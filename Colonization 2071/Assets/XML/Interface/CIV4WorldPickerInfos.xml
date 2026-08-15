@@ -1,0 +1,202 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Jason Winokur (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- World Picker -->
+<Civ4WorldPickerInfos xmlns="x-schema:CIV4InterfaceSchema.xml">
+	<WorldPickerInfos>
+		<WorldPickerInfo>
+			<MapName>DefaultWorldPicker</MapName>
+			<ModelFile>Art/Interface/Screens/WorldPicker/new_graphic/GlobeFLAT.nif</ModelFile>
+			<Sizes>
+				<Size>1.0</Size> <!-- Random -->
+				<Size>3.0</Size> <!-- Duel -->
+				<Size>2.5</Size> <!-- Tiny -->
+				<Size>2.0</Size> <!-- Small -->
+				<Size>1.5</Size> <!-- Standard -->
+				<Size>1.25</Size> <!-- Large -->
+				<Size>1.0</Size> <!-- Huge -->
+			</Sizes>
+			<Climates>
+				<ClimatePath>Art/Interface/Screens/WorldPicker/new_graphic/UNKNOWN.dds</ClimatePath> <!-- Random -->
+			</Climates>
+			<WaterLevelDecals>
+				<WaterLevelDecalPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelDecalPath> <!-- Random -->
+			</WaterLevelDecals>
+			<WaterLevelGloss>
+				<WaterLevelGlossPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelGlossPath> <!-- Random -->
+			</WaterLevelGloss>
+		</WorldPickerInfo>
+		<!-- Random Map Scripts -->
+		<WorldPickerInfo>
+			<MapName>Planets</MapName>
+			<ModelFile>Art/Interface/Screens/WorldPicker/new_graphic/GlobeFLAT.nif</ModelFile>
+			<Sizes>
+				<Size>1.0</Size> <!-- Random -->
+				<Size>3.0</Size> <!-- Duel -->
+				<Size>2.5</Size> <!-- Tiny -->
+				<Size>2.0</Size> <!-- Small -->
+				<Size>1.5</Size> <!-- Standard -->
+				<Size>1.25</Size> <!-- Large -->
+				<Size>1.0</Size> <!-- Huge -->
+			</Sizes>
+			<Climates>
+				<ClimatePath>Art/Interface/Screens/WorldPicker/new_graphic/UNKNOWN.dds</ClimatePath> <!-- Random -->
+			</Climates>
+			<WaterLevelDecals>
+				<WaterLevelDecalPath>Art/Interface/Screens/WorldPicker/new_graphic/Map.dds</WaterLevelDecalPath> <!-- Random -->
+			</WaterLevelDecals>
+			<WaterLevelGloss>
+				<WaterLevelGlossPath>Art/Interface/Screens/WorldPicker/new_graphic/Map.dds</WaterLevelGlossPath> <!-- Random -->
+			</WaterLevelGloss>
+		</WorldPickerInfo>
+		<WorldPickerInfo>
+			<MapName>Caribbean</MapName>
+			<ModelFile>Art/Interface/Screens/WorldPicker/new_graphic/GlobeFLAT.nif</ModelFile>
+			<Sizes>
+				<Size>1.0</Size> <!-- Random -->
+				<Size>3.0</Size> <!-- Duel -->
+				<Size>2.5</Size> <!-- Tiny -->
+				<Size>2.0</Size> <!-- Small -->
+				<Size>1.5</Size> <!-- Standard -->
+				<Size>1.25</Size> <!-- Large -->
+				<Size>1.0</Size> <!-- Huge -->
+			</Sizes>
+			<Climates>
+				<ClimatePath>Art/Interface/Screens/WorldPicker/new_graphic/map_carribean.dds</ClimatePath> <!-- Random -->
+			</Climates>
+			<WaterLevelDecals>
+				<WaterLevelDecalPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelDecalPath> <!-- Random -->
+			</WaterLevelDecals>
+			<WaterLevelGloss>
+				<WaterLevelGlossPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelGlossPath> <!-- Random -->
+			</WaterLevelGloss>
+		</WorldPickerInfo>
+		<WorldPickerInfo>
+			<MapName>A_New_World</MapName>
+			<ModelFile>Art/Interface/Screens/WorldPicker/new_graphic/GlobeFLAT.nif</ModelFile>
+			<Sizes>
+				<Size>1.0</Size> <!-- Random -->
+				<Size>3.0</Size> <!-- Duel -->
+				<Size>2.5</Size> <!-- Tiny -->
+				<Size>2.0</Size> <!-- Small -->
+				<Size>1.5</Size> <!-- Standard -->
+				<Size>1.25</Size> <!-- Large -->
+				<Size>1.0</Size> <!-- Huge -->
+			</Sizes>
+			<Climates>
+				<ClimatePath>Art/Interface/Screens/WorldPicker/new_graphic/map_new_world.dds</ClimatePath> <!-- Random -->
+			</Climates>
+			<WaterLevelDecals>
+				<WaterLevelDecalPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelDecalPath> <!-- Random -->
+			</WaterLevelDecals>
+			<WaterLevelGloss>
+				<WaterLevelGlossPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelGlossPath> <!-- Random -->
+			</WaterLevelGloss>
+		</WorldPickerInfo>
+		<!-- World Builder Scenarios -->
+		<WorldPickerInfo>
+			<MapName>America</MapName>
+			<ModelFile>Art/Interface/Screens/WorldPicker/new_graphic/GlobeFLAT.nif</ModelFile>
+			<Sizes>
+				<Size>1.0</Size> <!-- Random -->
+			</Sizes>
+			<Climates>
+				<ClimatePath>Art/Interface/Screens/WorldPicker/new_graphic/map_americas.dds</ClimatePath> <!-- Random -->
+			</Climates>
+			<WaterLevelDecals>
+				<WaterLevelDecalPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelDecalPath> <!-- Random -->
+			</WaterLevelDecals>
+			<WaterLevelGloss>
+				<WaterLevelGlossPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelGlossPath> <!-- Random -->
+			</WaterLevelGloss>
+		</WorldPickerInfo>
+		<WorldPickerInfo>
+			<MapName>Northwest Passage</MapName>
+			<ModelFile>Art/Interface/Screens/WorldPicker/new_graphic/GlobeFLAT.nif</ModelFile>
+			<Sizes>
+				<Size>1.0</Size> <!-- Random -->
+			</Sizes>
+			<Climates>
+				<ClimatePath>Art/Interface/Screens/WorldPicker/new_graphic/map_north_america.dds</ClimatePath> <!-- Random -->
+			</Climates>
+			<WaterLevelDecals>
+				<WaterLevelDecalPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelDecalPath> <!-- Random -->
+			</WaterLevelDecals>
+			<WaterLevelGloss>
+				<WaterLevelGlossPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelGlossPath> <!-- Random -->
+			</WaterLevelGloss>
+		</WorldPickerInfo>
+		<WorldPickerInfo>
+			<MapName>South America</MapName>
+			<ModelFile>Art/Interface/Screens/WorldPicker/new_graphic/GlobeFLAT.nif</ModelFile>
+			<Sizes>
+				<Size>1.0</Size> <!-- Random -->
+			</Sizes>
+			<Climates>
+				<ClimatePath>Art/Interface/Screens/WorldPicker/new_graphic/map_south_america.dds</ClimatePath> <!-- Random -->
+			</Climates>
+			<WaterLevelDecals>
+				<WaterLevelDecalPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelDecalPath> <!-- Random -->
+			</WaterLevelDecals>
+			<WaterLevelGloss>
+				<WaterLevelGlossPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelGlossPath> <!-- Random -->
+			</WaterLevelGloss>
+		</WorldPickerInfo>
+		<WorldPickerInfo>
+			<MapName>Western Hemisphere (Huge)</MapName>
+			<ModelFile>Art/Interface/Screens/WorldPicker/new_graphic/GlobeFLAT.nif</ModelFile>
+			<Sizes>
+				<Size>1.0</Size> <!-- Random -->
+			</Sizes>
+			<Climates>
+				<ClimatePath>Art/Interface/Screens/WorldPicker/new_graphic/map_western_hemi.dds</ClimatePath> <!-- Random -->
+			</Climates>
+			<WaterLevelDecals>
+				<WaterLevelDecalPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelDecalPath> <!-- Random -->
+			</WaterLevelDecals>
+			<WaterLevelGloss>
+				<WaterLevelGlossPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelGlossPath> <!-- Random -->
+			</WaterLevelGloss>
+		</WorldPickerInfo>
+		<WorldPickerInfo>
+			<MapName>Western Hemisphere</MapName>
+			<ModelFile>Art/Interface/Screens/WorldPicker/new_graphic/GlobeFLAT.nif</ModelFile>
+			<Sizes>
+				<Size>1.0</Size> <!-- Random -->
+			</Sizes>
+			<Climates>
+				<ClimatePath>Art/Interface/Screens/WorldPicker/new_graphic/map_western_hemi.dds</ClimatePath> <!-- Random -->
+			</Climates>
+			<WaterLevelDecals>
+				<WaterLevelDecalPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelDecalPath> <!-- Random -->
+			</WaterLevelDecals>
+			<WaterLevelGloss>
+				<WaterLevelGlossPath>Art/Interface/Screens/WorldPicker/new_graphic/MapBlank.dds</WaterLevelGlossPath> <!-- Random -->
+			</WaterLevelGloss>
+		</WorldPickerInfo>
+		<WorldPickerInfo>
+			<MapName>aDebugMap</MapName>
+			<ModelFile>Art/Interface/Screens/WorldPicker/Globe.nif</ModelFile>
+			<Sizes>
+				<Size>1.0</Size> <!-- Random -->
+				<Size>0.3</Size> <!-- Duel -->
+				<Size>0.6</Size> <!-- Tiny -->
+				<Size>0.8</Size> <!-- Small -->
+				<Size>1.0</Size> <!-- Standard -->
+				<Size>1.4</Size> <!-- Large -->
+				<Size>2.0</Size> <!-- Huge -->
+			</Sizes>
+			<Climates>
+				<ClimatePath>Art/Interface/Screens/WorldPicker/CLI_Temp.dds</ClimatePath> <!-- Random -->
+			</Climates>
+			<WaterLevelDecals>
+				<WaterLevelDecalPath>Art/Interface/Screens/WorldPicker/WaterCONT01.dds</WaterLevelDecalPath> <!-- Random -->
+			</WaterLevelDecals>
+			<WaterLevelGloss>
+				<WaterLevelGlossPath>Art/Interface/Screens/WorldPicker/GLOSS_CONT01.dds</WaterLevelGlossPath> <!-- Random -->
+			</WaterLevelGloss>
+		</WorldPickerInfo>
+	</WorldPickerInfos>
+</Civ4WorldPickerInfos>

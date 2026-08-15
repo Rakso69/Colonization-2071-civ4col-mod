@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by lcollins (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Game Text - New -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_FATHER_NATIVE_ATTITUDE_GOOD2</Tag>
+		<English>[ICON_BULLET]Ends wars with the Aliens</English>
+		<French>[ICON_BULLET]Termine la guerre contre les indig&#232;nes</French>
+		<German>[ICON_BULLET]Beendet den Krieg mit den Eingeborenen</German>
+		<Italian>[ICON_BULLET]Termina la guerra con i Nativi</Italian>
+		<Spanish>[ICON_BULLET]Termina las guerras con los nativos</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_RUNNING_OUT_OF_SPACE</Tag>
+		<English>%s2_city is running out of storage for %F1_yield_icon.</English>
+		<French>%s2_city est bient&#244;t &#224; court de r&#233;serves pour %F1_yield_icon.</French>
+		<German>Der Bestand an %F1_yield_icon geht in %s2_city zu Ende.</German>
+		<Italian>%s2_city sta finendo lo spazio per %F1_yield_icon.</Italian>
+		<Spanish>%s2_city se est&#225; quedando sin capacidad de almacenamiento para %F1_yield_icon.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_NO_RAW</Tag>
+		<English>%s1_city is out of %F2_yield_icon and cannot make %F3_yield_icon.</English>
+		<French>%s1_city est &#224; court de %F2_yield_icon et ne peut plus produire de %F3_yield_icon.</French>
+		<German>Kein %F2_yield_icon in %s1_city, kann %F3_yield_icon nicht herstellen.</German>
+		<Italian>%s1_city non ha pi&#249; %F2_yield_icon e non pu&#242; produrre %F3_yield_icon.</Italian>
+		<Spanish>%s1_city no tiene %F2_yield_icon y no puede  producir %F3_yield_icon.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YOU_UNITS_EUROPE_INTERCEPTED</Tag>
+		<English>Your %s1_UnitName was intercepted on Earth by the government.</English>
+		<French>Votre %s1_UnitName a &#233;t&#233; intercept&#233; en Europe par le Roi.</French>
+		<German>Ihre Einheit %s1_UnitName wurde in Europa vom K&#246;nig abgefangen.</German>
+		<Italian>La tua unit&#224; %s1_UnitName &#232; stata intercettata in Europa dal Re.</Italian>
+		<Spanish>El Rey ha interceptado tu %s1_UnitName en Europa.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISSION_FAILED</Tag>
+		<English>Your Anthropologist failed to establish a Field Station in %s1_CityName.</English>
+		<French>Votre missionnaire n'a pas pu &#233;tablir de mission &#224; %s1_CityName.</French>
+		<German>Ihr Missionar ist in %s1_CityName damit gescheitert eine Mission zu gr&#252;nden.</German>
+		<Italian>Il tuo missionario non &#232; riuscito a stabilire una missione a %s1_CityName.</Italian>
+		<Spanish>Tu misionero no ha podido construir una misi&#243;n en %s1_CityName.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TALK_NATIVES_POPUP_MISSION2</Tag>
+		<English>Chance of Success: %d1_success%%</English>
+		<French>Chance de r&#233;ussir : %d1_success%%</French>
+		<German>Erfolgschance: %d1_success%%</German>
+		<Italian>Probabilit&#224; di Successo: %d1_success%%</Italian>
+		<Spanish>Probabilidad de &#233;xito: %d1_success%%</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MEMORY_MISSIONARY_FAIL</Tag>
+		<English>"Your emissaries have tampered with our genes!"</English>
+		<French>"Vos missionnaires ont insult&#233; nos Esprits !"</French>
+		<German>"Eure Missionare haben unsere Seelen beleidigt"</German>
+		<Italian>"I tuoi missionari hanno insultato i nostri Spiriti!"</Italian>
+		<Spanish>"&#161;Tus misioneros han insultado a nuestros antepasados!"</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_OFFER_CITY_2</Tag>
+		<English>We would like to offer you the lands of our settlement as a sign of our respect.</English>
+		<French>Nous aimerions vous offrir les terres de notre village en signe de respect. </French>
+		<German>Als Zeichen unseres Respekts m&#246;chten wir Euch das Land unserer Siedlung anbieten. </German>
+		<Italian>Vorremmo offrirti le terre del nostro villaggio come segno del nostro rispetto.</Italian>
+		<Spanish>Te ofrecemos nuestras tierras como se&#241;al de respeto.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_TURNS_LEFT_TO_DOI</Tag>
+		<English>%d1 [NUM1:Turn:Turns] To Declare Independence</English>
+		<French>%d1 [NUM1:Turn:Tours] Pour d&#233;clarer votre Ind&#233;pendance</French>
+		<German>%d1 [NUM1:Runde:Runden] Bis zur Unabh&#228;ngigkeitserkl&#228;rung</German>
+		<Italian>%d1 [NUM1:Turno:Turni] per Dichiarare l'Indipendenza</Italian>
+		<Spanish>%d1 [NUM1:Turno:Turnos] para declarar la Independencia</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_NEW_EUROPE_ARMY_NEW</Tag>
+		<English>The government of %s1_civ_short is alarmed at the rebel sentiment in %s2_civ_short, and has added %d3 [NUM3:unit:units] to the %s4_adjective Interplanetary Expeditionary Force.</English>
+		<French>Le Roi des %s1_civ_short s'alarme du sentiment de r&#233;bellion &#224; %s2_civ_short. Il a ajout&#233; %d3 [NUM3:unit&#233;:unit&#233;s] au Corps Exp&#233;ditionnaire Royal %s4_adjective. </French>
+		<German>Der K&#246;nig von %s1_civ_short ist besorgt wegen der Stimmung der Rebellen in %s2_civ_short. Er hat die %s4_adjective K&#246;nigliche Expeditionseinheit mit %d3 [NUM3:Einheit:Einheiten] verst&#228;rkt.</German>
+		<Italian>Il Re di %s1_civ_short &#232; allarmato dal sentimento di ribellione a %s2_civ_short. Ha aggiunto %d3 unit&#224; al Corpo di Spedizione Reale %s4_adjective.</Italian>
+		<Spanish>El Rey de %s1_civ_short est&#225; preocupado por el sentimiento de rebeli&#243;n existente en %s2_civ_short. Ha a&#241;adido %d3 [NUM3:unidad:unidades] a las fuerzas reales expedicionarias  %s4_adjective.</Spanish>
+	</TEXT>
+</Civ4GameText>

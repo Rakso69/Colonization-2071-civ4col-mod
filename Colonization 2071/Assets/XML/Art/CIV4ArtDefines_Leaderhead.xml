@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Jason Winokur (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Leaderhead art path information -->
+<Civ4ArtDefines xmlns="x-schema:CIV4ArtDefinesSchema.xml">
+	<LeaderheadArtInfos>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_HUAYNA_CAPAC</Type><!--👽He-Who-Seeks-->
+			<Button>Art/Interface/Buttons/Leaderheads/green.dds</Button>
+			<NIF>art/LeaderHeads/Humanoid/alien_green.nif</NIF>
+			<KFM>art/LeaderHeads/Humanoid/gandhi.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/greenvalley/gandhi_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_CUNHAMBEBE</Type><!--👽Glusk the Moist-->
+			<Button>Art/Interface/Buttons/Leaderheads/amphibian.dds</Button>
+			<NIF>Art/LeaderHeads/prawn/gandhi.nif</NIF>
+			<KFM>Art/LeaderHeads/prawn/gandhi.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/bg/shrooms/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_MONTEZUMA</Type><!--👽He of the Ashes-->
+			<Button>Art/Interface/Buttons/Leaderheads/grey.dds</Button>
+			<NIF>art/LeaderHeads/Humanoid/alien_grey.nif</NIF>
+			<KFM>art/LeaderHeads/Humanoid/gandhi.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/aliencity/gandhi_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_WASHINGTON</Type><!-- Comrade Chairman-->
+			<Button>Art/Interface/Buttons/Leaderheads/chairman.dds</Button>
+			<NIF>art/LeaderHeads/polpot/polpot.nif</NIF>
+			<KFM>art/LeaderHeads/polpot/polpot.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/polpot/polpot_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_SITTING_BULL</Type><!--👽Androrc-->
+			<Button>Art/Interface/Buttons/Leaderheads/felid.dds</Button>
+			<NIF>Art/LeaderHeads/tchalla/tchalla.nif</NIF>
+			<KFM>Art/LeaderHeads/tchalla/shaka.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/purple/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_OCONOSTOTA</Type><!--👽Quetzalcoatl-->
+			<Button>Art/Interface/Buttons/Leaderheads/reptilian.dds</Button>
+			<NIF>Art/LeaderHeads/Ra/ramassesii.nif</NIF>
+			<KFM>Art/LeaderHeads/Ra/ramassesii.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/Ra/ramassesii_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_MANGAS_COLORADAS</Type><!--👽Kailric-->
+			<Button>Art/Interface/Buttons/Leaderheads/sasquatch.dds</Button>
+			<NIF>Art/LeaderHeads/The_Emperor/EMPEROR.nif</NIF>
+			<KFM>Art/LeaderHeads/The_Emperor/Suryavarman.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/sand/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_LOGAN</Type><!--👽Dagon-->
+			<Button>Art/Interface/Buttons/Leaderheads/ichthyoid.dds</Button>
+			<NIF>Art/LeaderHeads/Rama/asoka.nif</NIF>
+			<KFM>Art/LeaderHeads/Rama/asoka.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/oceansun/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_AGUEYBANA</Type><!--👽TC01-->
+			<Button>Art/Interface/Buttons/Leaderheads/silicoid.dds</Button>
+			<NIF>Art/LeaderHeads/Doom/drdoom.nif</NIF>
+			<KFM>Art/LeaderHeads/Doom/pacal.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/gskyice/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_ADAMS</Type><!-- Madam Secretary-->
+			<Button>Art/Interface/Buttons/Leaderheads/secretary.dds</Button>
+			<NIF>art/LeaderHeads/Wu/hatshepsut.nif</NIF>
+			<KFM>art/LeaderHeads/Wu/hatshepsut.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/Wu/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_BOLIVAR</Type><!-- The Major General-->
+			<Button>Art/Interface/Buttons/Leaderheads/major.dds</Button>
+			<NIF>art/LeaderHeads/idiamin/shaka.nif</NIF>
+			<KFM>art/LeaderHeads/idiamin/shaka.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/idiamin/shaka_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_SAN_MARTIN</Type><!-- The Chief of Staff-->
+			<Button>Art/Interface/Buttons/Leaderheads/chief.dds</Button>
+			<NIF>art/LeaderHeads/ryan/gilgamesh.nif</NIF>
+			<KFM>art/LeaderHeads/ryan/gilgamesh.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/ryan/gilgamesh_backgrnd.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_CHAMPLAIN</Type><!-- Herr Professor-->
+			<Button>Art/Interface/Buttons/Leaderheads/professor.dds</Button>
+			<NIF>art/LeaderHeads/Samuel_de_Champlain/Samuel_de_Champlain.nif</NIF>
+			<KFM>art/LeaderHeads/Samuel_de_Champlain/Samuel_de_Champlain.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/Samuel_de_Champlain/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_STUYVESANT</Type><!-- The Captain of Industry-->
+			<Button>Art/Interface/Buttons/Leaderheads/captain.dds</Button>
+			<NIF>art/Leaderheads/mikheil/saakashvili.nif</NIF>
+			<KFM>art/Leaderheads/mikheil/napoleon.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/mikheil/napoleon_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_FRONTENAC</Type><!-- His Excellency-->
+			<Button>Art/Interface/Buttons/Leaderheads/excellency.dds</Button>
+			<NIF>art/LeaderHeads/general/fdr.nif</NIF>
+			<KFM>art/LeaderHeads/general/fdr.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/general/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_DONCK</Type><!-- The Prodigal Daughter-->
+			<Button>Art/Interface/Buttons/Leaderheads/daughter.dds</Button>
+			<NIF>art/Leaderheads/tymoshenko/tymoshenko.nif</NIF>
+			<KFM>art/Leaderheads/tymoshenko/catherine.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/tymoshenko/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_ENGLISH_KING</Type><!--🤖PRC Chairman-->
+			<Button>Art/Interface/Buttons/Leaderheads/prc_chairman.dds</Button>
+			<NIF>art/LeaderHeads/Cheng/mao_tse_tung.nif</NIF>
+			<KFM>art/LeaderHeads/Cheng/mao_tse_tung.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/Cheng/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_FRENCH_KING</Type><!--🤖EU Prime Minister-->
+			<Button>Art/Interface/Buttons/Leaderheads/eu_prime_minister.dds</Button>
+			<NIF>art/LeaderHeads/Kekkonen/winston_churchill.nif</NIF>
+			<KFM>art/LeaderHeads/Kekkonen/winston_churchill.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/Kekkonen/winston_churchill_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_SPANISH_KING</Type><!--🤖NAFTA President-->
+			<Button>Art/Interface/Buttons/Leaderheads/nafta_president.dds</Button>
+			<NIF>art/LeaderHeads/Scudder/Zara Yaqob.nif</NIF>
+			<KFM>art/LeaderHeads/Scudder/Zara Yaqob.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/Scudder/Zara Yaqob_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_DUTCH_KING</Type><!--🤖Russian Premier-->
+			<Button>Art/Interface/Buttons/Leaderheads/russian_premier.dds</Button>
+			<NIF>art/LeaderHeads/Fearless Leader/fearless_leader.nif</NIF>
+			<KFM>art/LeaderHeads/Fearless Leader/josef_stalin.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/Fearless Leader/josef_stalin_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+
+<!-- Colonization 2071-->
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_MIRANDA</Type><!-- The lady in Black-->
+			<Button>Art/Interface/Buttons/Leaderheads/miranda.dds</Button>
+			<NIF>art/LeaderHeads/miranda/peter.nif</NIF>
+			<KFM>art/LeaderHeads/miranda/peter.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/miranda/peter_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_SYNDICATE_KING</Type><!--🤖Syndicate Crimelord-->
+			<Button>Art/Interface/Buttons/Leaderheads/cavour.dds</Button>
+			<NIF>art/LeaderHeads/Cavour/winston_churchill.nif</NIF>
+			<KFM>art/LeaderHeads/Cavour/winston_churchill.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/Cavour/winston_churchill_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_MODELCITIZEN</Type><!-- The Model Citizen-->
+			<Button>Art/Interface/Buttons/Leaderheads/meiji.dds</Button>
+			<NIF>art/LeaderHeads/Meiji/meiji.nif</NIF>
+			<KFM>art/LeaderHeads/Meiji/meiji.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/Meiji/meiji_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_JAPAN_KING</Type><!--🤖Japanese Everemperor-->
+			<Button>Art/Interface/Buttons/Leaderheads/everemperor.dds</Button>
+			<NIF>art/LeaderHeads/japanking/tokugawa.nif</NIF>
+			<KFM>art/LeaderHeads/japanking/tokugawa.kfm</KFM>
+			<BackgroundKFM>Art/Leaderheads/japanking/fdr_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_SAYYADINA</Type><!-- Sayyadina-->
+			<Button>Art/Interface/Buttons/Leaderheads/zenobia.dds</Button>
+			<NIF>art/LeaderHeads/zenobia/zenobia.nif</NIF>
+			<KFM>art/LeaderHeads/zenobia/zenobia.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/zenobia/zenobia_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_ADENAUER</Type><!--🤖Consortium CEO-->
+			<Button>Art/Interface/Buttons/Leaderheads/consortium_ceo.dds</Button>
+			<NIF>art/LeaderHeads/Adenauer/Chancelor.nif</NIF>
+			<KFM>art/LeaderHeads/Adenauer/Chancelor.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/spectrum/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_IBNSAUD</Type><!-- His Highness-->
+			<Button>Art/Interface/Buttons/Leaderheads/highness.dds</Button>
+			<NIF>art/LeaderHeads/IbnSaud/IbnSaud.nif</NIF>
+			<KFM>art/LeaderHeads/IbnSaud/John II.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/arab/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_QUAYLE</Type><!-- Director Green-->
+			<Button>Art/Interface/Buttons/Leaderheads/dirgreen.dds</Button>
+			<NIF>art/LeaderHeads/Quayle/alexander.nif</NIF>
+			<KFM>art/LeaderHeads/Quayle/alexander.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/courtyard/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_PILSUDSKI</Type><!--🤖Chief of State -->
+			<Button>art/LeaderHeads/pilsudski/pilsudski.dds</Button>
+			<NIF>art/LeaderHeads/pilsudski/pilsudski.nif</NIF>
+			<KFM>art/LeaderHeads/pilsudski/pilsudski.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/mercs/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_CURTIN</Type><!-- Director Black-->
+			<Button>Art/Interface/Buttons/Leaderheads/dirblack.dds</Button>
+			<NIF>art/LeaderHeads/Curtin/curtin.nif</NIF>
+			<KFM>art/LeaderHeads/Curtin/curtin.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/bluepipes/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_CALIPH</Type><!--🤖Caliphate Ayatollah-->
+			<Button>Art/Interface/Buttons/Leaderheads/ayatollah.dds</Button>
+			<NIF>art/LeaderHeads/Khomeini/saladin.nif</NIF>
+			<KFM>art/LeaderHeads/Khomeini/saladin.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/mosque/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_PROGENITOR</Type><!--👾Progenitor Exarch-->
+			<Button>Art/Interface/Buttons/Leaderheads/progenitor.dds</Button>
+			<NIF>Art/LeaderHeads/Sauron/Sauron.nif</NIF>
+			<KFM>Art/LeaderHeads/Sauron/shaka.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/wormhole/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+	</LeaderheadArtInfos>
+</Civ4ArtDefines>

@@ -1,0 +1,12 @@
+﻿<BFM modelname="entities\objects\Scenery\rock_pool\rock_pool_TAP.nif">
+	<animation anim="entities\objects\Scenery\rock_pool\rock_pool_TAP_Bip01_DockNode00_EnterA.bf" animName="Bip01_DockNode00_EnterA" debug="false" animSpeed="1.000000" explicitUseOnly="false" resolveUnitCollisions="true" load="true" />
+	<animation anim="entities\objects\Scenery\rock_pool\rock_pool_TAP_Bip01_DockNode01_ExitA.bf" animName="Bip01_DockNode01_ExitA" debug="false" animSpeed="1.000000" explicitUseOnly="false" resolveUnitCollisions="true" load="true" />
+</BFM>
+<Graph name="rock_pool_TAP" version="1">
+	<node name="Bip01">
+		<table>
+			<Bip01_DockNode00_EnterA />
+			<Bip01_DockNode01_ExitA />
+		</table>
+	</node>
+</Graph>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ###################################################################################### -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_GIANTSPIDER</Tag>
+		<English>Giant Spider</English>
+	        <French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+        </TEXT>
+</Civ4GameText>	

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Firaxis Games (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Movie art path information -->
+<Civ4ArtDefines xmlns="x-schema:CIV4ArtDefinesSchema.xml">
+	<MovieArtInfos>
+		<MovieArtInfo>
+			<Type>ART_DEF_MOVIE_INTRO</Type>
+			<Path>Art/Movies/Intro.bik</Path>
+		</MovieArtInfo>
+		<MovieArtInfo>
+			<Type>ART_DEF_MOVIE_2K_INTRO</Type>
+			<Path>Art/Movies/Intros/2KG_NTSC.bik</Path>
+		</MovieArtInfo>
+		<MovieArtInfo>
+			<Type>ART_DEF_MOVIE_NVIDIA_INTRO</Type>
+			<Path>Art/Movies/Intros/TheWay_720x486.bik</Path>
+		</MovieArtInfo>
+		<MovieArtInfo>
+			<Type>ART_DEF_MOVIE_REVOLUTION</Type>
+			<Path>Art/Movies/revolution.dds</Path>
+		</MovieArtInfo>
+		<MovieArtInfo>
+			<Type>ART_DEF_MOVIE_VICTORY_REVOLUTION</Type>
+			<Path>Art/Movies/independence.dds</Path>
+		</MovieArtInfo>
+		<MovieArtInfo>
+			<Type>ART_DEF_MOVIE_VICTORY_TRANSCENDENCE</Type>
+			<Path>Art/Movies/transcendence.dds</Path>
+		</MovieArtInfo>
+		<MovieArtInfo>
+			<Type>ART_DEF_MOVIE_VICTORY_STAGNATION</Type>
+			<Path>Art/Movies/stagnation.dds</Path>
+		</MovieArtInfo>
+		<MovieArtInfo>
+			<Type>ART_DEF_MOVIE_VICTORY_HEGEMONY</Type>
+			<Path>Art/Movies/hegemony.dds</Path>
+		</MovieArtInfo>
+		<MovieArtInfo>
+			<Type>ART_DEF_MOVIE_VICTORY_REVOLUTION_ALIEN</Type>
+			<Path>Art/Movies/alienvictory.dds</Path>
+		</MovieArtInfo>
+		<MovieArtInfo>
+			<Type>ART_DEF_MOVIE_VICTORY_UTOPIA</Type>
+			<Path>Art/Movies/utopia.dds</Path>
+		</MovieArtInfo>
+	</MovieArtInfos>
+</Civ4ArtDefines>

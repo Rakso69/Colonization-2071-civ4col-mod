@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Bart Muzzin (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- -->
+<!-- Global Defines -->
+<Civ4Defines xmlns="x-schema:CIV4GlobalDefinesSchema.xml">
+  <!-- This is the New Default Unit, Dawn as in Dawn of Discovery -->
+  <Define>
+    <DefineName>DEFAULT_DAWN_POPULATION_UNIT</DefineName>
+    <DefineTextVal>UNITCLASS_COLONIST</DefineTextVal>
+  </Define>
+  <!--Having this tech makes the Natives give you gifts more frequently-->
+  <Define>
+    <DefineName>CONTACT_YIELD_GIFT_TECH</DefineName>
+    <DefineTextVal>TECH_NEUA1</DefineTextVal>
+  </Define>
+  <!--Yield For Industrial Victory-->
+  <Define>
+    <DefineName>INDUSTRIAL_VICTORY_SINGLE_YIELD</DefineName>
+    <DefineTextVal>YIELD_COATS</DefineTextVal>
+  </Define>
+  <!--These are the Techs the natives get for free-->
+  <Define>
+    <DefineName>NATIVE_TECH</DefineName>
+    <DefineTextVal>TECH_NAT</DefineTextVal>
+  </Define>
+  <!--Used to make the Coal Burner Profession work-->
+  <Define>
+    <DefineName>PROFESSION_COAL_BURNER</DefineName>
+    <DefineTextVal>PROFESSION_COAL_BURNER</DefineTextVal>
+  </Define>
+  <!--This Class gets a bonus to Coal Burner-->
+  <Define>
+    <DefineName>UNITCLASS_PIONEER</DefineName>
+    <DefineTextVal>UNITCLASS_PIONEER</DefineTextVal>
+  </Define>
+  <!--This buiding has the Steamworks attributes-->
+  <Define>
+    <DefineName>STEAMWORKS_BUILDING</DefineName>
+    <DefineTextVal>BUILDING_STEAMWORKS</DefineTextVal>
+  </Define>
+  <!--Used to make the Coal Furnace work-->
+  <Define>
+    <DefineName>SPECIAL_FURNACE_BUILDING</DefineName>
+    <DefineTextVal>SPECIALBUILDING_COAL_FURNACE</DefineTextVal>
+  </Define>
+  <!--This buiding has the Steamworks attributes-->
+  <Define>
+    <DefineName>STEAMWORKS_CLASS_TYPE</DefineName>
+    <DefineTextVal>BUILDINGCLASS_STEAMWORKS</DefineTextVal>
+  </Define>
+  <!--Coal Furnace Bonus Production from Pioneer-->
+  <Define>
+    <DefineName>TK_PIONEER_COAL_FURNACE_BONUS</DefineName>
+    <iDefineIntVal>100</iDefineIntVal>
+  </Define>
+  <!--The Number of Coal it takes to make 1 production-->
+  <Define>
+    <DefineName>TK_STEAMWORKS_MODIFIER</DefineName>
+    <iDefineIntVal>3</iDefineIntVal>
+  </Define>
+  <Define>
+    <DefineName>CIVICOPTION_INVENTIONS</DefineName>
+    <DefineTextVal>CIVICOPTION_INVENTIONS</DefineTextVal>
+  </Define>
+  <Define>
+    <DefineName>VICTORY_INDUSTRIALISATION</DefineName>
+    <DefineTextVal>VICTORY_INDUSTRIALISATION</DefineTextVal>
+  </Define>
+  <Define>
+    <DefineName>PROFESSION_INVENTOR</DefineName>
+    <DefineTextVal>PROFESSION_INVENTOR</DefineTextVal>
+  </Define>
+  <!--Leave this at 0, other wise tech tree want work right-->
+  <Define>
+    <DefineName>TK_RESEARCH_IS_HIDDEN</DefineName>
+    <iDefineIntVal>0</iDefineIntVal>
+  </Define>
+  <!--The lower the more the AI will want to do Research-->
+  <Define>
+    <DefineName>TK_IDEAS_CITY_VALUE</DefineName>
+    <iDefineIntVal>75</iDefineIntVal>
+  </Define>
+  <!--Leave this at 1 to use X Y coordinates in the Tech Tree, 0 is automatic placement but its not fully supported yet-->
+  <Define>
+    <DefineName>TK_RESEARCH_SCREEN_XY</DefineName>
+    <iDefineIntVal>1</iDefineIntVal>
+  </Define>
+  <!--This effects the amount of experence need for the Next Prolific Inventor to be born-->
+  <Define>
+    <DefineName>PROLIFIC_INVENTOR_THRESHOLD_INCREASE</DefineName>
+    <iDefineIntVal>500</iDefineIntVal>
+  </Define>
+  <!--The amount of experence needed for the First Prolific Inventor-->
+  <Define>
+    <DefineName>TK_PROLIFIC_INVENTOR_THRESHOLD</DefineName>
+    <iDefineIntVal>150</iDefineIntVal>
+  </Define>
+  <!--The amount of prolific inventor experence earned per turn per city that is doing research-->
+  <Define>
+    <DefineName>TK_PROLIFIC_INVENTOR_PROGRESS</DefineName>
+    <iDefineIntVal>1</iDefineIntVal>
+  </Define>
+  <!--The base gold value AI places on Techs. This is further modified by the Tech cost-->
+  <Define>
+    <DefineName>TK_RESEARCH_TRADE_VALUE</DefineName>
+    <iDefineIntVal>300</iDefineIntVal>
+  </Define>
+  <!--The minimum amount of Research the player needs to have in order for AI to form Research Pacts-->
+  <Define>
+    <DefineName>TK_RESEARCH_PACT_IDEAS_THRESHOLD</DefineName>
+    <iDefineIntVal>6</iDefineIntVal>
+  </Define>
+  <!--Modifies the AIs cost to do research by this percent-->
+  <Define>
+    <DefineName>TK_AI_RESEARCH_COST_MOD_PERCENT</DefineName>
+    <iDefineIntVal>200</iDefineIntVal>
+  </Define>
+  <!--Turns off the default ability to do Map trading, must now research a tech to do this-->
+  <Define>
+    <DefineName>ENABLE_MAP_TRADING</DefineName>
+    <iDefineIntVal>1</iDefineIntVal>
+  </Define>
+  <!--The number of extra free techs each Leader recieves-->
+  <Define>
+    <DefineName>AI_ADVANCED_TECH_START</DefineName>
+    <iDefineIntVal>0</iDefineIntVal>
+  </Define>
+  <!--This increases the frequency that natives will give gifts if you have the Encomeida tech-->
+  <Define>
+    <DefineName>CONTACT_YIELD_GIFT_ENCOMEIDA_TIMER</DefineName>
+    <iDefineIntVal>10</iDefineIntVal>
+  </Define>
+  <!--Modifies the Human player cost to do research by this percent-->
+  <Define>
+    <DefineName>TK_HUMAN_RESEARCH_COST_MOD_PERCENT</DefineName>
+    <iDefineIntVal>100</iDefineIntVal>
+  </Define>
+  <!--Turns on Natives ability to do research. Set to 1 for allow, 0 for disallow-->
+  <Define>
+    <DefineName>TK_ALLOWS_NATIVES_TO_RESEARCH</DefineName>
+    <iDefineIntVal>1</iDefineIntVal>
+  </Define>
+  <!--If this is set to 1 natives get all techs that are listed as NATIVE_TECH in the CivicInfos.xml -->
+  <Define>
+    <DefineName>TK_NATIVES_GET_FREE_TECHS</DefineName>
+    <iDefineIntVal>1</iDefineIntVal>
+  </Define>
+</Civ4Defines>

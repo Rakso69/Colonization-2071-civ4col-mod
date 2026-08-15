@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!-- ###################################################################################### -->
+<Civ4ArtDefines xmlns="x-schema:ExoticAnimals-0.3_CIV4ArtDefinesSchema.xml">
+	<UnitArtInfos>
+		<UnitArtInfo>
+			<Type>ART_DEF_UNIT_GIANTSPIDER</Type>
+			<Button>Modules/Custom Units/ExoticAnimals-0.3/GiantSpider/GiantSpider.dds</Button>
+			<fScale>0.2</fScale>
+			<fInterfaceScale>0.7</fInterfaceScale>
+			<bActAsLand>0</bActAsLand>
+			<bActAsAir>0</bActAsAir>
+			<NIF>Modules/Custom Units/ExoticAnimals-0.3/GiantSpider/Abman-Spider.nif</NIF>
+			<KFM>Modules/Custom Units/ExoticAnimals-0.3/GiantSpider/Abman-Spider.kfm</KFM>
+			<SHADERNIF/>
+			<ShadowDef>
+				<ShadowNIF>Art/Units/01_UnitShadows/FighterShadow.nif</ShadowNIF>
+				<ShadowAttachNode>BIP Pelvis</ShadowAttachNode>
+				<fShadowScale>0.75</fShadowScale>
+			</ShadowDef>
+			<fBattleDistance>0.35</fBattleDistance>
+			<fRangedDeathTime>0.31</fRangedDeathTime>
+			<bSmoothMove>1</bSmoothMove>
+			<bActAsRanged>1</bActAsRanged>
+			<TrainSound>AS2D_UNIT_BUILD_UNIT</TrainSound>
+			<AudioRunSounds>
+				<AudioRunTypeLoop/>
+				<AudioRunTypeEnd/>
+			</AudioRunSounds>
+			<PatrolSound/>
+			<SelectionSound>AS3D_SPIDER</SelectionSound>
+			<ActionSound>AS3D_SPIDERSILK</ActionSound>
+		</UnitArtInfo>
+        </UnitArtInfos>
+</Civ4ArtDefines>

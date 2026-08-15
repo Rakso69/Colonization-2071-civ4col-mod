@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by lcollins (Firaxis Games) -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+	<TEXT>
+		<Tag>TXT_KEY_HINT_INTERFACE_55</Tag>
+		<English>Press [CTRL + C] to select all units of the same type on the same tile as the active unit.</English>
+		<French>Appuyez sur [CTRL + C] pour s&#233;lectionner toutes les unit&#233;s du m&#234;me type sur une case en tant qu'unit&#233; active.</French>
+		<German>[STRG + C] w&#228;hlt alle Einheiten desselben Typs auf dem Gel&#228;ndefeld der aktiven Einheit.</German>
+		<Italian>Premi [CTRL + C] per selezionare tutte le unit&#224; dello stesso tipo sulla stessa casella di quella attiva.</Italian>
+		<Spanish>Pulsar [CTRL + C] para seleccionar todas las unidades del mismo tipo que haya en la misma casilla que la unidad activa...</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ACTION_NEEDS_OUT_RIVAL_CULTURE_BORDER</Tag>
+		<English>[COLOR_WARNING_TEXT]Must be outside rival Cultural Borders.[COLOR_REVERT]</English>
+		<French>[COLOR_WARNING_TEXT]Doit &#234;tre en dehors des fronti&#232;res culturelles adverses.[COLOR_REVERT]</French>
+		<German>[COLOR_WARNING_TEXT]Muss sich au&#223;erhalb der Kulturgrenzen des Gegners befinden.[COLOR_REVERT]</German>
+		<Italian>[COLOR_WARNING_TEXT]Bisogna essere all'esterno dei confini culturali avversari.[COLOR_REVERT]</Italian>
+		<Spanish>[COLOR_WARNING_TEXT]Ha de estar fuera de las fronteras de la cultura rival.[COLOR_REVERT]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PING_RECEIVED</Tag>
+		<English>Ping received from %s1_player.</English>
+		<French>Ping re&#231;u par %s1_player.</French>
+		<German>Ping von Spieler %s1_player erhalten.</German>
+		<Italian>Ricevuto un segnale da %s1_player.</Italian>
+		<Spanish>Ping recibido de %s1_player.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EVENT_THE_UNIT</Tag>
+		<English>unit</English>
+		<French>unit&#233;</French>
+		<German>unit</German>
+		<Italian>unit&#224;</Italian>
+		<Spanish>unidad</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_COMBAT_MESSAGE_TERRAIN_ATTACK</Tag>
+		<English>(Terrain Attack: %D1%%)</English>
+		<French>(Attaque terrain : %D1%%)</French>
+		<German>(Gel&#228;ndeangriff: %D1%%)</German>
+		<Italian>(Attacco da terreno: %D1%%)</Italian>
+		<Spanish>(Ataque a terreno: %D1%%)</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MAIN_MENU_NOT_UNIQUE_DESC</Tag>
+		<English>%s1_leader has been chosen by more than one player. All players must choose a unique leader for anonymous play.</English>
+		<French>%s1_leader a &#233;t&#233; choisi par plusieurs joueurs. Tous les joueurs doivent choisir un chef unique pour jouer en mode anonyme.</French>
+		<German>%s1_leader wurde von mehr als einem Spieler gew&#228;hlt. Im anonymen Spielmodus m&#252;ssen alle Spieler einen einzigartigen Herrscher w&#228;hlen.</German>
+		<Italian>%s1_leader &#232; stato scelto da pi&#249; di un giocatore. Tutti i giocatori devono scegliere un unico leader per giocare anonimamente.</Italian>
+		<Spanish>%s1_leader ha sido elegido por m&#225;s de un jugador. Se deben escoger nombres &#250;nicos de l&#237;deres para permanecer en el anonimato.</Spanish>
+	</TEXT>
+</Civ4GameText>

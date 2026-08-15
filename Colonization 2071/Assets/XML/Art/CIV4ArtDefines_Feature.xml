@@ -1,0 +1,982 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Jason Winokur (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!--❗	Please always list in order; CIV4FeatureInfos.xml(WorldBuilder) -->
+<!-- Feature art path information -->
+<Civ4ArtDefines xmlns="x-schema:CIV4ArtDefinesSchema.xml">
+	<FeatureArtInfos>
+<!-- Nebula-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_ICE</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,6,4</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+<!--Disabled
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice01_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice01_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice01_03.nif</ModelFile>
+						<Connections>NW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice02_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice02_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice02_03.nif</ModelFile>
+						<Connections>NE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice03_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice03_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice03_03.nif</ModelFile>
+						<Connections>NW NE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice04_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice04_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice04_03.nif</ModelFile>
+						<Connections>SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice05_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice05_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice05_03.nif</ModelFile>
+						<Connections>NW SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice06_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice06_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice06_03.nif</ModelFile>
+						<Connections>NE SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice07_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice07_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice07_03.nif</ModelFile>
+						<Connections>NW NE SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice08_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice08_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice08_03.nif</ModelFile>
+						<Connections>SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice09_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice09_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice09_03.nif</ModelFile>
+						<Connections>NW SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice10_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice10_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice10_03.nif</ModelFile>
+						<Connections>NE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice11_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice11_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice11_03.nif</ModelFile>
+						<Connections>NW NE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice12_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice12_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice12_03.nif</ModelFile>
+						<Connections>SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice13_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice13_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice13_03.nif</ModelFile>
+						<Connections>NW SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice14_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice14_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice14_03.nif</ModelFile>
+						<Connections>NE SE SW</Connections>
+					</FeatureArtPiece>
+/Disabled-->
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice15_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice15_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice15_03.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice15_04.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice15_05.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice15_06.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice15_07.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/IcePack/Ice15_08.nif</ModelFile>
+						<Connections>NW NE SE SW</Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,6,4</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Wormhole Flare-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_NOVA</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,4,4</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/SuperNova/SuperNova.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,4,4</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Harmonic Forcefield-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_BLACKHOLE</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>4.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,3,4</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/BlackHole/BlackHole.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,3,4</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- lagoon-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_LAGOON</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>8.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>			
+			<Button>Art/interface/buttons/terrainfeatures/lagoon.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/lagoon/rock_pool.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>Art/interface/buttons/terrainfeatures/lagoon.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Lake-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_LAKE</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>20.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>			
+			<Button>Art/interface/buttons/terrainfeatures/lake.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/lake/reptilepool.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>Art/interface/buttons/terrainfeatures/lake.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Methane Bed-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_METHANE</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/interface/buttons/terrainfeatures/methane_bed.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/terrain/features/methane_bed/fallout.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>Art/interface/buttons/terrainfeatures/methane_bed.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Ancient Mound-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_MOUND</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>0.034</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/Units/mound_beast.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/mound/crystalforest.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/Units/mound_beast.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Buried Ruins-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_BURIED</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>0.034</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/Volcano.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Structures/Improvements/mound/crystalforest.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/Volcano.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Volcano-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_VOLCANO</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>0.5</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/Volcano.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Volcano/sopka7.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/Volcano.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Geyser-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_GEYSER</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>6.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/geyser.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/geyser/dormant_volcano.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/geyser.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Asteroid Belt-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_ASTEROID</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,5,4</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+<!--Disabled
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_01_01.nif</ModelFile>
+						<Connections>NW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_02_01.nif</ModelFile>
+						<Connections>NE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_03_01.nif</ModelFile>
+						<Connections>NW NE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_04_01.nif</ModelFile>
+						<Connections>SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_05_01.nif</ModelFile>
+						<Connections>NW SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_06_01.nif</ModelFile>
+						<Connections>NE SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_07_01.nif</ModelFile>
+						<Connections>NW NE SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_08_01.nif</ModelFile>
+						<Connections>SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_09_01.nif</ModelFile>
+						<Connections>NW SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_10_01.nif</ModelFile>
+						<Connections>NE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_11_01.nif</ModelFile>
+						<Connections>NW NE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_12_01.nif</ModelFile>
+						<Connections>SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_13_01.nif</ModelFile>
+						<Connections>NW SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_14_01.nif</ModelFile>
+						<Connections>NE SE SW</Connections>
+					</FeatureArtPiece>
+/Disabled-->
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_15_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_15_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/Asteroids/Asteroids_15_03.nif</ModelFile>
+						<Connections>NW NE SE SW</Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,5,4</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Space Junk-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_SPACEJUNK</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.2</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,4,3</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/wreckage/wreckage_fx.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,4,3</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Dark Matter-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_DARKMATTER</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>2.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>,Art/Interface/Buttons/TerrainFeatures/dark_matter.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/dark_matter/relic_pad_effect.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/TerrainFeatures/dark_matter.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Space-Time Anomaly-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_ANOMALY1</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>15.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>,Art/Interface/Buttons/Afterworld_Atlas.dds,8,2</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/space-time_anomaly/anomaly.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/Afterworld_Atlas.dds,8,2</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Gravitational Anomaly-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_ANOMALY2</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>15.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>,Art/Interface/Buttons/Afterworld_Atlas.dds,7,2</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/gravitational_anomaly/anomaly.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/Afterworld_Atlas.dds,7,2</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Radiation Field-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_RADIATION</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,7,4</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/FinalFrontier/Radiation/radiation.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,7,4</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Plasma Field-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_PLASMA</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>,Art/Interface/Buttons/Afterworld_Atlas.dds,5,14</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Plasma/radiation.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/Afterworld_Atlas.dds,5,14</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Jungle-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_JUNGLE</Type>
+			<bAnimated>0</bAnimated>
+			<TileArtType>TILE_ART_TYPE_TREES</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/jungle.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Jungle/Jungle_single_tree.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/Jungle/Jungle_single_tree_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/Jungle/Jungle_single_tree_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/Jungle/Jungle_single_tree_03.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>44</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/jungle.dds</VarietyButton>
+			</FeatureVariety>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle01_01.nif</ModelFile>
+						<Connections>NW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle02_01.nif</ModelFile>
+						<Connections>NE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle03_01.nif</ModelFile>
+						<Connections>NW NE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle04_01.nif</ModelFile>
+						<Connections>SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle05_01.nif</ModelFile>
+						<Connections>NW SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle06_01.nif</ModelFile>
+						<Connections>NE SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle07_01.nif</ModelFile>
+						<Connections>NW NE SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle08_01.nif</ModelFile>
+						<Connections>SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle09_01.nif</ModelFile>
+						<Connections>NW SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle10_01.nif</ModelFile>
+						<Connections>NE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle11_01.nif</ModelFile>
+						<Connections>NW NE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle12_01.nif</ModelFile>
+						<Connections>SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle13_01.nif</ModelFile>
+						<Connections>NW SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle14_01.nif</ModelFile>
+						<Connections>NE SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle15_01.nif</ModelFile>
+						<Connections>NW NE SE SW</Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>8</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/jungle.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Progenitor Ruins-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_FOREST</Type>
+			<bAnimated>0</bAnimated>
+			<TileArtType>TILE_ART_TYPE_TREES</TileArtType>
+			<fScale>0.3</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/progenitor.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/ruins/pf/obelisk.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>15</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/progenitor.dds</VarietyButton>
+			</FeatureVariety>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/ruins/pf/obeliskblue.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>14</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/progenitor.dds</VarietyButton>
+			</FeatureVariety>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/ruins/pf/obeliskgreen.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>13</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/progenitor.dds</VarietyButton>
+			</FeatureVariety>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/ruins/pf/obeliskred.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>12</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/progenitor.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Coniferous Forest-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_LIGHT_FOREST</Type>
+			<bAnimated>0</bAnimated>
+			<TileArtType>TILE_ART_TYPE_TREES</TileArtType>
+			<fScale>0.5</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,1,3</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/TreeLeafy/Leafy_single_tree.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/TreeLeafy/Leafy_single_tree_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/TreeLeafy/Leafy_single_tree_02.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>48</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,3,3</VarietyButton>
+			</FeatureVariety>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/TreeEvergreen/Evergreen_single_tree.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>48</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,7,3</VarietyButton>
+			</FeatureVariety>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/TreeSnowy/Snowy_single_tree.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>48</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,8,3</VarietyButton>
+			</FeatureVariety>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Light_forest/Light_forest_single_tree.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/Light_forest/Light_forest_single_tree_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/Light_forest/Light_forest_single_tree_02.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>67</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,1,3</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Fungal Forest-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_FUNGAL_FOREST</Type>
+			<bAnimated>0</bAnimated>
+			<TileArtType>TILE_ART_TYPE_TREES</TileArtType>
+			<fScale>0.5</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/fungal_forest.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/fungal_forest/spawningspot_land.nif</ModelFile>
+						<Connections>NW NE SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/fungal_forest/spawningspot_land.nif</ModelFile>
+						<Connections>NW NE SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/fungal_forest/spawningspot_water.nif</ModelFile>
+						<Connections>NW NE SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/fungal_forest/II/sl.nif</ModelFile>
+						<Connections>NW NE SE SW</Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>12</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/fungal_forest.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Cycad Forest-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_CYCAD_FOREST</Type>
+			<bAnimated>0</bAnimated>
+			<TileArtType>TILE_ART_TYPE_TREES</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/cycad_forest.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Liz Jungle/jungle01_01.nif</ModelFile>
+						<Connections>NW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Liz Jungle/jungle02_01.nif</ModelFile>
+						<Connections>NE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Liz Jungle/jungle03_01.nif</ModelFile>
+						<Connections>NE NW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Liz Jungle/jungle04_01.nif</ModelFile>
+						<Connections>SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Liz Jungle/jungle05_01.nif</ModelFile>
+						<Connections>NW SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Liz Jungle/jungle06_01.nif</ModelFile>
+						<Connections>NE SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Liz Jungle/jungle07_01.nif</ModelFile>
+						<Connections>NW NE SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Liz Jungle/jungle08_01.nif</ModelFile>
+						<Connections>SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Liz Jungle/jungle09_01.nif</ModelFile>
+						<Connections>NW SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Liz Jungle/jungle10_01.nif</ModelFile>
+						<Connections>NE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Liz Jungle/jungle11_01.nif</ModelFile>
+						<Connections>NW NE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Liz Jungle/jungle12_01.nif</ModelFile>
+						<Connections>SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Liz Jungle/jungle13_01.nif</ModelFile>
+						<Connections>NW SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Liz Jungle/jungle14_01.nif</ModelFile>
+						<Connections>NE SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Liz Jungle/jungle15_01.nif</ModelFile>
+						<Connections>NW NE SE SW</Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>7</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/cycad_forest.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Luminous Forest-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_LUMINOUS_FOREST</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/luminous_forest.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/hazard_forests/hauntedland.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/luminous_forest.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Petrified Forest-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_PETRIFIED_FOREST</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/petrified_forest.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/hazard_forests/burnttrees.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/petrified_forest.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Scrub-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_SCRUB</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/algaewhite.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/algae_red/wheat.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/algaered.dds</VarietyButton>
+			</FeatureVariety>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/algae_cyan/kelp.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>1</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/algaecyan.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Corrosive Atmosphere-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_ATMOS_CORROSIVE</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/corrosive_atmosphere.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/SolarSystem/atmos/corrosive.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>0</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/corrosive_atmosphere.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Earthlike Atmosphere-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_ATMOS_EARTHLIKE</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/earthlike_atmosphere.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/SolarSystem/atmos/earthlike.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>0</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/earthlike_atmosphere.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Toxic Atmosphere-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_ATMOS_TOXIC</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/toxic_infected_atmosphere.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/SolarSystem/atmos/toxic.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>0</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/toxic_infected_atmosphere.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Infected Atmosphere-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_ATMOS_INFECTED</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/toxic_infected_atmosphere.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/SolarSystem/atmos/infected.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>0</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/toxic_infected_atmosphere.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Methanogen Atmosphere-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_ATMOS_METHANOGEN</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/methanogen_atmosphere.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/SolarSystem/atmos/methanogen.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>0</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/methanogen_atmosphere.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Radioactive Atmosphere-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_ATMOS_RADIOACTIVE</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/radioactive_atmosphere.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/SolarSystem/atmos/radioactive.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>0</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/radioactive_atmosphere.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Dust Storms-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_ATMOS_DUSTSTORM</Type>
+			<bAnimated>1</bAnimated>
+			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/dust_storms.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/SolarSystem/atmos/duststorm.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>0</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/dust_storms.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+	</FeatureArtInfos>
+</Civ4ArtDefines>
