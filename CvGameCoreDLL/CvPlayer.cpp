@@ -15565,17 +15565,17 @@ void CvPlayer::doIdeas(bool Cheat)
 	{
 		return;
 	}
-//	bool NativesCanResearch = true;
-//	bool NativesFreeTechs = true;
-//	if (isNative() && GC.getDefineINT("TK_ALLOWS_NATIVES_TO_RESEARCH") == 0)
-//	{
-//	    NativesCanResearch = false;
-//	}
+	bool NativesCanResearch = true;
+	bool NativesFreeTechs = true;
+	if (isNative() && GC.getDefineINT("TK_ALLOWS_NATIVES_TO_RESEARCH") == 0)
+	{
+	    NativesCanResearch = false;
+	}
 
-//	if (isNative() && GC.getDefineINT("TK_NATIVES_GET_FREE_TECHS") == 0)
-//	{
-//	    NativesFreeTechs = false;
-//	}
+	if (isNative() && GC.getDefineINT("TK_NATIVES_GET_FREE_TECHS") == 0)
+	{
+	    NativesFreeTechs = false;
+	}
 
     int iTest = GC.getDefineINT("AI_ADVANCED_TECH_START");
     if (!isNative() && !isEurope())
