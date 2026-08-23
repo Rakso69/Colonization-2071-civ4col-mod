@@ -232,5 +232,12 @@
 			<KFM>Art/LeaderHeads/Sauron/shaka.kfm</KFM>
 			<BackgroundKFM>art/LeaderHeads/bg/wormhole/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
 		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_INVASION_OUTER_GODS</Type><!--🪼Outer Gods Pantheon-->
+			<Button>Art/Interface/Buttons/Leaderheads/Outer_Gods_Pantheon.dds</Button>
+			<NIF>Art/LeaderHeads/Azathoth/gandhi.nif</NIF>
+			<KFM>Art/LeaderHeads/Azathoth/gandhi.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/Azathoth/gandhi_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
 	</LeaderheadArtInfos>
 </Civ4ArtDefines>

@@ -16,7 +16,7 @@
     </InterfaceArtInfo>
     <InterfaceArtInfo>
       <Type>MAGNIFYING_GLASS</Type>
-      <Path>Art/Screens/MagnifingGlass.dds</Path>
+      <Path>Art/Screens/MagnifyingGlass.dds</Path>
     </InterfaceArtInfo>
     <InterfaceArtInfo>
       <Type>TRADE_TECH_HOLDER</Type>
@@ -36,7 +36,7 @@
     </InterfaceArtInfo>
     <InterfaceArtInfo>
       <Type>NO_TRADE</Type>
-      <Path>Art/Buttons/Techs/NoTrade.dds</Path>
+      <Path>Art/Buttons/NoTrade.dds</Path>
     </InterfaceArtInfo>
     <InterfaceArtInfo>
       <Type>ARROW_MXY</Type>
@@ -112,11 +112,11 @@
     </InterfaceArtInfo>
     <InterfaceArtInfo>
       <Type>INTERFACE_TECHNOLOGY_BG2</Type>
-      <Path>Art/Screens/TechnologyBG2.dds</Path>
+      <Path>Art/Screens/TechnologyBG.dds</Path>
     </InterfaceArtInfo>
     <InterfaceArtInfo>
       <Type>INTERFACE_TECHNOLOGY_BG_ALIEN</Type>
-      <Path>Art/Screens/TechnologyBG_Alien.dds</Path>
+      <Path>Art/Screens/TechnologyBG.dds</Path>
     </InterfaceArtInfo>
     <InterfaceArtInfo>
       <Type>INTERFACE_INVENTIONS_COMPLETE_SELECT</Type>

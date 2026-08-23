@@ -106,6 +106,14 @@
 					<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -163,6 +171,14 @@
 					<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -218,6 +234,14 @@
 			<UnitCombats>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -282,6 +306,14 @@
 					<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -342,6 +374,14 @@
 			<UnitCombats>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -406,6 +446,14 @@
 					<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -461,6 +509,14 @@
 			<UnitCombats>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -520,6 +576,14 @@
 					<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -575,6 +639,14 @@
 			<UnitCombats>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -646,6 +718,14 @@
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -713,6 +793,14 @@
 				</UnitCombat>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -784,6 +872,14 @@
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -839,6 +935,14 @@
 			<UnitCombats>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -898,6 +1002,14 @@
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -955,6 +1067,14 @@
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -1010,6 +1130,14 @@
 			<UnitCombats>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -1082,6 +1210,14 @@
 			<UnitCombats>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -1168,6 +1304,14 @@
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -1252,6 +1396,14 @@
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -1314,6 +1466,14 @@
 					<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -1371,6 +1531,14 @@
 					<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -1426,6 +1594,14 @@
 			<UnitCombats>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -1501,6 +1677,14 @@
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -1572,6 +1756,14 @@
 				</UnitCombat>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -1647,6 +1839,14 @@
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -1718,6 +1918,14 @@
 				</UnitCombat>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -1793,6 +2001,14 @@
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -1866,6 +2082,14 @@
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -1931,6 +2155,14 @@
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -1938,7 +2170,7 @@
 			<bCtrlDown>0</bCtrlDown>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<iHotKeyPriority>0</iHotKeyPriority>
-			<Button>,Art/Interface/Buttons/Promotions/Promotions_Atlas.dds,3,4</Button>
+			<Button>,Art/Interface/Buttons/Promotions/promotion_surgeon.dds</Button>
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_SURGEON2</Type>
@@ -1996,6 +2228,14 @@
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -2003,7 +2243,7 @@
 			<bCtrlDown>0</bCtrlDown>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<iHotKeyPriority>0</iHotKeyPriority>
-			<Button>,Art/Interface/Buttons/Promotions/Promotions_Atlas.dds,4,4</Button>
+			<Button>,Art/Interface/Buttons/Promotions/promotion_surgeon2.dds</Button>
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_SURGEON3</Type>
@@ -2059,6 +2299,14 @@
 				</UnitCombat>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -2383,6 +2631,14 @@
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -2471,6 +2727,14 @@
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -2550,6 +2814,14 @@
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -2609,6 +2881,14 @@
 				</UnitCombat>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -2672,6 +2952,14 @@
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -2731,6 +3019,14 @@
 				</UnitCombat>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -2812,6 +3108,14 @@
 				</UnitCombat>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -2905,6 +3209,14 @@
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -2986,6 +3298,14 @@
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -3047,6 +3367,14 @@
 					<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -3106,6 +3434,14 @@
 				</UnitCombat>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -3174,6 +3510,14 @@
 					<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -3233,11 +3577,27 @@
 			<FeatureDoubleMoves/>
 			<UnitCombats>
 				<UnitCombat>
-					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+					<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -3299,11 +3659,27 @@
 			<FeatureDoubleMoves/>
 			<UnitCombats>
 				<UnitCombat>
-					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+					<UnitCombatType>UNITCOMBAT_MOUNTED</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_SIEGE</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -3371,6 +3747,14 @@
 					<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -3434,6 +3818,14 @@
 				</UnitCombat>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -3506,6 +3898,14 @@
 					<UnitCombatType>UNITCOMBAT_MELEE</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -3575,6 +3975,14 @@
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -3582,7 +3990,7 @@
 			<bCtrlDown>0</bCtrlDown>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<iHotKeyPriority>0</iHotKeyPriority>
-			<Button>,Art/Interface/Buttons/Promotions/Promotions_Atlas.dds,3,7</Button>
+			<Button>,Art/Interface/Buttons/Promotions/promotions_looter.dds</Button>
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_FORMATION</Type>
@@ -3643,6 +4051,14 @@
 				</UnitCombat>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -3715,6 +4131,14 @@
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -3778,6 +4202,14 @@
 				</UnitCombat>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_GUN</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>
@@ -3853,6 +4285,14 @@
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
 			</UnitCombats>
 			<HotKey/>
 			<bAltDown>0</bAltDown>
@@ -3924,6 +4364,14 @@
 				</UnitCombat>
 				<UnitCombat>
 					<UnitCombatType>UNITCOMBAT_NAVAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<bUnitCombat>1</bUnitCombat>
+				</UnitCombat>
+				<UnitCombat>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
 					<bUnitCombat>1</bUnitCombat>
 				</UnitCombat>
 			</UnitCombats>

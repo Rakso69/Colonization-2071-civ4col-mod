@@ -204,6 +204,91 @@
 		</BonusInfo>
 <!--Grand Ziggurat🔸+2💎🩻🔔+1[🩻]💡 -->
 		<BonusInfo>
+			<Type>BONUS_GRANDZIGGURAT</Type>
+			<Description>Grand Ziggurat</Description>
+			<Civilopedia>Long since seized during the Progenitor conquest and overgrown by tangles of poisonous vines, this ancient complex was once of unparallelled religious significance to the aliens of the New Worlds. An alien Empire reconquering the Grand Ziggurat can gain awesome political and technological power, while Human colonies dream of sacking it for its untold stores of wealth.</Civilopedia>
+			<ArtDefineTag>ART_DEF_BONUS_GRANDZIGGURAT</ArtDefineTag>
+			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
+			<YieldChanges>
+				<YieldIntegerPair>
+					<YieldType>YIELD_FUR</YieldType>
+					<iValue>2</iValue>
+				</YieldIntegerPair>
+				<YieldIntegerPair>
+					<YieldType>YIELD_SILVER</YieldType>
+					<iValue>2</iValue>
+				</YieldIntegerPair>
+				<YieldIntegerPair>
+					<YieldType>YIELD_COATS</YieldType>
+					<iValue>1</iValue>
+				</YieldIntegerPair>
+				<YieldIntegerPair>
+					<YieldType>YIELD_IDEAS</YieldType>
+					<iValue>1</iValue>
+				</YieldIntegerPair>
+				<YieldIntegerPair>
+					<YieldType>YIELD_BELLS</YieldType>
+					<iValue>2</iValue>
+				</YieldIntegerPair>
+			</YieldChanges>
+			<iAIObjective>0</iAIObjective>
+			<iPlacementOrder>4</iPlacementOrder>
+			<iConstAppearance>40</iConstAppearance>
+			<iMinAreaSize>10</iMinAreaSize>
+			<iMinLatitude>0</iMinLatitude>
+			<iMaxLatitude>90</iMaxLatitude>
+			<Rands>
+				<iRandApp1>25</iRandApp1>
+				<iRandApp2>25</iRandApp2>
+				<iRandApp3>0</iRandApp3>
+				<iRandApp4>0</iRandApp4>
+			</Rands>
+			<iPlayer>0</iPlayer>
+			<iTilesPer>50</iTilesPer>
+			<iMinLandPercent>0</iMinLandPercent>
+			<iUnique>20</iUnique>
+			<iGroupRange>0</iGroupRange>
+			<iGroupRand>0</iGroupRand>
+			<bArea>0</bArea>
+			<bHills>0</bHills>
+			<bFlatlands>1</bFlatlands>
+			<bNoRiverSide>0</bNoRiverSide>
+			<TerrainBooleans/>
+			<FeatureBooleans>
+				<FeatureBoolean>
+					<FeatureType>FEATURE_LIGHT_FOREST</FeatureType>
+					<bFeature>1</bFeature>
+				</FeatureBoolean>
+				<FeatureBoolean>
+					<FeatureType>FEATURE_CYCAD_FOREST</FeatureType>
+					<bFeature>1</bFeature>
+				</FeatureBoolean>
+				<FeatureBoolean>
+					<FeatureType>FEATURE_JUNGLE</FeatureType>
+					<bFeature>1</bFeature>
+				</FeatureBoolean>
+			</FeatureBooleans>
+			<FeatureTerrainBooleans>
+				<FeatureTerrainBoolean>
+					<TerrainType>TERRAIN_SNOW</TerrainType>
+					<bFeatureTerrain>1</bFeatureTerrain>
+				</FeatureTerrainBoolean>
+				<FeatureTerrainBoolean>
+					<TerrainType>TERRAIN_DESERT</TerrainType>
+					<bFeatureTerrain>1</bFeatureTerrain>
+				</FeatureTerrainBoolean>
+				<FeatureTerrainBoolean>
+					<TerrainType>TERRAIN_TUNDRA</TerrainType>
+					<bFeatureTerrain>1</bFeatureTerrain>
+				</FeatureTerrainBoolean>
+				<FeatureTerrainBoolean>
+					<TerrainType>TERRAIN_GRASS</TerrainType>
+					<bFeatureTerrain>1</bFeatureTerrain>
+				</FeatureTerrainBoolean>
+			</FeatureTerrainBooleans>
+		</BonusInfo>
+<!--Grand Ziggurat🔸+2💎🩻🔔+1[🩻]💡 -->
+		<BonusInfo>
 			<Type>BONUS_ZIGGURAT</Type>
 			<Description>Grand Ziggurat</Description>
 			<Civilopedia>Long since seized during the Progenitor conquest and overgrown by tangles of poisonous vines, this ancient complex was once of unparallelled religious significance to the aliens of the New Worlds. An alien Empire reconquering the Grand Ziggurat can gain awesome political and technological power, while Human colonies dream of sacking it for its untold stores of wealth.</Civilopedia>

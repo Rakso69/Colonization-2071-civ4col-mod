@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--	🔹Resources as listed in city screen order;
+🌾	Food
+🛢️	Hydrocarbons (Oil)
+🔲	Plasteel
+💎	Platinum
+🦠	Xenospores
+🩻	Progenitor Artifacts
+🧬	Soma
+☣️	Uranium
+🪨	Ore
+[🦠]	Biotech
+[🩻]	Progenitor Tech
+[🧬]	Narcotics
+[☣]	Fusion Cores
+🛠️	Tools
+🔫	Weapons
+⚙️	Vehicles
+🛍️	Earth Goods
+-->
+<upgrades_system>
+<!--Soldier Upgrades System professions-->
+Veteran Soldier (Soldier)🔸50🔫🔹Veteran I🔹Leadership<!--Base Veteran-->
+
+→(Soldier I Armored)🔸50🔫50🪨🔹Amphibious I🔹Guerilla Tactics I🔹Point Defense I🔹Survivalist I<!--Pads & single Hammerpad -->
+→→(Soldier II Armored)🔸50🔫50🪨50💎🔹Amphibious II🔹Guerilla Tactics II🔹Point Defense II🔹Survivalist II<!--Hammerpads & Visor -->
+→→→(Soldier III Armored)🔸50🔫50🪨50💎50[🧬]🔹Amphibious III🔹Guerilla Tactics III🔹Point Defense III🔹Survivalist III<!--WH40k Space Marine -->
+→→→→(Soldier IV Assault)🔸50🔫50🪨50💎50[🧬]100🛢️🔹+2 Movement<!--Jetpack like Intrepid Explorer -->
+
+→(Soldier I Force Field)🔸50🔫50💎100[☣️]100🩻🔹Skirmisher I🔹Skirmisher II🔹Skirmisher III🔹Medipacks🔹Stem Cell Cores🔹Nanosurgeons🔹Veteran IV🔹Veteran V<!--all withdrawal chance & all healing -->
+
+→(Soldier I Flamethrower)🔸50🔫50[🦠]🔹+100% vs. Armed Units🔺-50% vs. Vehicle Units🔺-50% vs. Artillery<!--Flamethrower -->
+→→(Soldier II SAM)🔸50🔫50[🦠]50🩻🔹+25% vs. Vehicle Units🔹+25% vs. Artillery🔹+25% Colony Attack🔺-34% vs. Armed Units<!--SAM -->
+→→→(Soldier III Railgun)🔸50🔫50[🦠]50🩻100[🩻]🔹+50% vs. Armed Units🔹+50% vs. Vehicle Units🔹+50% Colony Attack<!--T'au Railgun -->
+
+→(Soldier I NVG Optics)🔸50🔫25[🦠]25[🧬]🔹Can See Hidden Units🔹+2 Visibility Range<!--Tactical Helmet -->
+
+→(Soldier I Stealthsuit)🔸50🔫100[🦠]🔹Invisible to Most Units<!--Invisibility -->
+
+→→→→(Soldier IV Ghost)🔸Requires All Previous Upgrades🔹Nuclear Bomb ability
+<!--Total Cost: 50🔫,50🪨,100💎,175[🦠],150🩻,100[🩻],75[🧬],100[☣️]-->
+
+Mecha Pilot🔸50⚙️50🔫
+<!--MK II-->
+→Mecha Pilot MK II🔸50⚙️50🔫200🛍️
+</upgrades_system>

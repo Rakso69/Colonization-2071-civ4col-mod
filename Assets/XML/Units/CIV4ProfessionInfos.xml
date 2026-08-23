@@ -87,7 +87,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>Art/Interface/Buttons/Civilizations/alienpro.dds</Button>
+			<Button>Art/Interface/Buttons/Civilizations/alien_species.dds</Button>
 		</ProfessionInfo>
 <!--#👽⚔️Alien Soldier:Alien Soldiers (👽Alien only)-->
 		<ProfessionInfo>
@@ -126,7 +126,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>Art/Interface/Buttons/Civilizations/alienpro.dds</Button>
+			<Button>Art/Interface/Buttons/Civilizations/alien_soldierpro.dds</Button>
 			<!--<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,8,8</Button>-->
 		</ProfessionInfo>
 <!--#👽⚔️Alien Mecha:Alien Mechas (👽Alien only)-->
@@ -166,7 +166,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>Art/Interface/Buttons/Civilizations/mechpro.dds</Button>
+			<Button>Art/Interface/Buttons/Civilizations/alien_mechpro.dds</Button>
 			<!--<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,8,5</Button>-->
 		</ProfessionInfo>
 <!--#👽⚔️Alien Corsair:Alien Corsairs (👽Alien only)-->
@@ -210,7 +210,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>Art/Interface/Buttons/Civilizations/mechpro.dds</Button>
+			<Button>Art/Interface/Buttons/Civilizations/alien_mechpro.dds</Button>
 			<!--<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,7,8</Button>-->
 		</ProfessionInfo>
 <!--#Colonist:Colonists-->
@@ -407,7 +407,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,3,8</Button>
+			<Button>Art/Interface/Buttons/Civilizations/farmerpro.dds</Button>
 		</ProfessionInfo>
 <!--#🌾Offworld Hydroponicist-->
 		<ProfessionInfo>
@@ -441,7 +441,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,3,9</Button>
+			<Button>Art/Interface/Buttons/Civilizations/offworld_hydroponicistpro.dds</Button>
 		</ProfessionInfo>
 <!--#🔲Plasteel Smelter:Plasteel Smelters-->
 		<ProfessionInfo>
@@ -509,7 +509,7 @@
 			<YieldsConsumed>
 				<YieldType>YIELD_LUMBER</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,2,7</Button>
+			<Button>Art/Interface/Buttons/Civilizations/engineerpro.dds</Button>
 		</ProfessionInfo>
 <!--#💎Prospector:Prospectors-->
 		<ProfessionInfo>
@@ -543,7 +543,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,8,7</Button>
+			<Button>Art/Interface/Buttons/Civilizations/platinumpro.dds</Button>
 		</ProfessionInfo>
 <!--#🪨Ore Miner:Ore Miners-->
 		<ProfessionInfo>
@@ -577,7 +577,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,7,7</Button>
+			<Button>Art/Interface/Buttons/Civilizations/orepro.dds</Button>
 		</ProfessionInfo>
 <!--#🛠️Machinist:Machinists-->
 		<ProfessionInfo>
@@ -645,7 +645,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,4,9</Button>
+			<Button>Art/Interface/Buttons/Civilizations/xenosporespro.dds</Button>
 		</ProfessionInfo>
 <!--#🦠Biochemist:Biochemists-->
 		<ProfessionInfo>
@@ -713,7 +713,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,6,8</Button>
+			<Button>Art/Interface/Buttons/Civilizations/artifactpro.dds</Button>
 		</ProfessionInfo>
 <!--#🩻Theorist:Theorists-->
 		<ProfessionInfo>
@@ -781,7 +781,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,6,9</Button>
+			<Button>Art/Interface/Buttons/Civilizations/somapro.dds</Button>
 		</ProfessionInfo>
 <!--#🧬Drug Runner:Drug Runners-->
 		<ProfessionInfo>
@@ -849,7 +849,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,5,9</Button>
+			<Button>Art/Interface/Buttons/Civilizations/uraniumpro.dds</Button>
 		</ProfessionInfo>
 <!--#☣️Physicist:Physicists-->
 		<ProfessionInfo>
@@ -917,7 +917,7 @@
 			<YieldsConsumed>
 				<YieldType>YIELD_TOOLS</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,1,7</Button>
+			<Button>Art/Interface/Buttons/Civilizations/arms_dealerpro.dds</Button>
 		</ProfessionInfo>
 <!--#⚙️Mechanicus:Mechanicus-->
 		<ProfessionInfo>
@@ -951,7 +951,7 @@
 			<YieldsConsumed>
 				<YieldType>YIELD_TOOLS</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,1,9</Button>
+			<Button>Art/Interface/Buttons/Civilizations/mechanicuspro.dds</Button>
 		</ProfessionInfo>
 <!--#🏗️Laborer:Laborers-->
 		<ProfessionInfo>
@@ -1097,7 +1097,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,6,6</Button>
+			<Button>Art/Interface/Buttons/Civilizations/anthropologistpro.dds</Button>
 		</ProfessionInfo>
 <!--#Student-->
 		<ProfessionInfo>
@@ -1270,14 +1270,14 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>Art/Interface/Buttons/Civilizations/CoalMinerPro.dds</Button>
+			<Button>Art/Buttons/Professions/CoalMinerPro.dds</Button>
 		</ProfessionInfo>
 <!--#🛢️Furnace Worker-->
 		<ProfessionInfo>
 			<Type>PROFESSION_COAL_BURNER</Type>
-			<Description>TXT_KEY_PROFESSION_COAL_BURNER</Description>
-			<Civilopedia>TXT_KEY_CORPORATION_5_PEDIA</Civilopedia>
-			<Strategy>TXT_KEY_PROFESSION_COAL_BURNER_STRATEGY</Strategy>
+			<Description>Furnace Worker</Description>
+			<Civilopedia>[TAB]For much of human history, victory has gone to those with access to the finest metals. From the Bronze Age onwards, metal tools, weapons and alloys have been an inherent part of the rise of civilization, spurring conquests and construction by the world's greatest empires. And while metal mining has had an impressive history, it was not until the nineteenth century that industrial mining truly began to take root.[PARAGRAPH:1]Two reasons explain this sudden intensification in mining operations. The first was the almost daily revolutions in the production of tools and consumer items, requiring a continual source of metal to produce them. The second was that the fuel that powered the Industrial Revolution was coal, nestled deep within the earth. In modern times, enormous excavators like the Bagger 288 have it possible to mine a pit three-hundred feet long and one-hundred feet deep in a day, a feat that, in the past, would have required the mobilization of nations.</Civilopedia>
+			<Strategy>[TAB]You can assign any Colonist to work as a Furnace Worker in a Power Plant or Oil Refinery to generate bonuses to industrial production in your colony through the consumption of Fossil Fuels. Hardy Laborers are even more effective in this role.</Strategy>
 			<Help/>
 			<bNativesInvalid>1</bNativesInvalid>
 			<bEuropeInvalid>1</bEuropeInvalid>
@@ -1306,7 +1306,7 @@
 			<YieldsConsumed>
 				<YieldType>YIELD_COAL</YieldType>
 			</YieldsConsumed>
-			<Button>Art/Interface/Buttons/Civilizations/coalworkerpro.dds</Button>
+			<Button>Art/Buttons/Professions/CoalWorker.dds</Button>
 		</ProfessionInfo>
 <!--#🔲Offworld Scavenger-->
 		<ProfessionInfo>
@@ -1374,7 +1374,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,2,8</Button>
+			<Button>Art/Interface/Buttons/Civilizations/hammerspro.dds</Button>
 		</ProfessionInfo>
 <!--#💎Offworld Banker-->
 		<ProfessionInfo>
@@ -1408,7 +1408,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,8,7</Button>
+			<Button>Art/Interface/Buttons/Civilizations/offworld_bankerpro.dds</Button>
 		</ProfessionInfo>
 <!--#🪨Offworld Ore Miner-->
 		<ProfessionInfo>
@@ -1442,7 +1442,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,7,7</Button>
+			<Button>Art/Interface/Buttons/Civilizations/orepro.dds</Button>
 		</ProfessionInfo>
 <!--#🛠️Nanotechnologist-->
 		<ProfessionInfo>
@@ -1510,7 +1510,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,4,9</Button>
+			<Button>Art/Interface/Buttons/Civilizations/xenosporespro.dds</Button>
 		</ProfessionInfo>
 <!--#🦠Xenogeneticist-->
 		<ProfessionInfo>
@@ -1578,7 +1578,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,6,8</Button>
+			<Button>Art/Interface/Buttons/Civilizations/artifactpro.dds</Button>
 		</ProfessionInfo>
 <!--#🩻Theoretician-->
 		<ProfessionInfo>
@@ -1646,7 +1646,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,6,9</Button>
+			<Button>Art/Interface/Buttons/Civilizations/somapro.dds</Button>
 		</ProfessionInfo>
 <!--#🧬Neuroscientist-->
 		<ProfessionInfo>
@@ -1714,7 +1714,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,5,9</Button>
+			<Button>Art/Interface/Buttons/Civilizations/uraniumpro.dds</Button>
 		</ProfessionInfo>
 <!--#☣️Quantum Physicist-->
 		<ProfessionInfo>
@@ -1782,7 +1782,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,2,8</Button>
+			<Button>Art/Interface/Buttons/Civilizations/artificerpro.dds</Button>
 		</ProfessionInfo>
 <!--#🛍️Offworld Trader-->
 		<ProfessionInfo>
@@ -1816,13 +1816,13 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,3,7</Button>
+			<Button>Art/Interface/Buttons/Civilizations/offworld_traderpro.dds</Button>
 		</ProfessionInfo>
 <!--#🏗️Mechanized Laborer-->
 		<ProfessionInfo>
 			<Type>PROFESSION_MECHANIZED_LABORER</Type>
 			<Description>Mechanized Laborer</Description>
-			<Civilopedia>By taking advantage of heavy construction equipment and advanced machine tools, provding Laborers with both Tools and Vehicles can significantly speed up the development of a sophisticated planetary infrastructure.</Civilopedia>
+			<Civilopedia>By taking advantage of heavy construction equipment and advanced machine tools, providing Laborers with both Tools and Vehicles can significantly speed up the development of a sophisticated planetary infrastructure.</Civilopedia>
 			<Strategy>A Laborer equipped with both Tools and Vehicles can construct tile improvements and clear map features at twice the usual rate.</Strategy>
 			<Help/>
 			<Combat>UNITCOMBAT_MELEE</Combat>
@@ -1837,12 +1837,16 @@
 			<bUnarmed>1</bUnarmed>
 			<bNoDefensiveBonus>0</bNoDefensiveBonus>
 			<iCombatChange>4</iCombatChange>
-			<iMovesChange>1</iMovesChange>
+			<iMovesChange>2</iMovesChange>
 			<iWorkRate>200</iWorkRate>
 			<iMissionaryRate>0</iMissionaryRate>
 			<iPower>0</iPower>
 			<iAsset>25</iAsset>
 			<YieldEquipedNums>
+			<YieldEquipedNum>
+				<YieldType>YIELD_TOOLS</YieldType>
+				<iYieldAmount>50</iYieldAmount>
+			</YieldEquipedNum>
 			<YieldEquipedNum>
 				<YieldType>YIELD_HORSES</YieldType>
 				<iYieldAmount>50</iYieldAmount>
@@ -1855,7 +1859,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,6,7</Button>
+			<Button>Art/Interface/Buttons/Civilizations/mechanized_laborerpro.dds</Button>
 		</ProfessionInfo>
 <!--#👽🔔Ritualist (👽Alien only)-->
 		<ProfessionInfo>
@@ -1923,7 +1927,7 @@
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,2,8</Button>
+			<Button>Art/Interface/Buttons/Civilizations/alienpro.dds</Button>
 		</ProfessionInfo>
 <!--#👽✝Abductor (👽Alien only)-->
 		<ProfessionInfo>
@@ -1993,7 +1997,7 @@
 			</YieldsConsumed>
 			<Button>Art/Interface/Buttons/Civilizations/InventorPro.dds</Button>
 		</ProfessionInfo>
-<!--#✝Field Journalist-->
+<!--#✝️Field Journalist-->
 		<ProfessionInfo>
 			<Type>PROFESSION_JOURNALIST</Type>
 			<Description>Field Journalist</Description>

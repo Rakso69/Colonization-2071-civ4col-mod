@@ -265,7 +265,7 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Structures/Improvements/excavation/meteor_lg.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/buttons/buildings/construction_facility.dds</Button>
+			<Button>Art/Interface/buttons/builds/build_excavation.dds</Button>
 		</ImprovementArtInfo>
 <!--Expedition -->
 		<ImprovementArtInfo>
@@ -315,7 +315,7 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Structures/Improvements/aquaculture/whalingboat_modern.nif</NIF>
 			<KFM>Art/Structures/Improvements/aquaculture/whalingboat_modern.kfm</KFM>
-			<Button>Art/Interface/buttons/builds/buildwell.dds</Button>
+			<Button>Art/Interface/buttons/builds/build_aquaculture.dds</Button>
 		</ImprovementArtInfo>
 <!--Plasteel Mill -->
 		<ImprovementArtInfo>
@@ -323,8 +323,8 @@
 			<bExtraAnimations>1</bExtraAnimations>
 			<fScale>0.8</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Structures/Improvements/plasteel_mill/sawmill.nif</NIF>
-			<KFM>Art/Structures/Improvements/plasteel_mill/workshop.kfm</KFM>
+			<NIF>Art/structures/improvements/plasteel_mill/sawmill.nif</NIF>
+			<KFM/>
 			<Button>Art/Interface/buttons/builds/build_lodge.dds</Button>
 		</ImprovementArtInfo>
 <!--Janus Device Stage I -->

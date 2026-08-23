@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
 <!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Ed Piper (Firaxis Games) -->
 <Civ4CivicInfos xmlns="x-schema:CIV4GameInfoSchema.xml">
-<!-- Sid Meier's Civilization 4 -->
-<!-- Copyright Firaxis Games 2005 -->
-<!--💡	TECH TREE LINE 488;-->
-<!-- Civic Infos -->
+	<!-- Sid Meier's Civilization 4 -->
+	<!-- Copyright Firaxis Games 2005 -->
+	<!-- -->
+	<!-- Civic Infos -->
 	<CivicInfos>
-<!--Constitution: All Men Are Free-->
 		<CivicInfo>
 			<CivicOptionType>CIVICOPTION_SLAVERY</CivicOptionType>
 			<Type>CIVIC_FREEDOM</Type>
@@ -41,7 +40,6 @@
 			<ProfessionCombatChanges/>
 			<ImmigrationConversion>NONE</ImmigrationConversion>
 		</CivicInfo>
-<!--Constitution: Slavery-->
 		<CivicInfo>
 			<CivicOptionType>CIVICOPTION_SLAVERY</CivicOptionType>
 			<Type>CIVIC_SLAVERY</Type>
@@ -108,7 +106,6 @@
 			<ProfessionCombatChanges/>
 			<ImmigrationConversion>NONE</ImmigrationConversion>
 		</CivicInfo>
-<!--Constitution: Authoritarianism-->
 		<CivicInfo>
 			<CivicOptionType>CIVICOPTION_ELECTION</CivicOptionType>
 			<Type>CIVIC_MONARCHY</Type>
@@ -138,7 +135,6 @@
 			<ProfessionCombatChanges/>
 			<ImmigrationConversion>NONE</ImmigrationConversion>
 		</CivicInfo>
-<!--Constitution: Democracy-->
 		<CivicInfo>
 			<CivicOptionType>CIVICOPTION_ELECTION</CivicOptionType>
 			<Type>CIVIC_ELECTIONS</Type>
@@ -168,7 +164,6 @@
 			<ProfessionCombatChanges/>
 			<ImmigrationConversion>NONE</ImmigrationConversion>
 		</CivicInfo>
-<!--Constitution: Human Supremacy-->
 		<CivicInfo>
 			<CivicOptionType>CIVICOPTION_NATIVES</CivicOptionType>
 			<Type>CIVIC_MANIFEST_DESTINY</Type>
@@ -198,7 +193,6 @@
 			<ProfessionCombatChanges/>
 			<ImmigrationConversion>NONE</ImmigrationConversion>
 		</CivicInfo>
-<!--Constitution: Alien Rights-->
 		<CivicInfo>
 			<CivicOptionType>CIVICOPTION_NATIVES</CivicOptionType>
 			<Type>CIVIC_NATIVE_RIGHTS</Type>
@@ -228,7 +222,6 @@
 			<ProfessionCombatChanges/>
 			<ImmigrationConversion>NONE</ImmigrationConversion>
 		</CivicInfo>
-<!--Constitution: Alien Supremacy-->
 		<CivicInfo>
 			<CivicOptionType>CIVICOPTION_NATIVES</CivicOptionType>
 			<Type>CIVIC_ALIEN_SUPREMACY</Type>
@@ -355,7 +348,6 @@
 			<ProfessionCombatChanges/>
 			<ImmigrationConversion>NONE</ImmigrationConversion>
 		</CivicInfo>
-<!--Consitution: Free Press-->
 		<CivicInfo>
 			<CivicOptionType>CIVICOPTION_RELIGION</CivicOptionType>
 			<Type>CIVIC_SEPARATION_CHURCH_STATE</Type>
@@ -385,7 +377,6 @@
 			<ProfessionCombatChanges/>
 			<ImmigrationConversion>YIELD_BELLS</ImmigrationConversion>
 		</CivicInfo>
-<!--Constitution: State Controlled Media-->
 		<CivicInfo>
 			<CivicOptionType>CIVICOPTION_RELIGION</CivicOptionType>
 			<Type>CIVIC_THEOCRACY</Type>
@@ -415,7 +406,6 @@
 			<ProfessionCombatChanges/>
 			<ImmigrationConversion>YIELD_HAMMERS</ImmigrationConversion>
 		</CivicInfo>
-<!--Constitution: Right to Bear Arms-->
 		<CivicInfo>
 			<CivicOptionType>CIVICOPTION_SECURITY</CivicOptionType>
 			<Type>CIVIC_BEAR_ARMS</Type>
@@ -450,7 +440,6 @@
 			</ProfessionCombatChanges>
 			<ImmigrationConversion>NONE</ImmigrationConversion>
 		</CivicInfo>
-<!--Constitution: Arms Control-->
 		<CivicInfo>
 			<CivicOptionType>CIVICOPTION_SECURITY</CivicOptionType>
 			<Type>CIVIC_CONTROLLED_ARMS</Type>
@@ -485,78 +474,7 @@
 			<ProfessionCombatChanges/>
 			<ImmigrationConversion>NONE</ImmigrationConversion>
 		</CivicInfo>
-<!--488;
-Colonization 2071💡TECH TREE:
 
-Hydrocarbon Geology
-→Organic Chemistry
-→→Chemical Engineering
-
-Radiation Geology
-→Nuclear Physics
-→→Nuclear Engineering
-→→→Cold Fusion
-
-Interstellar Ecology
-→Soil Enrichment
-→→Advanced Hydroponics
-→→→Nanomedicine
-
-Xenomycology
-→Alien Biochemistry
-→→Molecular Exobiology
-→→→Industrial Biotech
-
-Xenolinguistics
-→Alien Autopsy
-→→Alien Psychology
-
-Alien Neurotransmitters
-→Psychopharmacology
-→→Neurochemistry
-→→→Neuromodulation
-
-Planetology
-→Xenoarchaeology
-→Metadimensional Theory→→Progenitor Symbology→→→Dark Matter Physics
-→→Containment Fields
-→→→Unified Field Theory
-
-Metallurgy
-→Plasteel Polymers
-→→Duralloy Polymers
-→→→Polymorphic Alloys
-
-Mechanical Engineering
-→Structural Engineering
-→→Heavy Industry
-→→→Nanofabrication
-
-Organized Militia
-→Arms Trading
-→→Munitions Industry
-→→→Military-Industrial Complex
-
-Orbital Operations
-→Orbital Industry
-→→Advanced Hull Design
-→→→Nanomolecular Architecture
-
-Venture Capital
-→Interstellar Trade
-→→Corporative Investment
-→→→Offworld Banking
-
-Civil Rights
-→Literacy
-→→Higher Education
-→→→Enlightenment
-
-Mass Media
-→Cognitive Science
-→→Memetics
-→→→Neurosyntactic Priming
--->
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_NAT</Type>
@@ -609,6 +527,7 @@ Mass Media
       <iGoldBonusForFirstToResearch>0</iGoldBonusForFirstToResearch>
       <iGoldBonus>0</iGoldBonus>
     </CivicInfo>
+
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PHY</Type>
@@ -661,6 +580,7 @@ Mass Media
       <iGoldBonusForFirstToResearch>0</iGoldBonusForFirstToResearch>
       <iGoldBonus>0</iGoldBonus>
     </CivicInfo>
+    
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PHYA1</Type>
@@ -771,7 +691,7 @@ Mass Media
           <iYieldCost>60</iYieldCost>
         </RequiredYield>
       </RequiredYields>
-      <iCostToResearch>45</iCostToResearch>
+      <iCostToResearch>60</iCostToResearch>
       <AllowsYields/>
       <AllowsBuildingTypes>
         <AllowsBuildingType>
@@ -875,6 +795,7 @@ Mass Media
       </AllowsBuildingTypes>
       <AllowsUnitClasses/>
     </CivicInfo>
+    
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PHY1</Type>
@@ -1132,6 +1053,7 @@ Mass Media
       </AllowsBuildingTypes>
       <AllowsUnitClasses/>
     </CivicInfo>
+
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_LIF</Type>
@@ -1184,6 +1106,7 @@ Mass Media
       <iGoldBonusForFirstToResearch>0</iGoldBonusForFirstToResearch>
       <iGoldBonus>0</iGoldBonus>
     </CivicInfo>
+
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_LIFA0</Type>
@@ -1491,6 +1414,7 @@ Mass Media
       </AllowsPromotions>
       <iCheaperPopulationGrowth>20</iCheaperPopulationGrowth>
     </CivicInfo>
+    
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_LIF1</Type>
@@ -1754,6 +1678,7 @@ Mass Media
       </AllowsBuildingTypes>
       <AllowsUnitClasses/>
     </CivicInfo>
+    
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_NEU</Type>
@@ -1806,6 +1731,8 @@ Mass Media
       <iGoldBonusForFirstToResearch>0</iGoldBonusForFirstToResearch>
       <iGoldBonus>0</iGoldBonus>
     </CivicInfo>
+    
+
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_NEUA1</Type>
@@ -1992,6 +1919,7 @@ Mass Media
         </AllowsBonus>
       </AllowsBonuses>
     </CivicInfo>
+    
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_NEU1</Type>
@@ -2051,6 +1979,7 @@ Mass Media
           <iChange>1</iChange>
         </AllowsBonus>
       </AllowsBonuses>
+
     </CivicInfo>  
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
@@ -2244,6 +2173,7 @@ Mass Media
         </AllowsProfession>
       </AllowsProfessions>
     </CivicInfo>
+
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PRO</Type>
@@ -2296,6 +2226,7 @@ Mass Media
       <iGoldBonusForFirstToResearch>0</iGoldBonusForFirstToResearch>
       <iGoldBonus>0</iGoldBonus>
     </CivicInfo>
+
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PROA1</Type>
@@ -2538,11 +2469,8 @@ Mass Media
       <AllowsYields/>
       <AllowsBuildingTypes/>
       <AllowsUnitClasses>
-        <AllowsUnitClass>
-		  <AllowsUnit>UNITCLASS_SCIENCEVESSEL</AllowsUnit>
-          <iChange>1</iChange>
-        </AllowsUnitClass>
-	  </AllowsUnitClasses>
+      	  <UnitClass>UNITCLASS_SCIENCEVESSEL</UnitClass>
+      </AllowsUnitClasses>
       <AllowsPromotions>
         <AllowsPromotion>
           <PromotionType>PROMOTION_ANTIPROG</PromotionType>
@@ -2560,6 +2488,8 @@ Mass Media
          </AllowsProfession>
       </AllowsProfessions>
     </CivicInfo>
+
+
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PRO1</Type>
@@ -2859,6 +2789,7 @@ Mass Media
         </AllowsProfession>
       </AllowsProfessions>
     </CivicInfo>
+
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_MAT</Type>
@@ -3224,6 +3155,8 @@ Mass Media
         </AllowsUnitClass>
       </AllowsUnitClasses>
     </CivicInfo>
+
+
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_ENG</Type>
@@ -3547,6 +3480,7 @@ Mass Media
       <AllowsUnitClasses/>
       <AllowsProfessions/>
     </CivicInfo>
+
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_MIL</Type>
@@ -3732,7 +3666,6 @@ Mass Media
           <iChange>1</iChange>
         </AllowsProfession>
       </AllowsProfessions>
-      <AllowsBonuses/>
       <iCheaperPopulationGrowth>0</iCheaperPopulationGrowth>
       <iCenterPlotFoodBonus>0</iCenterPlotFoodBonus>
     </CivicInfo>
@@ -3864,7 +3797,7 @@ Mass Media
           <iYieldCost>100</iYieldCost>
         </RequiredYield>
       </RequiredYields>
-      <iCostToResearch>75</iCostToResearch>
+      <iCostToResearch>100</iCostToResearch>
       <AllowsYields/>
       <AllowsBuildingTypes>
         <AllowsBuildingType>
@@ -3883,7 +3816,14 @@ Mass Media
           <iChange>1</iChange>
         </AllowsPromotion>
       </AllowsPromotions>
+      <AllowsBuildTypes>
+        <AllowsBuildType>
+          <BuildType>IMPROVEMENT_DEVICE1</BuildType>
+          <iChange>1</iChange>
+        </AllowsBuildType>
+      </AllowsBuildTypes>
     </CivicInfo>
+
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_SPA</Type>
@@ -4285,6 +4225,7 @@ Mass Media
       <AllowsUnitClasses/>
       <AllowsTrait>TRAIT_JUAN_DE_BERMUDEZ</AllowsTrait>
     </CivicInfo>
+
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_ECO</Type>
@@ -4618,6 +4559,7 @@ Mass Media
         </AllowsProfession>
       </AllowsProfessions>
     </CivicInfo>
+
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_SOC</Type>
@@ -4956,6 +4898,8 @@ Mass Media
       </AllowsBuildingTypes>
       <AllowsUnitClasses/>
     </CivicInfo>
+
+
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PSY</Type>
@@ -5299,5 +5243,6 @@ Mass Media
         </AllowsProfession>
       </AllowsProfessions>
     </CivicInfo>
+
 	</CivicInfos>
 </Civ4CivicInfos>

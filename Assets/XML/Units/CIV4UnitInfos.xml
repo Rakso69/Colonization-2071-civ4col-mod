@@ -17,6 +17,7 @@
 👽	Alien only
 🤖	Earth Empire only
 👾	Progenitor Empire only
+🪼	Outer Gods only
 	🔹Special resource;
 💡	Ideas/Research
 🔨	Hammers
@@ -43,6 +44,7 @@
 📦	Cargo Space
 🗺️	Explorer
 ⭐	Unique Unit/Building
+🐺	Feral Unit
 👑	Boss Unit
 🛸	Space Unit
 💥	Can Bombard Colony Defenses
@@ -57,14 +59,14 @@
 <!-- Unit Infos -->
 <Civ4UnitInfos xmlns="x-schema:CIV4UnitSchema.xml">
 	<UnitInfos>
-<!--# Mound Beast-->
+<!--#🐺Mound Beast-->
 		<UnitInfo>
 			<Type>UNIT_MOUND</Type>
 			<Class>UNITCLASS_KILLBOT</Class>
 			<UniqueNames/>
 			<Special>NONE</Special>
 			<Capture>NONE</Capture>
-			<Combat>NONE</Combat>
+			<Combat>UNITCOMBAT_FERAL</Combat>
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
@@ -176,14 +178,14 @@
 			<LeaderPromotion>NONE</LeaderPromotion>
 			<iLeaderExperience>0</iLeaderExperience>
 		</UnitInfo>
-<!--# Giant Spider-->
+<!--#🐺Giant Spider-->
 		<UnitInfo>
 			<Type>UNIT_SPIDER</Type>
 			<Class>UNITCLASS_KILLBOT</Class>
 			<UniqueNames/>
 			<Special>NONE</Special>
 			<Capture>NONE</Capture>
-			<Combat>NONE</Combat>
+			<Combat>UNITCOMBAT_FERAL</Combat>
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
@@ -299,14 +301,14 @@
 			<LeaderPromotion>NONE</LeaderPromotion>
 			<iLeaderExperience>0</iLeaderExperience>
 		</UnitInfo>
-<!--# Progenitor AI-->
+<!--#🐺Progenitor AI-->
 		<UnitInfo>
 			<Type>UNIT_PROGENITORAI</Type>
 			<Class>UNITCLASS_KILLBOT</Class>
 			<UniqueNames/>
 			<Special>NONE</Special>
 			<Capture>NONE</Capture>
-			<Combat>NONE</Combat>
+			<Combat>UNITCOMBAT_FERAL</Combat>
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
@@ -418,21 +420,38 @@
 			<LeaderPromotion>NONE</LeaderPromotion>
 			<iLeaderExperience>0</iLeaderExperience>
 		</UnitInfo>
-<!--#👑Abomination (👑BOSS Unit)-->
+<!--#👑🪼Greater Warp Demon (👑BOSS Unit)-->
 		<UnitInfo>
 			<Type>UNIT_ABOMINATION</Type>
 			<Class>UNITCLASS_KILLBOT</Class>
-			<UniqueNames/>
+			<UniqueNames>
+				<UniqueName>An'ggrath the Unbound</UniqueName>
+				<UniqueName>Skarbraand Ragefeaster</UniqueName>
+				<UniqueName>Ka'Bandha</UniqueName>
+				<UniqueName>Khak'akaoz'khyshk'akami, The Sunderer</UniqueName>
+				<UniqueName>Ka'jagga'nath, The Lord of the Bloodtide</UniqueName>
+				<UniqueName>Arbra'Gax</UniqueName>
+				<UniqueName>Insensatus</UniqueName>
+				<UniqueName>Hellgrim</UniqueName>
+				<UniqueName>Baalthor</UniqueName>
+				<UniqueName>Hagra'xa Gorefeaster</UniqueName>
+				<UniqueName>Krag'ulak Doomfoe</UniqueName>
+				<UniqueName>Cruor'Vagh</UniqueName>
+				<UniqueName>Ghor'gath</UniqueName>
+				<UniqueName>Gh'orr</UniqueName>
+				<UniqueName>Khorax Doomhand</UniqueName>
+				<UniqueName>Anarkh'ad'nron</UniqueName>
+			</UniqueNames>
 			<Special>NONE</Special>
 			<Capture>NONE</Capture>
-			<Combat>NONE</Combat>
+			<Combat>UNITCOMBAT_BOSS</Combat>
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Abomination</Description>
-			<Civilopedia>This hideous being can only be the result of a truly unspeakable anomaly.</Civilopedia>
+			<Description>Greater Warp Demon</Description>
+			<Civilopedia>This hideous being can only be the result of a truly unspeakable anomaly occuring in extraterrestrial space.</Civilopedia>
 			<Strategy>The horror! What have we unearthed?</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
@@ -479,7 +498,7 @@
 			<iImmigrationWeight>0</iImmigrationWeight>
 			<iImmigrationWeightDecay>0</iImmigrationWeightDecay>
 			<iMinAreaSize>-1</iMinAreaSize>
-			<iMoves>1</iMoves>
+			<iMoves>4</iMoves>
 			<bCapturesCargo>0</bCapturesCargo>
 			<iWorkRate>0</iWorkRate>
 			<iWorkRateModifier>0</iWorkRateModifier>
@@ -487,11 +506,11 @@
 			<TerrainImpassables/>
 			<FeatureImpassables/>
 			<EvasionBuildings/>
-			<iCombat>6</iCombat>
-			<iXPValueAttack>6</iXPValueAttack>
-			<iXPValueDefense>4</iXPValueDefense>
-			<iWithdrawalProb>0</iWithdrawalProb>
-			<iCityAttack>25</iCityAttack>
+			<iCombat>8</iCombat>
+			<iXPValueAttack>18</iXPValueAttack>
+			<iXPValueDefense>8</iXPValueDefense>
+			<iWithdrawalProb>15</iWithdrawalProb>
+			<iCityAttack>88</iCityAttack>
 			<iCityDefense>0</iCityDefense>
 			<iHillsAttack>0</iHillsAttack>
 			<iHillsDefense>0</iHillsDefense>
@@ -514,7 +533,7 @@
 			<iCargo>0</iCargo>
 			<iRequiredTransportSize>1</iRequiredTransportSize>
 			<iAsset>160</iAsset>
-			<iPower>8</iPower>
+			<iPower>800</iPower>
 			<iNativeLearnTime>0</iNativeLearnTime>
 			<iStudentWeight>0</iStudentWeight>
 			<iTeacherWeight>0</iTeacherWeight>
@@ -527,7 +546,7 @@
 					<iRangedWaveSize>0</iRangedWaveSize>
 					<UnitMeshGroup>
 						<iRequired>1</iRequired>
-						<ArtDefineTag>ART_DEF_UNIT_HYBOREM</ArtDefineTag>
+						<ArtDefineTag>ART_DEF_UNIT_KHORNE</ArtDefineTag>
 					</UnitMeshGroup>
 				</UnitMeshGroups>
 			</ProfessionMeshGroups>
@@ -537,18 +556,35 @@
 			<bShiftDown>0</bShiftDown>
 			<bCtrlDown>0</bCtrlDown>
 			<iHotKeyPriority>0</iHotKeyPriority>
-			<FreePromotions/>
+			<FreePromotions>
+				<FreePromotion>
+					<PromotionType>PROMOTION_SURGEON1</PromotionType>
+					<bFreePromotion>1</bFreePromotion>
+				</FreePromotion>
+				<FreePromotion>
+					<PromotionType>PROMOTION_SURGEON2</PromotionType>
+					<bFreePromotion>1</bFreePromotion>
+				</FreePromotion>
+				<FreePromotion>
+					<PromotionType>PROMOTION_SURGEON3</PromotionType>
+					<bFreePromotion>1</bFreePromotion>
+				</FreePromotion>
+				<FreePromotion>
+					<PromotionType>PROMOTION_LEADERSHIP</PromotionType>
+					<bFreePromotion>1</bFreePromotion>
+				</FreePromotion>
+			</FreePromotions>
 			<LeaderPromotion>NONE</LeaderPromotion>
 			<iLeaderExperience>0</iLeaderExperience>
 		</UnitInfo>
-<!--# Progenitor Killbots-->
+<!--#🐺Progenitor Killbots-->
 		<UnitInfo>
 			<Type>UNIT_KILLBOT</Type>
 			<Class>UNITCLASS_KILLBOT</Class>
 			<UniqueNames/>
 			<Special>NONE</Special>
 			<Capture>NONE</Capture>
-			<Combat>NONE</Combat>
+			<Combat>UNITCOMBAT_FERAL</Combat>
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
@@ -727,8 +763,8 @@
 			<iAIWeight>0</iAIWeight>
 			<YieldCosts/>
 			<iHurryCostModifier>0</iHurryCostModifier>
-			<iAdvancedStartCost>-1</iAdvancedStartCost>
-			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
+			<iAdvancedStartCost>200</iAdvancedStartCost>
+			<iAdvancedStartCostIncrease>100</iAdvancedStartCostIncrease>
 			<iEuropeCost>-1</iEuropeCost>
 			<iEuropeCostIncrease>0</iEuropeCostIncrease>
 			<iImmigrationWeight>0</iImmigrationWeight>
@@ -937,6 +973,7 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_COLONIST</Description>
@@ -1161,7 +1198,7 @@
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_BRAVE</DefaultProfession>
 			<Invisible>INVISIBLE_LAND</Invisible>
-			<SeeInvisible>NONE</SeeInvisible>
+			<SeeInvisible>INVISIBLE_LAND</SeeInvisible>
 			<Description>Human Hybrid</Description>
 			<Civilopedia>The product of gene splicing experiments by alien scientists, Human Hybrids could range from the beautiful to the grotesque. When successful, the hybridization of DNA gave rise to offspring who were quick to learn a variety of tasks, and prodigiously talented in shaping the natural resources of the New Worlds into the high technology of Earth. Many could use their adaptable genetic makeup to pass unnoticed into human territory.</Civilopedia>
 			<Strategy>Human Hybrids are quick to learn, and apt in the technical wisdom of the Earthlings.</Strategy>
@@ -1453,6 +1490,7 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>Proletarian</Description>
@@ -2265,7 +2303,7 @@
 			<bOnlyDefensive>0</bOnlyDefensive>
 			<bNoCapture>0</bNoCapture>
 			<bQuickCombat>0</bQuickCombat>
-			<bRivalTerritory>0</bRivalTerritory>
+			<bRivalTerritory>1</bRivalTerritory>
 			<bMilitaryProduction>0</bMilitaryProduction>
 			<bFound>1</bFound>
 			<bInvisible>0</bInvisible>
@@ -2513,6 +2551,7 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_CONVERTED_NATIVE</Description>
@@ -3501,9 +3540,9 @@
       <bEuropeInvalid>1</bEuropeInvalid>
       <Invisible>NONE</Invisible>
       <SeeInvisible>NONE</SeeInvisible>
-      <Description>TXT_KEY_UNIT_COAL_MINER</Description>
-      <Civilopedia>TXT_KEY_UNIT_COAL_MINER_PEDIA</Civilopedia>
-      <Strategy>TXT_KEY_UNIT_COAL_MINER_STRATEGY</Strategy>
+      <Description>Expert Oilman</Description>
+      <Civilopedia>Just before the turn of the 17th century a shortage of lumber and firewood encouraged the expansion of coal mining. Coal began to be mined in the Americas in the early 1700s, and commercial mining occurred around 1730 in Midlothian, Virginia. Coal-cutting machines were invented in the 1880s. Before the invention, coal was mined from underground with a pick and shovel. By 1912 surface mining was conducted with steam shovels designed for coal mining.</Civilopedia>
+      <Strategy>[COLOR_UNIT_TEXT]Expert Oilmen[COLOR_REVERT] are able to draw a wealth of Fossil Fuels from any tile able to produce them. An Expert Oilman will double [COLOR_HIGHLIGHT_TEXT]Fossil Fuels[COLOR_REVERT] production in the tile where he works.</Strategy>
       <bGraphicalOnly>0</bGraphicalOnly>
       <bNoBadGoodies>0</bNoBadGoodies>
       <bOnlyDefensive>0</bOnlyDefensive>
@@ -3544,14 +3583,14 @@
           <BuildType>BUILD_MINE</BuildType>
           <bBuild>1</bBuild>
         </Build>
-				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
-					<bBuild>1</bBuild>
-				</Build>
-				<Build>
-					<BuildType>BUILD_OILWELL</BuildType>
-					<bBuild>1</bBuild>
-				</Build>
+		<Build>
+		  <BuildType>BUILD_RANCH</BuildType>
+		  <bBuild>1</bBuild>
+		</Build>
+		<Build>
+		  <BuildType>BUILD_OILWELL</BuildType>
+		  <bBuild>1</bBuild>
+		</Build>
         <Build>
           <BuildType>BUILD_LUMBERMILL</BuildType>
           <bBuild>1</bBuild>
@@ -4205,6 +4244,7 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_CARPENTER</Description>
@@ -5577,6 +5617,7 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_TRAPPER</Description>
@@ -7651,7 +7692,7 @@
 			<UniqueNames/>
 			<Special>NONE</Special>
 			<Capture>NONE</Capture>
-			<Combat>NONE</Combat>
+			<Combat>UNITCOMBAT_MELEE</Combat>
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_WORKER</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_PIONEER</DefaultProfession>
@@ -7927,6 +7968,17 @@
 						<ArtDefineTag>ART_DEF_UNIT_CULTIVATOR</ArtDefineTag>
 					</UnitMeshGroup>
 				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_MECHANIZED_LABORER</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_MECHANIZED_LABORER</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
 			</ProfessionMeshGroups>
 			<FormationType>FORMATION_TYPE_DEFAULT</FormationType>
 			<HotKey/>
@@ -7949,6 +8001,7 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_SETTLER</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_PIONEER</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_PIONEER</Description>
@@ -8145,6 +8198,17 @@
 					</UnitMeshGroup>
 				</UnitMeshGroups>
 				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_MISSIONARY</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_MISSIONARY</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
 					<ProfessionType>PROFESSION_PIONEER</ProfessionType>
 					<fMaxSpeed>1.75</fMaxSpeed>
 					<fPadTime>1</fPadTime>
@@ -8156,14 +8220,14 @@
 					</UnitMeshGroup>
 				</UnitMeshGroups>
 				<UnitMeshGroups>
-					<ProfessionType>PROFESSION_MISSIONARY</ProfessionType>
+					<ProfessionType>PROFESSION_MECHANIZED_LABORER</ProfessionType>
 					<fMaxSpeed>1.75</fMaxSpeed>
 					<fPadTime>1</fPadTime>
 					<iMeleeWaveSize>4</iMeleeWaveSize>
 					<iRangedWaveSize>0</iRangedWaveSize>
 					<UnitMeshGroup>
 						<iRequired>1</iRequired>
-						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_MISSIONARY</ArtDefineTag>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_MECHANIZED_LABORER</ArtDefineTag>
 					</UnitMeshGroup>
 				</UnitMeshGroups>
 			</ProfessionMeshGroups>
@@ -8191,6 +8255,7 @@
 				<UniqueName>Agent Smith</UniqueName>
 				<UniqueName>Silica Animus the Abominable Intelligence</UniqueName>
 				<UniqueName>J.A.R.V.I.S.</UniqueName>
+				<UniqueName>X.A.N.A.</UniqueName>
 				<UniqueName>ChatGPT</UniqueName>
 				<UniqueName>Claude</UniqueName>
 				<UniqueName>Gemini</UniqueName>
@@ -8962,6 +9027,7 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_PREACHER</Description>
@@ -9444,6 +9510,7 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_MISSIONARY</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_MISSIONARY</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_CHRISTIAN_MISSIONARY</Description>
@@ -9661,7 +9728,6 @@
 			<iLeaderExperience>0</iLeaderExperience>
 		</UnitInfo>
 <!--#⚔️	Colonial Garrison-->
-<!--Disabled
 		<UnitInfo>
 			<Type>UNIT_GARRISON</Type>
 			<Class>UNITCLASS_GARRISON</Class>
@@ -9672,6 +9738,7 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_DEFENSIVE</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>Colonial Garrison</Description>
@@ -9776,11 +9843,15 @@
 			<bShiftDown>0</bShiftDown>
 			<bCtrlDown>0</bCtrlDown>
 			<iHotKeyPriority>0</iHotKeyPriority>
-			<FreePromotions/>
+			<FreePromotions>
+				<FreePromotion>
+					<PromotionType>PROMOTION_MINUTEMAN1</PromotionType>
+					<bFreePromotion>1</bFreePromotion>
+				</FreePromotion>
+			</FreePromotions>
 			<LeaderPromotion>NONE</LeaderPromotion>
 			<iLeaderExperience>0</iLeaderExperience>
 		</UnitInfo>
-/Disabled-->
 <!--#⭐⚔️Elite Warrior (👽Replaces Veteran Soldier)-->
 		<UnitInfo>
 			<Type>UNIT_ELITE</Type>
@@ -9893,7 +9964,16 @@
 			<FeatureDefenses/>
 			<UnitClassAttackMods/>
 			<UnitClassDefenseMods/>
-			<UnitCombatMods/>
+			<UnitCombatMods>
+				<UnitCombatMod>
+					<UnitCombatType>UNITCOMBAT_FERAL</UnitCombatType>
+					<iUnitCombatMod>50</iUnitCombatMod>
+				</UnitCombatMod>
+				<UnitCombatMod>
+					<UnitCombatType>UNITCOMBAT_BOSS</UnitCombatType>
+					<iUnitCombatMod>50</iUnitCombatMod>
+				</UnitCombatMod>
+			</UnitCombatMods>
 			<DomainMods/>
 			<YieldModifiers/>
 			<YieldChanges/>
@@ -9997,6 +10077,7 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_OFFENSIVE</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_SOLDIER</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_VETERAN</Description>
@@ -10790,10 +10871,10 @@
 			</UniqueNames>
 			<Special>NONE</Special>
 			<Capture>NONE</Capture>
-			<Combat>UNITCOMBAT_GUN</Combat>
+			<Combat>UNITCOMBAT_BOSS</Combat>
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_OFFENSIVE</DefaultUnitAI>
-			<DefaultProfession>PROFESSION_SOLDIER</DefaultProfession>
+			<DefaultProfession>NONE</DefaultProfession>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>Progenitor Angel</Description>
@@ -10820,10 +10901,6 @@
 			<bTreasure>0</bTreasure>
 			<UnitClassUpgrades/>
 			<UnitAIs>
-				<UnitAI>
-					<UnitAIType>UNITAI_COUNTER</UnitAIType>
-					<bUnitAI>1</bUnitAI>
-				</UnitAI>
 				<UnitAI>
 					<UnitAIType>UNITAI_OFFENSIVE</UnitAIType>
 					<bUnitAI>1</bUnitAI>
@@ -10912,17 +10989,6 @@
 			<ProfessionMeshGroups>
 				<UnitMeshGroups>
 					<ProfessionType>NONE</ProfessionType>
-					<fMaxSpeed>1.25</fMaxSpeed>
-					<fPadTime>1</fPadTime>
-					<iMeleeWaveSize>1</iMeleeWaveSize>
-					<iRangedWaveSize>1</iRangedWaveSize>
-					<UnitMeshGroup>
-						<iRequired>1</iRequired>
-						<ArtDefineTag>ART_DEF_UNIT_EVANGELION_ANGEL</ArtDefineTag>
-					</UnitMeshGroup>
-				</UnitMeshGroups>
-				<UnitMeshGroups>
-					<ProfessionType>PROFESSION_SOLDIER</ProfessionType>
 					<fMaxSpeed>1.25</fMaxSpeed>
 					<fPadTime>1</fPadTime>
 					<iMeleeWaveSize>1</iMeleeWaveSize>
@@ -11120,6 +11186,7 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_OFFENSIVE</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>Artillery</Description>
@@ -11480,6 +11547,22 @@
 				<BuildType>BUILD_REMOVE_RADIATION</BuildType>
 				<bBuild>1</bBuild>
 				</Build>
+				<Build>
+				<BuildType>BUILD_REMOVE_DARKMATTER</BuildType>
+				<bBuild>1</bBuild>
+				</Build>
+				<Build>
+				<BuildType>BUILD_REMOVE_NEBULA</BuildType>
+				<bBuild>1</bBuild>
+				</Build>
+				<Build>
+				<BuildType>BUILD_REMOVE_ANOMALY1</BuildType>
+				<bBuild>1</bBuild>
+				</Build>
+				<Build>
+				<BuildType>BUILD_REMOVE_ANOMALY2</BuildType>
+				<bBuild>1</bBuild>
+				</Build>
 			</Builds>
 			<PrereqBuilding>BUILDINGCLASS_DRYDOCK</PrereqBuilding>
 			<PrereqOrBuildings/>
@@ -11701,7 +11784,7 @@
 					<iRangedWaveSize>1</iRangedWaveSize>
 					<UnitMeshGroup>
 						<iRequired>1</iRequired>
-						<ArtDefineTag>ART_DEF_UNIT_GALLEON</ArtDefineTag>
+						<ArtDefineTag>ART_DEF_UNIT_COLONY_SHIP</ArtDefineTag>
 					</UnitMeshGroup>
 				</UnitMeshGroups>
 			</ProfessionMeshGroups>
@@ -11859,6 +11942,7 @@
 			<Domain>DOMAIN_SEA</Domain>
 			<DefaultUnitAI>UNITAI_TRANSPORT_SEA</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>INVISIBLE_SPACE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_CARAVEL</Description>
@@ -12141,6 +12225,7 @@
 			<Domain>DOMAIN_SEA</Domain>
 			<DefaultUnitAI>UNITAI_TRANSPORT_SEA</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_MERCHANTMAN</Description>
@@ -12284,9 +12369,10 @@
 			<Domain>DOMAIN_SEA</Domain>
 			<DefaultUnitAI>UNITAI_PIRATE_SEA</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>TXT_KEY_UNIT_PRIVATEER</Description>
+			<Description>Privateer MKII</Description>
 			<Civilopedia>TXT_KEY_UNIT_PRIVATEER_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_UNIT_PRIVATEER_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
@@ -12294,7 +12380,7 @@
 			<bOnlyDefensive>0</bOnlyDefensive>
 			<bNoCapture>0</bNoCapture>
 			<bQuickCombat>0</bQuickCombat>
-			<bRivalTerritory>0</bRivalTerritory>
+			<bRivalTerritory>1</bRivalTerritory>
 			<bMilitaryProduction>1</bMilitaryProduction>
 			<bFound>0</bFound>
 			<bInvisible>0</bInvisible>
@@ -12453,7 +12539,7 @@
 			<bOnlyDefensive>0</bOnlyDefensive>
 			<bNoCapture>0</bNoCapture>
 			<bQuickCombat>0</bQuickCombat>
-			<bRivalTerritory>0</bRivalTerritory>
+			<bRivalTerritory>1</bRivalTerritory>
 			<bMilitaryProduction>1</bMilitaryProduction>
 			<bFound>0</bFound>
 			<bInvisible>0</bInvisible>
@@ -12580,6 +12666,7 @@
 			<Domain>DOMAIN_SEA</Domain>
 			<DefaultUnitAI>UNITAI_PIRATE_SEA</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_PRIVATEER</Description>
@@ -12590,7 +12677,7 @@
 			<bOnlyDefensive>0</bOnlyDefensive>
 			<bNoCapture>0</bNoCapture>
 			<bQuickCombat>0</bQuickCombat>
-			<bRivalTerritory>0</bRivalTerritory>
+			<bRivalTerritory>1</bRivalTerritory>
 			<bMilitaryProduction>1</bMilitaryProduction>
 			<bFound>0</bFound>
 			<bInvisible>0</bInvisible>
@@ -12849,6 +12936,7 @@
 			<Domain>DOMAIN_SEA</Domain>
 			<DefaultUnitAI>UNITAI_TRANSPORT_SEA</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_GALLEON</Description>
@@ -12982,7 +13070,7 @@
 			<DefaultUnitAI>UNITAI_COMBAT_SEA</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
 			<Invisible>INVISIBLE_SPACE</Invisible>
-			<SeeInvisible>NONE</SeeInvisible>
+			<SeeInvisible>INVISIBLE_SPACE</SeeInvisible>
 			<Description>Cloaked Warship</Description>
 			<Civilopedia>Although inferior in combat to the larger vessels of Earth, the most advanced alien warships incorporated cloaking technology that was a bane to human naval strategists.</Civilopedia>
 			<Strategy>Construct a Cloaked Warship to take the Earthling vessels by surprise.</Strategy>
@@ -13117,6 +13205,7 @@
 			<Domain>DOMAIN_SEA</Domain>
 			<DefaultUnitAI>UNITAI_COMBAT_SEA</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_FRIGATE</Description>
@@ -13692,6 +13781,7 @@
 			<Domain>DOMAIN_SEA</Domain>
 			<DefaultUnitAI>UNITAI_COMBAT_SEA</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_SHIP_OF_THE_LINE</Description>
@@ -13943,124 +14033,124 @@
 			<iLeaderExperience>0</iLeaderExperience>
 		</UnitInfo>
 <!--#🛢️	Hydrocarbons (Oil)-->
-    <UnitInfo>
-      <Type>UNIT_COAL</Type>
-      <Class>UNITCLASS_COAL</Class>
-      <UniqueNames/>
-      <Special>SPECIALUNIT_YIELD_CARGO</Special>
-      <Capture>UNITCLASS_COAL</Capture>
-      <Combat>NONE</Combat>
-      <Domain>DOMAIN_LAND</Domain>
-      <DefaultUnitAI>UNITAI_YIELD</DefaultUnitAI>
-      <DefaultProfession>NONE</DefaultProfession>
-      <Invisible>NONE</Invisible>
-      <SeeInvisible>NONE</SeeInvisible>
-      <Description>Coal</Description>
-      <Civilopedia>TXT_KEY_UNIT_ORE_PEDIA</Civilopedia>
-      <Strategy>TXT_KEY_UNIT_ORE_STRATEGY</Strategy>
-      <bGraphicalOnly>1</bGraphicalOnly>
-      <bNoBadGoodies>0</bNoBadGoodies>
-      <bOnlyDefensive>0</bOnlyDefensive>
-      <bNoCapture>0</bNoCapture>
-      <bQuickCombat>0</bQuickCombat>
-      <bRivalTerritory>0</bRivalTerritory>
-      <bMilitaryProduction>0</bMilitaryProduction>
-      <bFound>0</bFound>
-      <bInvisible>0</bInvisible>
-      <bNoDefensiveBonus>0</bNoDefensiveBonus>
-      <bCanMoveImpassable>0</bCanMoveImpassable>
-      <bCanMoveAllTerrain>0</bCanMoveAllTerrain>
-      <bFlatMovementCost>0</bFlatMovementCost>
-      <bIgnoreTerrainCost>0</bIgnoreTerrainCost>
-      <bMechanized>0</bMechanized>
-      <bLineOfSight>0</bLineOfSight>
-      <bHiddenNationality>1</bHiddenNationality>
-      <bAlwaysHostile>0</bAlwaysHostile>
-      <bTreasure>0</bTreasure>
-      <UnitClassUpgrades/>
-      <UnitAIs>
-        <UnitAI>
-          <UnitAIType>UNITAI_YIELD</UnitAIType>
-          <bUnitAI>1</bUnitAI>
-        </UnitAI>
-      </UnitAIs>
-      <NotUnitAIs/>
-      <Builds/>
-      <PrereqBuilding>NONE</PrereqBuilding>
-      <PrereqOrBuildings/>
-      <ProductionTraits/>
-      <iAIWeight>-100</iAIWeight>
-      <YieldCosts/>
-      <iHurryCostModifier>0</iHurryCostModifier>
-      <iAdvancedStartCost>-1</iAdvancedStartCost>
-      <iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
-      <iEuropeCost>-1</iEuropeCost>
-      <iEuropeCostIncrease>0</iEuropeCostIncrease>
-      <iImmigrationWeight>0</iImmigrationWeight>
-      <iImmigrationWeightDecay>0</iImmigrationWeightDecay>
-      <iMinAreaSize>-1</iMinAreaSize>
-      <iMoves>0</iMoves>
-      <bCapturesCargo>0</bCapturesCargo>
-      <iWorkRate>0</iWorkRate>
-      <iWorkRateModifier>0</iWorkRateModifier>
-      <iMissionaryRateModifier>0</iMissionaryRateModifier>
-      <TerrainImpassables/>
-      <FeatureImpassables/>
-      <EvasionBuildings/>
-      <iCombat>0</iCombat>
-      <iXPValueAttack>0</iXPValueAttack>
-      <iXPValueDefense>0</iXPValueDefense>
-      <iWithdrawalProb>0</iWithdrawalProb>
-      <iCityAttack>0</iCityAttack>
-      <iCityDefense>0</iCityDefense>
-      <iHillsAttack>0</iHillsAttack>
-      <iHillsDefense>0</iHillsDefense>
-      <TerrainAttacks/>
-      <TerrainDefenses/>
-      <FeatureAttacks/>
-      <FeatureDefenses/>
-      <UnitClassAttackMods/>
-      <UnitClassDefenseMods/>
-      <UnitCombatMods/>
-      <DomainMods/>
-      <YieldModifiers/>
-      <YieldChanges/>
-      <BonusYieldChanges/>
-      <bLandYieldChanges>1</bLandYieldChanges>
-      <bWaterYieldChanges>1</bWaterYieldChanges>
-      <iBombardRate>0</iBombardRate>
-      <SpecialCargo>NONE</SpecialCargo>
-      <DomainCargo>NONE</DomainCargo>
-      <iCargo>0</iCargo>
-      <iRequiredTransportSize>1</iRequiredTransportSize>
-      <iAsset>0</iAsset>
-      <iPower>0</iPower>
-      <iNativeLearnTime>-1</iNativeLearnTime>
-      <iStudentWeight>0</iStudentWeight>
-      <iTeacherWeight>0</iTeacherWeight>
-      <ProfessionMeshGroups>
-        <UnitMeshGroups>
-          <ProfessionType>NONE</ProfessionType>
-          <fMaxSpeed>1.25</fMaxSpeed>
-          <fPadTime>1</fPadTime>
-          <iMeleeWaveSize>1</iMeleeWaveSize>
-          <iRangedWaveSize>1</iRangedWaveSize>
-          <UnitMeshGroup>
-            <iRequired>1</iRequired>
-            <ArtDefineTag>ART_DEF_UNIT_COAL</ArtDefineTag>
-          </UnitMeshGroup>
-        </UnitMeshGroups>
-      </ProfessionMeshGroups>
-      <FormationType>FORMATION_TYPE_DEFAULT</FormationType>
-      <HotKey/>
-      <bAltDown>0</bAltDown>
-      <bShiftDown>0</bShiftDown>
-      <bCtrlDown>0</bCtrlDown>
-      <iHotKeyPriority>0</iHotKeyPriority>
-      <FreePromotions/>
-      <LeaderPromotion>NONE</LeaderPromotion>
-      <iLeaderExperience>0</iLeaderExperience>
-    </UnitInfo>
+		<UnitInfo>
+			<Type>UNIT_COAL</Type>
+			<Class>UNITCLASS_COAL</Class>
+			<UniqueNames/>
+			<Special>SPECIALUNIT_YIELD_CARGO</Special>
+			<Capture>UNITCLASS_COAL</Capture>
+			<Combat>NONE</Combat>
+			<Domain>DOMAIN_LAND</Domain>
+			<DefaultUnitAI>UNITAI_YIELD</DefaultUnitAI>
+			<DefaultProfession>NONE</DefaultProfession>
+			<Invisible>NONE</Invisible>
+			<SeeInvisible>NONE</SeeInvisible>
+			<Description>Coal</Description>
+			<Civilopedia>TXT_KEY_UNIT_ORE_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_ORE_STRATEGY</Strategy>
+			<bGraphicalOnly>1</bGraphicalOnly>
+			<bNoBadGoodies>0</bNoBadGoodies>
+			<bOnlyDefensive>0</bOnlyDefensive>
+			<bNoCapture>0</bNoCapture>
+			<bQuickCombat>0</bQuickCombat>
+			<bRivalTerritory>0</bRivalTerritory>
+			<bMilitaryProduction>0</bMilitaryProduction>
+			<bFound>0</bFound>
+			<bInvisible>0</bInvisible>
+			<bNoDefensiveBonus>0</bNoDefensiveBonus>
+			<bCanMoveImpassable>0</bCanMoveImpassable>
+			<bCanMoveAllTerrain>0</bCanMoveAllTerrain>
+			<bFlatMovementCost>0</bFlatMovementCost>
+			<bIgnoreTerrainCost>0</bIgnoreTerrainCost>
+			<bMechanized>0</bMechanized>
+			<bLineOfSight>0</bLineOfSight>
+			<bHiddenNationality>1</bHiddenNationality>
+			<bAlwaysHostile>0</bAlwaysHostile>
+			<bTreasure>0</bTreasure>
+			<UnitClassUpgrades/>
+			<UnitAIs>
+				<UnitAI>
+					<UnitAIType>UNITAI_YIELD</UnitAIType>
+					<bUnitAI>1</bUnitAI>
+				</UnitAI>
+			</UnitAIs>
+			<NotUnitAIs/>
+			<Builds/>
+			<PrereqBuilding>NONE</PrereqBuilding>
+			<PrereqOrBuildings/>
+			<ProductionTraits/>
+			<iAIWeight>-100</iAIWeight>
+			<YieldCosts/>
+			<iHurryCostModifier>0</iHurryCostModifier>
+			<iAdvancedStartCost>-1</iAdvancedStartCost>
+			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
+			<iEuropeCost>-1</iEuropeCost>
+			<iEuropeCostIncrease>0</iEuropeCostIncrease>
+			<iImmigrationWeight>0</iImmigrationWeight>
+			<iImmigrationWeightDecay>0</iImmigrationWeightDecay>
+			<iMinAreaSize>-1</iMinAreaSize>
+			<iMoves>0</iMoves>
+			<bCapturesCargo>0</bCapturesCargo>
+			<iWorkRate>0</iWorkRate>
+			<iWorkRateModifier>0</iWorkRateModifier>
+			<iMissionaryRateModifier>0</iMissionaryRateModifier>
+			<TerrainImpassables/>
+			<FeatureImpassables/>
+			<EvasionBuildings/>
+			<iCombat>0</iCombat>
+			<iXPValueAttack>0</iXPValueAttack>
+			<iXPValueDefense>0</iXPValueDefense>
+			<iWithdrawalProb>0</iWithdrawalProb>
+			<iCityAttack>0</iCityAttack>
+			<iCityDefense>0</iCityDefense>
+			<iHillsAttack>0</iHillsAttack>
+			<iHillsDefense>0</iHillsDefense>
+			<TerrainAttacks/>
+			<TerrainDefenses/>
+			<FeatureAttacks/>
+			<FeatureDefenses/>
+			<UnitClassAttackMods/>
+			<UnitClassDefenseMods/>
+			<UnitCombatMods/>
+			<DomainMods/>
+			<YieldModifiers/>
+			<YieldChanges/>
+			<BonusYieldChanges/>
+			<bLandYieldChanges>1</bLandYieldChanges>
+			<bWaterYieldChanges>1</bWaterYieldChanges>
+			<iBombardRate>0</iBombardRate>
+			<SpecialCargo>NONE</SpecialCargo>
+			<DomainCargo>NONE</DomainCargo>
+			<iCargo>0</iCargo>
+			<iRequiredTransportSize>1</iRequiredTransportSize>
+			<iAsset>0</iAsset>
+			<iPower>0</iPower>
+			<iNativeLearnTime>-1</iNativeLearnTime>
+			<iStudentWeight>0</iStudentWeight>
+			<iTeacherWeight>0</iTeacherWeight>
+			<ProfessionMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>NONE</ProfessionType>
+					<fMaxSpeed>1.25</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>1</iMeleeWaveSize>
+					<iRangedWaveSize>1</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_COAL</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+			</ProfessionMeshGroups>
+			<FormationType>FORMATION_TYPE_DEFAULT</FormationType>
+			<HotKey/>
+			<bAltDown>0</bAltDown>
+			<bShiftDown>0</bShiftDown>
+			<bCtrlDown>0</bCtrlDown>
+			<iHotKeyPriority>0</iHotKeyPriority>
+			<FreePromotions/>
+			<LeaderPromotion>NONE</LeaderPromotion>
+			<iLeaderExperience>0</iLeaderExperience>
+		</UnitInfo>
 <!--#🔲	Plasteel-->
 		<UnitInfo>
 			<Type>UNIT_LUMBER</Type>
@@ -15858,7 +15948,7 @@
 			<DefaultUnitAI>UNITAI_WAGON</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
 			<Invisible>INVISIBLE_LAND</Invisible>
-			<SeeInvisible>NONE</SeeInvisible>
+			<SeeInvisible>INVISIBLE_LAND</SeeInvisible>
 			<Description>Alien Palanquin</Description>
 			<Civilopedia>The aliens of the New Worlds transport precious goods between their settlements on stately palanquins, moving far more slowly than Earthling vehicles but able to remain hidden on a myriad of paths across the wilderness.</Civilopedia>
 			<Strategy>TXT_KEY_UNIT_WAGON_TRAIN_STRATEGY</Strategy>
@@ -15986,6 +16076,7 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_WAGON</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_WAGON_TRAIN</Description>
@@ -16121,6 +16212,7 @@
 				<UniqueName>Major Misato Katsuragi</UniqueName>
 				<UniqueName>Rei Ayanami</UniqueName>
 				<UniqueName>Asuka Langley Sohryu</UniqueName>
+				<UniqueName>Mari Makinami Illustrious</UniqueName>
 				<UniqueName>YoRHa No.2 Type B</UniqueName>
 				<UniqueName>Re-L Mayer</UniqueName>
 				<UniqueName>Trinity</UniqueName>
@@ -16146,6 +16238,7 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_SCOUT</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_SCOUT</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>INVISIBLE_LAND</Invisible>
 			<SeeInvisible>INVISIBLE_LAND</SeeInvisible>
 			<Description>TXT_KEY_UNIT_SCOUT</Description>

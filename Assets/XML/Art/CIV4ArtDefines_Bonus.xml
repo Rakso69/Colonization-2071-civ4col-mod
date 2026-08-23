@@ -2,7 +2,7 @@
 <!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Jason Winokur (Firaxis Games) -->
 <!-- Sid Meier's Civilization 4 -->
 <!-- Copyright Firaxis Games 2005 -->
-<!--❗	Please always list in order; WorldBuilder/💡/🌾/🔲/🔨/💎/🪨/🛠️/🦠/🩻/🧬/☣️/🔫/⚙️/🛍️/🔔/✝️/🛡/LowestMaxYield/HighestMaxYield -->
+<!--❗	Please always list in order; XML/Terrain/CIV4BonusInfos.xml -->
 <!-- Bonus/Resource art path information -->
 <Civ4ArtDefines xmlns="x-schema:CIV4ArtDefinesSchema.xml">
 	<BonusArtInfos>
@@ -230,7 +230,7 @@
 			<fInterfaceScale>1</fInterfaceScale>
 			<NIF>Art/Terrain/Resources/edible_berries/cofwes.nif</NIF>
 			<KFM>Art/Terrain/Resources/edible_berries/cofwes.kfm</KFM>
-			<Button>,Art/Interface/Buttons/atlasmapbonus.dds,3,8</Button>
+			<Button>Art/Interface/Buttons/terrainfeatures/edible_berries.dds</Button>
 			<FontButtonIndex>11</FontButtonIndex>
 			<bShadowCastor>1</bShadowCastor>
 			<bRefractionCastor>0</bRefractionCastor>
@@ -653,7 +653,7 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Terrain/Resources/oil/oil.nif</NIF>
 			<KFM>Art/Terrain/Resources/oil/oil.kfm</KFM>
-			<Button>,Art/Interface/Buttons/atlasmapbonus.dds,7,4</Button>
+			<Button>Art/Interface/Buttons/terrainfeatures/oil.dds</Button>
 			<FontButtonIndex>4</FontButtonIndex>
 			<bShadowCastor>1</bShadowCastor>
 			<bRefractionCastor>0</bRefractionCastor>

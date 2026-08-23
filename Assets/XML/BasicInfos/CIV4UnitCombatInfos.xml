@@ -9,37 +9,37 @@
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_MOUNTED</Type>
 			<Description>TXT_KEY_UNITCOMBAT_MOUNTED</Description>
-			<Button>,Art/Interface/Buttons/Promotions/Promotions_Atlas.dds,1,2</Button>
+			<Button>Art/Interface/Buttons/Promotions/promotions_formation.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_FERAL</Type><!--/Disabled for now. All neutral biological-only units-->
 			<Description>Feral Units</Description>
-			<Button>,Art/Interface/Buttons/Promotions/unitcombat_feral.dds</Button>
+			<Button>Art/Interface/Buttons/Promotions/unitcombat_feral.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_BOSS</Type><!--/Disabled for now. This is exclusive for boss units. Boss units include; Abomination, Progenitor Angel etc.-->
 			<Description>Cosmic Horrors</Description>
-			<Button>,Art/Interface/Buttons/Promotions/unitcombat_boss.dds</Button>
+			<Button>Art/Interface/Buttons/Promotions/unitcombat_boss.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_MELEE</Type>
 			<Description>TXT_KEY_UNITCOMBAT_MELEE</Description>
-			<Button>,Art/Interface/Buttons/Promotions/Promotions_Atlas.dds,4,5</Button>
+			<Button>Art/Interface/Buttons/Promotions/unitcombat_melee.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_SIEGE</Type>
 			<Description>TXT_KEY_UNITCOMBAT_SIEGE</Description>
-			<Button>,Art/Interface/Buttons/Promotions/Promotions_Atlas.dds,1,5</Button>
+			<Button>Art/Interface/Buttons/Promotions/promotions_charge.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_GUN</Type>
 			<Description>TXT_KEY_UNITCOMBAT_GUN</Description>
-			<Button>,Art/Interface/Buttons/Promotions/Promotions_Atlas.dds,3,5</Button>
+			<Button>Art/Interface/Buttons/Promotions/unitcombat_infantry.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_NAVAL</Type>
 			<Description>TXT_KEY_UNITCOMBAT_NAVAL</Description>
-			<Button>,Art/Interface/Buttons/Promotions/Promotions_Atlas.dds,4,7</Button>
+			<Button>,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,8,8</Button>
 		</UnitCombatInfo>
 	</UnitCombatInfos>
 </Civ4UnitCombatInfos>

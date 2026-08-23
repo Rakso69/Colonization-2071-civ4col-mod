@@ -120,7 +120,23 @@
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
 			<FeatureMakesValids/>
-			<BonusTypeStructs/>
+			<BonusTypeStructs>
+				<BonusTypeStruct>
+					<BonusType>BONUS_METROPOLIS</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_ORE</YieldType>
+							<iValue>5</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_SILVER</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+			</BonusTypeStructs>
 			<ImprovementPillage/>
 			<ImprovementUpgrade/>
 			<RouteYieldChanges/>
@@ -162,7 +178,19 @@
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
 			<FeatureMakesValids/>
-			<BonusTypeStructs/>
+			<BonusTypeStructs>
+				<BonusTypeStruct>
+					<BonusType>BONUS_METROPOLIS</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_MUSKETS</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+			</BonusTypeStructs>
 			<ImprovementPillage/>
 			<ImprovementUpgrade/>
 			<RouteYieldChanges/>
@@ -204,7 +232,19 @@
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
 			<FeatureMakesValids/>
-			<BonusTypeStructs/>
+			<BonusTypeStructs>
+				<BonusTypeStruct>
+					<BonusType>BONUS_METROPOLIS</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_MUSKETS</YieldType>
+							<iValue>4</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+			</BonusTypeStructs>
 			<ImprovementPillage/>
 			<ImprovementUpgrade/>
 			<RouteYieldChanges/>
@@ -246,7 +286,19 @@
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
 			<FeatureMakesValids/>
-			<BonusTypeStructs/>
+			<BonusTypeStructs>
+				<BonusTypeStruct>
+					<BonusType>BONUS_METROPOLIS</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_IDEAS</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+			</BonusTypeStructs>
 			<ImprovementPillage/>
 			<ImprovementUpgrade/>
 			<RouteYieldChanges/>
@@ -288,7 +340,19 @@
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
 			<FeatureMakesValids/>
-			<BonusTypeStructs/>
+			<BonusTypeStructs>
+				<BonusTypeStruct>
+					<BonusType>BONUS_METROPOLIS</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_CIGARS</YieldType>
+							<iValue>4</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+			</BonusTypeStructs>
 			<ImprovementPillage/>
 			<ImprovementUpgrade/>
 			<RouteYieldChanges/>
@@ -330,7 +394,19 @@
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
 			<FeatureMakesValids/>
-			<BonusTypeStructs/>
+			<BonusTypeStructs>
+				<BonusTypeStruct>
+					<BonusType>BONUS_METROPOLIS</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_COATS</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+			</BonusTypeStructs>
 			<ImprovementPillage/>
 			<ImprovementUpgrade/>
 			<RouteYieldChanges/>
@@ -376,7 +452,23 @@
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
 			<FeatureMakesValids/>
-			<BonusTypeStructs/>
+			<BonusTypeStructs>
+				<BonusTypeStruct>
+					<BonusType>BONUS_METROPOLIS</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_HAMMERS</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_TOOLS</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+			</BonusTypeStructs>
 			<ImprovementPillage/>
 			<ImprovementUpgrade/>
 			<RouteYieldChanges/>
@@ -418,7 +510,19 @@
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
 			<FeatureMakesValids/>
-			<BonusTypeStructs/>
+			<BonusTypeStructs>
+				<BonusTypeStruct>
+					<BonusType>BONUS_METROPOLIS</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_HAMMERS</YieldType>
+							<iValue>4</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+			</BonusTypeStructs>
 			<ImprovementPillage/>
 			<ImprovementUpgrade/>
 			<RouteYieldChanges/>
@@ -931,6 +1035,17 @@
 						</YieldIntegerPair>
 					</YieldChanges>	
 				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_BARRENMOON</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_ORE</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>	
+				</BonusTypeStruct>
 			</BonusTypeStructs>
 			<ImprovementPillage/>
 			<ImprovementUpgrade>IMPROVEMENT_MOON_COLONY2</ImprovementUpgrade>
@@ -959,7 +1074,7 @@
 			<bRequiresFeature>0</bRequiresFeature>
 			<bWater>1</bWater>
 			<bGoody>0</bGoody>
-			<bPermanent>0</bPermanent>
+			<bPermanent>1</bPermanent>
 			<bUseLSystem>0</bUseLSystem>
 			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
@@ -1047,6 +1162,17 @@
 						</YieldIntegerPair>
 					</YieldChanges>	
 				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_BARRENMOON</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_ORE</YieldType>
+							<iValue>3</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>	
+				</BonusTypeStruct>
 			</BonusTypeStructs>
 			<ImprovementPillage>IMPROVEMENT_MOON_COLONY1</ImprovementPillage>
 			<ImprovementUpgrade>IMPROVEMENT_MOON_COLONY3</ImprovementUpgrade>
@@ -1075,7 +1201,7 @@
 			<bRequiresFeature>0</bRequiresFeature>
 			<bWater>1</bWater>
 			<bGoody>0</bGoody>
-			<bPermanent>0</bPermanent>
+			<bPermanent>1</bPermanent>
 			<bUseLSystem>0</bUseLSystem>
 			<iAdvancedStartCost>100</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
@@ -1167,6 +1293,17 @@
 						</YieldIntegerPair>
 					</YieldChanges>	
 				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_BARRENMOON</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_ORE</YieldType>
+							<iValue>5</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>	
+				</BonusTypeStruct>
 			</BonusTypeStructs>
 			<ImprovementPillage>IMPROVEMENT_MOON_COLONY2</ImprovementPillage>
 			<ImprovementUpgrade/>
@@ -1244,6 +1381,104 @@
 					<iDiscoverRand>0</iDiscoverRand>
 					<YieldChanges/>
 				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_HORSE</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges/>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_PIG</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges/>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_SHEEP</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges/>
+				</BonusTypeStruct>
+			</BonusTypeStructs>
+			<ImprovementPillage/>
+			<ImprovementUpgrade></ImprovementUpgrade>
+			<RouteYieldChanges/>
+			<bGraphicalOnly>0</bGraphicalOnly>
+		</ImprovementInfo>
+		<ImprovementInfo>
+			<Type>IMPROVEMENT_AQUACULTURE</Type>
+			<Description>Aquaculture</Description>
+			<Civilopedia>The painstakingly crafted forest gardens of the aliens were of little use to human colonists, but through years of cultivation could provide a bounty of resources in alien hands.</Civilopedia>
+			<ArtDefineTag>ART_DEF_IMPROVEMENT_AQUACULTURE</ArtDefineTag>
+			<PrereqNatureYields/>
+			<YieldIncreases>
+				<YieldIntegerPair>
+					<YieldType>YIELD_FOOD</YieldType>
+					<iValue>1</iValue>
+				</YieldIntegerPair>		
+			</YieldIncreases>
+			<RiverSideYieldChanges>
+				<YieldIntegerPair>
+					<YieldType>YIELD_FOOD</YieldType>
+					<iValue>1</iValue>
+				</YieldIntegerPair>
+			</RiverSideYieldChanges>
+			<HillsYieldChanges/>
+			<bActsAsCity>0</bActsAsCity>
+			<bHillsMakesValid>0</bHillsMakesValid>
+			<bRiverSideMakesValid>0</bRiverSideMakesValid>
+			<bRequiresFlatlands>0</bRequiresFlatlands>
+			<bRequiresRiverSide>0</bRequiresRiverSide>
+			<bRequiresFeature>0</bRequiresFeature>
+			<bWater>0</bWater>
+			<bGoody>0</bGoody>
+			<bPermanent>0</bPermanent>
+			<bUseLSystem>0</bUseLSystem>
+			<iAdvancedStartCost>100</iAdvancedStartCost>
+			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
+			<iTilesPerGoody>0</iTilesPerGoody>
+			<iGoodyRange>0</iGoodyRange>
+			<iFeatureGrowth>0</iFeatureGrowth>
+			<iUpgradeTime>0</iUpgradeTime>
+			<iDefenseModifier>0</iDefenseModifier>
+			<iPillageGold>10</iPillageGold>
+			<bOutsideBorders>0</bOutsideBorders>
+			<TerrainMakesValids/>
+			<FeatureMakesValids/>
+			<BonusTypeStructs>
+				<BonusTypeStruct>
+					<BonusType>BONUS_PEARL</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_SILVER</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>	
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_CLAM</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_ORE</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>	
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_FISH</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_FOOD</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>	
+				</BonusTypeStruct>
 			</BonusTypeStructs>
 			<ImprovementPillage/>
 			<ImprovementUpgrade></ImprovementUpgrade>
@@ -1313,6 +1548,12 @@
 			<BonusTypeStructs>
 				<BonusTypeStruct>
 					<BonusType>BONUS_CORN</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges/>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_BERRIES</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<iDiscoverRand>0</iDiscoverRand>
 					<YieldChanges/>
@@ -1643,6 +1884,14 @@
 			<PrereqNatureYields/>
 			<YieldIncreases>
 				<YieldIntegerPair>
+					<YieldType>YIELD_LUMBER</YieldType>
+					<iValue>1</iValue>
+				</YieldIntegerPair>
+				<YieldIntegerPair>
+					<YieldType>YIELD_FUR</YieldType>
+					<iValue>1</iValue>
+				</YieldIntegerPair>
+				<YieldIntegerPair>
 					<YieldType>YIELD_ORE</YieldType>
 					<iValue>3</iValue>
 				</YieldIntegerPair>
@@ -1669,12 +1918,17 @@
 			<iPillageGold>5</iPillageGold>
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
-			<FeatureMakesValids/>
+			<FeatureMakesValids>
+				<FeatureMakesValid>
+					<FeatureType>FEATURE_BURIED</FeatureType>
+					<bMakesValid>1</bMakesValid>
+				</FeatureMakesValid>
+			</FeatureMakesValids>
 			<BonusTypeStructs>
 				<BonusTypeStruct>
 					<BonusType>BONUS_METROPOLIS</BonusType>
-					<bBonusMakesValid>1</bBonusMakesValid>
-					<iDiscoverRand>0</iDiscoverRand>
+					<bBonusMakesValid>0</bBonusMakesValid>
+					<iDiscoverRand>100</iDiscoverRand>
 					<YieldChanges>
 						<YieldIntegerPair>
 							<YieldType>YIELD_FUR</YieldType>
@@ -1682,6 +1936,74 @@
 						</YieldIntegerPair>
 					</YieldChanges>
 				</BonusTypeStruct>
+<!--Disabled See; Assets/XML/Events/CIV4EventInfos.xml Line 3144
+				<BonusTypeStruct>
+					<BonusType>BONUS_BONES</BonusType>
+					<bBonusMakesValid>0</bBonusMakesValid>
+					<iDiscoverRand>100</iDiscoverRand>
+					<YieldChanges/>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_TEMPLE</BonusType>
+					<bBonusMakesValid>0</bBonusMakesValid>
+					<iDiscoverRand>100</iDiscoverRand>
+					<YieldChanges/>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_GRANDZIGGURAT</BonusType>
+					<bBonusMakesValid>0</bBonusMakesValid>
+					<iDiscoverRand>100</iDiscoverRand>
+					<YieldChanges/>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_PYRAMID</BonusType>
+					<bBonusMakesValid>0</bBonusMakesValid>
+					<iDiscoverRand>100</iDiscoverRand>
+					<YieldChanges/>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_SPIRE</BonusType>
+					<bBonusMakesValid>0</bBonusMakesValid>
+					<iDiscoverRand>100</iDiscoverRand>
+					<YieldChanges/>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_CATACOMB</BonusType>
+					<bBonusMakesValid>0</bBonusMakesValid>
+					<iDiscoverRand>100</iDiscoverRand>
+					<YieldChanges/>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_BIOSPHERE</BonusType>
+					<bBonusMakesValid>0</bBonusMakesValid>
+					<iDiscoverRand>100</iDiscoverRand>
+					<YieldChanges/>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_STONEHENGE</BonusType>
+					<bBonusMakesValid>0</bBonusMakesValid>
+					<iDiscoverRand>100</iDiscoverRand>
+					<YieldChanges/>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_VOLCANOTEMPLE</BonusType>
+					<bBonusMakesValid>0</bBonusMakesValid>
+					<iDiscoverRand>100</iDiscoverRand>
+					<YieldChanges/>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_MTRUSHMORE</BonusType>
+					<bBonusMakesValid>0</bBonusMakesValid>
+					<iDiscoverRand>100</iDiscoverRand>
+					<YieldChanges/>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_MALI</BonusType>
+					<bBonusMakesValid>0</bBonusMakesValid>
+					<iDiscoverRand>100</iDiscoverRand>
+					<YieldChanges/>
+				</BonusTypeStruct>
+/Disabled-->
 			</BonusTypeStructs>
 			<ImprovementPillage/>
 			<ImprovementUpgrade/>
@@ -1714,7 +2036,7 @@
 			<iFeatureGrowth>0</iFeatureGrowth>
 			<iUpgradeTime>0</iUpgradeTime>
 			<iDefenseModifier>0</iDefenseModifier>
-			<iPillageGold>5</iPillageGold>
+			<iPillageGold>50</iPillageGold>
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
 			<FeatureMakesValids/>
@@ -1737,11 +2059,15 @@
 					<YieldChanges>
 						<YieldIntegerPair>
 							<YieldType>YIELD_FUR</YieldType>
-							<iValue>2</iValue>
+							<iValue>1</iValue>
 						</YieldIntegerPair>
 						<YieldIntegerPair>
 							<YieldType>YIELD_SILVER</YieldType>
-							<iValue>2</iValue>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_IDEAS</YieldType>
+							<iValue>1</iValue>
 						</YieldIntegerPair>
 					</YieldChanges>
 				</BonusTypeStruct>
@@ -1751,8 +2077,16 @@
 					<iDiscoverRand>0</iDiscoverRand>
 					<YieldChanges>
 						<YieldIntegerPair>
+							<YieldType>YIELD_FOOD</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
 							<YieldType>YIELD_COTTON</YieldType>
-							<iValue>4</iValue>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_CLOTH</YieldType>
+							<iValue>1</iValue>
 						</YieldIntegerPair>
 					</YieldChanges>
 				</BonusTypeStruct>
@@ -1762,8 +2096,226 @@
 					<iDiscoverRand>0</iDiscoverRand>
 					<YieldChanges>
 						<YieldIntegerPair>
+							<YieldType>YIELD_COTTON</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_LUMBER</YieldType>
+							<iValue>3</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_CLOTH</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_GRANDZIGGURAT</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_FUR</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_SILVER</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_COATS</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_IDEAS</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_BELLS</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_PYRAMID</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_FUR</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_SILVER</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_IDEAS</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_SPIRE</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_SUGAR</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_RUM</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_IDEAS</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_CATACOMB</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_SILVER</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_FUR</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_CROSSES</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_IDEAS</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_SACREDGROVE</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_COTTON</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
 							<YieldType>YIELD_CLOTH</YieldType>
 							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_IDEAS</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_BIOSPHERE</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_COTTON</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_CLOTH</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_IDEAS</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_CROSSES</YieldType>
+							<iValue>3</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_BELLS</YieldType>
+							<iValue>3</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_STONEHENGE</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_FUR</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_TOBACCO</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_CIGARS</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_VOLCANOTEMPLE</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_COTTON</YieldType>
+							<iValue>4</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_CROSSES</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_BELLS</YieldType>
+							<iValue>3</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_MTRUSHMORE</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_IDEAS</YieldType>
+							<iValue>2</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_CROSSES</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_BELLS</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+					</YieldChanges>
+				</BonusTypeStruct>
+				<BonusTypeStruct>
+					<BonusType>BONUS_MALI</BonusType>
+					<bBonusMakesValid>1</bBonusMakesValid>
+					<iDiscoverRand>0</iDiscoverRand>
+					<YieldChanges>
+						<YieldIntegerPair>
+							<YieldType>YIELD_MUSKETS</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_IDEAS</YieldType>
+							<iValue>1</iValue>
+						</YieldIntegerPair>
+						<YieldIntegerPair>
+							<YieldType>YIELD_BELLS</YieldType>
+							<iValue>1</iValue>
 						</YieldIntegerPair>
 					</YieldChanges>
 				</BonusTypeStruct>
@@ -1940,7 +2492,7 @@
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_LUMBERMILL</Type>
 			<Description>Plasteel Mill</Description>
-			<Civilopedia>Constructed by a Hardy Laborer, a Plasteel Mill can wring added yields of building materials from forests and ruins.</Civilopedia>
+			<Civilopedia>Constructed by a Hardy Laborer, a Plasteel Mill can wring added yields of building materials from forests and ruins, forming the cornerstone of a colony's growing urban infrastructure.</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_LUMBERMILL</ArtDefineTag>
 			<PrereqNatureYields>
 				<YieldIntegerPair>
@@ -1964,9 +2516,9 @@
 			<bActsAsCity>0</bActsAsCity>
 			<bHillsMakesValid>0</bHillsMakesValid>
 			<bRiverSideMakesValid>0</bRiverSideMakesValid>
-			<bRequiresFlatlands>1</bRequiresFlatlands>
+			<bRequiresFlatlands>0</bRequiresFlatlands>
 			<bRequiresRiverSide>0</bRequiresRiverSide>
-			<bRequiresFeature>0</bRequiresFeature>
+			<bRequiresFeature>1</bRequiresFeature>
 			<bWater>0</bWater>
 			<bGoody>0</bGoody>
 			<bPermanent>0</bPermanent>
@@ -2022,7 +2574,7 @@
 			<YieldIncreases/>
 			<RiverSideYieldChanges/>
 			<HillsYieldChanges/>
-			<bActsAsCity>0</bActsAsCity>
+			<bActsAsCity>1</bActsAsCity>
 			<bHillsMakesValid>0</bHillsMakesValid>
 			<bRiverSideMakesValid>0</bRiverSideMakesValid>
 			<bRequiresFlatlands>0</bRequiresFlatlands>
@@ -2043,7 +2595,11 @@
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids>
 				<TerrainMakesValid>
-					<TerrainType>TERRAIN_GRASS</TerrainType>
+					<TerrainType>TERRAIN_COAST</TerrainType>
+					<bMakesValid>1</bMakesValid>
+				</TerrainMakesValid>
+				<TerrainMakesValid>
+					<TerrainType>TERRAIN_OCEAN</TerrainType>
 					<bMakesValid>1</bMakesValid>
 				</TerrainMakesValid>
 			</TerrainMakesValids>
@@ -2079,7 +2635,7 @@
 			<iGoodyRange>0</iGoodyRange>
 			<iFeatureGrowth>0</iFeatureGrowth>
 			<iUpgradeTime>20</iUpgradeTime>
-			<iDefenseModifier>0</iDefenseModifier>
+			<iDefenseModifier>200</iDefenseModifier>
 			<iPillageGold>250</iPillageGold>
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
@@ -2115,7 +2671,7 @@
 			<iGoodyRange>0</iGoodyRange>
 			<iFeatureGrowth>0</iFeatureGrowth>
 			<iUpgradeTime>20</iUpgradeTime>
-			<iDefenseModifier>0</iDefenseModifier>
+			<iDefenseModifier>400</iDefenseModifier>
 			<iPillageGold>500</iPillageGold>
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
@@ -2151,7 +2707,7 @@
 			<iGoodyRange>0</iGoodyRange>
 			<iFeatureGrowth>0</iFeatureGrowth>
 			<iUpgradeTime>20</iUpgradeTime>
-			<iDefenseModifier>0</iDefenseModifier>
+			<iDefenseModifier>600</iDefenseModifier>
 			<iPillageGold>1000</iPillageGold>
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
@@ -2171,7 +2727,7 @@
 			<YieldIncreases/>
 			<RiverSideYieldChanges/>
 			<HillsYieldChanges/>
-			<bActsAsCity>0</bActsAsCity>
+			<bActsAsCity>1</bActsAsCity>
 			<bHillsMakesValid>0</bHillsMakesValid>
 			<bRiverSideMakesValid>0</bRiverSideMakesValid>
 			<bRequiresFlatlands>0</bRequiresFlatlands>
@@ -2187,7 +2743,7 @@
 			<iGoodyRange>0</iGoodyRange>
 			<iFeatureGrowth>0</iFeatureGrowth>
 			<iUpgradeTime>0</iUpgradeTime>
-			<iDefenseModifier>0</iDefenseModifier>
+			<iDefenseModifier>1000</iDefenseModifier>
 			<iPillageGold>2500</iPillageGold>
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>

@@ -366,7 +366,7 @@
 			<fInterfaceScale>0.45</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/08_narcotics_lab/III/energy nexus.nif</NIF>
 			<KFM/>
-			<Button>,Art/Interface/Buttons/Buildings/narcotrafficking_complex.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/narcotrafficking_complex.dds</Button>
 		</BuildingArtInfo>
 <!-- Enrichment Facility-->
 		<BuildingArtInfo>
@@ -457,7 +457,7 @@
 			<fInterfaceScale>0.6</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/11_armory/mil_acad.nif</NIF>
 			<KFM/>
-			<Button>,Art/Interface/Buttons/Buildings/armory.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/armory.dds</Button>
 		</BuildingArtInfo>
 <!-- Magazine-->
 		<BuildingArtInfo>
@@ -548,8 +548,8 @@
 			<fInterfaceScale>0.6</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/13_construction_facility/factory.nif</NIF>
 			<KFM/>
-			<Button>,Art/Interface/Buttons/Crossroads_Atlas1.dds,5,2</Button>
-			<!--<Button>Art/Interface/Buttons/Buildings/construction_facility.dds</Button>-->
+			<Button>Art/Interface/Buttons/Buildings/construction_facility.dds</Button>
+			<!--<Button>,Art/Interface/Buttons/Crossroads_Atlas1.dds,5,2</Button>-->
 		</BuildingArtInfo>
 <!-- Fabrication Plant-->
 		<BuildingArtInfo>
@@ -629,7 +629,7 @@
 			<fInterfaceScale>0.5</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/14_city_center/volkshalle.nif</NIF>
 			<KFM/>
-			<Button>,Art/Interface/Buttons/Buildings/city_center.dds</Button>
+			<Button>Art/Interface/Buttons/Buildings/city_center.dds</Button>
 		</BuildingArtInfo>
 <!-- Elder Council-->
 		<BuildingArtInfo>

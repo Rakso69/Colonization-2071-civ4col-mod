@@ -95,6 +95,10 @@
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
 				<Unit><!--👽Alien-->
 					<UnitClassType>UNITCLASS_COLONIST</UnitClassType>
 					<UnitType>UNIT_NATIVE</UnitType>
@@ -375,30 +379,6 @@
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
-				<Unit><!--⭐🧑‍🚀Intrepid Explorer-->
-					<UnitClassType>UNITCLASS_SCOUT</UnitClassType>
-					<UnitType>UNIT_SCOUT</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Corvette-->
-					<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
-					<UnitType>UNIT_CARAVEL</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Merchantman-->
-					<UnitClassType>UNITCLASS_MERCHANTMAN</UnitClassType>
-					<UnitType>UNIT_MERCHANTMAN</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Freighter-->
-					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_GALLEON</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Frigate-->
-					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
-					<UnitType>UNIT_FRIGATE</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Convoy-->
-					<UnitClassType>UNITCLASS_WAGON_TRAIN</UnitClassType>
-					<UnitType>UNIT_WAGON_TRAIN</UnitType>
-				</Unit>
 			</Units>
 			<Professions>
 				<Profession>
@@ -604,30 +584,6 @@
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
-				<Unit><!--⭐🧑‍🚀Intrepid Explorer-->
-					<UnitClassType>UNITCLASS_SCOUT</UnitClassType>
-					<UnitType>UNIT_SCOUT</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Corvette-->
-					<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
-					<UnitType>UNIT_CARAVEL</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Merchantman-->
-					<UnitClassType>UNITCLASS_MERCHANTMAN</UnitClassType>
-					<UnitType>UNIT_MERCHANTMAN</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Freighter-->
-					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_GALLEON</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Frigate-->
-					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
-					<UnitType>UNIT_FRIGATE</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Convoy-->
-					<UnitClassType>UNITCLASS_WAGON_TRAIN</UnitClassType>
-					<UnitType>UNIT_WAGON_TRAIN</UnitType>
-				</Unit>
 			</Units>
 			<Professions>
 				<Profession>
@@ -815,30 +771,6 @@
 				<Unit><!--🚫Stormtrooper-->
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
 					<UnitType>NONE</UnitType>
-				</Unit>
-				<Unit><!--⭐🧑‍🚀Intrepid Explorer-->
-					<UnitClassType>UNITCLASS_SCOUT</UnitClassType>
-					<UnitType>UNIT_SCOUT</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Corvette-->
-					<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
-					<UnitType>UNIT_CARAVEL</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Merchantman-->
-					<UnitClassType>UNITCLASS_MERCHANTMAN</UnitClassType>
-					<UnitType>UNIT_MERCHANTMAN</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Freighter-->
-					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_GALLEON</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Frigate-->
-					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
-					<UnitType>UNIT_FRIGATE</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Convoy-->
-					<UnitClassType>UNITCLASS_WAGON_TRAIN</UnitClassType>
-					<UnitType>UNIT_WAGON_TRAIN</UnitType>
 				</Unit>
 			</Units>
 			<Professions>
@@ -1044,30 +976,6 @@
 				<Unit><!--🚫Stormtrooper-->
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
 					<UnitType>NONE</UnitType>
-				</Unit>
-				<Unit><!--⭐🧑‍🚀Intrepid Explorer-->
-					<UnitClassType>UNITCLASS_SCOUT</UnitClassType>
-					<UnitType>UNIT_SCOUT</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Corvette-->
-					<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
-					<UnitType>UNIT_CARAVEL</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Merchantman-->
-					<UnitClassType>UNITCLASS_MERCHANTMAN</UnitClassType>
-					<UnitType>UNIT_MERCHANTMAN</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Freighter-->
-					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_GALLEON</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Frigate-->
-					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
-					<UnitType>UNIT_FRIGATE</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Convoy-->
-					<UnitClassType>UNITCLASS_WAGON_TRAIN</UnitClassType>
-					<UnitType>UNIT_WAGON_TRAIN</UnitType>
 				</Unit>
 			</Units>
 			<Professions>
@@ -1284,6 +1192,10 @@
 				</Unit>
 				<Unit><!--🚫Stormtrooper-->
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
 				<Unit><!--👽Alien-->
@@ -1600,6 +1512,10 @@
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
 				<Unit><!--👽Alien-->
 					<UnitClassType>UNITCLASS_COLONIST</UnitClassType>
 					<UnitType>UNIT_NATIVE</UnitType>
@@ -1914,6 +1830,10 @@
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
 				<Unit><!--👽Alien-->
 					<UnitClassType>UNITCLASS_COLONIST</UnitClassType>
 					<UnitType>UNIT_NATIVE</UnitType>
@@ -2224,6 +2144,10 @@
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
 				<Unit><!--👽Alien-->
 					<UnitClassType>UNITCLASS_COLONIST</UnitClassType>
 					<UnitType>UNIT_NATIVE</UnitType>
@@ -2512,10 +2436,6 @@
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
-				<Unit><!--⭐🧑‍🚀Intrepid Explorer-->
-					<UnitClassType>UNITCLASS_SCOUT</UnitClassType>
-					<UnitType>UNIT_SCOUT</UnitType>
-				</Unit>
 				<Unit><!--⭐日本🗾Android-->
 					<UnitClassType>UNITCLASS_RANCHER</UnitClassType>
 					<UnitType>UNIT_ANDROID</UnitType>
@@ -2523,26 +2443,6 @@
 				<Unit><!--⭐日本🗾Artificial Intelligence-->
 					<UnitClassType>UNITCLASS_STATESMAN</UnitClassType>
 					<UnitType>UNIT_AI</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Corvette-->
-					<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
-					<UnitType>UNIT_CARAVEL</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Merchantman-->
-					<UnitClassType>UNITCLASS_MERCHANTMAN</UnitClassType>
-					<UnitType>UNIT_MERCHANTMAN</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Freighter-->
-					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_GALLEON</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Frigate-->
-					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
-					<UnitType>UNIT_FRIGATE</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Convoy-->
-					<UnitClassType>UNITCLASS_WAGON_TRAIN</UnitClassType>
-					<UnitType>UNIT_WAGON_TRAIN</UnitType>
 				</Unit>
 			</Units>
 			<Professions>
@@ -2760,30 +2660,6 @@
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
-				<Unit><!--⭐🧑‍🚀Intrepid Explorer-->
-					<UnitClassType>UNITCLASS_SCOUT</UnitClassType>
-					<UnitType>UNIT_SCOUT</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Corvette-->
-					<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
-					<UnitType>UNIT_CARAVEL</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Merchantman-->
-					<UnitClassType>UNITCLASS_MERCHANTMAN</UnitClassType>
-					<UnitType>UNIT_MERCHANTMAN</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Freighter-->
-					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_GALLEON</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Frigate-->
-					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
-					<UnitType>UNIT_FRIGATE</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Convoy-->
-					<UnitClassType>UNITCLASS_WAGON_TRAIN</UnitClassType>
-					<UnitType>UNIT_WAGON_TRAIN</UnitType>
-				</Unit>
 			</Units>
 			<Professions>
 				<Profession>
@@ -2997,6 +2873,10 @@
 				</Unit>
 				<Unit><!--🚫Stormtrooper-->
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
 				<Unit><!--👽Alien-->
@@ -3295,30 +3175,6 @@
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
-				<Unit><!--⭐🧑‍🚀Intrepid Explorer-->
-					<UnitClassType>UNITCLASS_SCOUT</UnitClassType>
-					<UnitType>UNIT_SCOUT</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Corvette-->
-					<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
-					<UnitType>UNIT_CARAVEL</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Merchantman-->
-					<UnitClassType>UNITCLASS_MERCHANTMAN</UnitClassType>
-					<UnitType>UNIT_MERCHANTMAN</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Freighter-->
-					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_GALLEON</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Frigate-->
-					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
-					<UnitType>UNIT_FRIGATE</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Convoy-->
-					<UnitClassType>UNITCLASS_WAGON_TRAIN</UnitClassType>
-					<UnitType>UNIT_WAGON_TRAIN</UnitType>
-				</Unit>
 			</Units>
 			<Professions>
 				<Profession>
@@ -3534,6 +3390,10 @@
 				</Unit>
 				<Unit><!--🚫Stormtrooper-->
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
 				<Unit><!--👽Alien-->
@@ -3848,6 +3708,10 @@
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
 				<Unit><!--👽Alien-->
 					<UnitClassType>UNITCLASS_COLONIST</UnitClassType>
 					<UnitType>UNIT_NATIVE</UnitType>
@@ -4129,33 +3993,9 @@
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
-				<Unit><!--⭐🧑‍🚀Intrepid Explorer-->
-					<UnitClassType>UNITCLASS_SCOUT</UnitClassType>
-					<UnitType>UNIT_SCOUT</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Corvette-->
-					<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
-					<UnitType>UNIT_CARAVEL</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Merchantman-->
-					<UnitClassType>UNITCLASS_MERCHANTMAN</UnitClassType>
-					<UnitType>UNIT_MERCHANTMAN</UnitType>
-				</Unit>
 				<Unit><!--⭐🉐🏴Ghost in the Shell-->
 					<UnitClassType>UNITCLASS_PRIVATEER</UnitClassType>
 					<UnitType>UNIT_SYNDICATE_GHOST</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Freighter-->
-					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_GALLEON</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Frigate-->
-					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
-					<UnitType>UNIT_FRIGATE</UnitType>
-				</Unit>
-				<Unit><!--🧑‍🚀Convoy-->
-					<UnitClassType>UNITCLASS_WAGON_TRAIN</UnitClassType>
-					<UnitType>UNIT_WAGON_TRAIN</UnitType>
 				</Unit>
 			</Units>
 			<Professions>
@@ -4335,6 +4175,10 @@
 				</Unit>
 				<Unit><!--🚫Veteran Soldier-->
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
 			</Units>
@@ -4601,6 +4445,10 @@
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
 			</Units>
 			<Professions>
 				<Profession>
@@ -4832,7 +4680,7 @@
 			<ShortDescription>TXT_KEY_CIV_ENGLAND_EUROPE_SHORT_DESC</ShortDescription>
 			<Adjective>TXT_KEY_CIV_ENGLAND_EUROPE_ADJECTIVE</Adjective>
 			<Civilopedia>TXT_KEY_CIV_ENGLAND_EUROPE_PEDIA</Civilopedia>
-			<DefaultPlayerColor>PLAYERCOLOR_DARK_RED</DefaultPlayerColor>
+			<DefaultPlayerColor>PLAYERCOLOR_RED_KING</DefaultPlayerColor>
 			<ArtDefineTag>ART_DEF_CIVILIZATION_ENGLAND_EUROPE</ArtDefineTag>
 			<ArtStyleType>ARTSTYLE_EUROPEAN</ArtStyleType>
 			<bPlayable>0</bPlayable>
@@ -4863,6 +4711,10 @@
 				</Unit>
 				<Unit><!--🚫Veteran Soldier-->
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
 			</Units>
@@ -5129,6 +4981,10 @@
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
 			</Units>
 			<Professions>
 				<Profession>
@@ -5391,6 +5247,10 @@
 				</Unit>
 				<Unit><!--🚫Veteran Soldier-->
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
 			</Units>
@@ -5664,6 +5524,10 @@
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
 			</Units>
 			<Professions>
 				<Profession>
@@ -5933,6 +5797,10 @@
 				</Unit>
 				<Unit><!--🚫Veteran Soldier-->
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
 			</Units>
@@ -6206,6 +6074,10 @@
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
 			</Units>
 			<Professions>
 				<Profession>
@@ -6477,6 +6349,10 @@
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
 			</Units>
 			<Professions>
 				<Profession>
@@ -6708,7 +6584,7 @@
 			<ShortDescription>Japan</ShortDescription>
 			<Adjective>Japanese</Adjective>
 			<Civilopedia>TXT_KEY_CIV_ENGLAND_EUROPE_PEDIA</Civilopedia>
-			<DefaultPlayerColor>PLAYERCOLOR_RED_KING</DefaultPlayerColor>
+			<DefaultPlayerColor>PLAYERCOLOR_DARK_RED</DefaultPlayerColor>
 			<ArtDefineTag>ART_DEF_CIVILIZATION_JAPAN_EUROPE</ArtDefineTag>
 			<ArtStyleType>ARTSTYLE_EUROPEAN</ArtStyleType>
 			<bPlayable>0</bPlayable>
@@ -6739,6 +6615,10 @@
 				</Unit>
 				<Unit><!--🚫Veteran Soldier-->
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
 			</Units>
@@ -7003,6 +6883,10 @@
 				</Unit>
 				<Unit><!--🚫Veteran Soldier-->
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
 			</Units>
@@ -7276,6 +7160,10 @@
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
 			</Units>
 			<Professions>
 				<Profession>
@@ -7538,6 +7426,10 @@
 				</Unit>
 				<Unit><!--🚫Veteran Soldier-->
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
 			</Units>
@@ -7811,6 +7703,10 @@
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
 			</Units>
 			<Professions>
 				<Profession>
@@ -8082,6 +7978,10 @@
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
 			</Units>
 			<Professions>
 				<Profession>
@@ -8346,6 +8246,10 @@
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
 			</Units>
 			<Professions>
 				<Profession>
@@ -8573,12 +8477,12 @@
 		</CivilizationInfo>
 		<CivilizationInfo>
 			<Type>CIVILIZATION_BARBARIAN</Type>
-			<Description>TXT_KEY_CIV_BARBARIAN_DESC</Description>
+			<Description>TXT_KEY_CIV_BARBARIAN_DESC</Description><!-- Outer Gods Invasion-->
 			<ShortDescription>TXT_KEY_CIV_BARBARIAN_SHORT_DESC</ShortDescription>
 			<Adjective>TXT_KEY_CIV_BARBARIAN_ADJECTIVE</Adjective>
 			<Civilopedia>TXT_KEY_CIV_BARBARIAN_PEDIA</Civilopedia>
-			<DefaultPlayerColor>PLAYERCOLOR_BLACK</DefaultPlayerColor>
-			<ArtDefineTag>ART_DEF_CIVILIZATION_BARBARIAN</ArtDefineTag>
+			<DefaultPlayerColor>PLAYERCOLOR_DARK_INDIGO</DefaultPlayerColor>
+			<ArtDefineTag>ART_DEF_INVASION_OUTER_GODS</ArtDefineTag>
 			<ArtStyleType>ARTSTYLE_NATIVES_EAST</ArtStyleType>
 			<bPlayable>0</bPlayable>
 			<bAIPlayable>0</bAIPlayable>
@@ -8594,10 +8498,15 @@
 			<FavoredTerrain>NONE</FavoredTerrain>
 			<DefaultProfession>NONE</DefaultProfession>
 			<Cities>
-				<City/>
+				<City>R’lyeh</City>
 			</Cities>
 			<Buildings/>
-			<Units/>
+			<Units>
+				<Unit><!--👑🪼Greater Warp Demon-->
+					<UnitClassType>UNITCLASS_KILLBOT</UnitClassType>
+					<UnitType>UNIT_ABOMINATION</UnitType>
+				</Unit>
+			</Units>
 			<Professions/>
 			<Traits/>
 			<FreeUnitClasses/>
@@ -8606,6 +8515,12 @@
 			<FreeYields/>
 			<CapturedCityUnitClass>NONE</CapturedCityUnitClass>
 			<InitialCivics/>
+			<Leaders>
+				<Leader>
+					<LeaderName>LEADER_INVASION_OUTER_GODS</LeaderName>
+					<bLeaderAvailability>1</bLeaderAvailability>
+				</Leader>
+			</Leaders>
 			<DerivativeCiv>NONE</DerivativeCiv>
 			<CivilizationSelectionSound/>
 			<CivilizationActionSound/>

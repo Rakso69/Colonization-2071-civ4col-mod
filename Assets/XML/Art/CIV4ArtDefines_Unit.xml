@@ -31,7 +31,7 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_SPIDER</Type>
 			<Button>Art/Interface/Buttons/Units/giant_spider.dds</Button>
-			<FullLengthIcon>Art/Units/spider/spider.dds</FullLengthIcon>
+			<FullLengthIcon>Art/Interface/Buttons/Units/giant_spider.dds</FullLengthIcon>
 			<fScale>0.2</fScale>
 			<fInterfaceScale>2.0</fInterfaceScale>
 			<NIF>Art/Units/_feral/spider/Abman-Spider.nif</NIF>
@@ -49,7 +49,7 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_AZER</Type>
 			<Button>Art/Interface/Buttons/Units/progenitor_ai.dds</Button>
-			<FullLengthIcon>Art/Interface/Buttons/Units/ai.dds</FullLengthIcon>
+			<FullLengthIcon>Art/Interface/Buttons/Units/progenitor_ai.dds</FullLengthIcon>
 			<fScale>0.4</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Units/_feral/azer/sfx_moloch_head.nif</NIF>
@@ -63,11 +63,11 @@
 				<AudioRunTypeEnd/>
 			</AudioRunSounds>
 		</UnitArtInfo>
-<!--# Abomination-->
+<!--# Greater Warp Demon-->
 		<UnitArtInfo>
-			<Type>ART_DEF_UNIT_HYBOREM</Type>
-			<Button>Art/Interface/Buttons/Units/abomination.dds</Button>
-			<FullLengthIcon>Art/Interface/Buttons/Units/balor.dds</FullLengthIcon>
+			<Type>ART_DEF_UNIT_KHORNE</Type>
+			<Button>Art/Interface/Buttons/Units/bloodthirster_of_khorne.dds</Button>
+			<FullLengthIcon>Art/Interface/Buttons/Units/bloodthirster_of_khorne.dds</FullLengthIcon>
 			<fScale>20</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Units/_feral/Khorne/bloodthirster.nif</NIF>
@@ -85,7 +85,7 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_SPINNER</Type>
 			<Button>Art/Interface/Buttons/Units/killbots.dds</Button>
-			<FullLengthIcon>Art/Interface/Buttons/Units/spinner.dds</FullLengthIcon>
+			<FullLengthIcon>Art/Interface/Buttons/Units/killbots.dds</FullLengthIcon>
 			<fScale>0.2</fScale>
 			<fInterfaceScale>2.0</fInterfaceScale>
 			<NIF>Art/Units/_feral/killbots/spinner.nif</NIF>
@@ -103,7 +103,7 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_BRAVE</Type>
 			<Button>Art/Interface/Buttons/Units/grey.dds</Button>
-			<FullLengthIcon>,Art/Interface/Screens/City_Management/NativeScout.dds</FullLengthIcon>
+			<FullLengthIcon>Art/Interface/Buttons/Units/alien_city.dds</FullLengthIcon>
 			<fScale>0.5</fScale>
 			<fInterfaceScale>0.95</fInterfaceScale>
 			<NIF>Art/Units/_alien/alien/alien grey brave.nif</NIF>
@@ -224,7 +224,7 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_HUMANHYBRID</Type>
 			<Button>Art/Interface/Buttons/Units/human_hybrid.dds</Button>
-			<FullLengthIcon>,Art/Interface/Screens/City_Management/Hybrid.dds</FullLengthIcon>
+			<FullLengthIcon>Art/Interface/Buttons/Units/alien_city.dds</FullLengthIcon>
 			<fScale>0.5</fScale>
 			<fInterfaceScale>0.87</fInterfaceScale>
 			<NIF>Art/Units/_alien/alien/alien human hybrid.nif</NIF>
@@ -278,7 +278,7 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_ALIENCROSSBREED</Type>
 			<Button>Art/Interface/Buttons/Units/crossbreed.dds</Button>
-			<FullLengthIcon>,Art/Interface/Screens/City_Management/Hybrid.dds</FullLengthIcon>
+			<FullLengthIcon>Art/Interface/Buttons/Units/alien_city.dds</FullLengthIcon>
 			<fScale>40</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Units/_alien/alien_crossbreed/deathclaw skinp.nif</NIF>
@@ -296,7 +296,7 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_CONVERTED_NATIVE</Type>
 			<Button>Art/Interface/Buttons/Units/alien_hybrid.dds</Button>
-			<FullLengthIcon>,Art/Interface/Screens/City_Management/nativescout.dds</FullLengthIcon>
+			<FullLengthIcon>Art/Interface/Buttons/Units/alien_city.dds</FullLengthIcon>
 			<fScale>0.5</fScale>
 			<fInterfaceScale>0.87</fInterfaceScale>
 			<NIF>Art/Units/_citizen/converted_alien/swordsman_fx.nif</NIF>
@@ -331,7 +331,7 @@
 <!--#🌾Expert Farmer-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_FARMER</Type>
-			<Button>,Art/Interface/Buttons/Unit_Resource_Colonization_Atlas.dds,2,3</Button>
+			<Button>Art/Interface/Buttons/Units/expert_farmer.dds</Button>
 			<FullLengthIcon>,Art/Interface/Screens/City_Management/Expert_Farmer.dds</FullLengthIcon>
 			<fScale>0.44</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
@@ -369,12 +369,12 @@
 <!--#🛢️Expert Oilman-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_COAL_MINER</Type>
-			<Button>Art/Interface/Buttons/Units/expert_oilman.dds</Button>
-			<FullLengthIcon>Art/Interface/Screens/City_Management/expert_oilman.dds</FullLengthIcon>
+			<Button>Art/Buttons/Units/CoalMinerBut.dds</Button>
+			<FullLengthIcon>Art/Buttons/Units/CoalMinerCM.dds</FullLengthIcon>
 			<fScale>0.48</fScale>
 			<fInterfaceScale>0.9</fInterfaceScale>
-			<NIF>Art/Units/expert_coal_miner/Expert_Coal_Miner2.nif</NIF>
-			<KFM>Art/Units/expert_coal_miner/Expert_Silver_Miner.kfm</KFM>
+			<NIF>Art/Units/Expert_Coal_Miner/Expert_Coal_Miner.nif</NIF>
+			<KFM>Art/Units/Expert_Coal_Miner/Expert_Silver_Miner.kfm</KFM>
 			<fBattleDistance>0.35</fBattleDistance>
 			<fRangedDeathTime>0.31</fRangedDeathTime>
 			<bActAsRanged>0</bActAsRanged>
@@ -407,7 +407,7 @@
 			<Type>ART_DEF_UNIT_CYBORG</Type>
 			<!--<Button>,Art/Interface/Buttons/afterworld_atlas.dds,3,12.dds</Button>-->
 			<Button>Art/Interface/Buttons/Units/industrious_cyborg.dds</Button>
-			<FullLengthIcon>,Art/Interface/Buttons/afterworld_atlas.dds,3,12.dds</FullLengthIcon>
+			<FullLengthIcon>Art/Interface/Buttons/Units/industrious_cyborg_city.dds</FullLengthIcon>
 			<fScale>0.40</fScale>
 			<fInterfaceScale>0.95</fInterfaceScale>
 			<NIF>Art/Units/_alien/industrious_cyborg/severinv.nif</NIF>
@@ -442,7 +442,7 @@
 <!--#💎Expert Prospector-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_SILVERMINER</Type>
-			<Button>Art/Interface/Buttons/Units/miner.dds</Button>
+			<Button>Art/Interface/Buttons/Units/expert_prospector.dds</Button>
 			<!--#<Button>,Art/Interface/Buttons/Unit_Resource_Colonization_Atlas.dds,2,5</Button>-->
 			<FullLengthIcon>,Art/Interface/Screens/City_Management/Expert_Silverminer.dds</FullLengthIcon>
 			<fScale>0.45</fScale>
@@ -463,11 +463,11 @@
 <!--#🪨Expert Ore Miner-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_MINER</Type>
-			<Button>Art/Interface/Buttons/Units/miner.dds</Button>
+			<Button>Art/Interface/Buttons/Units/expert_ore_miner.dds</Button>
 			<FullLengthIcon>,Art/Interface/Screens/City_Management/Expert_Miner.dds</FullLengthIcon>
 			<fScale>0.45</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Units/moonworker/astro grey.nif</NIF>
+			<NIF>Art/Units/moonworker/astro red.nif</NIF>
 			<KFM>Art/Units/moonworker/modernworker.kfm</KFM>
 			<!--<NIF>Art/Units/Expert_Ore_Miner/Expert_Ore_Miner.nif</NIF>-->
 			<!--<KFM>Art/Units/Expert_Ore_Miner/Expert_Ore_Miner.kfm</KFM>-->
@@ -501,7 +501,7 @@
 <!--#🦠Expert Spore Grower-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_COTTON_PLANTER</Type>
-			<Button>,Art/Interface/Buttons/Unit_Resource_Colonization_Atlas.dds,5,4</Button>
+			<Button>Art/Interface/Buttons/Units/expert_spore_grower.dds</Button>
 			<FullLengthIcon>,Art/Interface/Screens/City_Management/Expert_CottonPlanter.dds</FullLengthIcon>
 			<fScale>0.44</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
@@ -543,7 +543,7 @@
 			<FullLengthIcon>,Art/Interface/Screens/City_Management/Expert_Trapper.dds</FullLengthIcon>
 			<fScale>0.44</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Units/_citizen/archeologist/spy.nif</NIF>
+			<NIF>Art/Units/_citizen/archeologist/spy_fx.nif</NIF>
 			<KFM>Art/Units/_citizen/archeologist/spy.kfm</KFM>
 			<fBattleDistance>0.35</fBattleDistance>
 			<fRangedDeathTime>0.31</fRangedDeathTime>
@@ -668,7 +668,7 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_ANDROID</Type>
 			<Button>Art/Interface/Buttons/Units/japan_android.dds</Button>
-			<FullLengthIcon>Art/Interface/Buttons/Units/cyborg.dds</FullLengthIcon>
+			<FullLengthIcon>,Art/Interface/Screens/City_Management/Expert_Rancher.dds</FullLengthIcon>
 			<fScale>0.45</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Units/_citizen/saminfantry/saminfantry.nif</NIF>
@@ -706,7 +706,7 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_CULTIVATOR</Type>
 			<Button>Art/Interface/Buttons/Units/cultivator.dds</Button>
-			<FullLengthIcon>Art/Interface/Buttons/Units/cultivator.dds</FullLengthIcon>
+			<FullLengthIcon>Art/Interface/Buttons/Units/cultivator_city.dds</FullLengthIcon>
 			<fScale>0.50</fScale>
 			<fInterfaceScale>0.95</fInterfaceScale>
 			<NIF>Art/Units/moonworker/alien cultivator.nif</NIF>
@@ -722,13 +722,48 @@
 		</UnitArtInfo>
 <!--#🏗️Hardy Laborer-->
 		<UnitArtInfo>
-			<Type>ART_DEF_UNIT_PROFESSION_UNIT_PIONEER</Type>
-			<Button>Art/Interface/Buttons/Units/hardy_pioneer.dds</Button>
+			<Type>ART_DEF_UNIT_PIONEER</Type>
+			<Button>Art/Interface/Buttons/Units/hardy_laborer.dds</Button>
 			<FullLengthIcon>,Art/Interface/Screens/City_Management/Hardy_Pioneer.dds</FullLengthIcon>
+			<fScale>0.45</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Units/moonworker/modernworker_fx.nif</NIF>
+			<KFM>Art/Units/moonworker/modernworker.kfm</KFM>
+			<fBattleDistance>0.35</fBattleDistance>
+			<fRangedDeathTime>0.31</fRangedDeathTime>
+			<bActAsRanged>0</bActAsRanged>
+			<TrainSound>AS2D_UNIT_BUILD_UNIT</TrainSound>
+			<AudioRunSounds>
+				<AudioRunTypeLoop/>
+				<AudioRunTypeEnd/>
+			</AudioRunSounds>
+		</UnitArtInfo>
+<!--#🏗️(Mechanized Laborer) Profession-->
+		<UnitArtInfo>
+			<Type>ART_DEF_UNIT_PROFESSION_MECHANIZED_LABORER</Type>
+			<Button>Art/Interface/Buttons/Units/hardy_mechanizedpro.dds</Button>
+			<FullLengthIcon>Art/Interface/Buttons/Units/hardy_mechanizedpro_city.dds</FullLengthIcon>
+			<fScale>0.20</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Units/moonworker/II/chimera_apc.nif</NIF>
+			<KFM>Art/Units/moonworker/II/chimera_apc.kfm</KFM>
+			<fBattleDistance>0.35</fBattleDistance>
+			<fRangedDeathTime>0.31</fRangedDeathTime>
+			<bActAsRanged>1</bActAsRanged>
+			<TrainSound>AS2D_UNIT_BUILD_UNIT</TrainSound>
+			<AudioRunSounds>
+				<AudioRunTypeLoop/>
+				<AudioRunTypeEnd/>
+			</AudioRunSounds>
+		</UnitArtInfo>
+<!--#🏗️Hardy Laborer (laborer) Profession-->
+		<UnitArtInfo>
+			<Type>ART_DEF_UNIT_PROFESSION_UNIT_PIONEER</Type>
+			<Button>Art/Interface/Buttons/Units/hardy_laborerpro.dds</Button>
+			<FullLengthIcon>,Art/Interface/Screens/City_Management/Pioneer_no_tools.dds</FullLengthIcon>
 			<fScale>0.48</fScale>
 			<fInterfaceScale>1.02</fInterfaceScale>
 			<NIF>Art/Units/moonworker/astro.nif</NIF>
-			<!--<NIF>Art/Units/moonworker/modernworker_fx.nif</NIF>-->
 			<KFM>Art/Units/moonworker/modernworker.kfm</KFM>
 			<fBattleDistance>0.35</fBattleDistance>
 			<fRangedDeathTime>0.31</fRangedDeathTime>
@@ -739,27 +774,10 @@
 				<AudioRunTypeEnd/>
 			</AudioRunSounds>
 		</UnitArtInfo>
-		<UnitArtInfo>
-			<Type>ART_DEF_UNIT_PIONEER</Type>
-			<Button>Art/Interface/Buttons/Units/pioneer.dds</Button>
-			<FullLengthIcon>,Art/Interface/Screens/City_Management/Pioneer_no_tools.dds</FullLengthIcon>
-			<fScale>0.45</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Units/moonworker/astro.nif</NIF>
-			<!--<NIF>Art/Units/moonworker/modernworker_fx.nif</NIF>-->
-			<KFM>Art/Units/moonworker/modernworker.kfm</KFM>
-			<fBattleDistance>0.35</fBattleDistance>
-			<fRangedDeathTime>0.31</fRangedDeathTime>
-			<bActAsRanged>0</bActAsRanged>
-			<TrainSound>AS2D_UNIT_BUILD_UNIT</TrainSound>
-			<AudioRunSounds>
-				<AudioRunTypeLoop/>
-				<AudioRunTypeEnd/>
-			</AudioRunSounds>
-		</UnitArtInfo>
+<!--#🏗️Colonist (Laborer) Profession-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_PROFESSION_PIONEER</Type>
-			<Button>Art/Interface/Buttons/Units/pioneer_2.dds</Button>
+			<Button>Art/Interface/Buttons/Units/laborerpro.dds</Button>
 			<FullLengthIcon>,Art/Interface/Screens/City_Management/Pioneer.dds</FullLengthIcon>
 			<fScale>0.45</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
@@ -814,7 +832,7 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_ELDER</Type>
 			<Button>Art/Interface/Buttons/Units/elder.dds</Button>
-			<FullLengthIcon>Art/Interface/Buttons/Units/elder.dds</FullLengthIcon>
+			<FullLengthIcon>Art/Interface/Buttons/Units/elder_city.dds</FullLengthIcon>
 			<fScale>0.40</fScale>
 			<fInterfaceScale>0.95</fInterfaceScale>
 			<NIF>Art/Units/_alien/alien_elder/spearman.nif</NIF>
@@ -850,7 +868,7 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_POLYMATH</Type>
 			<Button>Art/Interface/Buttons/Units/polymath.dds</Button>
-			<FullLengthIcon>Art/Interface/Buttons/Units/polymath.dds</FullLengthIcon>
+			<FullLengthIcon>Art/Interface/Buttons/Units/polymath_city.dds</FullLengthIcon>
 			<fScale>0.40</fScale>
 			<fInterfaceScale>0.95</fInterfaceScale>
 			<NIF>Art/Units/_alien/alien_polymath/grenadier.nif</NIF>
@@ -917,15 +935,14 @@
 			</AudioRunSounds>
 		</UnitArtInfo>
 <!--#⚔️	Colonial Garrison-->
-<!--Disabled
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_DRONE</Type>
 			<Button>,Art/Interface/Buttons/NextWar_Atlas.dds,2,1</Button>
 			<FullLengthIcon>,Art/Interface/Screens/City_Management/Veteran_Musketman.dds</FullLengthIcon>
 			<fScale>0.48</fScale>
 			<fInterfaceScale>0.9</fInterfaceScale>
-			<NIF>Art/Units/drone/nextwar_automaton_fx.nif</NIF>
-			<KFM>Art/Units/drone/nextwar_automaton.kfm</KFM>
+			<NIF>Art/Units/_military/NextWar_Automaton/NextWar_Automaton_FX.nif</NIF>
+			<KFM>Art/Units/_military/NextWar_Automaton/NextWar_Automaton.kfm</KFM>
 			<fBattleDistance>0.35</fBattleDistance>
 			<fRangedDeathTime>0.31</fRangedDeathTime>
 			<bActAsRanged>0</bActAsRanged>
@@ -935,7 +952,6 @@
 				<AudioRunTypeEnd/>
 			</AudioRunSounds>
 		</UnitArtInfo>
-/Disabled-->
 <!--#⭐⚔️Elite Warrior (👽Replaces Veteran Warrior)-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_ELITE</Type>
@@ -1140,7 +1156,7 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_MUTANT</Type>
 			<Button>Art/Interface/Buttons/Units/mutant.dds</Button>
-			<FullLengthIcon>,Art/Interface/Screens/City_Management/NativeScout.dds</FullLengthIcon>
+			<FullLengthIcon>Art/Interface/Buttons/Units/mutant_city.dds</FullLengthIcon>
 			<fScale>0.60</fScale>
 			<fInterfaceScale>0.95</fInterfaceScale>
 			<NIF>Art/Units/_alien/alien_mutant/scout.nif</NIF>
@@ -1158,7 +1174,7 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_EVANGELION_ANGEL</Type>
 			<Button>,Art/Interface/Buttons/afterworld_atlas.dds,4,4.dds</Button>
-			<FullLengthIcon>,Art/Interface/Screens/City_Management/Cannon.dds</FullLengthIcon>
+			<FullLengthIcon>,Art/Interface/Buttons/afterworld_atlas.dds,4,4.dds</FullLengthIcon>
 			<fScale>2.0</fScale>
 			<fInterfaceScale>0.4</fInterfaceScale>
 			<NIF>Art/Units/_military/progenitor_angel/marauder_fx.nif</NIF>
@@ -1282,6 +1298,31 @@
 			<SelectionSound>AS3D_UN_SPACESHIP_FORTIFY</SelectionSound>
 			<ActionSound>AS3D_UN_SPACESHIP_FORTIFY</ActionSound>
 		</UnitArtInfo>
+<!--#🏗️🛸Colony Ship-->
+		<UnitArtInfo>
+			<Type>ART_DEF_UNIT_COLONY_SHIP</Type>
+			<Button>,Art/Interface/Buttons/finalfrontier1_atlas.dds,1,1</Button>
+			<FullLengthIcon>Art/Interface/Screens/Europe/ships/europe_galleon.dds</FullLengthIcon>
+			<fScale>0.5</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Units/_space/FinalFrontier_ColonyShip/ColonyShip_FX.nif</NIF>
+			<KFM>Art/Units/_space/FinalFrontier_ColonyShip/ColonyShip.kfm</KFM>
+			<iDamageStates>4</iDamageStates>
+			<fBattleDistance>0.35</fBattleDistance>
+			<fRangedDeathTime>0.31</fRangedDeathTime>
+			<bSmoothMove>1</bSmoothMove>
+			<fAngleInterpRate>720.0</fAngleInterpRate>
+			<fBankRate>.3</fBankRate>
+			<fExchangeAngle>25.0</fExchangeAngle>
+			<bActAsRanged>1</bActAsRanged>
+			<TrainSound>AS2D_UNIT_BUILD_UNIT</TrainSound>
+			<AudioRunSounds>
+				<AudioRunTypeLoop/>
+				<AudioRunTypeEnd/>
+			</AudioRunSounds>
+			<SelectionSound>AS3D_UN_SPACESHIP_FORTIFY</SelectionSound>
+			<ActionSound>AS3D_UN_SPACESHIP_FORTIFY</ActionSound>
+		</UnitArtInfo>
 <!--#⭐🛸Saucer (👽Replaces Corvette,🌠Amphibious)-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_SAUCER</Type>
@@ -1385,7 +1426,7 @@
 <!--#⭐🛸Ghost in the Shell (🉐🏴Replaces Privateer)-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_SYNDICATE_GHOST</Type>
-			<Button>,Art/Interface/Buttons/finalfrontier1_atlas.dds,8,3</Button>
+			<Button>Art/Interface/Buttons/Units/syndicate_ghost.dds</Button>
 			<FullLengthIcon>Art/Interface/Screens/Europe/ships/europe_privateer.dds</FullLengthIcon>
 			<fScale>0.8</fScale>
 			<fInterfaceScale>0.5</fInterfaceScale>
@@ -1482,21 +1523,21 @@
 			<SelectionSound>AS3D_UN_SPACESHIP_FORTIFY</SelectionSound>
 			<ActionSound>AS3D_UN_SPACESHIP_FORTIFY</ActionSound>
 		</UnitArtInfo>
-<!--#💸🛸Freighter--><!--#🏗️🛸Colony Ship-->
+<!--#💸🛸Freighter-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_GALLEON</Type>
-			<Button>,Art/Interface/Buttons/finalfrontier1_atlas.dds,1,1</Button>
+			<Button>,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,7,1</Button>
 			<FullLengthIcon>Art/Interface/Screens/Europe/ships/europe_galleon.dds</FullLengthIcon>
-			<fScale>0.5</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Units/_space/FinalFrontier_ColonyShip/ColonyShip_FX.nif</NIF>
-			<KFM>Art/Units/_space/FinalFrontier_ColonyShip/ColonyShip.kfm</KFM>
+			<fScale>0.8</fScale>
+			<fInterfaceScale>0.8</fInterfaceScale>
+			<NIF>Art/Units/_space/FinalFrontier_InvasionShip/InvasionShip_FX.nif</NIF>
+			<KFM>Art/Units/_space/FinalFrontier_InvasionShip/InvasionShip.kfm</KFM>
 			<iDamageStates>4</iDamageStates>
-			<fBattleDistance>0.35</fBattleDistance>
-			<fRangedDeathTime>0.31</fRangedDeathTime>
+			<fBattleDistance>0.5</fBattleDistance>
+			<fRangedDeathTime>0.12</fRangedDeathTime>
 			<bSmoothMove>1</bSmoothMove>
 			<fAngleInterpRate>720.0</fAngleInterpRate>
-			<fBankRate>.3</fBankRate>
+			<fBankRate>.2</fBankRate>
 			<fExchangeAngle>25.0</fExchangeAngle>
 			<bActAsRanged>1</bActAsRanged>
 			<TrainSound>AS2D_UNIT_BUILD_UNIT</TrainSound>
@@ -1561,7 +1602,7 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_BATTLESTAR</Type>
 			<Button>Art/Interface/Buttons/Units/battlestar.dds</Button>
-			<FullLengthIcon>Art/Interface/Buttons/Units/borgsphere.dds</FullLengthIcon>
+			<FullLengthIcon>Art/Interface/Buttons/Units/battlestar.dds</FullLengthIcon>
 			<fScale>0.055</fScale>
 			<fInterfaceScale>0.6</fInterfaceScale>
 			<NIF>Art/Units/_space/alien/borgsphere.nif</NIF>
@@ -1589,8 +1630,8 @@
 			<FullLengthIcon>Art/Interface/Screens/Europe/ships/europe_man_o_war.dds</FullLengthIcon>
 			<fScale>0.2</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Units/_military/FTL/Carrier_FX.nif</NIF>
-			<KFM>Art/Units/_military/FTL/Carrier.kfm</KFM>
+			<NIF>Art/Units/_space/FTL/Carrier_FX.nif</NIF>
+			<KFM>Art/Units/_space/FTL/Carrier.kfm</KFM>
 			<iDamageStates>4</iDamageStates>
 			<fBattleDistance>0.35</fBattleDistance>
 			<fRangedDeathTime>0.31</fRangedDeathTime>
@@ -1614,8 +1655,8 @@
 			<FullLengthIcon>Art/Interface/Screens/Europe/ships/europe_man_o_war.dds</FullLengthIcon>
 			<fScale>0.3</fScale>
 			<fInterfaceScale>0.6</fInterfaceScale>
-			<NIF>Art/Units/_military/FinalFrontier_Battleship/III/Battleship_FX.nif</NIF>
-			<KFM>Art/Units/_military/FinalFrontier_Battleship/III/Battleship.kfm</KFM>
+			<NIF>Art/Units/_space/FinalFrontier_Battleship/III/Battleship_FX.nif</NIF>
+			<KFM>Art/Units/_space/FinalFrontier_Battleship/III/Battleship.kfm</KFM>
 			<iDamageStates>4</iDamageStates>
 			<fBattleDistance>0.35</fBattleDistance>
 			<fRangedDeathTime>0.31</fRangedDeathTime>
@@ -1690,8 +1731,8 @@
 			<FullLengthIcon>,Art/Interface/Game Hud/Actions/need_button.dds</FullLengthIcon>
 			<fScale>1.2</fScale>
 			<fInterfaceScale>1.2</fInterfaceScale>
-			<NIF>Art/Units/Trade_Goods/02_hydrocarbons/Ore.nif</NIF>
-			<!--<NIF>Art/Units/Coal/Ore.nif</NIF>-->
+			<NIF>Art/Units/Coal/Ore.nif</NIF>
+			<!--<NIF>Art/Units/Trade_Goods/02_hydrocarbons/Ore.nif</NIF>-->
 			<KFM/>
 			<TrailDefinition>
 				<Texture>Art/Shared/wheeltread.dds</Texture>
@@ -1979,7 +2020,7 @@
 <!--#🪨	Ore-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_ORE</Type>
-			<Button>,Art/Interface/Buttons/Unit_Resource_Colonization_Atlas.dds,8,1</Button>
+			<Button>Art/Interface/Buttons/Resources/oreunit.dds</Button>
 			<FullLengthIcon>,Art/Interface/Game Hud/Actions/need_button.dds</FullLengthIcon>
 			<fScale>1.2</fScale>
 			<fInterfaceScale>1.2</fInterfaceScale>
@@ -2114,7 +2155,7 @@
 <!--#📦Alien Palanquin (👽Replaces Convoy)-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_PALANQUIN</Type>
-			<Button>,Art/Interface/Buttons/colonization_atlas_military.dds,8,16</Button>
+			<Button>Art/Interface/Buttons/Units/alien_palanquin.dds</Button>
 			<FullLengthIcon>,Art/Interface/Screens/City_Management/Wagon_Train.dds</FullLengthIcon>
 			<fScale>0.16</fScale>
 			<fInterfaceScale>1.2</fInterfaceScale>
@@ -2224,7 +2265,7 @@
 <!--#💸Progenitor Treasure-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_TREASURE_UNIT</Type>
-			<Button>,Art/Interface/Buttons/Units/treasure.dds</Button>
+			<Button>Art/Interface/Buttons/Units/treasure.dds</Button>
 			<FullLengthIcon>,Art/Interface/Screens/City_Management/Treasure.dds</FullLengthIcon>
 			<fScale>0.7</fScale>
 			<fInterfaceScale>1.5</fInterfaceScale>
@@ -2270,7 +2311,7 @@
 <!--# Mound Beast-->
 <!--# Giant Spider-->
 <!--# Progenitor AI-->
-<!--# Abomination-->
+<!--# Greater Warp Demon-->
 <!--# Progenitor Killbots-->
 <!--# Alien (👽Replaces Free Colonist)-->
 <!--# Free Colonist-->

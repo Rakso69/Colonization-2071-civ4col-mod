@@ -1,0 +1,62 @@
+CONCEPT_ALIENS
+"However, living in a state of pastoral anarchy, each alien settlment must construct a [LINK=BUILDING_ZIGGURAT]Ziggurat[\LINK] in each settlement to enable further organized development, effectively giving Human players a 50-turn head start."
+-The Ziggurat mechanic is no longer a thing for the Capital city (the first one you build in-game), it is only a mechanic for the other cities. And you don't build a Ziggurat anymore because that didn't work. It is a normal Construction Facility.
+
+"The Ziggurat also functions as a basic market building to represent the aliens' internal economy; enabling each settlement to automatically sell excess resources at a small fraction of the price on Earth."
+-The alien unique buildings do mostly function like this, but they are no longer available that early in such quantity. They are the final upgrades of the default Earth buildings, or one above that. It is worth a mention that the amount of worker slots at buildings differ between Colonists and Aliens. For example an Elder Council(the upgraded City Center) has 4 working slots instead of the buildings' original 3.
+
+"[NEWLINE][H1]Aliens and Earth:[\H1][NEWLINE]After gathering sufficient industrial goods and building an Alien Shipyard, aliens may construct a variety of space vessels such as the [LINK=UNIT_SAUCER]Saucer[\LINK] and [LINK=UNIT_UFO]UFO[\LINK], and can eventually discover and enter the wormhole to Earth."
+-They can travel to Earth whenever they want. They do get a Saucer(Corvette) or a Saucer and a Smuggler(Merchantman) at the start of the game.
+
+"(Note that Alien Saucers use a different propulsion mechanism than the Earthling vessels, which are restricted to Deep Space and Low Orbit tiles. By right-clicking over a planet's interior, a Saucer can fly through the entirety of its atmosphere, reaching colonies not directly accessible to Earthling ships.)"
+-lol - Forgot that this was an author-intended thing. That's why I made the alien ships amphibious. They can traverse both Space and Planets.
+
+"Due to the monopolistic practices of the Earth superpowers, aliens can only conduct covert trade with disenfranchised Third World nations, and the market prices they receive will be much less favorable than human colonies."
+-Leave it I don't even know if this is a thing because I had changed nothing about resources prices fluctuations.
+
+"[NEWLINE][H1]Aliens and Human Colonists:[\H1][NEWLINE]The political situation in some Earthling nations has become so intolerable that some aliens are able to abduct a steady trickle of human colonists to their worlds by building an [LINK=BUILDING_HABITAT]Earthling Habitat[\LINK] in their cities to generate Propaganda. Although aliens again have a severe disadvantage in attracting emigrants compared to the human colonies, the manufacturing skills of even unspecialized human colonists make them greatly prized among the species of the New Worlds."
+-Yeah they can do that. Is it good? No. Propaganda(Crosses) is almost completely useless for the Alien Civilizations because their Leaders start with a trait that gives them +1000% Propaganda required for Immigration.
+
+Abducting human colonists by force is another alternative to gain access to their skills - on conquering a human colony, aliens can obtain enough Earthling tissue to create a [LINK=UNIT_HUMANHYBRID]Human Hybrid[\LINK] who will also work in manufacturing facilities much more efficiently than the aliens themselves.
+-I think the Hybrid could now actually live among the Natives or at least do Education at the Academy/University/Direct Neural Interface, but I don't remember this anymore.
+
+Long dismissed as the rantings of conspiracy theorists, secret societies such as the [LINK=BUILDING_ILLUMINATED_CIRCLE]Illuminati[\LINK] have covertly permeated alien and human societies for centuries, and have many secret adherents among certain select members of the Earth elite.
+-[LINK=BUILDING_ILLUMINATED_CIRCLE]Illuminati[\LINK] change to [LINK=BUILDING_ILLUMINATI_LODGE]Illuminati Lodge[\LINK]. (It Replaces Network Backbone)
+
+Through deep connections to this far-reaching conspiracy, the alien elders of an Illuminati Lodge could begin to challenge the dominance of the Progenitors among their race and even attract highly-placed human Directors to conspire with their agenda.[NEWLINE],
+-Actually a Venerable Elder requires a Narcotics Lab building and has always been like this so this sentence needs changing.
+
+[H1]Alien Improvements:[\H1][NEWLINE]A number of secret alien sites are scattered across the New Worlds, though many are quickly ransacked for treasure by the Earthling imperialists. If these sites can be captured and protected, a Venerable Elder working as a Ritualist on a tile containing a sacred [LINK=IMPROVEMENT_MENHIR]Menhir[\LINK] can be a powerful force for Liberty, or an Elder working at an [LINK=IMPROVEMENT_ALTAR]Abduction Site[\LINK] can engineer the abduction of human servitors from Earth.
+-Every Alien can perform this job. You don't need a Venerable Elder for that. Always been like this and honestly blocking that possibility behind required research or something is a stupid idea because the Colonists Civilizations will already loot or start looting ruins the moment you would unlock it. Not a mention that Aliens themselves can't loot ruins or even have an Intrepid Explorer to begin with because that unit's primary purpose is entirely pointless for the Aliens, so that makes the Intrepid Explorer only be a Colonists Civilizations exclusive unique unit. Aliens can however have a Explorer(Scout) profession, but it's only useful for +1 Movement and +2 Strength.
+
+With enough Biotech, aliens can train a [LINK=UNIT_CULTIVATOR]Cultivator[\LINK] capable of building Alien Garden and Alien Burrow improvements, that given time will develop into rich Plantation and Cavern complexes that create significant wealth.
+-building *Alien Fertilizers.
+
+-There is not a single mention about the requiring Colonist Specialists to conduct advanced research and that they can (99% of the time) obtain them only through direct purchase from Earth because to Live among the Natives or to do Education is almost (99%) entirely disabled. They start with a lot of Colonies, Aliens (Replaces Free Colonist) and resources already gathered (Some of their Colonies start with around or above full stacks of resources for example 300 Xenospores or 200 Uranium), but their crucial spender in the game is the purchase of specialists from Earth after they unlock the technologies. Especially Expert Farmers and Expert Astronauts are very useful and they might buy several of them, not single ones, since the Alien units have got nowhere the same potential of increasing food yield as the Colonists, and they will need this to eventually reach a somewhat equal production of advanced goods, wwhich they desperately need for the much greater Units production costs.
+
+-No mention about Alien Civilizations passively producing Aliens (Replaces Free Colonist) from time to time, just out of nowhere and on top of the collect 200 food mechanic, so they get vastly more basic population sooner on top of already starting the game big.
+
+-No mention about Aliens being completely unable to produce the Hydrocarbons resource. I made this available to be produced in 2.01v+ through the Wonder Building (Progenitor Autofab), still not by a settler at all. Only through passive building production.
+
+
+CONCEPT_TECH
+-All good informations. So check if you maybe want to make more decent writing.
+
+CONCEPT_EXPEDITIONS
+[H1]Sites and Expeditions:[\H1]A variety of rare and mysterious sites such as [LINK=BONUS_TEMPLE]Ruined Temples[\LINK] and [LINK=BONUS_PYRAMID]Iridescent Pyramids[\LINK]can be found dotted throughout the ruins and forests of the New Worlds. See Bonus Resources in the Civilopedia for a complete list and descriptions. After obtaining control of one of these sites, an Intrepid Explorer or Intrepid Archaeologist assigned to the Laborer profession can be moved to the tile and ordered to begin an Expedition there. This consumes the unit, but can greatly increase the amount and variety of resources that can harvested from the site, particularly after discovering later technologies that boost the yield of Expeditions.
+-The Intrepid Explorer has to be a laborer profession to be able to do Expeditions. The Intrepid Archeologist or a Laborer or Hardy Laborer(with Laborer profession) can't do Expeditions only the Intrepid Explorer with a Laborer profession can do that. I'll give you the resources list it works on once I figure them out. And doing this consumes the unit/makes the unit die, but it's not mentioned here.
+
+CONCEPT_MOONS
+[H1]Moons and Lunar Colonies:[\H1]Some planets among the New Worlds are orbited by a variety of small moons, each having a unique ecosystem and composition. Thought to be the remnants of Progenitor experiments in terraforming, these planetoids' unusually dense cores enables them to maintain some semblance of an atmosphere. On moons in orbit close to an existing planetary settlement, a Colony Ship can found a Lunar Outpost, which over time can develop into a prosperous Lunar Settlement and later a Lunar Colony as the tile is worked by its parent city. Although colonizing the tiny planetoids orbiting the New Worlds required a huge upfront investment in time and supplies, a mature Lunar Colony could eventually yield rich resources for export to its parent settlement on the planet below.[NEWLINE][NEWLINE][H1]Atmospheres and Terraforming:[\H1]With the appropriate technology, the delicate instruments carried by a Science Vessel can permit successful terraforming of the noxious atmospheres common to the New Worlds' resource-rich moons, further enhancing the yield of a resident Lunar Colony.
+-This is a nuasance more than anything. It's nowhere as powerful as he makes it out and definitely not something worth a chasing for. Also building a Lunar Outpost consumes the Colony Ship Unit.
+
+CONCEPT_ASTEROIDMINING
+"[H1]Asteroid Mining and Anomalies[\H1]The robotic armatures of a Mining Vessel can extract valuable resources from the various asteroid belts and space debris scattered across the deep space surrounding the New Worlds. Additionally, the advanced but delicate research instruments carried by a Science Vessel can harvest valuable research data and scientific goods from the strange deep space anomalies prevalent in close proximity to the wormhole."
+-Looks good but maybe I'd improve it. 
+
+CONCEPT_EXCAVATING (It's completely missing)
+-Create something. You can see Excavating of Ancient Mounds.
+You will find rewards and vague event descriptions of that occuring at like half of all the entries in Assets/XML/Events/CIV4EventInfos.xml.
+
+
+Progenitor Reactor is an Improvement, that can only spawn in a Progenitor Metropolis. Those improvements cannot be built. Can only be dug out if you exavate an Ancient Mound terrain feature and cause it to be become Buried Ruins. On top of this there exist a script in which after the excavation has ended a random one of these spawns on top of the now-called Buried Ruins "mound" or something like that.

@@ -578,7 +578,7 @@
 			<bRequiresRiver>0</bRequiresRiver>
 			<bImpassable>0</bImpassable>
 			<bNoCity>1</bNoCity>
-			<bNoImprovement>0<!-- 1--></bNoImprovement>
+			<bNoImprovement>1</bNoImprovement>
 			<bVisibleAlways>0</bVisibleAlways>
 			<OnUnitChangeTo/>
 			<TerrainBooleans>
@@ -655,7 +655,6 @@
 			<iAdvancedStartRemoveCost>0</iAdvancedStartRemoveCost>
 		</FeatureInfo>
 <!-- Buried Ruins-->
-<!--Disabled
 		<FeatureInfo>
 			<Type>FEATURE_BURIED</Type>
 			<Description>Buried Ruins</Description>
@@ -752,7 +751,6 @@
 			<iEffectProbability>0</iEffectProbability>
 			<iAdvancedStartRemoveCost>0</iAdvancedStartRemoveCost>
 		</FeatureInfo>
-/Disabled-->
 <!-- Volcano-->
 		<FeatureInfo>
 			<Type>FEATURE_VOLCANO</Type>
