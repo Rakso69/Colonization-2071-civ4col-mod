@@ -1,0 +1,25 @@
+2071 TODOLIST:
+A) Art and XML:
+- Economic, Research Advisor and Board of Directors adjustments so that gameplay feels more fluid. (-25% Research costs as experiment for now.)
+☑️Buff Janus Device Stage I-5 where 1;Colony, 2;200def, 3;400def, 4;600def, 5;1000def+Colony.
+❎Map bonuses shown inside cities as their building version.
+❎New Poland Civilization (Already have King but no Colonist Leader.)
+❎Units Upgrades System (for any Colonist, Veteran Soldier, Mecha Pilot, Veteran Mecha Pilot.)
+☑️Fix Syndicate Colonies unique Privateer from literally turning to regular Privateer. (Probably needs to have a different unit name.)
+❎Art/Units/_citizen/mechanicus/technocrat.nif&technocrat.kfm doesn't work. (It's from Dunewars Revival mod if that helps.)
+❎Art/Units/_military/mech_tarantula/mech.kfm doesn't work (Crashes the game when attacking so it's the attack animation specifically that crashes. I managed to fix it once but unbeknownst how.), (Also the mech.nif works no problem)
+❎Art/units/_alien/alien_elder_not_working/spearman.nif&spearmanblood.kfm doesn't work. (It's from Fall of Heavens 2 if that helps.)
+❎Art/Units/_military/spacemarine/rover/rover.nif&rover.kfm doesn't work. (It's from Planetfall v16 mod if that helps.)
+❎Space-Time Anomaly, Lagrange Point(?) and Dark Matter have no descriptions of what they do.
+☑️CIV4FeatureInfos.xml/<!-- Buried Ruins--> CIV4BuildInfos.xml
+
+B) Python or CvGameCoreDLL:
+❎Fix erros/codes causing game crashes and such.
+❎Make player Score show up for Alien Civs.
+❎"Can see Hidden Units" ability is not displayed in-game on units Special Abilities.
+❎Fix settlers disappear in colonies when moved between or to buildings.
+
+Both Art and XML+Python or CvGameCoreDLL:
+☑️Finding again where the script responsible for the Excavation Improvement turning TerrainFeatures/Ancient Mound from Cannot Build Improvements to Can Build Improvements & Edit these possibilities in XMLs. (My bad. I completely forgot where that was. lol)
+❎Civilopedia display bugs/Python exceptions. (Units/Expert Oilman, Professions/Oilman.)
+❎Fix Default units overwrite unique units. (Still happens. Technology Advisor Techs is the trigger.)
