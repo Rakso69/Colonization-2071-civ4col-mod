@@ -9035,6 +9035,13 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, CvPlot* pPlot
 		return -1;
 	}
 
+	const UnitClassTypes eUnitClass = (UnitClassTypes)GC.getUnitInfo(eUnit).getUnitClassType();
+	if (GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eUnitClass) != eUnit)
+	{
+		// bail out early and avoid an assert failure later when it turns out this unit isn't valid.
+		return -1;
+	}
+
 	int iCost = 0;
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
