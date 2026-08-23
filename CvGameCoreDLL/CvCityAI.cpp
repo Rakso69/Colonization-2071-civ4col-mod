@@ -3787,28 +3787,28 @@ void CvCityAI::AI_assignDesiredYield()
 {
 	YieldTypes eBestYield = NO_YIELD;
 //orlanth natives
-//	if (isNative())
-//	{
-//		int iBestValue = 0;
-//		for (int i = 0; i < NUM_YIELD_TYPES; ++i)
-//		{
-//			YieldTypes eYield = (YieldTypes) i;
-//			int iValue = GC.getYieldInfo(eYield).getNativeBuyPrice();
-//			if (iValue > 0)
-//			{
-//				if ((getYieldStored(eYield) == 0) && !canProduceYield(eYield))
-//				{
-//					iValue += 10 + GC.getYieldInfo(eYield).getNativeHappy();
-//					iValue *= 1 + GC.getGameINLINE().getSorenRandNum(100, "City Desired Yield");
-//					if (iValue > iBestValue)
-//					{
-//						iBestValue = iValue;
-//						eBestYield = eYield;
-//					}
-//				}
-//			}
-//		}
-//	}
+	if (isNative())
+	{
+		int iBestValue = 0;
+		for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+		{
+			YieldTypes eYield = (YieldTypes) i;
+			int iValue = GC.getYieldInfo(eYield).getNativeBuyPrice();
+			if (iValue > 0)
+			{
+				if ((getYieldStored(eYield) == 0) && !canProduceYield(eYield))
+				{
+					iValue += 10 + GC.getYieldInfo(eYield).getNativeHappy();
+					iValue *= 1 + GC.getGameINLINE().getSorenRandNum(100, "City Desired Yield");
+					if (iValue > iBestValue)
+					{
+						iBestValue = iValue;
+						eBestYield = eYield;
+					}
+				}
+			}
+		}
+	}
 //end orlanth natives
 	if (m_eDesiredYield != eBestYield)
 	{

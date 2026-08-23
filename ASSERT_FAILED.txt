@@ -1,0 +1,56 @@
+Assert Failed
+
+File:  .\.\CvTeam.cpp
+Line:  963
+Expression:  eTeam != getID()
+Message:  eTeam is not expected to be equal with getID()
+
+----------------------------------------------------------
+Assert Failed
+
+File:  .\.\CvPlayer.cpp
+Line:  4309
+Expression:  GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eUnitClass) == eUnit
+Message:  
+
+----------------------------------------------------------
+Assert Failed
+
+File:  .\.\CvCityAI.cpp
+Line:  500
+Expression:  isNative()
+Message:  AI not building anything.
+
+----------------------------------------------------------
+Assert Failed
+
+File:  .\.\CvGlobals.cpp
+Line:  1814
+Expression:  eProfessionNum > -1
+Message:  
+
+----------------------------------------------------------
+Assert Failed
+
+File:  .\.\CvUnit.cpp
+Line:  8732
+Expression:  false
+Message:  Unit can not have profession
+
+----------------------------------------------------------
+Assert Failed
+
+File:  .\.\CvPlayer.cpp
+Line:  14148
+Expression:  eProfession >= 0 && eProfession < GC.getNumProfessionInfos()
+Message:  
+
+----------------------------------------------------------
+Assert Failed
+
+File:  .\.\CvPlayer.cpp
+Line:  14221
+Expression:  eProfession >= 0 && eProfession < GC.getNumProfessionInfos()
+Message:  
+
+----------------------------------------------------------
