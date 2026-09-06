@@ -3778,5 +3778,16 @@
 			<Path>Art/Effects/FlameThrower/firespray_sfx.nif</Path>
 			<bIsProjectile>0</bIsProjectile>
 		</EffectInfo>
+
+	<!-- <Type><Path>✅Marsjetzt v04: -->
+		<!-- Projectiles:-->
+		<EffectInfo>
+			<Type>EFFECT_BOLTER_FIRE</Type>
+			<Description>Primitive plasma thrower effect</Description>
+			<fScale>1.0</fScale>
+			<fUpdateRate>1.0</fUpdateRate>
+			<Path>Art/Effects/BOLTER_FIRE/BOLTER_FIRE.nif</Path>
+			<bIsProjectile>0</bIsProjectile>
+		</EffectInfo>
 	</EffectInfos>
 </Civ4EffectInfos>

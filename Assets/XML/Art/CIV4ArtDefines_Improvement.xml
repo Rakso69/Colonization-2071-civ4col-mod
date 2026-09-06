@@ -2,132 +2,11 @@
 <!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by Alex Mantzaris (Firaxis Games) -->
 <!-- Sid Meier's Civilization 4 -->
 <!-- Copyright Firaxis Games 2005 -->
-<!--❗	Please always list in order; WorldBuilder/💡/🌾/🔲/🔨/💎/🪨/🛠️/🦠/🩻/🧬/☣️/🔫/⚙️/🛍️/🔔/✝️/🛡/LowestMaxYield/HighestMaxYield -->
-<!--❔ I don't know what that is -->
+<!--❗	Please always list in order; XML/Terrain/CIV4ImprovementInfos.xml -->
 <!-- Improvement art path information -->
 <Civ4ArtDefines xmlns="x-schema:CIV4ArtDefinesSchema.xml">
 	<ImprovementArtInfos>
-<!--Lunar Outpost -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_MOON_COLONY1</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>3.1</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Terrain/Resources/moons/colony1.nif</NIF>
-			<KFM/>
-			<Button>Art/Interface/Buttons/builds/build_lunar_outpost.dds</Button>
-		</ImprovementArtInfo>
-<!--Lunar Settlement -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_MOON_COLONY2</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>3.1</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Terrain/Resources/moons/colony2.nif</NIF>
-			<KFM/>
-			<Button>Art/Interface/Buttons/builds/build_lunar_outpost.dds</Button>
-		</ImprovementArtInfo>
-<!--Lunar Colony -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_MOON_COLONY3</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>3.1</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Terrain/Resources/moons/testcol.nif</NIF>
-			<KFM/>
-			<Button>Art/Interface/Buttons/builds/build_lunar_outpost.dds</Button>
-		</ImprovementArtInfo>
-<!--Industrial Complex -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_PROIN1</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>0.2</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Structures/_unbuildable/progenitor_autofab_complex/fedoutpost.nif</NIF>
-			<KFM/>
-			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
-		</ImprovementArtInfo>
-<!--Ruined Autofab -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_PROIN2</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>0.2</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Structures/_unbuildable/progenitor_autofab_complex/fedoutpost2.nif</NIF>
-			<KFM/>
-			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
-		</ImprovementArtInfo>
-<!--Ruined Bunker -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_BUNKER</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>0.007</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Structures/_unbuildable/progenitor_bunker_reactor/fedstarbase2.nif</NIF>
-			<KFM/>
-			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
-		</ImprovementArtInfo>
-<!--Progenitor Reactor -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_REACTOR</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>0.005</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Structures/_unbuildable/progenitor_bunker_reactor/fedstarbase.nif</NIF>
-			<KFM/>
-			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
-		</ImprovementArtInfo>
-<!--Progenitor Installation -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_INSTALLATION</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>0.008</fScale>
-			<fInterfaceScale>0.9</fInterfaceScale>
-			<NIF>Art/Structures/_unbuildable/progenitor_installation/klingstarbase.nif</NIF>
-			<KFM/>
-			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
-		</ImprovementArtInfo>
-<!--Ancient Databank -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_LIBRARY</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>1</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Structures/_unbuildable/ancient_databank/feroutpost.nif</NIF>
-			<KFM/>
-			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
-		</ImprovementArtInfo>
-<!--Progenitor Keep -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_KEEP</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>0.8</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Structures/_unbuildable/progenitor_citadel_keep/ferstarbase.nif</NIF>
-			<KFM/>
-			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
-		</ImprovementArtInfo>
-<!--Progenitor Citadel -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_CITADEL</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>0.85</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Structures/_unbuildable/progenitor_citadel_keep/ferstarbase2.nif</NIF>
-			<KFM/>
-			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
-		</ImprovementArtInfo>
-<!--Progenitor Borehole -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_BOREHOLE</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>1.5</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Structures/_unbuildable/progenitor_borehole/ExtractionFacility.nif</NIF>
-			<KFM/>
-			<Button>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,3,3</Button>
-		</ImprovementArtInfo>
-<!--❔ -->
+<!--Land Worked -->
 		<ImprovementArtInfo>
 			<Type>ART_DEF_IMPROVEMENT_LAND_WORKED</Type>
 			<bExtraAnimations>1</bExtraAnimations>
@@ -137,7 +16,7 @@
 			<KFM/>
 			<Button>,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,-1,-1</Button>
 		</ImprovementArtInfo>
-<!--❔ -->
+<!--Space Worked -->
 		<ImprovementArtInfo>
 			<Type>ART_DEF_IMPROVEMENT_WATER_WORKED</Type>
 			<bExtraAnimations>1</bExtraAnimations>
@@ -187,15 +66,166 @@
 			<KFM/>
 			<Button>Art/Interface/Buttons/builds/build_farm.dds</Button>
 		</ImprovementArtInfo>
-<!--Alien Fertilizers -->
+<!--Plasteel Mill -->
 		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_ALIEN_GARDEN</Type>
+			<Type>ART_DEF_IMPROVEMENT_LODGE</Type>
 			<bExtraAnimations>1</bExtraAnimations>
 			<fScale>0.8</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Structures/Improvements/boreholecluster/boreholecluster_worked.nif</NIF>
+			<NIF>Art/structures/improvements/plasteel_mill/sawmill.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/builds/build_alien_fertilizers.dds</Button>
+			<Button>Art/Interface/buttons/builds/build_lodge.dds</Button>
+		</ImprovementArtInfo>
+<!--Mine -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_MINE</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/Improvements/Mine/Mine_modern.nif</NIF>
+			<KFM>Art/Structures/Improvements/Mine/Mine_modern.kfm</KFM>
+			<Button>Art/Interface/buttons/builds/buildmine.dds</Button>
+		</ImprovementArtInfo>
+<!-- Colonization 2071-->
+<!--Progenitor Borehole -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_BOREHOLE</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>1.5</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/_unbuildable/progenitor_borehole/ExtractionFacility.nif</NIF>
+			<KFM/>
+			<Button>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,3,3</Button>
+		</ImprovementArtInfo>
+<!--Progenitor Keep -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_KEEP</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>0.8</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/_unbuildable/progenitor_citadel_keep/ferstarbase.nif</NIF>
+			<KFM/>
+			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
+		</ImprovementArtInfo>
+<!--Progenitor Citadel -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_CITADEL</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>0.85</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/_unbuildable/progenitor_citadel_keep/ferstarbase2.nif</NIF>
+			<KFM/>
+			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
+		</ImprovementArtInfo>
+<!--Ancient Databank -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_LIBRARY</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>1</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/_unbuildable/ancient_databank/feroutpost.nif</NIF>
+			<KFM/>
+			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
+		</ImprovementArtInfo>
+<!--Progenitor Reactor -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_REACTOR</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>0.005</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/_unbuildable/progenitor_bunker_reactor/fedstarbase.nif</NIF>
+			<KFM/>
+			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
+		</ImprovementArtInfo>
+<!--Progenitor Installation -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_INSTALLATION</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>0.008</fScale>
+			<fInterfaceScale>0.9</fInterfaceScale>
+			<NIF>Art/Structures/_unbuildable/progenitor_installation/klingstarbase.nif</NIF>
+			<KFM/>
+			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
+		</ImprovementArtInfo>
+<!--Industrial Complex -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_PROIN1</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>0.2</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/_unbuildable/progenitor_autofab_complex/fedoutpost.nif</NIF>
+			<KFM/>
+			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
+		</ImprovementArtInfo>
+<!--Ruined Autofab -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_PROIN2</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>0.2</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/_unbuildable/progenitor_autofab_complex/fedoutpost2.nif</NIF>
+			<KFM/>
+			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
+		</ImprovementArtInfo>
+<!--Ruined Bunker -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_BUNKER</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>0.007</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/_unbuildable/progenitor_bunker_reactor/fedstarbase2.nif</NIF>
+			<KFM/>
+			<Button>,Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
+		</ImprovementArtInfo>
+<!--Menhir -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_STONECIRCLE</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>1.2</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/Buildings/Ruins/sacred.nif</NIF>
+			<KFM/>
+			<Button>Art/Interface/Buttons/builds/cantbuild_menhir.dds</Button>
+		</ImprovementArtInfo>
+<!--Abduction Site -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_ALTAR</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>6.5</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/Buildings/Ruins/campcoalt_b.nif</NIF>
+			<KFM/>
+			<Button>Art/Interface/Buttons/builds/cantbuild_abduction_site.dds</Button>
+		</ImprovementArtInfo>
+<!--Lunar Outpost -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_MOON_COLONY1</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>3.1</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Terrain/Resources/moons/colony1.nif</NIF>
+			<KFM/>
+			<Button>Art/Interface/Buttons/builds/build_lunar_outpost.dds</Button>
+		</ImprovementArtInfo>
+<!--Lunar Settlement -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_MOON_COLONY2</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>3.1</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Terrain/Resources/moons/colony2.nif</NIF>
+			<KFM/>
+			<Button>Art/Interface/Buttons/builds/build_lunar_outpost.dds</Button>
+		</ImprovementArtInfo>
+<!--Lunar Colony -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_MOON_COLONY3</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>3.1</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Terrain/Resources/moons/testcol.nif</NIF>
+			<KFM/>
+			<Button>Art/Interface/Buttons/builds/build_lunar_outpost.dds</Button>
 		</ImprovementArtInfo>
 <!--Pasture -->
 		<ImprovementArtInfo>
@@ -206,6 +236,26 @@
 			<NIF>Art/Structures/Improvements/pasture/mod_pasture.nif</NIF>
 			<KFM>Art/Structures/Improvements/pasture/mod_pasture.kfm</KFM>
 			<Button>Art/Interface/Buttons/builds/buildpasture.dds</Button>
+		</ImprovementArtInfo>
+<!--Aquaculture -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_AQUACULTURE</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>0.8</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/Improvements/aquaculture/whalingboat_modern.nif</NIF>
+			<KFM>Art/Structures/Improvements/aquaculture/whalingboat_modern.kfm</KFM>
+			<Button>Art/Interface/buttons/builds/build_aquaculture.dds</Button>
+		</ImprovementArtInfo>
+<!--Alien Fertilizers -->
+		<ImprovementArtInfo>
+			<Type>ART_DEF_IMPROVEMENT_ALIEN_GARDEN</Type>
+			<bExtraAnimations>1</bExtraAnimations>
+			<fScale>0.8</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<NIF>Art/Structures/Improvements/boreholecluster/boreholecluster_worked.nif</NIF>
+			<KFM/>
+			<Button>Art/Interface/Buttons/builds/build_alien_fertilizers.dds</Button>
 		</ImprovementArtInfo>
 <!--Future Farm -->
 		<ImprovementArtInfo>
@@ -237,26 +287,6 @@
 			<KFM/>
 			<Button>Art/Interface/Buttons/builds/build_alien_cavern.dds</Button>
 		</ImprovementArtInfo>
-<!--Menhir -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_STONECIRCLE</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>1.2</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Structures/Buildings/Ruins/sacred.nif</NIF>
-			<KFM/>
-			<Button>Art/Interface/Buttons/builds/cantbuild_menhir.dds</Button>
-		</ImprovementArtInfo>
-<!--Abduction Site -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_ALTAR</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>6.5</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Structures/Buildings/Ruins/campcoalt_b.nif</NIF>
-			<KFM/>
-			<Button>Art/Interface/Buttons/builds/cantbuild_abduction_site.dds</Button>
-		</ImprovementArtInfo>
 <!--Excavation -->
 		<ImprovementArtInfo>
 			<Type>ART_DEF_IMPROVEMENT_EXCAVATION</Type>
@@ -277,26 +307,6 @@
 			<KFM>Art/Structures/Improvements/expedition/quarrymodern.kfm</KFM>
 			<Button>Art/Interface/buttons/builds/build_expedition.dds</Button>
 		</ImprovementArtInfo>
-<!--❔ -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_LODGE</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>0.8</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Structures/Improvements/expedition/quarrymodern.nif</NIF>
-			<KFM>Art/Structures/Improvements/expedition/quarrymodern.kfm</KFM>
-			<Button>,Art/Interface/Buttons/structures/constyard.dds</Button>
-		</ImprovementArtInfo>
-<!--Mine -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_MINE</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>1.0</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Structures/Improvements/Mine/Mine_modern.nif</NIF>
-			<KFM>Art/Structures/Improvements/Mine/Mine_modern.kfm</KFM>
-			<Button>Art/Interface/buttons/builds/buildmine.dds</Button>
-		</ImprovementArtInfo>
 <!--Oil Well -->
 		<ImprovementArtInfo>
 			<Type>ART_DEF_IMPROVEMENT_OILWELL</Type>
@@ -306,26 +316,6 @@
 			<NIF>Art/Structures/Improvements/oilwell/oilwell.nif</NIF>
 			<KFM>Art/Structures/Improvements/oilwell/oilwell.kfm</KFM>
 			<Button>Art/Interface/buttons/builds/buildwell.dds</Button>
-		</ImprovementArtInfo>
-<!--Aquaculture -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_AQUACULTURE</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>0.8</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Structures/Improvements/aquaculture/whalingboat_modern.nif</NIF>
-			<KFM>Art/Structures/Improvements/aquaculture/whalingboat_modern.kfm</KFM>
-			<Button>Art/Interface/buttons/builds/build_aquaculture.dds</Button>
-		</ImprovementArtInfo>
-<!--Plasteel Mill -->
-		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_LUMBERMILL</Type>
-			<bExtraAnimations>1</bExtraAnimations>
-			<fScale>0.8</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/structures/improvements/plasteel_mill/sawmill.nif</NIF>
-			<KFM/>
-			<Button>Art/Interface/buttons/builds/build_lodge.dds</Button>
 		</ImprovementArtInfo>
 <!--Janus Device Stage I -->
 		<ImprovementArtInfo>

@@ -139,7 +139,7 @@
 			<Button>Art/Interface/TeamColor/Colonization_Flags/Azathoth.dds</Button>
 			<Path>Art/Interface/TeamColor/Colonization_Flags/FlagDECAL_Azathoth.dds<!--FlagDECAL_Skull.dds--></Path>
 			<bWhiteFlag>1</bWhiteFlag>
-			<bInvertFlag>0</bInvertFlag>
+			<bInvertFlag>1</bInvertFlag>
 			<iFontButtonIndex>0</iFontButtonIndex>
 		</CivilizationArtInfo>
 
@@ -149,7 +149,15 @@
 			<Button>Art/Interface/Buttons/techtree/Progenitor Secrets.dds</Button>
 			<Path>Art/Interface/TeamColor/Colonization_Flags/FlagDECAL_Progenitor.dds</Path>
 			<bWhiteFlag>1</bWhiteFlag>
-			<bInvertFlag>0</bInvertFlag>
+			<bInvertFlag>1</bInvertFlag>
+			<iFontButtonIndex>6</iFontButtonIndex>
+		</CivilizationArtInfo>
+		<CivilizationArtInfo>
+			<Type>ART_DEF_INVASION_OUTER_GODS</Type>
+			<Button>Art/Interface/TeamColor/Colonization_Flags/Azathoth.dds</Button>
+			<Path>Art/Interface/TeamColor/Colonization_Flags/FlagDECAL_Azathoth.dds</Path>
+			<bWhiteFlag>0</bWhiteFlag>
+			<bInvertFlag>1</bInvertFlag>
 			<iFontButtonIndex>6</iFontButtonIndex>
 		</CivilizationArtInfo>
 		<CivilizationArtInfo>
@@ -217,9 +225,41 @@
 			<iFontButtonIndex>6</iFontButtonIndex>
 		</CivilizationArtInfo>
 		<CivilizationArtInfo>
-			<Type>ART_DEF_INVASION_OUTER_GODS</Type>
-			<Button>Art/Interface/TeamColor/Colonization_Flags/Azathoth.dds</Button>
-			<Path>Art/Interface/TeamColor/Colonization_Flags/FlagDECAL_Azathoth.dds</Path>
+			<Type>ART_DEF_CIVILIZATION_INDIA</Type>
+			<Button>Art/Interface/TeamColor/India_Emblem.dds</Button>
+			<Path>Art/Interface/TeamColor/FlagDECAL_India.dds</Path>
+			<bWhiteFlag>0</bWhiteFlag>
+			<bInvertFlag>0</bInvertFlag>
+			<iFontButtonIndex>6</iFontButtonIndex>
+		</CivilizationArtInfo>
+		<CivilizationArtInfo>
+			<Type>ART_DEF_CIVILIZATION_INDIA_EUROPE</Type>
+			<Button>Art/Interface/TeamColor/India_Emblem.dds</Button>
+			<Path>Art/Interface/TeamColor/FlagDECAL_Crown.dds</Path>
+			<bWhiteFlag>0</bWhiteFlag>
+			<bInvertFlag>1</bInvertFlag>
+			<iFontButtonIndex>6</iFontButtonIndex>
+		</CivilizationArtInfo>
+		<CivilizationArtInfo>
+			<Type>ART_DEF_CIVILIZATION_POLAND</Type>
+			<Button>Art/Interface/TeamColor/Poland_Colonies.dds</Button>
+			<Path>Art/Interface/TeamColor/FlagDECAL_Poland_colonist.dds</Path>
+			<bWhiteFlag>0</bWhiteFlag>
+			<bInvertFlag>0</bInvertFlag>
+			<iFontButtonIndex>6</iFontButtonIndex>
+		</CivilizationArtInfo>
+		<CivilizationArtInfo>
+			<Type>ART_DEF_CIVILIZATION_POLAND_EUROPE</Type>
+			<Button>Art/Interface/TeamColor/Poland_Emblem.dds</Button>
+			<Path>Art/Interface/TeamColor/FlagDECAL_Poland.dds</Path>
+			<bWhiteFlag>0</bWhiteFlag>
+			<bInvertFlag>0</bInvertFlag>
+			<iFontButtonIndex>6</iFontButtonIndex>
+		</CivilizationArtInfo>
+		<CivilizationArtInfo>
+			<Type>ART_DEF_CIVILIZATION_CYEAN</Type>
+			<Button>Art/Interface/TeamColor/Colonization_Flags/Cyean.dds</Button>
+			<Path>Art/Interface/TeamColor/Colonization_Flags/FlagDECAL_Cyean.dds</Path>
 			<bWhiteFlag>0</bWhiteFlag>
 			<bInvertFlag>1</bInvertFlag>
 			<iFontButtonIndex>6</iFontButtonIndex>

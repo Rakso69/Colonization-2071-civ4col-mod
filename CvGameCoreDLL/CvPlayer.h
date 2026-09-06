@@ -598,6 +598,7 @@ public:
 	void setMissionarySuccessPercent(int iValue);
 
 	int getRebelCombatPercent() const;
+	int getStrengthPercent() const;
 
 	int getProfessionEquipmentModifier(ProfessionTypes eProfession) const;
 	void setProfessionEquipmentModifier(ProfessionTypes eProfession, int iValue);

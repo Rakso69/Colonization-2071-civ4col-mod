@@ -309,6 +309,7 @@ public:
 	int unitCombatModifier(UnitCombatTypes eUnitCombat) const;
 	int domainModifier(DomainTypes eDomain) const;
 	int rebelModifier(PlayerTypes eOtherPlayer) const;
+	int strengthModifier(PlayerTypes eOtherPlayer) const;
 
 	int bombardRate() const;
 	SpecialUnitTypes specialCargo() const;

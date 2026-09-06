@@ -1749,4 +1749,65 @@
 		<Italian>Fammici pensare. (Non costruire l'insediamento)</Italian>
 		<Spanish>Dejad que lo piense. (No fundar asentamiento)</Spanish>
 	</TEXT>
+
+	<TEXT>
+		<Tag>AI_DIPLO_FIRST_CONTACT_LEADER_NIGHTINGGALE_1</Tag>
+		<English>[CT_NAME], you say? Interesting. I am Nightinggale of the Cyeans. I would be delighted to learn the history of your people.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_REFUSE_TO_TALK_LEADER_NIGHTINGGALE_1</Tag>
+		<English>There is nothing you have to say that I want to pass on to my children; there is nothing you have to say that would not bring me shame to share with my people. Be silent!</English>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_NO_PEACE_LEADER_NIGHTINGGALE_1</Tag>
+		<English>Your actions have made this war inevitable, [CT_NAME]. It will end by the actions of the Cyeans, and the story of your annihilation will be preserved in our records for all eternity.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_ATT_FR_LEADER_NIGHTINGGALE_1</Tag>
+		<English>Your people have the concept of libraries, yes? I would dearly love the opportunity to visit one, [CT_NAME], perhaps one day you could arrange a private visit for me.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_ATT_FUR_LEADER_NIGHTINGGALE_1</Tag>
+		<English>Conveying to you exactly how much I detest the presence of you and your kind would almost be worth making physical contact with you. Almost. Be grateful that the sensation of disgust you bring me is something I cannot directly share.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_FIRST_CONTACT_LEADER_CENOBITE_1</Tag>
+		<English>I greet you in the name of the people of Navbharat, [CT_NAME]. I hope that we may walk the Noble Eightfold Path together in peace and harmony.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_REFUSE_TO_TALK_LEADER_CENOBITE_1</Tag>
+		<English>You are trying my patience, [CT_NAME]. Begone!</English>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_NO_PEACE_LEADER_CENOBITE_1</Tag>
+		<English>Peace? YOU speak of peace? No, [CT_NAME], I regret that there can be no peace while your actions speak of nothing but war.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_ATT_FR_LEADER_CENOBITE_1</Tag>
+		<English>With friends like you, [CT_NAME], the cycle of Samsara is not so unpleasant. How can Navbharat assist you?</English>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_ATT_FUR_LEADER_CENOBITE_1</Tag>
+		<English>Oh, it's you. I know not what I did in a previous life that merits the punishment of having to speak to you, but it must have been truly despicable. What do you want?</English>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_FIRST_CONTACT_LEADER_MINISTER_1</Tag>
+		<English>Kosmiczna Polska is glad to make your acquaintance, [CT_NAME]. Are you a fellow advocate of liberty?</English>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_REFUSE_TO_TALK_LEADER_MINISTER_1</Tag>
+		<English>My people have suffered enough! We don't need to listen to your oppressive rambling!</English>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_NO_PEACE_LEADER_MINISTER_1</Tag>
+		<English>Peace? Poland is no stranger to oppressors, [CT_NAME]. We have already learned the all-too-bitter lesson that the likes of you cannot be negotiated with.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_ATT_FR_LEADER_MINISTER_1</Tag>
+		<English>The winds of freedom are sweeping the galaxy, [CT_NAME]. Nowa Polska is fortunate to have a friend like you to enjoy the breeze with.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>AI_DIPLO_GREETINGS_ATT_FUR_LEADER_MINISTER_1</Tag>
+		<English>I swear to God, if you are calling to whine about how weird you think pasta and strawberries are or to make more 'Poland can into space' jokes, there will be [BOLD]WAR[/BOLD] between our people! Choose your next words very carefully.</English>
+	</TEXT>
 </Civ4GameText>

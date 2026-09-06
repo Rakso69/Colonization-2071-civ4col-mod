@@ -2778,6 +2778,16 @@ void CvGameTextMgr::parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait
 			szHelpString.append(gDLL->getText("TXT_KEY_TRAIT_REBEL_COMBAT_MOD", kTrait.getRebelCombatModifier()));
 		}
 
+		if (kTrait.getStrengthModifier() != 0)
+		{
+			szHelpString.append(NEWLINE);
+			if (bIndent)
+			{
+				szHelpString.append(L"  ");
+			}
+			szHelpString.append(gDLL->getText("TXT_KEY_TRAIT_STRENGTH_MOD", kTrait.getStrengthModifier()));
+		}
+
 		if (kTrait.getTaxRateThresholdModifier() != 0)
 		{
 			szHelpString.append(NEWLINE);
@@ -3045,6 +3055,24 @@ void CvGameTextMgr::parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait
 						}
 						szHelpString.append(szTempBuffer);
 					}
+				}
+			}
+		}
+		for (int iImprovement = 0; iImprovement < GC.getNumImprovementInfos(); ++iImprovement)
+		{
+			for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+			{
+				if (kTrait.getImprovementYieldChanges(iImprovement, iYield) != 0)
+				{
+					szTempBuffer = gDLL->getText("TXT_KEY_CIVIC_IMPROVEMENT_YIELD_CHANGE", kTrait.getImprovementYieldChanges(iImprovement, iYield), GC.getYieldInfo((YieldTypes)iYield).getChar());
+					szHelpString.append(NEWLINE);
+					if (bIndent)
+					{
+						szHelpString.append(L"  ");
+					}
+					szHelpString.append(szTempBuffer);
+					szHelpString.append(L" ");
+					szHelpString.append(GC.getImprovementInfo((ImprovementTypes)iImprovement).getDescription());
 				}
 			}
 		}
@@ -4341,46 +4369,58 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
         }
     }
 	//TK Update 1.1d
-    for (iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
+for (iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
+{
+    if (kCivicInfo.getAllowsUnitClasses(iI) > 0)
     {
-        if (kCivicInfo.getAllowsUnitClasses(iI) > 0)
+        UnitTypes eDisplayUnit = NO_UNIT;
+
+        if (GC.getGameINLINE().getActivePlayer() != NO_PLAYER)
         {
-            for (int i = 0; i < GC.getNumUnitInfos(); ++i)
-            {
-                CvUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes) i);
-                if (kUnitInfo.getUnitClassType() == (UnitClassTypes)iI)
-                {
-			if (GC.getGameINLINE().getActivePlayer() != NO_PLAYER)
-			{
-		    		UnitTypes eUniqueUnit = (UnitTypes)GC.getCivilizationInfo(GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType()).getCivilizationUnits(iI);
-				kUnitInfo = GC.getUnitInfo(eUniqueUnit);
-			}
-                    szHelpText.append(NEWLINE);
-                    szHelpText.append(gDLL->getText("TXT_KEY_INVENTION_ALLOWS_UNITCLASS", kUnitInfo.getDescription()));
-                    break;
-                }
-            }
+            eDisplayUnit = (UnitTypes)GC.getCivilizationInfo(
+                GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType()
+            ).getCivilizationUnits(iI);
         }
 
-        if (kCivicInfo.getAllowsUnitClasses(iI) < 0)
+        if (eDisplayUnit == NO_UNIT)
         {
-            for (int i = 0; i < GC.getNumUnitInfos(); ++i)
-            {
-                CvUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes) i);
-                if (kUnitInfo.getUnitClassType() == (UnitClassTypes)iI)
-                {
-			if (GC.getGameINLINE().getActivePlayer() != NO_PLAYER)
-			{
-		    		UnitTypes eUniqueUnit = (UnitTypes)GC.getCivilizationInfo(GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType()).getCivilizationUnits(iI);
-				kUnitInfo = GC.getUnitInfo(eUniqueUnit);
-			}
-                    szHelpText.append(NEWLINE);
-                    szHelpText.append(gDLL->getText("TXT_KEY_INVENTION_OBSOLETES", kUnitInfo.getDescription()));
-                    break;
-                }
-            }
+            eDisplayUnit = (UnitTypes)GC.getUnitClassInfo((UnitClassTypes)iI).getDefaultUnitIndex();
+        }
+
+        if (eDisplayUnit != NO_UNIT)
+        {
+            szHelpText.append(NEWLINE);
+            szHelpText.append(gDLL->getText(
+                "TXT_KEY_INVENTION_ALLOWS_UNITCLASS",
+                GC.getUnitInfo(eDisplayUnit).getDescription()));
         }
     }
+
+    if (kCivicInfo.getAllowsUnitClasses(iI) < 0)
+    {
+        UnitTypes eDisplayUnit = NO_UNIT;
+
+        if (GC.getGameINLINE().getActivePlayer() != NO_PLAYER)
+        {
+            eDisplayUnit = (UnitTypes)GC.getCivilizationInfo(
+                GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType()
+            ).getCivilizationUnits(iI);
+        }
+
+        if (eDisplayUnit == NO_UNIT)
+        {
+            eDisplayUnit = (UnitTypes)GC.getUnitClassInfo((UnitClassTypes)iI).getDefaultUnitIndex();
+        }
+
+        if (eDisplayUnit != NO_UNIT)
+        {
+            szHelpText.append(NEWLINE);
+            szHelpText.append(gDLL->getText(
+                "TXT_KEY_INVENTION_OBSOLETES",
+                GC.getUnitInfo(eDisplayUnit).getDescription()));
+        }
+    }
+}
 
     for (iI = 0; iI < GC.getNumBonusInfos(); iI++)
     {
@@ -6211,16 +6251,18 @@ void CvGameTextMgr::setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTyp
 	}
 
 	CvImprovementInfo& info = GC.getImprovementInfo(eImprovement);
+
 	if (!bCivilopediaText)
 	{
-		szTempBuffer.Format( SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), info.getDescription());
+		szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), info.getDescription());
 		szBuffer.append(szTempBuffer);
 
 		setYieldChangeHelp(szBuffer, L", ", L"", L"", info.getYieldIncreaseArray(), false, false);
 
 		setYieldChangeHelp(szBuffer, L"", L"", gDLL->getText("TXT_KEY_MISC_ON_HILLS").c_str(), info.getHillsYieldChangeArray());
 		setYieldChangeHelp(szBuffer, L"", L"", gDLL->getText("TXT_KEY_MISC_ALONG_RIVER").c_str(), info.getRiverSideYieldChangeArray());
-		//	Civics
+
+		// Civics
 		for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
 		{
 			for (int iCivic = 0; iCivic < GC.getNumCivicInfos(); iCivic++)
@@ -6228,7 +6270,7 @@ void CvGameTextMgr::setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTyp
 				int iChange = GC.getCivicInfo((CivicTypes)iCivic).getImprovementYieldChanges(eImprovement, iYield);
 				if (0 != iChange)
 				{
-					szTempBuffer.Format( SETCOLR L"%s" ENDCOLR , TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), GC.getCivicInfo((CivicTypes)iCivic).getDescription());
+					szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), GC.getCivicInfo((CivicTypes)iCivic).getDescription());
 					szBuffer.append(NEWLINE);
 					szBuffer.append(gDLL->getText("TXT_KEY_CIVIC_IMPROVEMENT_YIELD_CHANGE", iChange, GC.getYieldInfo((YieldTypes)iYield).getChar()));
 					szBuffer.append(szTempBuffer);

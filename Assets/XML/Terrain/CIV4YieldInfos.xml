@@ -684,9 +684,9 @@
 			<UnitClass>NONE</UnitClass>
 			<iTextureIndex>-1</iTextureIndex>
 			<iWaterTextureIndex>-1</iWaterTextureIndex>
-			<Icon>,Art/Interface/Buttons/Unit_Resource_Colonization_Atlas.dds,7,16</Icon>
-			<HighlightIcon>,Art/Interface/Buttons/Unit_Resource_Colonization_Atlas.dds,3,16</HighlightIcon>
-			<Button>,Art/Interface/Buttons/Unit_Resource_Colonization_Atlas.dds,3,16</Button>
+			<Icon>Art/Interface/Buttons/Resources/crosses.dds</Icon>
+			<HighlightIcon>Art/Interface/Buttons/Resources/crossesunit.dds</HighlightIcon>
+			<Button>Art/Interface/Buttons/Resources/crossesunit.dds</Button>
 		</YieldInfo>
 <!--#📖	Education-->
 		<YieldInfo>
@@ -717,9 +717,9 @@
 			<UnitClass>NONE</UnitClass>
 			<iTextureIndex>-1</iTextureIndex>
 			<iWaterTextureIndex>-1</iWaterTextureIndex>
-			<Icon>,Art/Interface/Buttons/Unit_Resource_Colonization_Atlas.dds,8,16</Icon>
-			<HighlightIcon>,Art/Interface/Buttons/Unit_Resource_Colonization_Atlas.dds,4,16</HighlightIcon>
-			<Button>,Art/Interface/Buttons/Unit_Resource_Colonization_Atlas.dds,4,16</Button>
+			<Icon>Art/Interface/Buttons/Resources/education.dds</Icon>
+			<HighlightIcon>Art/Interface/Buttons/Resources/education.dds</HighlightIcon>
+			<Button>Art/Interface/Buttons/Resources/education.dds</Button>
 		</YieldInfo>
 <!--Colonization 2071--><!--#💡	Ideas/Research-->
 		<YieldInfo>

@@ -638,6 +638,55 @@
 			<bInGeneric>1</bInGeneric>
 		</SoundData>
 		<SoundData>
+			<SoundID>DIPLO_POLAND1</SoundID>
+			<Filename>Sounds/Diplomacy/poland1</Filename>
+			<LoadType>STREAMED</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>DIPLO_POLAND_KING</SoundID>
+			<Filename>Sounds/Diplomacy/poland_king</Filename>
+			<LoadType>STREAMED</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>DIPLO_INDIA1</SoundID>
+			<Filename>Sounds/Diplomacy/luminosity</Filename>
+			<LoadType>STREAMED</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>DIPLO_INDIA_KING</SoundID>
+			<Filename>Sounds/Diplomacy/india_king</Filename>
+			<LoadType>STREAMED</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>DIPLO_CYEAN1</SoundID>
+			<Filename>Sounds/Diplomacy/cyean</Filename>
+			<LoadType>STREAMED</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>DIPLO_CYEAN2</SoundID>
+			<Filename>Sounds/Diplomacy/chant</Filename>
+			<LoadType>STREAMED</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
+			<SoundID>DIPLO_COSMICHORROR</SoundID>
+			<Filename>Sounds/Diplomacy/cosmic_horror</Filename>
+			<LoadType>STREAMED</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+		<SoundData>
 			<SoundID>DIPLO_SAYYADINA</SoundID>
 			<Filename>Sounds/Diplomacy/sayyadina</Filename>
 			<LoadType>STREAMED</LoadType>

@@ -205,11 +205,18 @@
 			<BackgroundKFM>art/LeaderHeads/bg/courtyard/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
 		</LeaderheadArtInfo>
 		<LeaderheadArtInfo>
-			<Type>ART_DEF_LEADER_PILSUDSKI</Type><!--🤖Chief of State -->
-			<Button>art/LeaderHeads/pilsudski/pilsudski.dds</Button>
-			<NIF>art/LeaderHeads/pilsudski/pilsudski.nif</NIF>
-			<KFM>art/LeaderHeads/pilsudski/pilsudski.kfm</KFM>
-			<BackgroundKFM>art/LeaderHeads/bg/mercs/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+			<Type>ART_DEF_LEADER_MINISTER</Type><!-- Minister of Liberty-->
+			<Button>Art/Interface/Buttons/Leaderheads/walesa.dds</Button>
+			<NIF>Art/LeaderHeads/Libertarian_minister/walesa.nif</NIF>
+			<KFM>Art/LeaderHeads/Libertarian_minister/fdr.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/Libertarian_minister/FDR_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_POLISH_KING</Type><!--🤖Chief of State-->
+			<Button>Art/Interface/Buttons/Leaderheads/pilsudski.dds</Button>
+			<NIF>Art/LeaderHeads/pilsudski/pilsudski.nif</NIF>
+			<KFM>Art/LeaderHeads/pilsudski/pilsudski.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/pilsudski/peter_bg.kfm</BackgroundKFM>
 		</LeaderheadArtInfo>
 		<LeaderheadArtInfo>
 			<Type>ART_DEF_LEADER_CURTIN</Type><!-- Director Black-->
@@ -226,11 +233,32 @@
 			<BackgroundKFM>art/LeaderHeads/bg/mosque/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
 		</LeaderheadArtInfo>
 		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_NIGHTINGGALE</Type><!--👽Nightinggale-->
+			<Button>Art/Interface/Buttons/Leaderheads/Cyean.dds</Button>
+			<NIF>Art/LeaderHeads/Nightinggale/isabella.nif</NIF>
+			<KFM>Art/LeaderHeads/Nightinggale/isabella.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/Nightinggale/peter_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
 			<Type>ART_DEF_LEADER_PROGENITOR</Type><!--👾Progenitor Exarch-->
 			<Button>Art/Interface/Buttons/Leaderheads/progenitor.dds</Button>
 			<NIF>Art/LeaderHeads/Sauron/Sauron.nif</NIF>
 			<KFM>Art/LeaderHeads/Sauron/shaka.kfm</KFM>
 			<BackgroundKFM>art/LeaderHeads/bg/wormhole/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_CENOBITE</Type><!-- Ascetic Cenobite-->
+			<Button>Art/Interface/Buttons/Leaderheads/ascetic_cenobite.dds</Button>
+			<NIF>Art/LeaderHeads/Ascetic_cenobite/asoka.nif</NIF>
+			<KFM>Art/LeaderHeads/Ascetic_cenobite/asoka.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/Ascetic_cenobite/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_INDIA_KING</Type><!--🤖India Rastrapati-->
+			<Button>Art/Interface/Buttons/Leaderheads/victoria.dds</Button>
+			<NIF>Art/LeaderHeads/India_Rastrapati/victoria.nif</NIF>
+			<KFM>Art/LeaderHeads/India_Rastrapati/victoria.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/India_Rastrapati/victoria_bg.kfm</BackgroundKFM>
 		</LeaderheadArtInfo>
 		<LeaderheadArtInfo>
 			<Type>ART_DEF_LEADER_INVASION_OUTER_GODS</Type><!--🪼Outer Gods Pantheon-->

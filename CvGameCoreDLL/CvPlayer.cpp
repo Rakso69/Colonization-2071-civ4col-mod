@@ -4767,6 +4767,10 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 		{
 			changeBuildingYieldChange((BuildingClassTypes) iBuildingClass, eYield, iChange * kTrait.getBuildingYieldChange(iBuildingClass, iYield));
 		}
+		for (int iImprovement = 0; iImprovement < GC.getNumImprovementInfos(); ++iImprovement)
+		{
+			changeImprovementYieldChange((ImprovementTypes) iImprovement, eYield, iChange * kTrait.getImprovementYieldChanges(iImprovement, iYield));
+		}
 
 		updateExtraYieldThreshold(eYield);
 
@@ -14148,6 +14152,26 @@ int CvPlayer::getRebelCombatPercent() const
 	iPercent /= 100;
 
 	return iPercent;
+}
+
+int CvPlayer::getStrengthPercent() const
+{
+        int iPercent = 0;
+
+        for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); ++iTrait)
+        {
+                TraitTypes eTrait = (TraitTypes) iTrait;
+                CvTraitInfo& kTrait = GC.getTraitInfo(eTrait);
+                if (kTrait.getStrengthModifier() != 0)
+                {
+                        if (hasTrait(eTrait))
+                        {
+                                iPercent += kTrait.getStrengthModifier();
+                        }
+                }
+        }
+
+        return iPercent;
 }
 
 int CvPlayer::getProfessionEquipmentModifier(ProfessionTypes eProfession) const

@@ -1,0 +1,75 @@
+According to my Next War Update mod, this unit is the first available futuristic unitclass
+ in a game. It's an armed by a primitive plasma-throwing gun our times uniform-wearing soldiers.
+Later they just like other firearmed units are getting replaced by more advanced weapons.
+
+
+
+
+BOLTER_FIRE folder is to Effects folder in your CIV4...\art folder
+
+This - is to XML\Misc\CIV4EffectInfos
+
+		<EffectInfo>
+			<Type>EFFECT_BOLTER_FIRE</Type>
+			<Description>Primitive plasma thrower effect</Description>
+			<fScale>1.0</fScale>
+			<fUpdateRate>1.0</fUpdateRate>
+			<Path>Art/Effects/BOLTER_FIRE/BOLTER_FIRE.nif</Path>
+			<bIsProjectile>0</bIsProjectile>
+		</EffectInfo>
+
+This - is to XML\Audio\AudioDefines
+
+
+		<SoundData>
+			<SoundID>SND_BOLTER_FIRE</SoundID>
+			<Filename>Sounds/Units/BOLTER_FIRE</Filename>
+			<LoadType>DYNAMIC_RES</LoadType>
+			<bIsCompressed>1</bIsCompressed>
+			<bInGeneric>1</bInGeneric>
+		</SoundData>
+
+
+This - is to XML\Audio\Audio3DScripts
+
+
+	<Script3DSound>
+		<ScriptID>AS3D_UN_BOLTER_FIRE</ScriptID>
+		<SoundID>SND_BOLTER_FIRE</SoundID>
+		<SoundType>GAME_SFX</SoundType>
+		<iMinVolume>90</iMinVolume>
+		<iMaxVolume>100</iMaxVolume>
+		<iPitchChangeDown>0</iPitchChangeDown>
+		<iPitchChangeUp>0</iPitchChangeUp>
+		<bLooping>0</bLooping>
+		<iMinTimeDelay>0</iMinTimeDelay>
+		<iMaxTimeDelay>0</iMaxTimeDelay>
+		<StartPosition>NONE</StartPosition>
+		<EndPosition>NONE</EndPosition>
+		<iMinVelocity>0</iMinVelocity>
+		<iMaxVelocity>0</iMaxVelocity>
+		<iMinDistanceFromListener>0</iMinDistanceFromListener>
+		<iMaxDistanceFromListener>0</iMaxDistanceFromListener>
+		<iMinDistanceForMaxVolume>500</iMinDistanceForMaxVolume>
+		<iMaxDistanceForMaxVolume>1000</iMaxDistanceForMaxVolume>
+		<iMinCutoffDistance>7000</iMinCutoffDistance>
+		<iMaxCutoffDistance>7000</iMaxCutoffDistance>
+		<bTaperForSoundtracks>0</bTaperForSoundtracks>
+		<iLengthOfSound>0</iLengthOfSound>
+		<fMinDryLevel>1.0</fMinDryLevel>
+		<fMaxDryLevel>1.0</fMaxDryLevel>
+		<fMinWetLevel>0.5</fMinWetLevel>
+		<fMaxWetLevel>0.5</fMaxWetLevel>
+		<iNotPlayPercent>0</iNotPlayPercent>
+	</Script3DSound>
+
+bolter_fire.mp3 - is to Sounds\Units  - possibly it's not the best sound, there is no problem to replace it by something more cool.
+
+Make sure you are using both nifs, shader and nonshader (fx), and the jannisary animations
+form BOLTER folder, not the Warlords one, make sure you added all you need, and, enjoy!
+Feel free to use it anywhere you like, but don't forget to give me a credit, and note that it was 
+originally made for ZPNext war update!
+
+Regards and Best wishes,
+
+Zerver.

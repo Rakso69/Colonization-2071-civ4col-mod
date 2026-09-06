@@ -380,7 +380,7 @@ class CvEventManager:
 
 	        iNewUnit = CvUtil.findInfoTypeNum('UNIT_KILLBOT')
 	        iNewProfession = CvUtil.findInfoTypeNum('PROFESSION_SOLDIER')
-	        iExarch = gc.getInfoTypeForString('LEADER_PROGENITOR')
+	        iExarch = gc.getInfoTypeForString('LEADER_INVASION_OUTER_GODS')
 	        for iPlayer in range(gc.getMAX_PLAYERS()):
 	            pPlayer = gc.getPlayer(iPlayer)
 	            if pPlayer.getLeaderType() == iExarch:

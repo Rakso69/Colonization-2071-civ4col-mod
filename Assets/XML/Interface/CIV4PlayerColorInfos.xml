@@ -117,7 +117,7 @@
 		<PlayerColorInfo>
 			<Type>PLAYERCOLOR_RED_KING</Type>
 			<ColorTypePrimary>COLOR_PLAYER_RED</ColorTypePrimary>
-			<ColorTypeSecondary>COLOR_PLAYER_BLACK</ColorTypeSecondary>
+			<ColorTypeSecondary>COLOR_PLAYER_WHITE</ColorTypeSecondary>
 			<TextColorType>COLOR_PLAYER_RED_TEXT</TextColorType>
 		</PlayerColorInfo>
 		<PlayerColorInfo>

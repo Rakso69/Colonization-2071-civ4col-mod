@@ -41,7 +41,7 @@
 					<Yields>
 						<Yield>
 							<YieldType>YIELD_LUMBER</YieldType>
-							<iYield>10</iYield>
+							<iYield>30</iYield>
 						</Yield>
 						<Yield>
 							<YieldType>YIELD_FOOD</YieldType>
@@ -56,7 +56,7 @@
 					<Yields>
 						<Yield>
 							<YieldType>YIELD_LUMBER</YieldType>
-							<iYield>10</iYield>
+							<iYield>20</iYield>
 						</Yield>
 						<Yield>
 							<YieldType>YIELD_FUR</YieldType>
@@ -144,6 +144,202 @@
 			<iHotKeyPriority>0</iHotKeyPriority>
 			<Button>Art\Interface\Game Hud\Actions\farm_high_res.dds</Button>
 		</BuildInfo>
+		<BuildInfo>
+			<Type>BUILD_LODGE</Type>
+			<Description>Build Plasteel Mill<!--TXT_KEY_BUILD_LODGE--></Description>
+			<Help/>
+			<iTime>1000</iTime>
+			<iCost>20</iCost>
+			<bKill>0</bKill>
+			<ImprovementType>IMPROVEMENT_LODGE</ImprovementType>
+			<RouteType>NONE</RouteType>
+			<EntityEvent>ENTITY_EVENT_BUILD</EntityEvent>
+			<FeatureStructs/>
+			<HotKey>KB_O</HotKey>
+			<bAltDown>0</bAltDown>
+			<bShiftDown>0</bShiftDown>
+			<bCtrlDown>0</bCtrlDown>
+			<iHotKeyPriority>0</iHotKeyPriority>
+			<Button>Art\Interface\Game Hud\Actions\build_lodge_high_res.dds</Button>
+		</BuildInfo>
+		<BuildInfo>
+			<Type>BUILD_MINE</Type>
+			<Description>TXT_KEY_BUILD_MINE</Description>
+			<Help/>
+			<iTime>800</iTime>
+			<iCost>20</iCost>
+			<bKill>0</bKill>
+			<ImprovementType>IMPROVEMENT_MINE</ImprovementType>
+			<RouteType>NONE</RouteType>
+			<EntityEvent>ENTITY_EVENT_MINE</EntityEvent>
+			<FeatureStructs>
+				<FeatureStruct>
+					<FeatureType>FEATURE_JUNGLE</FeatureType>
+					<iTime>800</iTime>
+					<Yields/>
+					<bRemove>1</bRemove>
+				</FeatureStruct>
+				<FeatureStruct>
+					<FeatureType>FEATURE_FOREST</FeatureType>
+					<iTime>600</iTime>
+					<Yields>
+						<Yield>
+							<YieldType>YIELD_LUMBER</YieldType>
+							<iYield>20</iYield>
+						</Yield>
+					</Yields>
+					<bRemove>1</bRemove>
+				</FeatureStruct>
+				<FeatureStruct>
+					<FeatureType>FEATURE_LIGHT_FOREST</FeatureType>
+					<iTime>400</iTime>
+					<Yields>
+						<Yield>
+							<YieldType>YIELD_LUMBER</YieldType>
+							<iYield>10</iYield>
+						</Yield>
+					</Yields>
+					<bRemove>1</bRemove>
+				</FeatureStruct>
+				<FeatureStruct>
+					<FeatureType>FEATURE_FUNGAL_FOREST</FeatureType>
+					<iTime>400</iTime>
+					<Yields>
+						<Yield>
+							<YieldType>YIELD_LUMBER</YieldType>
+							<iYield>10</iYield>
+						</Yield>
+						<Yield>
+							<YieldType>YIELD_COTTON</YieldType>
+							<iYield>5</iYield>
+						</Yield>
+					</Yields>
+					<bRemove>1</bRemove>
+				</FeatureStruct>
+				<FeatureStruct>
+					<FeatureType>FEATURE_LUMINOUS_FOREST</FeatureType>
+					<iTime>400</iTime>
+					<Yields>
+						<Yield>
+							<YieldType>YIELD_LUMBER</YieldType>
+							<iYield>10</iYield>
+						</Yield>
+						<Yield>
+							<YieldType>YIELD_TOBACCO</YieldType>
+							<iYield>5</iYield>
+						</Yield>
+					</Yields>
+					<bRemove>1</bRemove>
+				</FeatureStruct>
+				<FeatureStruct>
+					<FeatureType>FEATURE_CYCAD_FOREST</FeatureType>
+					<iTime>400</iTime>
+					<Yields>
+						<Yield>
+							<YieldType>YIELD_LUMBER</YieldType>
+							<iYield>10</iYield>
+						</Yield>
+						<Yield>
+							<YieldType>YIELD_SUGAR</YieldType>
+							<iYield>5</iYield>
+						</Yield>
+					</Yields>
+					<bRemove>1</bRemove>
+				</FeatureStruct>
+			</FeatureStructs>
+			<HotKey>KB_M</HotKey>
+			<bAltDown>0</bAltDown>
+			<bShiftDown>0</bShiftDown>
+			<bCtrlDown>0</bCtrlDown>
+			<iHotKeyPriority>0</iHotKeyPriority>
+			<Button>Art\Interface\Game Hud\Actions\mine_high_res.dds</Button>
+		</BuildInfo>
+		<BuildInfo>
+			<Type>BUILD_REMOVE_JUNGLE</Type>
+			<Description>Chop Jungle<!--TXT_KEY_BUILD_REMOVE_JUNGLE--></Description>
+			<Help/>
+			<iTime>0</iTime>
+			<iCost>0</iCost>
+			<bKill>0</bKill>
+			<ImprovementType>NONE</ImprovementType>
+			<RouteType>NONE</RouteType>
+			<EntityEvent>ENTITY_EVENT_CHOP</EntityEvent>
+			<FeatureStructs>
+				<FeatureStruct>
+					<FeatureType>FEATURE_JUNGLE</FeatureType>
+					<iTime>800</iTime>
+					<Yields/>
+					<bRemove>1</bRemove>
+				</FeatureStruct>
+			</FeatureStructs>
+			<HotKey>KB_C</HotKey>
+			<bAltDown>1</bAltDown>
+			<bShiftDown>0</bShiftDown>
+			<bCtrlDown>0</bCtrlDown>
+			<iHotKeyPriority>0</iHotKeyPriority>
+			<Button>Art\Interface\Game Hud\Actions\chop_high_res.dds</Button>
+		</BuildInfo>
+		<BuildInfo>
+			<Type>BUILD_REMOVE_FOREST</Type>
+			<Description>Clear Ruins<!--TXT_KEY_BUILD_REMOVE_FOREST--></Description>
+			<Help/>
+			<iTime>0</iTime>
+			<iCost>0</iCost>
+			<bKill>0</bKill>
+			<ImprovementType>NONE</ImprovementType>
+			<RouteType>NONE</RouteType>
+			<EntityEvent>ENTITY_EVENT_CHOP</EntityEvent>
+			<FeatureStructs>
+				<FeatureStruct>
+					<FeatureType>FEATURE_FOREST</FeatureType>
+					<iTime>600</iTime>
+					<Yields>
+						<Yield>
+							<YieldType>YIELD_LUMBER</YieldType>
+							<iYield>20</iYield>
+						</Yield>
+					</Yields>
+					<bRemove>1</bRemove>
+				</FeatureStruct>
+			</FeatureStructs>
+			<HotKey>KB_C</HotKey>
+			<bAltDown>1</bAltDown>
+			<bShiftDown>0</bShiftDown>
+			<bCtrlDown>0</bCtrlDown>
+			<iHotKeyPriority>0</iHotKeyPriority>
+			<Button>Art\Interface\Game Hud\Actions\chop_high_res.dds</Button>
+		</BuildInfo>
+		<BuildInfo>
+			<Type>BUILD_REMOVE_LIGHT_FOREST</Type>
+			<Description>Chop Coniferous Forest<!--TXT_KEY_BUILD_REMOVE_FOREST--></Description>
+			<Help/>
+			<iTime>0</iTime>
+			<iCost>0</iCost>
+			<bKill>0</bKill>
+			<ImprovementType>NONE</ImprovementType>
+			<RouteType>NONE</RouteType>
+			<EntityEvent>ENTITY_EVENT_CHOP</EntityEvent>
+			<FeatureStructs>
+				<FeatureStruct>
+					<FeatureType>FEATURE_LIGHT_FOREST</FeatureType>
+					<iTime>400</iTime>
+					<Yields>
+						<Yield>
+							<YieldType>YIELD_LUMBER</YieldType>
+							<iYield>10</iYield>
+						</Yield>
+					</Yields>
+					<bRemove>1</bRemove>
+				</FeatureStruct>
+			</FeatureStructs>
+			<HotKey>KB_C</HotKey>
+			<bAltDown>1</bAltDown>
+			<bShiftDown>0</bShiftDown>
+			<bCtrlDown>0</bCtrlDown>
+			<iHotKeyPriority>0</iHotKeyPriority>
+			<Button>Art\Interface\Game Hud\Actions\chop_high_res.dds</Button>
+		</BuildInfo>
+<!-- Colonization 2071-->
 		<BuildInfo>
 			<Type>BUILD_OILWELL</Type>
 			<Description>Drill Oil Well</Description>
@@ -413,7 +609,7 @@
 					<bRemove>1</bRemove>
 				</FeatureStruct>
 				<FeatureStruct>
-					<FeatureType>FEATURE_BURIED</FeatureType>
+					<FeatureType>FEATURE_MOUND</FeatureType>
 					<iTime>1000</iTime>
 					<Yields>
 						<Yield>
@@ -495,24 +691,6 @@
 			<bCtrlDown>0</bCtrlDown>
 			<iHotKeyPriority>0</iHotKeyPriority>
 			<Button>Art\Interface\Game Hud\Actions\build_expedition.dds</Button>
-		</BuildInfo>
-		<BuildInfo>
-			<Type>BUILD_LUMBERMILL</Type>
-			<Description>Build Plasteel Mill</Description>
-			<Help/>
-			<iTime>1000</iTime>
-			<iCost>20</iCost>
-			<bKill>0</bKill>
-			<ImprovementType>IMPROVEMENT_LUMBERMILL</ImprovementType>
-			<RouteType>NONE</RouteType>
-			<EntityEvent>ENTITY_EVENT_BUILD</EntityEvent>
-			<FeatureStructs/>
-			<HotKey>KB_O</HotKey>
-			<bAltDown>0</bAltDown>
-			<bShiftDown>0</bShiftDown>
-			<bCtrlDown>0</bCtrlDown>
-			<iHotKeyPriority>0</iHotKeyPriority>
-			<Button>Art\Interface\Game Hud\Actions\build_lodge_high_res.dds</Button>
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_MOON_COLONY1</Type>
@@ -716,98 +894,6 @@
 			<Button>Art\Interface\Game Hud\Actions\build_burrow.dds</Button>
 		</BuildInfo>
 		<BuildInfo>
-			<Type>BUILD_MINE</Type>
-			<Description>TXT_KEY_BUILD_MINE</Description>
-			<Help/>
-			<iTime>800</iTime>
-			<iCost>20</iCost>
-			<bKill>0</bKill>
-			<ImprovementType>IMPROVEMENT_MINE</ImprovementType>
-			<RouteType>NONE</RouteType>
-			<EntityEvent>ENTITY_EVENT_MINE</EntityEvent>
-			<FeatureStructs>
-				<FeatureStruct>
-					<FeatureType>FEATURE_JUNGLE</FeatureType>
-					<iTime>800</iTime>
-					<Yields/>
-					<bRemove>1</bRemove>
-				</FeatureStruct>
-				<FeatureStruct>
-					<FeatureType>FEATURE_FOREST</FeatureType>
-					<iTime>600</iTime>
-					<Yields>
-						<Yield>
-							<YieldType>YIELD_LUMBER</YieldType>
-							<iYield>20</iYield>
-						</Yield>
-					</Yields>
-					<bRemove>1</bRemove>
-				</FeatureStruct>
-				<FeatureStruct>
-					<FeatureType>FEATURE_LIGHT_FOREST</FeatureType>
-					<iTime>400</iTime>
-					<Yields>
-						<Yield>
-							<YieldType>YIELD_LUMBER</YieldType>
-							<iYield>10</iYield>
-						</Yield>
-					</Yields>
-					<bRemove>1</bRemove>
-				</FeatureStruct>
-				<FeatureStruct>
-					<FeatureType>FEATURE_FUNGAL_FOREST</FeatureType>
-					<iTime>400</iTime>
-					<Yields>
-						<Yield>
-							<YieldType>YIELD_LUMBER</YieldType>
-							<iYield>5</iYield>
-						</Yield>
-						<Yield>
-							<YieldType>YIELD_COTTON</YieldType>
-							<iYield>5</iYield>
-						</Yield>
-					</Yields>
-					<bRemove>1</bRemove>
-				</FeatureStruct>
-				<FeatureStruct>
-					<FeatureType>FEATURE_LUMINOUS_FOREST</FeatureType>
-					<iTime>400</iTime>
-					<Yields>
-						<Yield>
-							<YieldType>YIELD_LUMBER</YieldType>
-							<iYield>5</iYield>
-						</Yield>
-						<Yield>
-							<YieldType>YIELD_TOBACCO</YieldType>
-							<iYield>5</iYield>
-						</Yield>
-					</Yields>
-					<bRemove>1</bRemove>
-				</FeatureStruct>
-				<FeatureStruct>
-					<FeatureType>FEATURE_CYCAD_FOREST</FeatureType>
-					<iTime>400</iTime>
-					<Yields>
-						<Yield>
-							<YieldType>YIELD_LUMBER</YieldType>
-							<iYield>5</iYield>
-						</Yield>
-						<Yield>
-							<YieldType>YIELD_SUGAR</YieldType>
-							<iYield>5</iYield>
-						</Yield>
-					</Yields>
-					<bRemove>1</bRemove>
-				</FeatureStruct>
-			</FeatureStructs>
-			<HotKey>KB_M</HotKey>
-			<bAltDown>0</bAltDown>
-			<bShiftDown>0</bShiftDown>
-			<bCtrlDown>0</bCtrlDown>
-			<iHotKeyPriority>0</iHotKeyPriority>
-			<Button>Art\Interface\Game Hud\Actions\mine_high_res.dds</Button>
-		</BuildInfo>
-		<BuildInfo>
 			<Type>BUILD_REMOVE_MOUND</Type>
 			<Description>Remove Mound</Description>
 			<Help/>
@@ -840,91 +926,6 @@
 			<bCtrlDown>0</bCtrlDown>
 			<iHotKeyPriority>0</iHotKeyPriority>
 			<Button>Art\Interface\Game Hud\Actions\mine_high_res.dds</Button>
-		</BuildInfo>
-		<BuildInfo>
-			<Type>BUILD_REMOVE_JUNGLE</Type>
-			<Description>Chop Jungle</Description>
-			<Help/>
-			<iTime>0</iTime>
-			<iCost>0</iCost>
-			<bKill>0</bKill>
-			<ImprovementType>NONE</ImprovementType>
-			<RouteType>NONE</RouteType>
-			<EntityEvent>ENTITY_EVENT_CHOP</EntityEvent>
-			<FeatureStructs>
-				<FeatureStruct>
-					<FeatureType>FEATURE_JUNGLE</FeatureType>
-					<iTime>800</iTime>
-					<Yields/>
-					<bRemove>1</bRemove>
-				</FeatureStruct>
-			</FeatureStructs>
-			<HotKey>KB_C</HotKey>
-			<bAltDown>1</bAltDown>
-			<bShiftDown>0</bShiftDown>
-			<bCtrlDown>0</bCtrlDown>
-			<iHotKeyPriority>0</iHotKeyPriority>
-			<Button>Art\Interface\Game Hud\Actions\chop_high_res.dds</Button>
-		</BuildInfo>
-		<BuildInfo>
-			<Type>BUILD_REMOVE_FOREST</Type>
-			<Description>Clear Ruins</Description>
-			<Help/>
-			<iTime>0</iTime>
-			<iCost>0</iCost>
-			<bKill>0</bKill>
-			<ImprovementType>NONE</ImprovementType>
-			<RouteType>NONE</RouteType>
-			<EntityEvent>ENTITY_EVENT_CHOP</EntityEvent>
-			<FeatureStructs>
-				<FeatureStruct>
-					<FeatureType>FEATURE_FOREST</FeatureType>
-					<iTime>600</iTime>
-					<Yields>
-						<Yield>
-							<YieldType>YIELD_LUMBER</YieldType>
-							<iYield>20</iYield>
-						</Yield>
-					</Yields>
-					<bRemove>1</bRemove>
-				</FeatureStruct>
-			</FeatureStructs>
-			<HotKey>KB_C</HotKey>
-			<bAltDown>1</bAltDown>
-			<bShiftDown>0</bShiftDown>
-			<bCtrlDown>0</bCtrlDown>
-			<iHotKeyPriority>0</iHotKeyPriority>
-			<Button>Art\Interface\Game Hud\Actions\chop_high_res.dds</Button>
-		</BuildInfo>
-		<BuildInfo>
-			<Type>BUILD_REMOVE_LIGHT_FOREST</Type>
-			<Description>Chop Coniferous Forest</Description>
-			<Help/>
-			<iTime>0</iTime>
-			<iCost>0</iCost>
-			<bKill>0</bKill>
-			<ImprovementType>NONE</ImprovementType>
-			<RouteType>NONE</RouteType>
-			<EntityEvent>ENTITY_EVENT_CHOP</EntityEvent>
-			<FeatureStructs>
-				<FeatureStruct>
-					<FeatureType>FEATURE_LIGHT_FOREST</FeatureType>
-					<iTime>400</iTime>
-					<Yields>
-						<Yield>
-							<YieldType>YIELD_LUMBER</YieldType>
-							<iYield>10</iYield>
-						</Yield>
-					</Yields>
-					<bRemove>1</bRemove>
-				</FeatureStruct>
-			</FeatureStructs>
-			<HotKey>KB_C</HotKey>
-			<bAltDown>1</bAltDown>
-			<bShiftDown>0</bShiftDown>
-			<bCtrlDown>0</bCtrlDown>
-			<iHotKeyPriority>0</iHotKeyPriority>
-			<Button>Art\Interface\Game Hud\Actions\chop_high_res.dds</Button>
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_FUNGAL_FOREST</Type>
@@ -1489,7 +1490,7 @@
 			<Description>Build the Janus Device</Description>
 			<Help/>
 			<iTime>1500</iTime>
-			<iCost>100</iCost>
+			<iCost>5000</iCost>
 			<bKill>1</bKill>
 			<ImprovementType>IMPROVEMENT_DEVICE1</ImprovementType>
 			<RouteType>NONE</RouteType>

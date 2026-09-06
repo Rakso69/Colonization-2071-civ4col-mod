@@ -9905,6 +9905,7 @@ CvTraitInfo::CvTraitInfo() :
 	m_iNativeCombatModifier(0),
 	m_iMissionaryModifier(0),
 	m_iRebelCombatModifier(0),
+	m_iStrengthModifier(0),
 	m_iTaxRateThresholdModifier(0),
 	m_iMercantileFactor(0),
 	m_iTreasureModifier(0),
@@ -9964,6 +9965,16 @@ CvTraitInfo::~CvTraitInfo()
 	{
 		SAFE_DELETE_ARRAY(m_aaiBuildingYieldChanges[iBuildingClass]);
 	}
+
+	for (uint iImprovement = 0; iImprovement < m_aaiImprovementYieldChanges.size(); ++iImprovement)
+	{
+		SAFE_DELETE_ARRAY(m_aaiImprovementYieldChanges[iImprovement]);
+	}
+
+	for (uint i = 0; i < m_aaiImprovementYieldChangesPass3.size(); ++i)
+	{
+		SAFE_DELETE_ARRAY(m_aaiImprovementYieldChangesPass3[i]);
+	}
 }
 int CvTraitInfo::getLevelExperienceModifier() const
 {
@@ -10008,6 +10019,10 @@ int CvTraitInfo::getMissionaryModifier() const
 int CvTraitInfo::getRebelCombatModifier() const
 {
 	return m_iRebelCombatModifier;
+}
+int CvTraitInfo::getStrengthModifier() const
+{
+	return m_iStrengthModifier;
 }
 int CvTraitInfo::getTaxRateThresholdModifier() const
 {
@@ -10122,6 +10137,16 @@ int CvTraitInfo::getBuildingYieldChange(int iBuildingClass, int iYieldType) cons
 	return m_aaiBuildingYieldChanges[iBuildingClass][iYieldType];
 }
 
+int CvTraitInfo::getImprovementYieldChanges(int iImprovement, int iYieldType) const
+{
+	FAssert(iImprovement >= 0);
+	FAssert(iImprovement < GC.getNumImprovementInfos());
+	FAssert(iYieldType >= 0);
+	FAssert(iYieldType < NUM_YIELD_TYPES);
+
+	return m_aaiImprovementYieldChanges[iImprovement][iYieldType];
+}
+
 const char* CvTraitInfo::getShortDescription() const
 {
 	return m_szShortDescription;
@@ -10170,6 +10195,7 @@ void CvTraitInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iNativeCombatModifier);
 	stream->Read(&m_iMissionaryModifier);
 	stream->Read(&m_iRebelCombatModifier);
+	stream->Read(&m_iStrengthModifier);
 	stream->Read(&m_iTaxRateThresholdModifier);
 	stream->Read(&m_iMercantileFactor);
 	stream->Read(&m_iTreasureModifier);
@@ -10253,6 +10279,21 @@ void CvTraitInfo::read(FDataStreamBase* stream)
 		m_aaiBuildingYieldChanges.push_back(new int[NUM_YIELD_TYPES]);
 		stream->Read(NUM_YIELD_TYPES, m_aaiBuildingYieldChanges[i]);
 	}
+
+	for (uint i = 0; i < m_aaiImprovementYieldChangesPass3.size(); ++i)
+	{
+		SAFE_DELETE_ARRAY(m_aaiImprovementYieldChangesPass3[i]);
+	}
+	m_aaiImprovementYieldChangesPass3.clear();
+
+	int iNumImprovementYieldChanges = 0;
+	stream->Read(&iNumImprovementYieldChanges);
+
+	for (int i = 0; i < iNumImprovementYieldChanges; i++)
+	{
+		m_aaiImprovementYieldChangesPass3.push_back(new int[NUM_YIELD_TYPES]);
+		stream->Read(NUM_YIELD_TYPES, m_aaiImprovementYieldChangesPass3[i]);
+	}
 }
 
 void CvTraitInfo::write(FDataStreamBase* stream)
@@ -10270,6 +10311,7 @@ void CvTraitInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iNativeCombatModifier);
 	stream->Write(m_iMissionaryModifier);
 	stream->Write(m_iRebelCombatModifier);
+	stream->Write(m_iStrengthModifier);
 	stream->Write(m_iTaxRateThresholdModifier);
 	stream->Write(m_iMercantileFactor);
 	stream->Write(m_iTreasureModifier);
@@ -10304,6 +10346,12 @@ void CvTraitInfo::write(FDataStreamBase* stream)
 	{
 		stream->Write(NUM_YIELD_TYPES, m_aaiBuildingYieldChanges[i]);
 	}
+
+	stream->Write((int)m_aaiImprovementYieldChangesPass3.size());
+	for (int i=0; i < (int)m_aaiImprovementYieldChangesPass3.size(); i++)
+	{
+		stream->Write(NUM_YIELD_TYPES, m_aaiImprovementYieldChangesPass3[i]);
+	}
 }
 
 bool CvTraitInfo::read(CvXMLLoadUtility* pXML)
@@ -10324,6 +10372,7 @@ bool CvTraitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iNativeCombatModifier, "iNativeCombatModifier");
 	pXML->GetChildXmlValByName(&m_iMissionaryModifier, "iMissionaryModifier");
 	pXML->GetChildXmlValByName(&m_iRebelCombatModifier, "iRebelCombatModifier");
+	pXML->GetChildXmlValByName(&m_iStrengthModifier, "iStrengthModifier");
 	pXML->GetChildXmlValByName(&m_iTaxRateThresholdModifier, "iTaxRateThresholdModifier");
 	pXML->GetChildXmlValByName(&m_iMercantileFactor, "iMercantileFactor");
 	pXML->GetChildXmlValByName(&m_iTreasureModifier, "iTreasureModifier");
@@ -10381,7 +10430,35 @@ bool CvTraitInfo::read(CvXMLLoadUtility* pXML)
 		}
 		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
 	}
+	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"ImprovementYieldChanges"))
+	{
+		if (pXML->SkipToNextVal())
+		{
+			int iNumSibs = gDLL->getXMLIFace()->GetNumChildren(pXML->GetXML());
+			if (gDLL->getXMLIFace()->SetToChild(pXML->GetXML()))
+			{
+				if (0 < iNumSibs)
+				{
+					for (int j = 0; j < iNumSibs; j++)
+					{
+						pXML->GetChildXmlValByName(szTextVal, "ImprovementType");
+						m_aszExtraXMLforPass3.push_back(szTextVal);
 
+						int* piYieldChanges = NULL;
+						pXML->SetVariableListTagPair(&piYieldChanges, "ImprovementYields", NUM_YIELD_TYPES, 0);
+						m_aaiImprovementYieldChangesPass3.push_back(piYieldChanges);
+
+						if (!gDLL->getXMLIFace()->NextSibling(pXML->GetXML()))
+						{
+							break;
+						}
+					}
+				}
+				gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+			}
+		}
+		gDLL->getXMLIFace()->SetToParent(pXML->GetXML());
+	}
 
 	pXML->SetVariableListTagPair(&m_aiCityExtraYields, "CityExtraYields", NUM_YIELD_TYPES, 0);
 	pXML->SetVariableListTagPair(&m_aiExtraYieldThreshold, "ExtraYieldThresholds", NUM_YIELD_TYPES, 0);
@@ -10391,7 +10468,46 @@ bool CvTraitInfo::read(CvXMLLoadUtility* pXML)
 	pXML->SetVariableListTagPair(&m_abFreeBuildingClass, "FreeBuildingClasses", GC.getNumBuildingClassInfos(), false);
 	return true;
 }
+bool CvTraitInfo::readPass3()
+{
+	for (uint iImprovement = 0; iImprovement < m_aaiImprovementYieldChanges.size(); ++iImprovement)
+	{
+		SAFE_DELETE_ARRAY(m_aaiImprovementYieldChanges[iImprovement]);
+	}
+	m_aaiImprovementYieldChanges.clear();
 
+	for (int iImprovement = 0; iImprovement < GC.getNumImprovementInfos(); iImprovement++)
+	{
+		int* piYieldChanges = new int[NUM_YIELD_TYPES];
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
+		{
+			piYieldChanges[iYield] = 0;
+		}
+		m_aaiImprovementYieldChanges.push_back(piYieldChanges);
+	}
+
+	FAssert(m_aszExtraXMLforPass3.size() == m_aaiImprovementYieldChangesPass3.size());
+
+	for (uint i = 0; i < m_aszExtraXMLforPass3.size(); i++)
+	{
+		int iIndex = GC.getInfoTypeForString(m_aszExtraXMLforPass3[i]);
+
+		if (iIndex > -1)
+		{
+			for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
+			{
+				m_aaiImprovementYieldChanges[iIndex][iYield] = m_aaiImprovementYieldChangesPass3[i][iYield];
+			}
+		}
+
+		SAFE_DELETE_ARRAY(m_aaiImprovementYieldChangesPass3[i]);
+	}
+
+	m_aszExtraXMLforPass3.clear();
+	m_aaiImprovementYieldChangesPass3.clear();
+
+	return true;
+}
 //======================================================================================================
 //					CvCursorInfo
 //======================================================================================================

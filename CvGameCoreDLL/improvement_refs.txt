@@ -1,0 +1,204 @@
+CvCity.cpp:7564:					if (NO_IMPROVEMENT != pPlot->getImprovementType() && !GC.getImprovementInfo(pPlot->getImprovementType()).isPermanent())
+CvCity.cpp:7627:							if (NO_IMPROVEMENT != pPlot->getImprovementType() && !GC.getImprovementInfo(pPlot->getImprovementType()).isPermanent())
+CvCity.cpp:7629:								CvWString szBuffer = gDLL->getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide());
+CvCity.cpp:7630:								gDLL->getInterfaceIFace()->addMessage(getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGED", MESSAGE_TYPE_INFO, GC.getImprovementInfo(pPlot->getImprovementType()).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pPlot->getX_INLINE(), pPlot->getY_INLINE(), true, true);
+CvCityAI.cpp:1605:			if (GC.getImprovementInfo(pPlot->getImprovementType()).isRequiresFeature())
+CvCityAI.cpp:4324:					if (GC.getImprovementInfo(eCurrentImprovement).getImprovementBonusDiscoverRand(iI) > 0)
+CvCityAI.cpp:4332:	if ((eCurrentImprovement != NO_IMPROVEMENT) && (GC.getImprovementInfo(pPlot->getImprovementType()).getImprovementUpgrade() != NO_IMPROVEMENT))
+CvCityAI.cpp:4607:				CvImprovementInfo& kImprovement = GC.getImprovementInfo(eImprovement);
+CvDLLWidgetData.cpp:1554:					szBuffer.append(gDLL->getText("TXT_KEY_ACTION_DESTROY_IMP", GC.getImprovementInfo(pMissionPlot->getImprovementType()).getTextKeyWide()));
+CvDLLWidgetData.cpp:1685:							if (GC.getImprovementInfo(eBuildImprovement).isOutsideBorders())
+CvDLLWidgetData.cpp:1707:						szBuffer.append(gDLL->getText("TXT_KEY_ACTION_WILL_DESTROY_IMP", GC.getImprovementInfo(pMissionPlot->getImprovementType()).getTextKeyWide()));
+CvDLLWidgetData.cpp:1751:							if (GC.getImprovementInfo(eBuildImprovement).getImprovementBonusDiscoverRand(iI) > 0)
+CvDLLWidgetData.cpp:1755:								setListHelp(szBuffer, szFirstBuffer, szTempBuffer, L", ", (GC.getImprovementInfo(eBuildImprovement).getImprovementBonusDiscoverRand(iI) != iLast));
+CvDLLWidgetData.cpp:1756:								iLast = GC.getImprovementInfo(eBuildImprovement).getImprovementBonusDiscoverRand(iI);
+CvDLLWidgetData.cpp:1767:								GAMETEXT.setYieldChangeHelp(szBuffer, GC.getRouteInfo((RouteTypes)iI).getDescription(), L": ", L"", GC.getImprovementInfo(eBuildImprovement).getRouteYieldChangesArray((RouteTypes)iI));
+CvDLLWidgetData.cpp:1772:					if (GC.getImprovementInfo(eBuildImprovement).getDefenseModifier() != 0)
+CvDLLWidgetData.cpp:1775:						szBuffer.append(gDLL->getText("TXT_KEY_ACTION_DEFENSE_MODIFIER", GC.getImprovementInfo(eBuildImprovement).getDefenseModifier()));
+CvDLLWidgetData.cpp:1778:					if (GC.getImprovementInfo(eBuildImprovement).getImprovementUpgrade() != NO_IMPROVEMENT)
+CvDLLWidgetData.cpp:1783:						szBuffer.append(gDLL->getText("TXT_KEY_ACTION_BECOMES_IMP", GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eBuildImprovement).getImprovementUpgrade()).getTextKeyWide(), iTurns));
+CvDLLWidgetData.cpp:1798:						GAMETEXT.setYieldChangeHelp(szBuffer, GC.getImprovementInfo(eFinalImprovement).getDescription(), L": ", L"", GC.getImprovementInfo(eFinalImprovement).getRouteYieldChangesArray(eBuildRoute));
+CvDLLWidgetData.cpp:2837:				szBuffer.assign(bMinimal ? GC.getImprovementInfo(eImprovement).getDescription() : gDLL->getText("TXT_KEY_MISC_HISTORICAL_INFO", GC.getImprovementInfo(eImprovement).getTextKeyWide()));
+CvGame.cpp:3348:	iTime = GC.getImprovementInfo(eImprovement).getUpgradeTime();
+CvGame.cpp:5723:					*pLogString += CvString::format("%s = %d\n", CvString(GC.getImprovementInfo((ImprovementTypes) iJ).getDescription()).GetCString(), kPlayer.getImprovementCount((ImprovementTypes)iJ));
+CvGameCoreUtils.cpp:305:	if (GC.getImprovementInfo(eImprovement).getImprovementUpgrade() != NO_IMPROVEMENT)
+CvGameCoreUtils.cpp:307:		return finalImprovementUpgrade(((ImprovementTypes)(GC.getImprovementInfo(eImprovement).getImprovementUpgrade())), (iCount + 1));
+CvGameTextMgr.cpp:2426:			szString.append(GC.getImprovementInfo(eImprovement).getDescription());
+CvGameTextMgr.cpp:2428:			if (GC.getImprovementInfo(eImprovement).getImprovementUpgrade() != NO_IMPROVEMENT)
+CvGameTextMgr.cpp:2434:					szString.append(gDLL->getText("TXT_KEY_PLOT_IMP_UPGRADE", iTurns, GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getTextKeyWide()));
+CvGameTextMgr.cpp:2438:					szString.append(gDLL->getText("TXT_KEY_PLOT_WORK_TO_UPGRADE", GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getTextKeyWide()));
+CvGameTextMgr.cpp:4051:			if (GC.getImprovementInfo((ImprovementTypes)iI).getImprovementUpgrade() != NO_IMPROVEMENT)
+CvGameTextMgr.cpp:4055:				szImprovement.Format(L"<link=literal>%s</link>", GC.getImprovementInfo((ImprovementTypes)iI).getDescription());
+CvGameTextMgr.cpp:4149:				szImprovement.Format(L"<link=literal>%s</link>", GC.getImprovementInfo((ImprovementTypes)iJ).getDescription());
+CvGameTextMgr.cpp:4314:                szHelpText.append(gDLL->getText("TXT_KEY_INVENTION_ALLOWS_BUILDTYPE_TERRAIN", GC.getImprovementInfo((ImprovementTypes)iI).getDescription()));
+CvGameTextMgr.cpp:4322:                szHelpText.append(gDLL->getText("TXT_KEY_INVENTION_ALLOWS_BUILDTYPE", GC.getImprovementInfo((ImprovementTypes)iI).getDescription()));
+CvGameTextMgr.cpp:4330:            szHelpText.append(gDLL->getText("TXT_KEY_INVENTION_DISALLOWS_BUILDTYPE", GC.getImprovementInfo((ImprovementTypes)iI).getDescription()));
+CvGameTextMgr.cpp:6144:		if (GC.getImprovementInfo((ImprovementTypes)iLoopImprovement).isImprovementBonusMakesValid(eBonus))
+CvGameTextMgr.cpp:6225:	CvImprovementInfo& info = GC.getImprovementInfo(eImprovement);
+CvGameTextMgr.cpp:6276:		szBuffer.append(gDLL->getText("TXT_KEY_IMPROVEMENT_EVOLVES", GC.getImprovementInfo((ImprovementTypes) info.getImprovementUpgrade()).getTextKeyWide(), iTurns));
+CvGameTextMgr.cpp:8205:			szBuffer.append(gDLL->getText("TXT_KEY_EVENT_IMPROVEMENT_GROWTH", GC.getImprovementInfo((ImprovementTypes)kEvent.getImprovement()).getTextKeyWide()));
+CvGameTextMgr.cpp:8213:			szBuffer.append(gDLL->getText("TXT_KEY_EVENT_IMPROVEMENT_REMOVE", GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide()));
+CvGameTextMgr.cpp:8537:			szBuffer.append(gDLL->getText("TXT_KEY_FATHER_REVEALS_IMPROVEMENT", GC.getImprovementInfo((ImprovementTypes) iImprovement).getTextKeyWide()));
+CvMapGenerator.cpp:134:	FAssertMsg(GC.getImprovementInfo(eImprovement).isGoody(), "ImprovementType eImprovement is expected to be a goody");
+CvMapGenerator.cpp:176:	int iUniqueRange = GC.getImprovementInfo(eImprovement).getGoodyUniqueRange();
+CvMapGenerator.cpp:853:		if (GC.getImprovementInfo((ImprovementTypes)iI).isGoody() && GC.getImprovementInfo((ImprovementTypes)iI).getTilesPerGoody() > 0)
+CvMapGenerator.cpp:864:					if (pArea->getNumImprovements((ImprovementTypes)iI) < ((pArea->getNumTiles() + (GC.getImprovementInfo((ImprovementTypes)iI).getTilesPerGoody() / 2)) / GC.getImprovementInfo((ImprovementTypes) iI).getTilesPerGoody()))
+CvPlayer.cpp:9632:	int iCost = GC.getImprovementInfo(eImprovement).getAdvancedStartCost();
+CvPlayer.cpp:9696:	if (0 != GC.getImprovementInfo(eImprovement).getAdvancedStartCostIncrease())
+CvPlayer.cpp:9714:			iCost *= 100 + GC.getImprovementInfo(eImprovement).getAdvancedStartCostIncrease() * iNumImprovements;
+CvPlayer.cpp:11637:			NULL != pPlot && NO_IMPROVEMENT != pPlot->getImprovementType() ? GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide() : L"",
+CvPlayer.cpp:11997:						if (NO_IMPROVEMENT != pPlot->getImprovementType() && !GC.getImprovementInfo(pPlot->getImprovementType()).isPermanent())
+CvPlayer.cpp:11999:							CvWString szBuffer = gDLL->getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide());
+CvPlayer.cpp:12000:							gDLL->getInterfaceIFace()->addMessage(getID(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGED", MESSAGE_TYPE_INFO, GC.getImprovementInfo(pPlot->getImprovementType()).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pPlot->getX_INLINE(), pPlot->getY_INLINE(), true, true);
+CvPlayerAI.cpp:12111:					iYieldValue += ((GC.getImprovementInfo(pPlot->getImprovementType()).getRouteYieldChanges(eRoute, YIELD_FOOD)) * 100);
+CvPlayerAI.cpp:13283:					CvImprovementInfo &kImprovementInfo = GC.getImprovementInfo(pPlot->getImprovementType());
+CvPlot.cpp:373:				if (GC.getImprovementInfo(getImprovementType()).getImprovementBonusDiscoverRand(iI) > 0)
+CvPlot.cpp:375:					if (GC.getGameINLINE().getSorenRandNum(GC.getImprovementInfo(getImprovementType()).getImprovementBonusDiscoverRand(iI), "Bonus Discovery") == 0)
+CvPlot.cpp:398:		ImprovementTypes eImprovementUpdrade = (ImprovementTypes)GC.getImprovementInfo(getImprovementType()).getImprovementUpgrade();
+CvPlot.cpp:422:			if (isBeingWorked() || GC.getImprovementInfo(eImprovementUpdrade).isOutsideBorders())
+CvPlot.cpp:1565:	if (GC.getImprovementInfo(eImprovement).isWater() != isWater())
+CvPlot.cpp:1577:	if ((getBonusType() != NO_BONUS) && GC.getImprovementInfo(eImprovement).isImprovementBonusMakesValid(getBonusType()))
+CvPlot.cpp:1582:	if (GC.getImprovementInfo(eImprovement).isRequiresFlatlands() && !isFlatlands())
+CvPlot.cpp:1587:	if (GC.getImprovementInfo(eImprovement).isRequiresFeature() && (getFeatureType() == NO_FEATURE))
+CvPlot.cpp:1592:	if (GC.getImprovementInfo(eImprovement).isHillsMakesValid() && (isHills() || isPeak()))
+CvPlot.cpp:1597:	if (GC.getImprovementInfo(eImprovement).isRiverSideMakesValid() && isRiverSide())
+CvPlot.cpp:1602:	if (GC.getImprovementInfo(eImprovement).getTerrainMakesValid(getTerrainType()))
+CvPlot.cpp:1607:	if ((getFeatureType() != NO_FEATURE) && GC.getImprovementInfo(eImprovement).getFeatureMakesValid(getFeatureType()))
+CvPlot.cpp:1617:	if (GC.getImprovementInfo(eImprovement).isRequiresRiverSide())
+CvPlot.cpp:1648:		int iRequired = GC.getImprovementInfo(eImprovement).getPrereqNatureYield(iI);
+CvPlot.cpp:1712:			if (GC.getImprovementInfo(getImprovementType()).isPermanent())
+CvPlot.cpp:1738:				if (GC.getImprovementInfo(eImprovement).isOutsideBorders())
+CvPlot.cpp:2092:			iModifier += GC.getImprovementInfo(eImprovement).getDefenseModifier();
+CvPlot.cpp:2679:	return (GC.getImprovementInfo(getImprovementType()).isGoody());
+CvPlot.cpp:2690:	return ((getRevealedImprovementType(eTeam, false) == NO_IMPROVEMENT) ? false : GC.getImprovementInfo(getRevealedImprovementType(eTeam, false)).isGoody());
+CvPlot.cpp:2704:		if (GC.getImprovementInfo(getImprovementType()).isActsAsCity())
+CvPlot.cpp:2706:			if (NO_TEAM == eForTeam || (NO_TEAM == getTeam() && GC.getImprovementInfo(getImprovementType()).isOutsideBorders()) || GET_TEAM(eForTeam).isFriendlyTerritory(getTeam()))
+CvPlot.cpp:4217:				if (GC.getImprovementInfo(getImprovementType()).isRequiresFeature())
+CvPlot.cpp:4336:		if (NO_FEATURE != eOldImprovement && GC.getImprovementInfo(eOldImprovement).isActsAsCity())
+CvPlot.cpp:4787:		iYield += GC.getImprovementInfo(eImprovement).getRiverSideYieldChange(eYield);
+CvPlot.cpp:4792:		iYield += GC.getImprovementInfo(eImprovement).getHillsYieldChange(eYield);
+CvPlot.cpp:4801:			iBestYield = std::max(iBestYield, GC.getImprovementInfo(eImprovement).getRouteYieldChanges(iI, eYield));
+CvPlot.cpp:4810:			iYield += GC.getImprovementInfo(eImprovement).getRouteYieldChanges(getRouteType(), eYield);
+CvPlot.cpp:4831:			iYield += GC.getImprovementInfo(eImprovement).getImprovementBonusYield(eBonus, eYield);
+CvPlot.cpp:4835:	if (GC.getImprovementInfo(eImprovement).getYieldIncrease(eYield) != 0)
+CvPlot.cpp:4845:			iYield += GC.getImprovementInfo(eImprovement).getYieldIncrease(eYield);
+CvPlot.cpp:6902:											iProbability += GC.getImprovementInfo(pLoopPlot->getImprovementType()).getFeatureGrowthProbability();
+CvPlot.cpp:7715:			ImprovementTypes eUpgradeImprovement = (ImprovementTypes)GC.getImprovementInfo(eImprovement).getImprovementUpgrade();
+CvPlot.cpp:7718:				ImprovementTypes eUpgradeImprovement2 = (ImprovementTypes)GC.getImprovementInfo(eUpgradeImprovement).getImprovementUpgrade();
+CvPlot.cpp:7742:				iYield += GC.getImprovementInfo(eImprovement).getRouteYieldChanges(eRoute, iI);
+CvPlot.cpp:7745:					iYield -= GC.getImprovementInfo(eImprovement).getRouteYieldChanges(getRouteType(), iI);
+CvSelectionGroup.cpp:2644:					if (GC.getImprovementInfo(eImprovement).getImprovementPillage() != NO_IMPROVEMENT)
+CvUnit.cpp:1545:								if (GC.getImprovementInfo(eImprovement).getYieldIncrease(YIELD_FOOD) > 0)
+CvUnit.cpp:1583:							if (GC.getImprovementInfo(eFinalImprovement).getRouteYieldChanges(eRoute, (YieldTypes)i) > 0)
+CvUnit.cpp:4600:		if (GC.getImprovementInfo(pPlot->getImprovementType()).isPermanent())
+CvUnit.cpp:4680:				szBuffer = gDLL->getText("TXT_KEY_MISC_PLUNDERED_GOLD_FROM_IMP", iPillageGold, GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide());
+CvUnit.cpp:4685:					szBuffer = gDLL->getText("TXT_KEY_MISC_IMP_DESTROYED", GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide(), getNameOrProfessionKey(), getVisualCivAdjective(pPlot->getTeam()));
+CvUnit.cpp:4691:		pPlot->setImprovementType((ImprovementTypes)(GC.getImprovementInfo(pPlot->getImprovementType()).getImprovementPillage()));
+CvUnitAI.cpp:7203:			if (GC.getImprovementInfo(eImprovement).isActsAsCity())
+CvUnitAI.cpp:7234:					if (GC.getImprovementInfo(eImprovement).isActsAsCity())
+CvUnitAI.cpp:11667:								if (GC.getImprovementInfo((ImprovementTypes)(GC.getBuildInfo(eBuild).getImprovement())).isActsAsCity())
+CvUnitAI.cpp:11669:								    if (GC.getImprovementInfo((ImprovementTypes)(GC.getBuildInfo(eBuild).getImprovement())).getDefenseModifier() > 0)
+CvUnitAI.cpp:11871:						int iRouteMultiplier = ((GC.getImprovementInfo(eImprovement).getRouteYieldChanges(eRoute, YIELD_FOOD)) * 100);
+CvUnitAI.cpp:11988:									if (GC.getImprovementInfo(eImprovement).getRouteYieldChanges(eBestRoute, iJ) > 0)
+CvUnitAI.cpp:12829:		iValue += GC.getImprovementInfo(eImprovement).getPillageGold();
+CvXMLLoadUtilitySet.cpp:711:	LoadGlobalClassInfo(GC.getImprovementInfo(), "CIV4ImprovementInfos", "Terrain", "Civ4ImprovementInfos/ImprovementInfos/ImprovementInfo", &CvDLLUtilityIFaceBase::createImprovementInfoCacheObject);
+CyGlobalContext.cpp:142:	return (i>=0 && i<GC.getNumImprovementInfos()) ? &GC.getImprovementInfo((ImprovementTypes) i) : NULL;
+_backup\CvCity.cpp:7511:					if (NO_IMPROVEMENT != pPlot->getImprovementType() && !GC.getImprovementInfo(pPlot->getImprovementType()).isPermanent())
+_backup\CvCity.cpp:7574:							if (NO_IMPROVEMENT != pPlot->getImprovementType() && !GC.getImprovementInfo(pPlot->getImprovementType()).isPermanent())
+_backup\CvCity.cpp:7576:								CvWString szBuffer = gDLL->getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide());
+_backup\CvCity.cpp:7577:								gDLL->getInterfaceIFace()->addMessage(getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGED", MESSAGE_TYPE_INFO, GC.getImprovementInfo(pPlot->getImprovementType()).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pPlot->getX_INLINE(), pPlot->getY_INLINE(), true, true);
+_backup\CvCityAI.cpp:1609:			if (GC.getImprovementInfo(pPlot->getImprovementType()).isRequiresFeature())
+_backup\CvCityAI.cpp:4306:					if (GC.getImprovementInfo(eCurrentImprovement).getImprovementBonusDiscoverRand(iI) > 0)
+_backup\CvCityAI.cpp:4314:	if ((eCurrentImprovement != NO_IMPROVEMENT) && (GC.getImprovementInfo(pPlot->getImprovementType()).getImprovementUpgrade() != NO_IMPROVEMENT))
+_backup\CvCityAI.cpp:4589:				CvImprovementInfo& kImprovement = GC.getImprovementInfo(eImprovement);
+_backup\CvDLLWidgetData.cpp:1554:					szBuffer.append(gDLL->getText("TXT_KEY_ACTION_DESTROY_IMP", GC.getImprovementInfo(pMissionPlot->getImprovementType()).getTextKeyWide()));
+_backup\CvDLLWidgetData.cpp:1685:							if (GC.getImprovementInfo(eBuildImprovement).isOutsideBorders())
+_backup\CvDLLWidgetData.cpp:1707:						szBuffer.append(gDLL->getText("TXT_KEY_ACTION_WILL_DESTROY_IMP", GC.getImprovementInfo(pMissionPlot->getImprovementType()).getTextKeyWide()));
+_backup\CvDLLWidgetData.cpp:1751:							if (GC.getImprovementInfo(eBuildImprovement).getImprovementBonusDiscoverRand(iI) > 0)
+_backup\CvDLLWidgetData.cpp:1755:								setListHelp(szBuffer, szFirstBuffer, szTempBuffer, L", ", (GC.getImprovementInfo(eBuildImprovement).getImprovementBonusDiscoverRand(iI) != iLast));
+_backup\CvDLLWidgetData.cpp:1756:								iLast = GC.getImprovementInfo(eBuildImprovement).getImprovementBonusDiscoverRand(iI);
+_backup\CvDLLWidgetData.cpp:1767:								GAMETEXT.setYieldChangeHelp(szBuffer, GC.getRouteInfo((RouteTypes)iI).getDescription(), L": ", L"", GC.getImprovementInfo(eBuildImprovement).getRouteYieldChangesArray((RouteTypes)iI));
+_backup\CvDLLWidgetData.cpp:1772:					if (GC.getImprovementInfo(eBuildImprovement).getDefenseModifier() != 0)
+_backup\CvDLLWidgetData.cpp:1775:						szBuffer.append(gDLL->getText("TXT_KEY_ACTION_DEFENSE_MODIFIER", GC.getImprovementInfo(eBuildImprovement).getDefenseModifier()));
+_backup\CvDLLWidgetData.cpp:1778:					if (GC.getImprovementInfo(eBuildImprovement).getImprovementUpgrade() != NO_IMPROVEMENT)
+_backup\CvDLLWidgetData.cpp:1783:						szBuffer.append(gDLL->getText("TXT_KEY_ACTION_BECOMES_IMP", GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eBuildImprovement).getImprovementUpgrade()).getTextKeyWide(), iTurns));
+_backup\CvDLLWidgetData.cpp:1798:						GAMETEXT.setYieldChangeHelp(szBuffer, GC.getImprovementInfo(eFinalImprovement).getDescription(), L": ", L"", GC.getImprovementInfo(eFinalImprovement).getRouteYieldChangesArray(eBuildRoute));
+_backup\CvDLLWidgetData.cpp:2837:				szBuffer.assign(bMinimal ? GC.getImprovementInfo(eImprovement).getDescription() : gDLL->getText("TXT_KEY_MISC_HISTORICAL_INFO", GC.getImprovementInfo(eImprovement).getTextKeyWide()));
+_backup\CvGame.cpp:3348:	iTime = GC.getImprovementInfo(eImprovement).getUpgradeTime();
+_backup\CvGame.cpp:5723:					*pLogString += CvString::format("%s = %d\n", CvString(GC.getImprovementInfo((ImprovementTypes) iJ).getDescription()).GetCString(), kPlayer.getImprovementCount((ImprovementTypes)iJ));
+_backup\CvGameCoreUtils.cpp:305:	if (GC.getImprovementInfo(eImprovement).getImprovementUpgrade() != NO_IMPROVEMENT)
+_backup\CvGameCoreUtils.cpp:307:		return finalImprovementUpgrade(((ImprovementTypes)(GC.getImprovementInfo(eImprovement).getImprovementUpgrade())), (iCount + 1));
+_backup\CvGameTextMgr.cpp:2426:			szString.append(GC.getImprovementInfo(eImprovement).getDescription());
+_backup\CvGameTextMgr.cpp:2428:			if (GC.getImprovementInfo(eImprovement).getImprovementUpgrade() != NO_IMPROVEMENT)
+_backup\CvGameTextMgr.cpp:2434:					szString.append(gDLL->getText("TXT_KEY_PLOT_IMP_UPGRADE", iTurns, GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getTextKeyWide()));
+_backup\CvGameTextMgr.cpp:2438:					szString.append(gDLL->getText("TXT_KEY_PLOT_WORK_TO_UPGRADE", GC.getImprovementInfo((ImprovementTypes) GC.getImprovementInfo(eImprovement).getImprovementUpgrade()).getTextKeyWide()));
+_backup\CvGameTextMgr.cpp:4051:			if (GC.getImprovementInfo((ImprovementTypes)iI).getImprovementUpgrade() != NO_IMPROVEMENT)
+_backup\CvGameTextMgr.cpp:4055:				szImprovement.Format(L"<link=literal>%s</link>", GC.getImprovementInfo((ImprovementTypes)iI).getDescription());
+_backup\CvGameTextMgr.cpp:4149:				szImprovement.Format(L"<link=literal>%s</link>", GC.getImprovementInfo((ImprovementTypes)iJ).getDescription());
+_backup\CvGameTextMgr.cpp:4314:                szHelpText.append(gDLL->getText("TXT_KEY_INVENTION_ALLOWS_BUILDTYPE_TERRAIN", GC.getImprovementInfo((ImprovementTypes)iI).getDescription()));
+_backup\CvGameTextMgr.cpp:4322:                szHelpText.append(gDLL->getText("TXT_KEY_INVENTION_ALLOWS_BUILDTYPE", GC.getImprovementInfo((ImprovementTypes)iI).getDescription()));
+_backup\CvGameTextMgr.cpp:4330:            szHelpText.append(gDLL->getText("TXT_KEY_INVENTION_DISALLOWS_BUILDTYPE", GC.getImprovementInfo((ImprovementTypes)iI).getDescription()));
+_backup\CvGameTextMgr.cpp:6090:		if (GC.getImprovementInfo((ImprovementTypes)iLoopImprovement).isImprovementBonusMakesValid(eBonus))
+_backup\CvGameTextMgr.cpp:6171:	CvImprovementInfo& info = GC.getImprovementInfo(eImprovement);
+_backup\CvGameTextMgr.cpp:6222:		szBuffer.append(gDLL->getText("TXT_KEY_IMPROVEMENT_EVOLVES", GC.getImprovementInfo((ImprovementTypes) info.getImprovementUpgrade()).getTextKeyWide(), iTurns));
+_backup\CvGameTextMgr.cpp:8151:			szBuffer.append(gDLL->getText("TXT_KEY_EVENT_IMPROVEMENT_GROWTH", GC.getImprovementInfo((ImprovementTypes)kEvent.getImprovement()).getTextKeyWide()));
+_backup\CvGameTextMgr.cpp:8159:			szBuffer.append(gDLL->getText("TXT_KEY_EVENT_IMPROVEMENT_REMOVE", GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide()));
+_backup\CvGameTextMgr.cpp:8483:			szBuffer.append(gDLL->getText("TXT_KEY_FATHER_REVEALS_IMPROVEMENT", GC.getImprovementInfo((ImprovementTypes) iImprovement).getTextKeyWide()));
+_backup\CvPlayer.cpp:9622:	int iCost = GC.getImprovementInfo(eImprovement).getAdvancedStartCost();
+_backup\CvPlayer.cpp:9686:	if (0 != GC.getImprovementInfo(eImprovement).getAdvancedStartCostIncrease())
+_backup\CvPlayer.cpp:9704:			iCost *= 100 + GC.getImprovementInfo(eImprovement).getAdvancedStartCostIncrease() * iNumImprovements;
+_backup\CvPlayer.cpp:11627:			NULL != pPlot && NO_IMPROVEMENT != pPlot->getImprovementType() ? GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide() : L"",
+_backup\CvPlayer.cpp:11987:						if (NO_IMPROVEMENT != pPlot->getImprovementType() && !GC.getImprovementInfo(pPlot->getImprovementType()).isPermanent())
+_backup\CvPlayer.cpp:11989:							CvWString szBuffer = gDLL->getText("TXT_KEY_EVENT_CITY_IMPROVEMENT_DESTROYED", GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide());
+_backup\CvPlayer.cpp:11990:							gDLL->getInterfaceIFace()->addMessage(getID(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_PILLAGED", MESSAGE_TYPE_INFO, GC.getImprovementInfo(pPlot->getImprovementType()).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), pPlot->getX_INLINE(), pPlot->getY_INLINE(), true, true);
+_backup\CvPlayerAI.cpp:12106:					iYieldValue += ((GC.getImprovementInfo(pPlot->getImprovementType()).getRouteYieldChanges(eRoute, YIELD_FOOD)) * 100);
+_backup\CvPlayerAI.cpp:13278:					CvImprovementInfo &kImprovementInfo = GC.getImprovementInfo(pPlot->getImprovementType());
+_backup\CvPlot.cpp:373:				if (GC.getImprovementInfo(getImprovementType()).getImprovementBonusDiscoverRand(iI) > 0)
+_backup\CvPlot.cpp:375:					if (GC.getGameINLINE().getSorenRandNum(GC.getImprovementInfo(getImprovementType()).getImprovementBonusDiscoverRand(iI), "Bonus Discovery") == 0)
+_backup\CvPlot.cpp:398:		ImprovementTypes eImprovementUpdrade = (ImprovementTypes)GC.getImprovementInfo(getImprovementType()).getImprovementUpgrade();
+_backup\CvPlot.cpp:422:			if (isBeingWorked() || GC.getImprovementInfo(eImprovementUpdrade).isOutsideBorders())
+_backup\CvPlot.cpp:1565:	if (GC.getImprovementInfo(eImprovement).isWater() != isWater())
+_backup\CvPlot.cpp:1577:	if ((getBonusType() != NO_BONUS) && GC.getImprovementInfo(eImprovement).isImprovementBonusMakesValid(getBonusType()))
+_backup\CvPlot.cpp:1582:	if (GC.getImprovementInfo(eImprovement).isRequiresFlatlands() && !isFlatlands())
+_backup\CvPlot.cpp:1587:	if (GC.getImprovementInfo(eImprovement).isRequiresFeature() && (getFeatureType() == NO_FEATURE))
+_backup\CvPlot.cpp:1592:	if (GC.getImprovementInfo(eImprovement).isHillsMakesValid() && (isHills() || isPeak()))
+_backup\CvPlot.cpp:1597:	if (GC.getImprovementInfo(eImprovement).isRiverSideMakesValid() && isRiverSide())
+_backup\CvPlot.cpp:1602:	if (GC.getImprovementInfo(eImprovement).getTerrainMakesValid(getTerrainType()))
+_backup\CvPlot.cpp:1607:	if ((getFeatureType() != NO_FEATURE) && GC.getImprovementInfo(eImprovement).getFeatureMakesValid(getFeatureType()))
+_backup\CvPlot.cpp:1617:	if (GC.getImprovementInfo(eImprovement).isRequiresRiverSide())
+_backup\CvPlot.cpp:1648:		int iRequired = GC.getImprovementInfo(eImprovement).getPrereqNatureYield(iI);
+_backup\CvPlot.cpp:1712:			if (GC.getImprovementInfo(getImprovementType()).isPermanent())
+_backup\CvPlot.cpp:1738:				if (GC.getImprovementInfo(eImprovement).isOutsideBorders())
+_backup\CvPlot.cpp:2092:			iModifier += GC.getImprovementInfo(eImprovement).getDefenseModifier();
+_backup\CvPlot.cpp:2679:	return (GC.getImprovementInfo(getImprovementType()).isGoody());
+_backup\CvPlot.cpp:2690:	return ((getRevealedImprovementType(eTeam, false) == NO_IMPROVEMENT) ? false : GC.getImprovementInfo(getRevealedImprovementType(eTeam, false)).isGoody());
+_backup\CvPlot.cpp:2704:		if (GC.getImprovementInfo(getImprovementType()).isActsAsCity())
+_backup\CvPlot.cpp:2706:			if (NO_TEAM == eForTeam || (NO_TEAM == getTeam() && GC.getImprovementInfo(getImprovementType()).isOutsideBorders()) || GET_TEAM(eForTeam).isFriendlyTerritory(getTeam()))
+_backup\CvPlot.cpp:4217:				if (GC.getImprovementInfo(getImprovementType()).isRequiresFeature())
+_backup\CvPlot.cpp:4336:		if (NO_FEATURE != eOldImprovement && GC.getImprovementInfo(eOldImprovement).isActsAsCity())
+_backup\CvPlot.cpp:4787:		iYield += GC.getImprovementInfo(eImprovement).getRiverSideYieldChange(eYield);
+_backup\CvPlot.cpp:4792:		iYield += GC.getImprovementInfo(eImprovement).getHillsYieldChange(eYield);
+_backup\CvPlot.cpp:4801:			iBestYield = std::max(iBestYield, GC.getImprovementInfo(eImprovement).getRouteYieldChanges(iI, eYield));
+_backup\CvPlot.cpp:4810:			iYield += GC.getImprovementInfo(eImprovement).getRouteYieldChanges(getRouteType(), eYield);
+_backup\CvPlot.cpp:4831:			iYield += GC.getImprovementInfo(eImprovement).getImprovementBonusYield(eBonus, eYield);
+_backup\CvPlot.cpp:4835:	if (GC.getImprovementInfo(eImprovement).getYieldIncrease(eYield) != 0)
+_backup\CvPlot.cpp:4845:			iYield += GC.getImprovementInfo(eImprovement).getYieldIncrease(eYield);
+_backup\CvPlot.cpp:6902:											iProbability += GC.getImprovementInfo(pLoopPlot->getImprovementType()).getFeatureGrowthProbability();
+_backup\CvPlot.cpp:7715:			ImprovementTypes eUpgradeImprovement = (ImprovementTypes)GC.getImprovementInfo(eImprovement).getImprovementUpgrade();
+_backup\CvPlot.cpp:7718:				ImprovementTypes eUpgradeImprovement2 = (ImprovementTypes)GC.getImprovementInfo(eUpgradeImprovement).getImprovementUpgrade();
+_backup\CvPlot.cpp:7742:				iYield += GC.getImprovementInfo(eImprovement).getRouteYieldChanges(eRoute, iI);
+_backup\CvPlot.cpp:7745:					iYield -= GC.getImprovementInfo(eImprovement).getRouteYieldChanges(getRouteType(), iI);
+_backup\CvUnit.cpp:1545:								if (GC.getImprovementInfo(eImprovement).getYieldIncrease(YIELD_FOOD) > 0)
+_backup\CvUnit.cpp:1583:							if (GC.getImprovementInfo(eFinalImprovement).getRouteYieldChanges(eRoute, (YieldTypes)i) > 0)
+_backup\CvUnit.cpp:4593:		if (GC.getImprovementInfo(pPlot->getImprovementType()).isPermanent())
+_backup\CvUnit.cpp:4673:				szBuffer = gDLL->getText("TXT_KEY_MISC_PLUNDERED_GOLD_FROM_IMP", iPillageGold, GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide());
+_backup\CvUnit.cpp:4678:					szBuffer = gDLL->getText("TXT_KEY_MISC_IMP_DESTROYED", GC.getImprovementInfo(pPlot->getImprovementType()).getTextKeyWide(), getNameOrProfessionKey(), getVisualCivAdjective(pPlot->getTeam()));
+_backup\CvUnit.cpp:4684:		pPlot->setImprovementType((ImprovementTypes)(GC.getImprovementInfo(pPlot->getImprovementType()).getImprovementPillage()));
+_backup\CvUnitAI.cpp:7203:			if (GC.getImprovementInfo(eImprovement).isActsAsCity())
+_backup\CvUnitAI.cpp:7234:					if (GC.getImprovementInfo(eImprovement).isActsAsCity())
+_backup\CvUnitAI.cpp:11667:								if (GC.getImprovementInfo((ImprovementTypes)(GC.getBuildInfo(eBuild).getImprovement())).isActsAsCity())
+_backup\CvUnitAI.cpp:11669:								    if (GC.getImprovementInfo((ImprovementTypes)(GC.getBuildInfo(eBuild).getImprovement())).getDefenseModifier() > 0)
+_backup\CvUnitAI.cpp:11871:						int iRouteMultiplier = ((GC.getImprovementInfo(eImprovement).getRouteYieldChanges(eRoute, YIELD_FOOD)) * 100);
+_backup\CvUnitAI.cpp:11988:									if (GC.getImprovementInfo(eImprovement).getRouteYieldChanges(eBestRoute, iJ) > 0)
+_backup\CvUnitAI.cpp:12829:		iValue += GC.getImprovementInfo(eImprovement).getPillageGold();
+_backup\CvXMLLoadUtilitySet.cpp:711:	LoadGlobalClassInfo(GC.getImprovementInfo(), "CIV4ImprovementInfos", "Terrain", "Civ4ImprovementInfos/ImprovementInfos/ImprovementInfo", &CvDLLUtilityIFaceBase::createImprovementInfoCacheObject);

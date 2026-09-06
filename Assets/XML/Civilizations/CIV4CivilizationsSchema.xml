@@ -219,6 +219,7 @@
 	<ElementType name="iNativeCombatModifier" content="textOnly" dt:type="int"/>
 	<ElementType name="iMissionaryModifier" content="textOnly" dt:type="int"/>
 	<ElementType name="iRebelCombatModifier" content="textOnly" dt:type="int"/>
+	<ElementType name="iStrengthModifier" content="textOnly" dt:type="int"/>
 	<ElementType name="iTaxRateThresholdModifier" content="textOnly" dt:type="int"/>
 	<ElementType name="iMercantileFactor" content="textOnly" dt:type="int"/>
 	<ElementType name="iTreasureModifier" content="textOnly" dt:type="int"/>
@@ -282,9 +283,19 @@
 		<element type="BuildingClassType"/>
 		<element type="BuildingYields"/>
 	</ElementType>
-	<ElementType name="BuildingYieldChanges" content="eltOnly">
-		<element type="BuildingYieldChange" minOccurs="0" maxOccurs="*"/>
-	</ElementType>
+    <ElementType name="BuildingYieldChanges" content="eltOnly">
+            <element type="BuildingYieldChange" minOccurs="0" maxOccurs="*"/>
+    </ElementType>
+    <ElementType name="ImprovementYields" content="eltOnly">
+            <element type="YieldChange" minOccurs="0" maxOccurs="*"/>
+    </ElementType>
+    <ElementType name="ImprovementYieldChange" content="eltOnly">
+            <element type="ImprovementType"/>
+            <element type="ImprovementYields"/>
+    </ElementType>
+    <ElementType name="ImprovementYieldChanges" content="eltOnly">
+            <element type="ImprovementYieldChange" minOccurs="0" maxOccurs="*"/>
+    </ElementType>
 	<ElementType name="iChange" content="textOnly" dt:type="int"/>
 	<ElementType name="UnitClass" content="textOnly"/>
 	<ElementType name="UnitMoveChange" content="eltOnly">
@@ -352,6 +363,7 @@
 		<element type="iNativeCombatModifier"/>
 		<element type="iMissionaryModifier"/>
 		<element type="iRebelCombatModifier"/>
+		<element type="iStrengthModifier"/>
 		<element type="iTaxRateThresholdModifier"/>
 		<element type="iMercantileFactor"/>
 		<element type="iTreasureModifier"/>
@@ -371,6 +383,7 @@
 		<element type="YieldModifiers"/>
 		<element type="TaxYieldModifiers"/>
 		<element type="BuildingYieldChanges"/>
+		<element type="ImprovementYieldChanges"/>
 		<element type="UnitMoveChanges"/>
 		<element type="ProfessionMoveChanges"/>
 		<element type="BuildingProductionModifiers"/>

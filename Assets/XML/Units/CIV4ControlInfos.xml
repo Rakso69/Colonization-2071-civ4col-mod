@@ -643,7 +643,7 @@
 			<Help/>
 			<HotKey>KB_F3</HotKey>
 			<bAltDown>0</bAltDown>
-			<bShiftDown>1</bShiftDown>
+			<bShiftDown>0</bShiftDown>
 			<bCtrlDown>0</bCtrlDown>
 			<iHotKeyPriority>0</iHotKeyPriority>
 			<HotKeyAlt/>
@@ -697,21 +697,6 @@
 			<bCtrlDownAlt>0</bCtrlDownAlt>
 			<iHotKeyPriorityAlt>0</iHotKeyPriorityAlt>
 		</ControlInfo>
-    <ControlInfo>
-      <Type>CONTROL_TECHNOLOGY_SCREEN</Type>
-      <Description>TXT_KEY_TECHONOLOGY_ADVISOR_TITLE</Description>
-      <Help/>
-      <HotKey>KB_F3</HotKey>
-      <bAltDown>0</bAltDown>
-      <bShiftDown>0</bShiftDown>
-      <bCtrlDown>0</bCtrlDown>
-      <iHotKeyPriority>0</iHotKeyPriority>
-      <HotKeyAlt/>
-      <bAltDownAlt>0</bAltDownAlt>
-      <bShiftDownAlt>0</bShiftDownAlt>
-      <bCtrlDownAlt>0</bCtrlDownAlt>
-      <iHotKeyPriorityAlt>0</iHotKeyPriorityAlt>
-    </ControlInfo>
 		<ControlInfo>
 			<Type>CONTROL_TURN_LOG</Type>
 			<Description>TXT_KEY_EVENT_LOG</Description>
@@ -914,6 +899,22 @@
 			<HotKey>KB_F1</HotKey>
 			<bAltDown>1</bAltDown>
 			<bShiftDown>0</bShiftDown>
+			<bCtrlDown>0</bCtrlDown>
+			<iHotKeyPriority>0</iHotKeyPriority>
+			<HotKeyAlt/>
+			<bAltDownAlt>0</bAltDownAlt>
+			<bShiftDownAlt>0</bShiftDownAlt>
+			<bCtrlDownAlt>0</bCtrlDownAlt>
+			<iHotKeyPriorityAlt>0</iHotKeyPriorityAlt>
+		</ControlInfo>
+<!-- Colonization 2071-->
+		<ControlInfo>
+			<Type>CONTROL_TECHNOLOGY_SCREEN</Type>
+			<Description>TXT_KEY_TECHONOLOGY_ADVISOR_TITLE</Description>
+			<Help/>
+			<HotKey>KB_F3</HotKey>
+			<bAltDown>0</bAltDown>
+			<bShiftDown>1</bShiftDown>
 			<bCtrlDown>0</bCtrlDown>
 			<iHotKeyPriority>0</iHotKeyPriority>
 			<HotKeyAlt/>

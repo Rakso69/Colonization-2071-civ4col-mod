@@ -126,29 +126,30 @@
 			<ProductionTraits/>
 			<Button>Art/Interface/Buttons/Buildings/BombShelters.dds</Button>
 		</SpecialBuildingInfo>
-    <SpecialBuildingInfo>
-      <Type>SPECIALBUILDING_IDEAS</Type>
-      <Description>TXT_KEY_SPECIALBUILDING_PRINT</Description>
-      <bValid>1</bValid>
-      <FontButtonIndex>22</FontButtonIndex>
-      <ProductionTraits/>
-      <Button>Art/Interface/Buttons/Buildings/BombShelters.dds</Button>
-    </SpecialBuildingInfo>
-    <SpecialBuildingInfo>
-      <Type>SPECIALBUILDING_OBSERVATORY</Type>
-      <Description>Observatory</Description>
-      <bValid>1</bValid>
-      <FontButtonIndex>22</FontButtonIndex>
-      <ProductionTraits/>
-      <Button>Art/Interface/Buttons/Buildings/BombShelters.dds</Button>
-    </SpecialBuildingInfo>
-    <SpecialBuildingInfo>
-      <Type>SPECIALBUILDING_COAL_FURNACE</Type>
-      <Description>Coal Furnace</Description>
-      <bValid>1</bValid>
-      <FontButtonIndex>16</FontButtonIndex>
-      <ProductionTraits/>
-      <Button>Art/Interface/Buttons/Buildings/BombShelters.dds</Button>
-    </SpecialBuildingInfo>
+<!-- Colonization 2071-->
+		<SpecialBuildingInfo>
+			<Type>SPECIALBUILDING_IDEAS</Type>
+			<Description>TXT_KEY_SPECIALBUILDING_PRINT</Description>
+			<bValid>1</bValid>
+			<FontButtonIndex>22</FontButtonIndex>
+			<ProductionTraits/>
+			<Button>Art/Interface/Buttons/Buildings/BombShelters.dds</Button>
+		</SpecialBuildingInfo>
+		<SpecialBuildingInfo>
+			<Type>SPECIALBUILDING_OBSERVATORY</Type>
+			<Description>Observatory</Description>
+			<bValid>1</bValid>
+			<FontButtonIndex>22</FontButtonIndex>
+			<ProductionTraits/>
+			<Button>Art/Interface/Buttons/Buildings/BombShelters.dds</Button>
+		</SpecialBuildingInfo>
+		<SpecialBuildingInfo>
+			<Type>SPECIALBUILDING_COAL_FURNACE</Type>
+			<Description>Coal Furnace</Description>
+			<bValid>1</bValid>
+			<FontButtonIndex>16</FontButtonIndex>
+			<ProductionTraits/>
+			<Button>Art/Interface/Buttons/Buildings/BombShelters.dds</Button>
+		</SpecialBuildingInfo>
 	</SpecialBuildingInfos>
 </Civ4SpecialBuildingInfos>

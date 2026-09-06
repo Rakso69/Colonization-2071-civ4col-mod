@@ -12,7 +12,6 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_MOUND</Type>
 			<Button>Art/Interface/Buttons/Units/mound_beast.dds</Button>
-			<!--<Button>,Art/Interface/Buttons/beyond_the_sword_atlas.dds,4,14</Button>-->
 			<FullLengthIcon>Art/Interface/Buttons/Units/mound_beast.dds</FullLengthIcon>
 			<fScale>0.024</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
@@ -335,10 +334,8 @@
 			<FullLengthIcon>,Art/Interface/Screens/City_Management/Expert_Farmer.dds</FullLengthIcon>
 			<fScale>0.44</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
-			<NIF>Art/Units/_citizen/spore_lancer/pikeman_fx.nif</NIF>
+			<NIF>Art/Units/_citizen/spore_lancer/Expert_Farmer.nif</NIF>
 			<KFM>Art/Units/_citizen/spore_lancer/pikeman.kfm</KFM>
-			<!--<NIF>Art/Units/Expert_Farmer/Expert_Farmer.nif</NIF>-->
-			<!--<KFM>Art/Units/Expert_Farmer/Expert_Farmer.kfm</KFM>-->
 			<fBattleDistance>0.35</fBattleDistance>
 			<fRangedDeathTime>0.31</fRangedDeathTime>
 			<bActAsRanged>0</bActAsRanged>
@@ -443,14 +440,11 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_SILVERMINER</Type>
 			<Button>Art/Interface/Buttons/Units/expert_prospector.dds</Button>
-			<!--#<Button>,Art/Interface/Buttons/Unit_Resource_Colonization_Atlas.dds,2,5</Button>-->
 			<FullLengthIcon>,Art/Interface/Screens/City_Management/Expert_Silverminer.dds</FullLengthIcon>
 			<fScale>0.45</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Units/moonworker/astro grey.nif</NIF>
 			<KFM>Art/Units/moonworker/modernworker.kfm</KFM>
-			<!--<NIF>Art/Units/Expert_Silver_Miner/Expert_Silver_Miner.nif</NIF>-->
-			<!--<KFM>Art/Units/Expert_Silver_Miner/Expert_Silver_Miner.kfm</KFM>-->
 			<fBattleDistance>0.35</fBattleDistance>
 			<fRangedDeathTime>0.31</fRangedDeathTime>
 			<bActAsRanged>0</bActAsRanged>
@@ -469,8 +463,6 @@
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Units/moonworker/astro red.nif</NIF>
 			<KFM>Art/Units/moonworker/modernworker.kfm</KFM>
-			<!--<NIF>Art/Units/Expert_Ore_Miner/Expert_Ore_Miner.nif</NIF>-->
-			<!--<KFM>Art/Units/Expert_Ore_Miner/Expert_Ore_Miner.kfm</KFM>-->
 			<fBattleDistance>0.35</fBattleDistance>
 			<fRangedDeathTime>0.31</fRangedDeathTime>
 			<bActAsRanged>0</bActAsRanged>
@@ -946,6 +938,41 @@
 			<fBattleDistance>0.35</fBattleDistance>
 			<fRangedDeathTime>0.31</fRangedDeathTime>
 			<bActAsRanged>0</bActAsRanged>
+			<TrainSound>AS2D_UNIT_BUILD_UNIT</TrainSound>
+			<AudioRunSounds>
+				<AudioRunTypeLoop/>
+				<AudioRunTypeEnd/>
+			</AudioRunSounds>
+		</UnitArtInfo>
+<!--#⭐⚔️Spetsnaz/Спецназ (🪆Replaces Veteran Soldier)-->
+		<UnitArtInfo>
+			<Type>ART_DEF_UNIT_SPETSNAZ</Type>
+			<Button>Art/Interface/Buttons/Units/russia_spetsnaz_armed.dds</Button>
+			<FullLengthIcon>,Art/Interface/Screens/City_Management/Veteran_Soldier.dds</FullLengthIcon>
+			<fScale>0.5</fScale>
+			<fInterfaceScale>0.9</fInterfaceScale>
+			<NIF>Art/Units/_military/spetsnaz/janissary_fx.nif</NIF>
+			<KFM>Art/Units/_military/spetsnaz/janissary.kfm</KFM>
+			<fBattleDistance>0.35</fBattleDistance>
+			<fRangedDeathTime>0.31</fRangedDeathTime>
+			<bActAsRanged>0</bActAsRanged>
+			<TrainSound>AS2D_UNIT_BUILD_UNIT</TrainSound>
+			<AudioRunSounds>
+				<AudioRunTypeLoop/>
+				<AudioRunTypeEnd/>
+			</AudioRunSounds>
+		</UnitArtInfo>
+		<UnitArtInfo>
+			<Type>ART_DEF_UNIT_PROFESSION_SPETSNAZ_SOLDIER</Type>
+			<Button>Art/Interface/Buttons/Units/russia_spetsnaz_armed.dds</Button>
+			<FullLengthIcon>,Art/Interface/Screens/City_Management/Veteran_Musketman.dds</FullLengthIcon>
+			<fScale>0.44</fScale>
+			<fInterfaceScale>0.84</fInterfaceScale>
+			<NIF>Art/Units/_military/spetsnaz/janissary_fx.nif</NIF>
+			<KFM>Art/Units/_military/spetsnaz/janissary.kfm</KFM>
+			<fBattleDistance>0.35</fBattleDistance>
+			<fRangedDeathTime>0.05</fRangedDeathTime>
+			<bActAsRanged>1</bActAsRanged>
 			<TrainSound>AS2D_UNIT_BUILD_UNIT</TrainSound>
 			<AudioRunSounds>
 				<AudioRunTypeLoop/>
@@ -1651,7 +1678,7 @@
 <!--#⭐⚔️🛸Dreadnought (🤖Replaces Cruiser)-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_MAN_O_WAR</Type>
-			<Button>,Art/Interface/Buttons/finalfrontier1_atlas.dds,1,5</Button>
+			<Button>Art/Interface/Buttons/Units/dreadnought.dds</Button>
 			<FullLengthIcon>Art/Interface/Screens/Europe/ships/europe_man_o_war.dds</FullLengthIcon>
 			<fScale>0.3</fScale>
 			<fInterfaceScale>0.6</fInterfaceScale>
@@ -1915,12 +1942,10 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_SUGAR</Type>
 			<Button>Art/Interface/Buttons/Resources/soma.dds</Button>
-			<!--<Button>,Art/Interface/Buttons/Unit_Resource_Colonization_Atlas.dds,6,1</Button>-->
 			<FullLengthIcon>,Art/Interface/Game Hud/Actions/need_button.dds</FullLengthIcon>
 			<fScale>1.2</fScale>
 			<fInterfaceScale>1.2</fInterfaceScale>
 			<NIF>Art/Units/Trade_Goods/07_soma/red_Pepper.nif</NIF>
-			<!--<NIF>Art/Units/Trade_Goods/Sugar/Sugar.nif</NIF>-->
 			<KFM/>
 			<TrailDefinition>
 				<Texture>Art/Shared/wheeltread.dds</Texture>
@@ -2074,7 +2099,6 @@
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_MUSKETS</Type>
 			<Button>Art/Interface/Buttons/Resources/modern_weaponsunit.dds</Button>
-			<!--<Button>,Art/Interface/Buttons/Unit_Resource_Colonization_Atlas.dds,6,2</Button>-->
 			<FullLengthIcon>,Art/Interface/Game Hud/Actions/need_button.dds</FullLengthIcon>
 			<fScale>1.2</fScale>
 			<fInterfaceScale>1.2</fInterfaceScale>
@@ -2105,7 +2129,6 @@
 			<fScale>0.43</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Units/MechanizedInfantry/mechanizedinfantry_fx.nif</NIF>
-			<!--<NIF>Art/Units/Trade_Goods/Horses/Horses.nif</NIF>-->
 			<KFM>Art/Units/MechanizedInfantry/mechanizedinfantry.kfm</KFM>
 			<TrailDefinition>
 				<Texture>Art/Shared/wheeltread.dds</Texture>
@@ -2224,6 +2247,7 @@
 			<SelectionSound>AS3D_UN_SPY_SURR_VOX</SelectionSound>
 			<ActionSound>AS3D_UN_SPY_SURR_VOX</ActionSound>
 		</UnitArtInfo>
+<!--#⭐🗺️Intrepid Explorer (Explorer) Profession-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_PROFESSION_UNIT_SCOUT</Type>
 			<Button>Art/Interface/Buttons/Units/intrepid_explorer_scoutpro.dds</Button>
@@ -2245,9 +2269,10 @@
 			<SelectionSound>AS3D_UN_SPY_SURR_VOX</SelectionSound>
 			<ActionSound>AS3D_UN_SPY_SURR_VOX</ActionSound>
 		</UnitArtInfo>
+<!--#🗺️Colonist (Explorer) Profession-->
 		<UnitArtInfo>
 			<Type>ART_DEF_UNIT_PROFESSION_SCOUT</Type>
-			<Button>Art/Interface/Buttons/Units/mech.dds</Button>
+			<Button>Art/Interface/Buttons/Units/intrepid_explorer_scoutpro.dds</Button>
 			<FullLengthIcon>,Art/Interface/Screens/City_Management/Scout_Seasoned.dds</FullLengthIcon>
 			<fScale>0.33</fScale>
 			<fInterfaceScale>0.9</fInterfaceScale>

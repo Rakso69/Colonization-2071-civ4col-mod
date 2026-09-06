@@ -118,6 +118,197 @@
 				<VarietyButton>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,6,4</VarietyButton>
 			</FeatureVariety>
 		</FeatureArtInfo>
+<!-- Jungle-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_JUNGLE</Type>
+			<bAnimated>0</bAnimated>
+			<TileArtType>TILE_ART_TYPE_TREES</TileArtType>
+			<fScale>1.0</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/jungle.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Jungle/Jungle_single_tree.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/Jungle/Jungle_single_tree_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/Jungle/Jungle_single_tree_02.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/Jungle/Jungle_single_tree_03.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>44</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/jungle.dds</VarietyButton>
+			</FeatureVariety>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle01_01.nif</ModelFile>
+						<Connections>NW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle02_01.nif</ModelFile>
+						<Connections>NE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle03_01.nif</ModelFile>
+						<Connections>NW NE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle04_01.nif</ModelFile>
+						<Connections>SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle05_01.nif</ModelFile>
+						<Connections>NW SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle06_01.nif</ModelFile>
+						<Connections>NE SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle07_01.nif</ModelFile>
+						<Connections>NW NE SE</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle08_01.nif</ModelFile>
+						<Connections>SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle09_01.nif</ModelFile>
+						<Connections>NW SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle10_01.nif</ModelFile>
+						<Connections>NE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle11_01.nif</ModelFile>
+						<Connections>NW NE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle12_01.nif</ModelFile>
+						<Connections>SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle13_01.nif</ModelFile>
+						<Connections>NW SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle14_01.nif</ModelFile>
+						<Connections>NE SE SW</Connections>
+					</FeatureArtPiece>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle15_01.nif</ModelFile>
+						<Connections>NW NE SE SW</Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>8</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/jungle.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Progenitor Ruins-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_FOREST</Type>
+			<bAnimated>0</bAnimated>
+			<TileArtType>TILE_ART_TYPE_TREES</TileArtType>
+			<fScale>0.3</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>Art/Interface/Buttons/TerrainFeatures/progenitor.dds</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/ruins/pf/obelisk.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>15</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/progenitor.dds</VarietyButton>
+			</FeatureVariety>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/ruins/pf/obeliskblue.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>14</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/progenitor.dds</VarietyButton>
+			</FeatureVariety>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/ruins/pf/obeliskgreen.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>13</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/progenitor.dds</VarietyButton>
+			</FeatureVariety>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/ruins/pf/obeliskred.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>12</iModelCopies>
+				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/progenitor.dds</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Coniferous Forest-->
+		<FeatureArtInfo>
+			<Type>ART_DEF_FEATURE_LIGHT_FOREST</Type>
+			<bAnimated>0</bAnimated>
+			<TileArtType>TILE_ART_TYPE_TREES</TileArtType>
+			<fScale>0.5</fScale>
+			<fInterfaceScale>1.0</fInterfaceScale>
+			<Button>,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,1,3</Button>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/TreeLeafy/Leafy_single_tree.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/TreeLeafy/Leafy_single_tree_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/TreeLeafy/Leafy_single_tree_02.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>48</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,3,3</VarietyButton>
+			</FeatureVariety>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/TreeEvergreen/Evergreen_single_tree.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>48</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,7,3</VarietyButton>
+			</FeatureVariety>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/TreeSnowy/Snowy_single_tree.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>48</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,8,3</VarietyButton>
+			</FeatureVariety>
+			<FeatureVariety>
+				<FeatureArtPieces>
+					<FeatureArtPiece>
+						<ModelFile>Art/Terrain/Features/Light_forest/Light_forest_single_tree.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/Light_forest/Light_forest_single_tree_01.nif</ModelFile>
+						<ModelFile>Art/Terrain/Features/Light_forest/Light_forest_single_tree_02.nif</ModelFile>
+						<Connections></Connections>
+					</FeatureArtPiece>
+				</FeatureArtPieces>
+				<iModelCopies>67</iModelCopies>
+				<VarietyButton>,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,1,3</VarietyButton>
+			</FeatureVariety>
+		</FeatureArtInfo>
+<!-- Colonization 2071-->
 <!-- Wormhole Flare-->
 		<FeatureArtInfo>
 			<Type>ART_DEF_FEATURE_NOVA</Type>
@@ -230,25 +421,6 @@
 				</FeatureArtPieces>
 				<iModelCopies>1</iModelCopies>
 				<VarietyButton>Art/Interface/Buttons/Units/mound_beast.dds</VarietyButton>
-			</FeatureVariety>
-		</FeatureArtInfo>
-<!-- Buried Ruins-->
-		<FeatureArtInfo>
-			<Type>ART_DEF_FEATURE_BURIED</Type>
-			<bAnimated>1</bAnimated>
-			<TileArtType>TILE_ART_TYPE_NONE</TileArtType>
-			<fScale>0.034</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<Button>Art/Interface/Buttons/TerrainFeatures/Volcano.dds</Button>
-			<FeatureVariety>
-				<FeatureArtPieces>
-					<FeatureArtPiece>
-						<ModelFile>Art/Structures/Improvements/mound/crystalforest.nif</ModelFile>
-						<Connections></Connections>
-					</FeatureArtPiece>
-				</FeatureArtPieces>
-				<iModelCopies>1</iModelCopies>
-				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/Volcano.dds</VarietyButton>
 			</FeatureVariety>
 		</FeatureArtInfo>
 <!-- Volcano-->
@@ -480,196 +652,6 @@
 				</FeatureArtPieces>
 				<iModelCopies>1</iModelCopies>
 				<VarietyButton>,Art/Interface/Buttons/Afterworld_Atlas.dds,5,14</VarietyButton>
-			</FeatureVariety>
-		</FeatureArtInfo>
-<!-- Jungle-->
-		<FeatureArtInfo>
-			<Type>ART_DEF_FEATURE_JUNGLE</Type>
-			<bAnimated>0</bAnimated>
-			<TileArtType>TILE_ART_TYPE_TREES</TileArtType>
-			<fScale>1.0</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<Button>Art/Interface/Buttons/TerrainFeatures/jungle.dds</Button>
-			<FeatureVariety>
-				<FeatureArtPieces>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/Jungle/Jungle_single_tree.nif</ModelFile>
-						<ModelFile>Art/Terrain/Features/Jungle/Jungle_single_tree_01.nif</ModelFile>
-						<ModelFile>Art/Terrain/Features/Jungle/Jungle_single_tree_02.nif</ModelFile>
-						<ModelFile>Art/Terrain/Features/Jungle/Jungle_single_tree_03.nif</ModelFile>
-						<Connections></Connections>
-					</FeatureArtPiece>
-				</FeatureArtPieces>
-				<iModelCopies>44</iModelCopies>
-				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/jungle.dds</VarietyButton>
-			</FeatureVariety>
-			<FeatureVariety>
-				<FeatureArtPieces>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle01_01.nif</ModelFile>
-						<Connections>NW</Connections>
-					</FeatureArtPiece>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle02_01.nif</ModelFile>
-						<Connections>NE</Connections>
-					</FeatureArtPiece>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle03_01.nif</ModelFile>
-						<Connections>NW NE</Connections>
-					</FeatureArtPiece>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle04_01.nif</ModelFile>
-						<Connections>SE</Connections>
-					</FeatureArtPiece>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle05_01.nif</ModelFile>
-						<Connections>NW SE</Connections>
-					</FeatureArtPiece>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle06_01.nif</ModelFile>
-						<Connections>NE SE</Connections>
-					</FeatureArtPiece>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle07_01.nif</ModelFile>
-						<Connections>NW NE SE</Connections>
-					</FeatureArtPiece>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle08_01.nif</ModelFile>
-						<Connections>SW</Connections>
-					</FeatureArtPiece>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle09_01.nif</ModelFile>
-						<Connections>NW SW</Connections>
-					</FeatureArtPiece>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle10_01.nif</ModelFile>
-						<Connections>NE SW</Connections>
-					</FeatureArtPiece>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle11_01.nif</ModelFile>
-						<Connections>NW NE SW</Connections>
-					</FeatureArtPiece>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle12_01.nif</ModelFile>
-						<Connections>SE SW</Connections>
-					</FeatureArtPiece>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle13_01.nif</ModelFile>
-						<Connections>NW SE SW</Connections>
-					</FeatureArtPiece>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle14_01.nif</ModelFile>
-						<Connections>NE SE SW</Connections>
-					</FeatureArtPiece>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/JungleManiac/Jungle15_01.nif</ModelFile>
-						<Connections>NW NE SE SW</Connections>
-					</FeatureArtPiece>
-				</FeatureArtPieces>
-				<iModelCopies>8</iModelCopies>
-				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/jungle.dds</VarietyButton>
-			</FeatureVariety>
-		</FeatureArtInfo>
-<!-- Progenitor Ruins-->
-		<FeatureArtInfo>
-			<Type>ART_DEF_FEATURE_FOREST</Type>
-			<bAnimated>0</bAnimated>
-			<TileArtType>TILE_ART_TYPE_TREES</TileArtType>
-			<fScale>0.3</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<Button>Art/Interface/Buttons/TerrainFeatures/progenitor.dds</Button>
-			<FeatureVariety>
-				<FeatureArtPieces>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/ruins/pf/obelisk.nif</ModelFile>
-						<Connections></Connections>
-					</FeatureArtPiece>
-				</FeatureArtPieces>
-				<iModelCopies>15</iModelCopies>
-				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/progenitor.dds</VarietyButton>
-			</FeatureVariety>
-			<FeatureVariety>
-				<FeatureArtPieces>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/ruins/pf/obeliskblue.nif</ModelFile>
-						<Connections></Connections>
-					</FeatureArtPiece>
-				</FeatureArtPieces>
-				<iModelCopies>14</iModelCopies>
-				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/progenitor.dds</VarietyButton>
-			</FeatureVariety>
-			<FeatureVariety>
-				<FeatureArtPieces>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/ruins/pf/obeliskgreen.nif</ModelFile>
-						<Connections></Connections>
-					</FeatureArtPiece>
-				</FeatureArtPieces>
-				<iModelCopies>13</iModelCopies>
-				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/progenitor.dds</VarietyButton>
-			</FeatureVariety>
-			<FeatureVariety>
-				<FeatureArtPieces>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/ruins/pf/obeliskred.nif</ModelFile>
-						<Connections></Connections>
-					</FeatureArtPiece>
-				</FeatureArtPieces>
-				<iModelCopies>12</iModelCopies>
-				<VarietyButton>Art/Interface/Buttons/TerrainFeatures/progenitor.dds</VarietyButton>
-			</FeatureVariety>
-		</FeatureArtInfo>
-<!-- Coniferous Forest-->
-		<FeatureArtInfo>
-			<Type>ART_DEF_FEATURE_LIGHT_FOREST</Type>
-			<bAnimated>0</bAnimated>
-			<TileArtType>TILE_ART_TYPE_TREES</TileArtType>
-			<fScale>0.5</fScale>
-			<fInterfaceScale>1.0</fInterfaceScale>
-			<Button>,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,1,3</Button>
-			<FeatureVariety>
-				<FeatureArtPieces>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/TreeLeafy/Leafy_single_tree.nif</ModelFile>
-						<ModelFile>Art/Terrain/Features/TreeLeafy/Leafy_single_tree_01.nif</ModelFile>
-						<ModelFile>Art/Terrain/Features/TreeLeafy/Leafy_single_tree_02.nif</ModelFile>
-						<Connections></Connections>
-					</FeatureArtPiece>
-				</FeatureArtPieces>
-				<iModelCopies>48</iModelCopies>
-				<VarietyButton>,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,3,3</VarietyButton>
-			</FeatureVariety>
-			<FeatureVariety>
-				<FeatureArtPieces>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/TreeEvergreen/Evergreen_single_tree.nif</ModelFile>
-						<Connections></Connections>
-					</FeatureArtPiece>
-				</FeatureArtPieces>
-				<iModelCopies>48</iModelCopies>
-				<VarietyButton>,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,7,3</VarietyButton>
-			</FeatureVariety>
-			<FeatureVariety>
-				<FeatureArtPieces>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/TreeSnowy/Snowy_single_tree.nif</ModelFile>
-						<Connections></Connections>
-					</FeatureArtPiece>
-				</FeatureArtPieces>
-				<iModelCopies>48</iModelCopies>
-				<VarietyButton>,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,8,3</VarietyButton>
-			</FeatureVariety>
-			<FeatureVariety>
-				<FeatureArtPieces>
-					<FeatureArtPiece>
-						<ModelFile>Art/Terrain/Features/Light_forest/Light_forest_single_tree.nif</ModelFile>
-						<ModelFile>Art/Terrain/Features/Light_forest/Light_forest_single_tree_01.nif</ModelFile>
-						<ModelFile>Art/Terrain/Features/Light_forest/Light_forest_single_tree_02.nif</ModelFile>
-						<Connections></Connections>
-					</FeatureArtPiece>
-				</FeatureArtPieces>
-				<iModelCopies>67</iModelCopies>
-				<VarietyButton>,Art/Interface/Buttons/BaseTerrain_TerrainFeatures_Atlas.dds,1,3</VarietyButton>
 			</FeatureVariety>
 		</FeatureArtInfo>
 <!-- Fungal Forest-->

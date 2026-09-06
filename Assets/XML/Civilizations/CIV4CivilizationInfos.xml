@@ -149,7 +149,7 @@
 				</Unit>
 				<Unit><!--👽Carrion-->
 					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_CARRION</UnitType>
+					<UnitType>UNIT_CARRIER</UnitType>
 				</Unit>
 				<Unit><!--👽Cloaked Warship-->
 					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
@@ -434,7 +434,7 @@
 			</Traits>
 			<FreeUnitClasses>
 				<FreeUnitClass>
-					<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
+					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
 					<FreeUnitProfession>NONE</FreeUnitProfession>
 				</FreeUnitClass>
 				<FreeUnitClass>
@@ -827,7 +827,7 @@
 			</Traits>
 			<FreeUnitClasses>
 				<FreeUnitClass>
-					<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
+					<UnitClassType>UNITCLASS_MERCHANTMAN</UnitClassType>
 					<FreeUnitProfession>NONE</FreeUnitProfession>
 				</FreeUnitClass>
 				<FreeUnitClass>
@@ -899,6 +899,320 @@
       </FreeTechs>
 		</CivilizationInfo>
 		<CivilizationInfo>
+			<Type>CIVILIZATION_CYEAN</Type>
+			<Description><!--TXT_KEY_CIV_CYEAN_DESC-->Cyeans</Description><!-- Cyeans-->
+			<ShortDescription><!--TXT_KEY_CIV_CYEAN_SHORT_DESC-->Cyeans</ShortDescription>
+			<Adjective><!--TXT_KEY_CIV_CYEAN_ADJECTIVE-->Cyeanic</Adjective>
+			<Civilopedia><!--TXT_KEY_CIV_CYEAN_PEDIA-->The Cyeans are known throughout the various species of the New Worlds for their commitment to scholarship and aversion to initiating violence. Cyean scholars possess pictographic records dating back to shortly after the departure of the Progenitors, as well as faint memories, passed on genealogically, from shortly before. With an average height of 9 feet (2.75 meters), the Cyeans can be physically imposing but seldom choose to use this to their advantage. Their preference for diplomatic over military solutions to conflict should not be confused with pacifism; their reluctance to start fights is vastly exceeded by their willingness to finish them. A unique part of their anatomy is a so-called 'accessory brain' that allows them to store memories for longer and with greater vividness than other species. Through prolonged physical contact with others (in particular, their offspring), the Cyeans can directly pass on skills they have learned throughout their lives.</Civilopedia>
+			<DefaultPlayerColor>PLAYERCOLOR_CYAN</DefaultPlayerColor>
+			<ArtDefineTag>ART_DEF_CIVILIZATION_CYEAN</ArtDefineTag>
+			<ArtStyleType>ARTSTYLE_NATIVES_SOUTH</ArtStyleType>
+			<bPlayable>1</bPlayable>
+			<bAIPlayable>1</bAIPlayable>
+			<bWaterStart>0</bWaterStart>
+			<bOpenBorders>1</bOpenBorders>
+			<bWaterWorks>1</bWaterWorks>
+			<bEurope>0</bEurope>
+			<bNative>1</bNative>
+			<iAdvancedStartPoints>1500</iAdvancedStartPoints>
+			<iAreaMultiplier>100</iAreaMultiplier>
+			<iDensityMultiplier>100</iDensityMultiplier>
+			<iTreasure>200</iTreasure>
+			<FavoredTerrain>NONE</FavoredTerrain>
+			<DefaultProfession>PROFESSION_BRAVE</DefaultProfession>
+			<Cities>
+				<City>Ayoeng alu Na'vi</City>
+				<City>Shambhala</City>
+				<City>Treabode</City>
+				<City>Quire</City>
+				<City>Memores</City>
+				<City>Mhelode</City>
+				<City>Xenorborea</City>
+				<City>Doctrote</City>
+				<City>Pacem</City>
+				<City>Karmen</City>
+				<City>Tikaya</City>
+				<City>Kayina</City>
+				<City>Angkwan</City>
+				<City>Paprys</City>
+				<City>Laet</City>
+				<City>Qurtoise</City>
+				<City>Olumbidaec</City>
+				<City>Avios</City>
+				<City>Gollece</City>
+				<City>Cerabelle</City>
+				<City>Xortec</City>
+				<City>Heiratos</City>
+				<City>Atlantis</City>
+				<City>Zytron</City>
+			</Cities>
+			<Buildings>
+				<Building><!--👽Shamanic Lodge-->
+					<BuildingClassType>BUILDINGCLASS_INVENTORS_LABROTORY</BuildingClassType>
+					<BuildingType>BUILDING_SHAMAN</BuildingType>
+				</Building>
+				<Building><!--👽Ziggurat-->
+					<BuildingClassType>BUILDINGCLASS_WAREHOUSE_EXPANSION</BuildingClassType>
+					<BuildingType>BUILDING_ZIGGURAT</BuildingType>
+				</Building>
+				<Building><!--👽Alien Shipyard-->
+					<BuildingClassType>BUILDINGCLASS_SHIPYARD</BuildingClassType>
+					<BuildingType>BUILDING_ALIEN_SHIPYARD</BuildingType>
+				</Building>
+				<Building><!--👽Alien Facility-->
+					<BuildingClassType>BUILDINGCLASS_RANCH</BuildingClassType>
+					<BuildingType>BUILDING_NATIVE_STABLE</BuildingType>
+				</Building>
+				<Building><!--👽Progenitor Autofab-->
+					<BuildingClassType>BUILDINGCLASS_STEAMWORKS</BuildingClassType>
+					<BuildingType>BUILDING_ALIEN_LUMBER_MILL</BuildingType>
+				</Building>
+				<Building><!--👽Elder Council-->
+					<BuildingClassType>BUILDINGCLASS_COAL_FURNACE</BuildingClassType>
+					<BuildingType>BUILDING_ELDER_COUNCIL</BuildingType>
+				</Building>
+				<Building><!--👽Illuminati Lodge-->
+					<BuildingClassType>BUILDINGCLASS_NEWSPAPER</BuildingClassType>
+					<BuildingType>BUILDING_ILLUMINATI_LODGE</BuildingType>
+				</Building>
+				<Building><!--👽Earthling Habitat-->
+					<BuildingClassType>BUILDINGCLASS_CATHEDRAL</BuildingClassType>
+					<BuildingType>BUILDING_HABITAT</BuildingType>
+				</Building>
+			</Buildings>
+			<Units>
+				<Unit><!--🚫Intrepid Explorer-->
+					<UnitClassType>UNITCLASS_SCOUT</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--🚫Stormtrooper-->
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--👽Alien-->
+					<UnitClassType>UNITCLASS_COLONIST</UnitClassType>
+					<UnitType>UNIT_NATIVE</UnitType>
+				</Unit>
+				<Unit><!--👽Human Hybrid-->
+					<UnitClassType>UNITCLASS_INDENTURED_SERVANT</UnitClassType>
+					<UnitType>UNIT_HUMANHYBRID</UnitType>
+				</Unit>
+				<Unit><!--👽Alien Crossbreed-->
+					<UnitClassType>UNITCLASS_CONVERTED_NATIVE</UnitClassType>
+					<UnitType>UNIT_ALIENCROSSBREED</UnitType>
+				</Unit>
+				<Unit><!--👽Industrious Cyborg-->
+					<UnitClassType>UNITCLASS_CARPENTER</UnitClassType>
+					<UnitType>UNIT_CYBORG</UnitType>
+				</Unit>
+				<Unit><!--👽Cultivator-->
+					<UnitClassType>UNITCLASS_PIONEER</UnitClassType>
+					<UnitType>UNIT_CULTIVATOR</UnitType>
+				</Unit>
+				<Unit><!--👽Venerable Elder-->
+					<UnitClassType>UNITCLASS_PREACHER</UnitClassType>
+					<UnitType>UNIT_ELDER</UnitType>
+				</Unit>
+				<Unit><!--👽Brilliant Polymath-->
+					<UnitClassType>UNITCLASS_CHRISTIAN_MISSIONARY</UnitClassType>
+					<UnitType>UNIT_POLYMATH</UnitType>
+				</Unit>
+				<Unit><!--👽Elite Warrior-->
+					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
+					<UnitType>UNIT_ELITE</UnitType>
+				</Unit>
+				<Unit><!--👽Mutant-->
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<UnitType>UNIT_MUTANT</UnitType>
+				</Unit>
+				<Unit><!--👽Saucer-->
+					<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
+					<UnitType>UNIT_SAUCER</UnitType>
+				</Unit>
+				<Unit><!--👽Smuggler-->
+					<UnitClassType>UNITCLASS_MERCHANTMAN</UnitClassType>
+					<UnitType>UNIT_SMUGGLER</UnitType>
+				</Unit>
+				<Unit><!--👽UFO-->
+					<UnitClassType>UNITCLASS_PRIVATEER</UnitClassType>
+					<UnitType>UNIT_UFO</UnitType>
+				</Unit>
+				<Unit><!--👽Carrion-->
+					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
+					<UnitType>UNIT_CARRIER</UnitType>
+				</Unit>
+				<Unit><!--👽Cloaked Warship-->
+					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
+					<UnitType>UNIT_CLOAKED_WARSHIP</UnitType>
+				</Unit>
+				<Unit><!--👽Battlestar-->
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<UnitType>UNIT_BATTLESTAR</UnitType>
+				</Unit>
+				<Unit><!--👽Alien Palanquin-->
+					<UnitClassType>UNITCLASS_WAGON_TRAIN</UnitClassType>
+					<UnitType>UNIT_PALANQUIN</UnitType>
+				</Unit>
+			</Units>
+			<Professions>
+				<Profession>
+					<ProfessionType>PROFESSION_BRAVE</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_MOUNTED_BRAVE</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ARMED_MOUNTED_BRAVE</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ARMED_BRAVE</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_RITUALIST</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ABDUCTOR</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_COLONIST</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_SCOUT</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_SOLDIER</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_DRAGOON</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_MISSIONARY</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+			</Professions>
+			<Traits>
+				<Trait>
+					<TraitType>TRAIT_ALIEN</TraitType>
+					<bTrait>1</bTrait>
+				</Trait>
+				<Trait>
+					<TraitType>TRAIT_MENTOR</TraitType>
+					<bTrait>1</bTrait>
+				</Trait>
+			</Traits>
+			<FreeUnitClasses>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_COLONIST</UnitClassType>
+					<FreeUnitProfession>PROFESSION_ARMED_BRAVE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_COLONIST</UnitClassType>
+					<FreeUnitProfession>PROFESSION_ARMED_BRAVE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+			</FreeUnitClasses>
+			<FreeBuildingClasses/>
+			<TeachUnitClasses>
+				<TeachUnitClass>
+					<UnitClassType>UNITCLASS_FARMER</UnitClassType>
+					<iWeight>2</iWeight>
+				</TeachUnitClass>
+				<TeachUnitClass>
+					<UnitClassType>UNITCLASS_TOBACCO_PLANTER</UnitClassType>
+					<iWeight>2</iWeight>
+				</TeachUnitClass>
+				<TeachUnitClass>
+					<UnitClassType>UNITCLASS_COTTON_PLANTER</UnitClassType>
+					<iWeight>2</iWeight>
+				</TeachUnitClass>
+				<TeachUnitClass>
+					<UnitClassType>UNITCLASS_SUGAR_PLANTER</UnitClassType>
+					<iWeight>3</iWeight>
+				</TeachUnitClass>
+				<TeachUnitClass>
+					<UnitClassType>UNITCLASS_FISHERMAN</UnitClassType>
+					<iWeight>2</iWeight>
+				</TeachUnitClass>
+				<TeachUnitClass>
+					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
+					<iWeight>1</iWeight>
+				</TeachUnitClass>
+				<TeachUnitClass>
+					<UnitClassType>UNITCLASS_INVENTOR</UnitClassType>
+					<iWeight>1</iWeight>
+				</TeachUnitClass>
+				<TeachUnitClass>
+					<UnitClassType>UNITCLASS_SCOUT</UnitClassType>
+					<iWeight>1</iWeight>
+				</TeachUnitClass>
+				<TeachUnitClass>
+					<UnitClassType>UNITCLASS_TRAPPER</UnitClassType>
+					<iWeight>2</iWeight>
+				</TeachUnitClass>
+				<TeachUnitClass>
+					<UnitClassType>UNITCLASS_FUR_TRADER</UnitClassType>
+					<iWeight>1</iWeight>
+				</TeachUnitClass>
+			</TeachUnitClasses>
+			<FreeYields/>
+			<CapturedCityUnitClass>UNITCLASS_CONVERTED_NATIVE</CapturedCityUnitClass>
+			<InitialCivics>
+				<CivicType>CIVIC_ALIEN_SUPREMACY</CivicType>
+			</InitialCivics>
+			<Leaders>
+				<Leader>
+					<LeaderName>LEADER_NIGHTINGGALE</LeaderName>
+					<bLeaderAvailability>1</bLeaderAvailability>
+				</Leader>
+			</Leaders>
+			<DerivativeCiv>NONE</DerivativeCiv>
+			<CivilizationSelectionSound>AS3D_AZTEC_SELECT</CivilizationSelectionSound>
+			<CivilizationActionSound>AS3D_AZTEC_ORDER</CivilizationActionSound>
+      <FreeTechs>
+        <FreeTech>
+          <Tech>TECH_PHY1</Tech>
+          <bFree>1</bFree>
+        </FreeTech>
+        <FreeTech>
+          <Tech>TECH_LIF1</Tech>
+          <bFree>1</bFree>
+        </FreeTech>
+        <FreeTech>
+          <Tech>TECH_NEU1</Tech>
+          <bFree>1</bFree>
+        </FreeTech>
+        <FreeTech>
+          <Tech>TECH_PRO1</Tech>
+          <bFree>1</bFree>
+        </FreeTech>
+        <FreeTech>
+          <Tech>TECH_PROA1</Tech>
+          <bFree>1</bFree>
+        </FreeTech>
+        <FreeTech>
+          <Tech>TECH_LIFA0</Tech>
+          <bFree>1</bFree>
+        </FreeTech>
+      </FreeTechs>
+		</CivilizationInfo>
+		<CivilizationInfo>
 			<Type>CIVILIZATION_FRANCE</Type>
 			<Description>TXT_KEY_CIV_FRANCE_DESC</Description><!-- EU Colonies-->
 			<ShortDescription>TXT_KEY_CIV_FRANCE_SHORT_DESC</ShortDescription>
@@ -931,8 +1245,8 @@
 				<City>Torino</City>
 				<City>Prague</City>
 				<City>New Hamburg</City>
-				<City>Warsaw</City>
 				<City>Milan</City>
+				<City>TXT_KEY_CITY_NAME_FORT_DETROIT</City>
 				<City>TXT_KEY_CITY_NAME_FORT_FRONTENAC</City>
 				<City>TXT_KEY_CITY_NAME_FORT_PONTCHARTAIN</City>
 				<City>TXT_KEY_CITY_NAME_FORT_TADOUSSAC</City>
@@ -1248,7 +1562,7 @@
 				</Unit>
 				<Unit><!--👽Carrion-->
 					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_CARRION</UnitType>
+					<UnitType>UNIT_CARRIER</UnitType>
 				</Unit>
 				<Unit><!--👽Cloaked Warship-->
 					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
@@ -1566,7 +1880,7 @@
 				</Unit>
 				<Unit><!--👽Carrion-->
 					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_CARRION</UnitType>
+					<UnitType>UNIT_CARRIER</UnitType>
 				</Unit>
 				<Unit><!--👽Cloaked Warship-->
 					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
@@ -1884,7 +2198,7 @@
 				</Unit>
 				<Unit><!--👽Carrion-->
 					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_CARRION</UnitType>
+					<UnitType>UNIT_CARRIER</UnitType>
 				</Unit>
 				<Unit><!--👽Cloaked Warship-->
 					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
@@ -2198,7 +2512,7 @@
 				</Unit>
 				<Unit><!--👽Carrion-->
 					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_CARRION</UnitType>
+					<UnitType>UNIT_CARRIER</UnitType>
 				</Unit>
 				<Unit><!--👽Cloaked Warship-->
 					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
@@ -2372,6 +2686,183 @@
       </FreeTechs>
 		</CivilizationInfo>
 		<CivilizationInfo>
+			<Type>CIVILIZATION_INDIA</Type>
+			<Description><!--TXT_KEY_CIV_INDIA_DESC-->India Colonies</Description><!-- India Colonies-->
+			<ShortDescription><!--TXT_KEY_CIV_INDIA_SHORT_DESC-->Navbharat</ShortDescription>
+			<Adjective><!--TXT_KEY_CIV_INDIA_ADJECTIVE-->Indian</Adjective>
+			<Civilopedia><!--TXT_KEY_CIV_INDIA_PEDIA-->The mid-21st century was a tumultuous time for the subcontinent. Fertilizer shortages, climate collapse, and a limited nuclear exchange with a pre-caliphate Pakistan led to sweeping crop failures. The ensuing famines resulted in the population of the most populous country on Earth falling from a peak of almost two and a half billion to a little over one billion. Combined with the political turmoil instigated by resurgent Hindu nationalist movements leading pogroms against India's Muslim and Buddhist minorities, it is nothing short of a miracle that India has not only persevered, but has become the center of innovation regarding novel agricultural techniques. Nevertheless, the farms and pastures of India are still strained both by the demand of the recovering Indian population and a deteriorating climate. The price of food in India is triple that of other nations on Earth. Many hope that the discovery of the New Worlds will be the key to securing not just Indian, but Terran food security for generations. Familiarity with farming in harsh conditions allows the Indian Colonies to start with an Expert Farmer.</Civilopedia>
+			<DefaultPlayerColor>PLAYERCOLOR_ORANGE_AND_GREEN</DefaultPlayerColor>
+			<ArtDefineTag>ART_DEF_CIVILIZATION_INDIA</ArtDefineTag>
+			<ArtStyleType>ARTSTYLE_EUROPEAN</ArtStyleType>
+			<bPlayable>1</bPlayable>
+			<bAIPlayable>1</bAIPlayable>
+			<bWaterStart>1</bWaterStart>
+			<bOpenBorders>0</bOpenBorders>
+			<bWaterWorks>1</bWaterWorks>
+			<bEurope>0</bEurope>
+			<bNative>0</bNative>
+			<iAdvancedStartPoints>0</iAdvancedStartPoints>
+			<iAreaMultiplier>100</iAreaMultiplier>
+			<iDensityMultiplier>100</iDensityMultiplier>
+			<iTreasure>0</iTreasure>
+			<FavoredTerrain>NONE</FavoredTerrain>
+			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
+			<Cities>
+				<City>Third Delhi</City>
+				<City>Shirshabindu</City>
+				<City>Navbengaluru</City>
+				<City>Asraya</City>
+				<City>Prasiddh Shahar</City>
+				<City>Hyperabad</City>
+				<City>Nirvana</City>
+				<City>Goa</City>
+				<City>Isro Shahar</City>
+				<City>Chandrayaan</City>
+				<City>Mangalyaan</City>
+				<City>Navkolkata</City>
+				<City>Mandira</City>
+				<City>Kavitha</City>
+				<City>Udyama</City>
+				<City>Thakur</City>
+				<City>Dholavira</City>
+				<City>Rakhigarhi</City>
+				<City>Mumbai</City>
+				<City>Nehru</City>
+			</Cities>
+			<Buildings>
+				<Building><!--⭐🧑‍🚀🌃Midgar-->
+					<BuildingClassType>BUILDINGCLASS_ARSENAL</BuildingClassType>
+					<BuildingType>BUILDING_PYLON</BuildingType>
+				</Building>
+			</Buildings>
+			<Units>
+				<Unit><!--🚫Stormtrooper-->
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+			</Units>
+			<Professions>
+				<Profession>
+					<ProfessionType>PROFESSION_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_MOUNTED_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ARMED_MOUNTED_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ARMED_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_RITUALIST</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ABDUCTOR</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_COLONIST</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_SCOUT</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_SOLDIER</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_DRAGOON</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_MISSIONARY</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+			</Professions>
+			<Traits>
+				<Trait>
+					<TraitType>TRAIT_AGRICULTURALIST</TraitType>
+					<bTrait>1</bTrait>
+				</Trait>
+			</Traits>
+			<FreeUnitClasses>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_COLONIST</UnitClassType>
+					<FreeUnitProfession>PROFESSION_PIONEER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_FARMER</UnitClassType>
+					<FreeUnitProfession>PROFESSION_COLONIST</FreeUnitProfession>
+				</FreeUnitClass>
+			</FreeUnitClasses>
+			<FreeBuildingClasses>
+				<FreeBuildingClass>
+					<BuildingClassType>BUILDINGCLASS_WEAVERS_HOUSE</BuildingClassType>
+					<bFreeBuildingClass>1</bFreeBuildingClass>
+				</FreeBuildingClass>
+				<FreeBuildingClass>
+					<BuildingClassType>BUILDINGCLASS_CARPENTER_SHOP</BuildingClassType>
+					<bFreeBuildingClass>1</bFreeBuildingClass>
+				</FreeBuildingClass>
+				<FreeBuildingClass>
+					<BuildingClassType>BUILDINGCLASS_TOWNHALL</BuildingClassType>
+					<bFreeBuildingClass>1</bFreeBuildingClass>
+				</FreeBuildingClass>
+				<FreeBuildingClass>
+					<BuildingClassType>BUILDINGCLASS_INVENTORS_HOUSE</BuildingClassType>
+					<bFreeBuildingClass>1</bFreeBuildingClass>
+				</FreeBuildingClass>
+			</FreeBuildingClasses>
+			<TeachUnitClasses/>
+			<FreeYields>
+				<FreeYield>
+					<YieldType>YIELD_BELLS</YieldType>
+					<iYield>1</iYield>
+				</FreeYield>
+				<FreeYield>
+					<YieldType>YIELD_CROSSES</YieldType>
+					<iYield>1</iYield>
+				</FreeYield>
+				<FreeYield>
+					<YieldType>YIELD_IDEAS</YieldType>
+					<iYield>1</iYield>
+				</FreeYield>
+			</FreeYields>
+			<CapturedCityUnitClass>UNITCLASS_INDENTURED_SERVANT</CapturedCityUnitClass>
+			<InitialCivics/>
+			<Leaders>
+				<Leader>
+					<LeaderName>LEADER_CENOBITE</LeaderName>
+					<bLeaderAvailability>1</bLeaderAvailability>
+				</Leader>
+			</Leaders>
+			<DerivativeCiv>NONE</DerivativeCiv>
+			<CivilizationSelectionSound>AS3D_CHINA_SELECT</CivilizationSelectionSound>
+			<CivilizationActionSound>AS3D_CHINA_ORDER</CivilizationActionSound>
+      <FreeTechs>
+        <FreeTech>
+          <Tech>TECH_LIFA0</Tech>
+          <bFree>1</bFree>
+        </FreeTech>
+        <FreeTech>
+          <Tech>TECH_LIFA1</Tech>
+          <bFree>1</bFree>
+        </FreeTech>
+      </FreeTechs>
+		</CivilizationInfo>
+		<CivilizationInfo>
 			<Type>CIVILIZATION_JAPAN</Type>
 			<Description>Japanese Colonies</Description>
 			<ShortDescription>New Japan</ShortDescription>
@@ -2503,8 +2994,8 @@
 					<FreeUnitProfession>NONE</FreeUnitProfession>
 				</FreeUnitClass>
 				<FreeUnitClass>
-					<UnitClassType>UNITCLASS_COLONIST</UnitClassType>
-					<FreeUnitProfession>PROFESSION_PIONEER</FreeUnitProfession>
+					<UnitClassType>UNITCLASS_PIONEER</UnitClassType>
+					<FreeUnitProfession>PROFESSION_MECHANIZED_LABORER</FreeUnitProfession>
 				</FreeUnitClass>
 				<FreeUnitClass>
 					<UnitClassType>UNITCLASS_COLONIST</UnitClassType>
@@ -2724,7 +3215,7 @@
 				</FreeUnitClass>
 				<FreeUnitClass>
 					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
-					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
 				</FreeUnitClass>
 			</FreeUnitClasses>
 			<FreeBuildingClasses>
@@ -2782,6 +3273,189 @@
         </FreeTech>
         <FreeTech>
           <Tech>TECH_MIL1</Tech>
+          <bFree>1</bFree>
+        </FreeTech>
+        <FreeTech>
+          <Tech>TECH_MIL2</Tech>
+          <bFree>1</bFree>
+        </FreeTech>
+      </FreeTechs>
+		</CivilizationInfo>
+		<CivilizationInfo>
+			<Type>CIVILIZATION_POLAND</Type>
+			<Description><!--TXT_KEY_CIV_POLAND_DESC-->Polish Colonies</Description><!-- Polish Colonies-->
+			<ShortDescription><!--TXT_KEY_CIV_POLAND_SHORT_DESC-->Space Poland</ShortDescription>
+			<Adjective><!--TXT_KEY_CIV_POLAND_ADJECTIVE-->Polish</Adjective>
+			<Civilopedia><!--TXT_KEY_CIV_POLAND_PEDIA-->Initially, Poland prospered after its liberation from Soviet occupation and accession to the European Union. This prosperity was not to last, however, as history has shown time and time again that the people of Poland can never enjoy good times for long. Poland was the nation that put up the strongest resistance to the expanding, authoritarian EU federal government; consequently, millions of European citizens fled their home nations for Poland in pursuit of the freedoms that had slowly eroded over the decades. This increase in population resulted in Poland becoming the most populous country in the EU, with an economy surpassing even that of Germany by 2039. Seeing the writing on the wall, the people of Poland decided to leave the European Union in order to preserve the liberties that were under threat from Brussels. Tragedy would follow as a then-young staff officer in the Polish military orchestrated a coup d'état, betraying everything the Poles had spent the previous half a century fighting for. The self-styled Sovereignty of Poland boasted of the superficial freedoms retained by its populace, while repressing all meaningful forms of self-expression. Fortifying against a Nanny-State EU in the west and an expansionist Russia in the east, Poland has become increasingly militaristic alongside its libertarian platitudes.</Civilopedia>
+			<DefaultPlayerColor>PLAYERCOLOR_RED</DefaultPlayerColor>
+			<ArtDefineTag>ART_DEF_CIVILIZATION_POLAND</ArtDefineTag>
+			<ArtStyleType>ARTSTYLE_EUROPEAN</ArtStyleType>
+			<bPlayable>1</bPlayable>
+			<bAIPlayable>1</bAIPlayable>
+			<bWaterStart>1</bWaterStart>
+			<bOpenBorders>0</bOpenBorders>
+			<bWaterWorks>1</bWaterWorks>
+			<bEurope>0</bEurope>
+			<bNative>0</bNative>
+			<iAdvancedStartPoints>0</iAdvancedStartPoints>
+			<iAreaMultiplier>100</iAreaMultiplier>
+			<iDensityMultiplier>100</iDensityMultiplier>
+			<iTreasure>0</iTreasure>
+			<FavoredTerrain>NONE</FavoredTerrain>
+			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
+			<Cities>
+				<City>Freedom House</City>
+				<City>New Warsaw</City>
+				<City>Bojowość</City>
+				<City>Pilsudski</City>
+				<City>Lem</City>
+				<City>Kaszkajce</City>
+				<City>Jadwiga</City>
+				<City>Poznaj</City>
+				<City>Vistula Landing</City>
+				<City>Cyber Silesia</City>
+				<City>Bieszczady Jeszcze Dalsze</City>
+				<City>Neo-Cracow</City>
+				<City>Voivodes</City>
+				<City>Lodz Station</City>
+				<City>Glogow Bulwark</City>
+				<City>Enclosed Zapora</City>
+				<City>Marienburg Secundus</City>
+				<City>Kres Frontier</City>
+			</Cities>
+			<Buildings>
+				<Building><!--⭐🧑‍🚀🌃Midgar-->
+					<BuildingClassType>BUILDINGCLASS_ARSENAL</BuildingClassType>
+					<BuildingType>BUILDING_PYLON</BuildingType>
+				</Building>
+			</Buildings>
+			<Units>
+				<Unit><!--🚫Stormtrooper-->
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+			</Units>
+			<Professions>
+				<Profession>
+					<ProfessionType>PROFESSION_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_MOUNTED_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ARMED_MOUNTED_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ARMED_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_RITUALIST</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ABDUCTOR</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_COLONIST</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_SCOUT</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_SOLDIER</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_DRAGOON</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_MISSIONARY</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+			</Professions>
+			<Traits>
+				<Trait>
+					<TraitType>TRAIT_LIBERTARIAN</TraitType>
+					<bTrait>1</bTrait>
+				</Trait>
+			</Traits>
+			<FreeUnitClasses>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_COLONIST</UnitClassType>
+					<FreeUnitProfession>PROFESSION_PIONEER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_COLONIST</UnitClassType>
+					<FreeUnitProfession>PROFESSION_COLONIST</FreeUnitProfession>
+				</FreeUnitClass>
+			</FreeUnitClasses>
+			<FreeBuildingClasses>
+				<FreeBuildingClass>
+					<BuildingClassType>BUILDINGCLASS_PRINTING_PRESS</BuildingClassType>
+					<bFreeBuildingClass>1</bFreeBuildingClass>
+				</FreeBuildingClass>
+				<FreeBuildingClass>
+					<BuildingClassType>BUILDINGCLASS_CARPENTER_SHOP</BuildingClassType>
+					<bFreeBuildingClass>1</bFreeBuildingClass>
+				</FreeBuildingClass>
+				<FreeBuildingClass>
+					<BuildingClassType>BUILDINGCLASS_TOWNHALL</BuildingClassType>
+					<bFreeBuildingClass>1</bFreeBuildingClass>
+				</FreeBuildingClass>
+				<FreeBuildingClass>
+					<BuildingClassType>BUILDINGCLASS_INVENTORS_HOUSE</BuildingClassType>
+					<bFreeBuildingClass>1</bFreeBuildingClass>
+				</FreeBuildingClass>
+			</FreeBuildingClasses>
+			<TeachUnitClasses/>
+			<FreeYields>
+				<FreeYield>
+					<YieldType>YIELD_BELLS</YieldType>
+					<iYield>1</iYield>
+				</FreeYield>
+				<FreeYield>
+					<YieldType>YIELD_CROSSES</YieldType>
+					<iYield>1</iYield>
+				</FreeYield>
+				<FreeYield>
+					<YieldType>YIELD_IDEAS</YieldType>
+					<iYield>1</iYield>
+				</FreeYield>
+			</FreeYields>
+			<CapturedCityUnitClass>UNITCLASS_INDENTURED_SERVANT</CapturedCityUnitClass>
+			<InitialCivics/>
+			<Leaders>
+				<Leader>
+					<LeaderName>LEADER_MINISTER</LeaderName>
+					<bLeaderAvailability>1</bLeaderAvailability>
+				</Leader>
+			</Leaders>
+			<DerivativeCiv>NONE</DerivativeCiv>
+			<CivilizationSelectionSound>AS3D_FRANCE_SELECT</CivilizationSelectionSound>
+			<CivilizationActionSound>AS3D_FRANCE_ORDER</CivilizationActionSound>
+      <FreeTechs>
+        <FreeTech>
+          <Tech>TECH_PHYA1</Tech>
+          <bFree>1</bFree>
+        </FreeTech>
+        <FreeTech>
+          <Tech>TECH_SOC1</Tech>
+          <bFree>1</bFree>
+        </FreeTech>
+        <FreeTech>
+          <Tech>TECH_SOC2</Tech>
           <bFree>1</bFree>
         </FreeTech>
       </FreeTechs>
@@ -2929,7 +3603,7 @@
 				</Unit>
 				<Unit><!--👽Carrion-->
 					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_CARRION</UnitType>
+					<UnitType>UNIT_CARRIER</UnitType>
 				</Unit>
 				<Unit><!--👽Cloaked Warship-->
 					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
@@ -3175,6 +3849,10 @@
 					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
 					<UnitType>NONE</UnitType>
 				</Unit>
+				<Unit><!--⭐🪆Spetsnaz-->
+					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
+					<UnitType>UNIT_SPETSNAZ</UnitType>
+				</Unit>
 			</Units>
 			<Professions>
 				<Profession>
@@ -3230,7 +3908,7 @@
 			</Traits>
 			<FreeUnitClasses>
 				<FreeUnitClass>
-					<UnitClassType>UNITCLASS_MERCHANTMAN</UnitClassType>
+					<UnitClassType>UNITCLASS_CARAVEL</UnitClassType>
 					<FreeUnitProfession>NONE</FreeUnitProfession>
 				</FreeUnitClass>
 				<FreeUnitClass>
@@ -3238,8 +3916,8 @@
 					<FreeUnitProfession>PROFESSION_PIONEER</FreeUnitProfession>
 				</FreeUnitClass>
 				<FreeUnitClass>
-					<UnitClassType>UNITCLASS_COLONIST</UnitClassType>
-					<FreeUnitProfession>PROFESSION_COLONIST</FreeUnitProfession>
+					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
 				</FreeUnitClass>
 			</FreeUnitClasses>
 			<FreeBuildingClasses>
@@ -3293,6 +3971,10 @@
       <FreeTechs>
         <FreeTech>
           <Tech>TECH_NEU1</Tech>
+          <bFree>1</bFree>
+        </FreeTech>
+		<FreeTech>
+          <Tech>TECH_MIL1</Tech>
           <bFree>1</bFree>
         </FreeTech>
         <FreeTech>
@@ -3446,7 +4128,7 @@
 				</Unit>
 				<Unit><!--👽Carrion-->
 					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_CARRION</UnitType>
+					<UnitType>UNIT_CARRIER</UnitType>
 				</Unit>
 				<Unit><!--👽Cloaked Warship-->
 					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
@@ -3762,7 +4444,7 @@
 				</Unit>
 				<Unit><!--👽Carrion-->
 					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<UnitType>UNIT_CARRION</UnitType>
+					<UnitType>UNIT_CARRIER</UnitType>
 				</Unit>
 				<Unit><!--👽Cloaked Warship-->
 					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
@@ -4680,7 +5362,7 @@
 			<ShortDescription>TXT_KEY_CIV_ENGLAND_EUROPE_SHORT_DESC</ShortDescription>
 			<Adjective>TXT_KEY_CIV_ENGLAND_EUROPE_ADJECTIVE</Adjective>
 			<Civilopedia>TXT_KEY_CIV_ENGLAND_EUROPE_PEDIA</Civilopedia>
-			<DefaultPlayerColor>PLAYERCOLOR_RED_KING</DefaultPlayerColor>
+			<DefaultPlayerColor>PLAYERCOLOR_DARK_ORANGE</DefaultPlayerColor>
 			<ArtDefineTag>ART_DEF_CIVILIZATION_ENGLAND_EUROPE</ArtDefineTag>
 			<ArtStyleType>ARTSTYLE_EUROPEAN</ArtStyleType>
 			<bPlayable>0</bPlayable>
@@ -5209,6 +5891,281 @@
 			<DerivativeCiv>CIVILIZATION_CONSORTIUM</DerivativeCiv>
 			<CivilizationSelectionSound>AS3D_AMERICA_SELECT</CivilizationSelectionSound>
 			<CivilizationActionSound>AS3D_AMERICA_ORDER</CivilizationActionSound>
+		</CivilizationInfo>
+		<CivilizationInfo>
+			<Type>CIVILIZATION_CYEAN_EUROPE</Type>
+			<Description>The Progenitors</Description><!-- Cyeans King-->
+			<ShortDescription>the Third World</ShortDescription>
+			<Adjective>Progenitor</Adjective>
+			<Civilopedia></Civilopedia>
+			<DefaultPlayerColor>PLAYERCOLOR_CYAN_AND_GRAY</DefaultPlayerColor>
+			<ArtDefineTag>ART_DEF_CIVILIZATION_PROGENITOR</ArtDefineTag>
+			<ArtStyleType>ARTSTYLE_EUROPEAN</ArtStyleType>
+			<bPlayable>0</bPlayable>
+			<bAIPlayable>0</bAIPlayable>
+			<bWaterStart>0</bWaterStart>
+			<bOpenBorders>1</bOpenBorders>
+			<bWaterWorks>1</bWaterWorks>
+			<bEurope>1</bEurope>
+			<bNative>0</bNative>
+			<iAdvancedStartPoints>0</iAdvancedStartPoints>
+			<iAreaMultiplier>100</iAreaMultiplier>
+			<iDensityMultiplier>100</iDensityMultiplier>
+			<iTreasure>0</iTreasure>
+			<FavoredTerrain>NONE</FavoredTerrain>
+			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
+			<Cities>
+				<City>Delhi</City>
+				<City>Rio de Janeiro</City>
+				<City>Cairo</City>
+				<City>Nairobi</City>
+			</Cities>
+			<Buildings/>
+			<Units>
+				<Unit><!--👾Progenitor FTL Warp Voyager-->
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<UnitType>UNIT_PROGENITOR_FTL</UnitType>
+				</Unit>
+				<Unit><!--👑👾Progenitor Angel-->
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<UnitType>UNIT_EVANGELION_ANGEL</UnitType>
+				</Unit>
+				<Unit><!--👾Progenitor Naytiba-->
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<UnitType>UNIT_NAYTIBA</UnitType>
+				</Unit>
+				<Unit><!--🚫Veteran Soldier-->
+					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+			</Units>
+			<Professions>
+				<Profession>
+					<ProfessionType>PROFESSION_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_MOUNTED_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ARMED_MOUNTED_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ARMED_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_RITUALIST</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ABDUCTOR</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_COLONIST</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_SCOUT</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_SOLDIER</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_DRAGOON</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_MISSIONARY</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+			</Professions>
+			<Traits/>
+			<FreeUnitClasses>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>			
+			</FreeUnitClasses>
+			<FreeBuildingClasses/>
+			<TeachUnitClasses/>
+			<FreeYields/>
+			<CapturedCityUnitClass>NONE</CapturedCityUnitClass>
+			<InitialCivics/>
+			<Leaders>
+				<Leader>
+					<LeaderName>LEADER_PROGENITOR</LeaderName>
+					<bLeaderAvailability>1</bLeaderAvailability>
+				</Leader>
+			</Leaders>
+			<DerivativeCiv>CIVILIZATION_CYEAN</DerivativeCiv>
+			<CivilizationSelectionSound>AS3D_AZTEC_SELECT</CivilizationSelectionSound>
+			<CivilizationActionSound>AS3D_AZTEC_ORDER</CivilizationActionSound>
 		</CivilizationInfo>
 		<CivilizationInfo>
 			<Type>CIVILIZATION_FRANCE_EUROPE</Type>
@@ -6579,6 +7536,274 @@
 			<CivilizationActionSound>AS3D_AZTEC_ORDER</CivilizationActionSound>
 		</CivilizationInfo>
 		<CivilizationInfo>
+			<Type>CIVILIZATION_INDIA_EUROPE</Type>
+			<Description><!--TXT_KEY_CIV_INDIA_EUROPE_DESC-->India</Description><!-- India King-->
+			<ShortDescription><!--TXT_KEY_CIV_INDIA_EUROPE_SHORT_DESC-->Bharat</ShortDescription>
+			<Adjective><!--TXT_KEY_CIV_INDIA_EUROPE_ADJECTIVE-->Indian</Adjective>
+			<Civilopedia><!--TXT_KEY_CIV_INDIA_EUROPE_PEDIA-->The mid-21st century was a tumultuous time for the subcontinent. Fertilizer shortages, climate collapse, and a limited nuclear exchange with a pre-caliphate Pakistan led to sweeping crop failures. The ensuing famines resulted in the population of the most populous country on Earth falling from a peak of almost two and a half billion to a little over one billion. Combined with the political turmoil instigated by resurgent Hindu nationalist movements leading pogroms against India's Muslim and Buddhist minorities, it is nothing short of a miracle that India has not only persevered, but has become the center of innovation regarding novel agricultural techniques. Nevertheless, the farms and pastures of India are still strained both by the demand of the recovering Indian population and a deteriorating climate. The price of food in India is triple that of other nations on Earth. Many hope that the discovery of the New Worlds will be the key to securing not just Indian, but Terran food security for generations. Familiarity with farming in harsh conditions allows the Indian Colonies to start with an Expert Farmer.</Civilopedia>
+			<DefaultPlayerColor>PLAYERCOLOR_ORANGE</DefaultPlayerColor>
+			<ArtDefineTag>ART_DEF_CIVILIZATION_INDIA_EUROPE</ArtDefineTag>
+			<ArtStyleType>ARTSTYLE_EUROPEAN</ArtStyleType>
+			<bPlayable>0</bPlayable>
+			<bAIPlayable>0</bAIPlayable>
+			<bWaterStart>0</bWaterStart>
+			<bOpenBorders>1</bOpenBorders>
+			<bWaterWorks>1</bWaterWorks>
+			<bEurope>1</bEurope>
+			<bNative>0</bNative>
+			<iAdvancedStartPoints>0</iAdvancedStartPoints>
+			<iAreaMultiplier>100</iAreaMultiplier>
+			<iDensityMultiplier>100</iDensityMultiplier>
+			<iTreasure>0</iTreasure>
+			<FavoredTerrain>NONE</FavoredTerrain>
+			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
+			<Cities>
+				<City>Delhi Primus</City>
+			</Cities>
+			<Buildings/>
+			<Units>
+				<Unit><!--🤖Dreadnought-->
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<UnitType>UNIT_MAN_O_WAR</UnitType>
+				</Unit>
+				<Unit><!--🤖Devastator-->
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<UnitType>UNIT_ARTILLERY</UnitType>
+				</Unit>
+				<Unit><!--🚫Veteran Soldier-->
+					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+			</Units>
+			<Professions>
+				<Profession>
+					<ProfessionType>PROFESSION_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_MOUNTED_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ARMED_MOUNTED_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ARMED_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_RITUALIST</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ABDUCTOR</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_COLONIST</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_SCOUT</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_SOLDIER</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_DRAGOON</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_MISSIONARY</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+			</Professions>
+			<Traits/>
+			<FreeUnitClasses>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+			</FreeUnitClasses>
+			<FreeBuildingClasses/>
+			<TeachUnitClasses/>
+			<FreeYields/>
+			<CapturedCityUnitClass>NONE</CapturedCityUnitClass>
+			<InitialCivics/>
+			<Leaders>
+				<Leader>
+					<LeaderName>LEADER_INDIA_KING</LeaderName>
+					<bLeaderAvailability>1</bLeaderAvailability>
+				</Leader>
+			</Leaders>
+			<DerivativeCiv>CIVILIZATION_INDIA</DerivativeCiv>
+			<CivilizationSelectionSound>AS3D_CHINA_SELECT</CivilizationSelectionSound>
+			<CivilizationActionSound>AS3D_CHINA_ORDER</CivilizationActionSound>
+		</CivilizationInfo>
+		<CivilizationInfo>
 			<Type>CIVILIZATION_JAPAN_EUROPE</Type>
 			<Description>Empire of Japan</Description>
 			<ShortDescription>Japan</ShortDescription>
@@ -7113,6 +8338,274 @@
 			<DerivativeCiv>CIVILIZATION_SPAIN</DerivativeCiv>
 			<CivilizationSelectionSound>AS3D_SPAIN_SELECT</CivilizationSelectionSound>
 			<CivilizationActionSound>AS3D_SPAIN_ORDER</CivilizationActionSound>
+		</CivilizationInfo>
+		<CivilizationInfo>
+			<Type>CIVILIZATION_POLAND_EUROPE</Type>
+			<Description><!--TXT_KEY_CIV_POLAND_EUROPE_DESC-->Sovereignty of Poland</Description><!-- EU Colonies King-->
+			<ShortDescription><!--TXT_KEY_CIV_POLAND_EUROPE_SHORT_DESC-->Sovereignty of Poland</ShortDescription>
+			<Adjective><!--TXT_KEY_CIV_POLAND_EUROPE_ADJECTIVE-->Polski</Adjective>
+			<Civilopedia><!--TXT_KEY_CIV_POLAND_EUROPE_PEDIA-->Initially, Poland prospered after its liberation from Soviet occupation and accession to the European Union. This prosperity was not to last, however, as history has shown time and time again that the people of Poland can never enjoy good times for long. Poland was the nation that put up the strongest resistance to the expanding, authoritarian EU federal government; consequently, millions of European citizens fled their home nations for Poland in pursuit of the freedoms that had slowly eroded over the decades. This increase in population resulted in Poland becoming the most populous country in the EU, with an economy surpassing even that of Germany by 2039. Seeing the writing on the wall, the people of Poland decided to leave the European Union in order to preserve the liberties that were under threat from Brussels. Tragedy would follow as a then-young staff officer in the Polish military orchestrated a coup d'état, betraying everything the Poles had spent the previous half a century fighting for. The self-styled Sovereignty of Poland boasted of the superficial freedoms retained by its populace, while repressing all meaningful forms of self-expression. Fortifying against a Nanny-State EU in the west and an expansionist Russia in the east, Poland has become increasingly militaristic alongside its libertarian platitudes.</Civilopedia>
+			<DefaultPlayerColor>PLAYERCOLOR_RED_KING</DefaultPlayerColor>
+			<ArtDefineTag>ART_DEF_CIVILIZATION_POLAND_EUROPE</ArtDefineTag>
+			<ArtStyleType>ARTSTYLE_EUROPEAN</ArtStyleType>
+			<bPlayable>0</bPlayable>
+			<bAIPlayable>0</bAIPlayable>
+			<bWaterStart>0</bWaterStart>
+			<bOpenBorders>1</bOpenBorders>
+			<bWaterWorks>1</bWaterWorks>
+			<bEurope>1</bEurope>
+			<bNative>0</bNative>
+			<iAdvancedStartPoints>0</iAdvancedStartPoints>
+			<iAreaMultiplier>100</iAreaMultiplier>
+			<iDensityMultiplier>100</iDensityMultiplier>
+			<iTreasure>0</iTreasure>
+			<FavoredTerrain>NONE</FavoredTerrain>
+			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
+			<Cities>
+				<City>Warsaw Primus</City>
+			</Cities>
+			<Buildings/>
+			<Units>
+				<Unit><!--🤖Dreadnought-->
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<UnitType>UNIT_MAN_O_WAR</UnitType>
+				</Unit>
+				<Unit><!--🤖Devastator-->
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<UnitType>UNIT_ARTILLERY</UnitType>
+				</Unit>
+				<Unit><!--🚫Veteran Soldier-->
+					<UnitClassType>UNITCLASS_VETERAN</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+				<Unit><!--🚫Colonial Garrison-->
+					<UnitClassType>UNITCLASS_GARRISON</UnitClassType>
+					<UnitType>NONE</UnitType>
+				</Unit>
+			</Units>
+			<Professions>
+				<Profession>
+					<ProfessionType>PROFESSION_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_MOUNTED_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ARMED_MOUNTED_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ARMED_BRAVE</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_RITUALIST</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_ABDUCTOR</ProfessionType>
+					<bValid>0</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_COLONIST</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_SCOUT</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_SOLDIER</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_DRAGOON</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+				<Profession>
+					<ProfessionType>PROFESSION_MISSIONARY</ProfessionType>
+					<bValid>1</bValid>
+				</Profession>
+			</Professions>
+			<Traits/>
+			<FreeUnitClasses>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_CANNON</UnitClassType>
+					<FreeUnitProfession>NONE</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_DRAGOON</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+				<FreeUnitClass>
+					<UnitClassType>UNITCLASS_REGULAR</UnitClassType>
+					<FreeUnitProfession>PROFESSION_SOLDIER</FreeUnitProfession>
+				</FreeUnitClass>
+			</FreeUnitClasses>
+			<FreeBuildingClasses/>
+			<TeachUnitClasses/>
+			<FreeYields/>
+			<CapturedCityUnitClass>NONE</CapturedCityUnitClass>
+			<InitialCivics/>
+			<Leaders>
+				<Leader>
+					<LeaderName>LEADER_POLISH_KING</LeaderName>
+					<bLeaderAvailability>1</bLeaderAvailability>
+				</Leader>
+			</Leaders>
+			<DerivativeCiv>CIVILIZATION_POLAND</DerivativeCiv>
+			<CivilizationSelectionSound>AS3D_FRANCE_SELECT</CivilizationSelectionSound>
+			<CivilizationActionSound>AS3D_FRANCE_ORDER</CivilizationActionSound>
 		</CivilizationInfo>
 		<CivilizationInfo>
 			<Type>CIVILIZATION_CHEROKEE_EUROPE</Type>
@@ -8485,7 +9978,7 @@
 			<ArtDefineTag>ART_DEF_INVASION_OUTER_GODS</ArtDefineTag>
 			<ArtStyleType>ARTSTYLE_NATIVES_EAST</ArtStyleType>
 			<bPlayable>0</bPlayable>
-			<bAIPlayable>0</bAIPlayable>
+			<bAIPlayable>1</bAIPlayable>
 			<bWaterStart>0</bWaterStart>
 			<bOpenBorders>0</bOpenBorders>
 			<bWaterWorks>1</bWaterWorks>

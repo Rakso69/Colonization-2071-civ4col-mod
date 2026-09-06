@@ -6262,6 +6262,8 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 		{
 			pCombatDetails->iRebelPercentModifier = iExtraModifier;
 		}
+		iExtraModifier = strengthModifier(pAttacker->getOwnerINLINE()) - pAttacker->strengthModifier(getOwnerINLINE());
+		iModifier += iExtraModifier;
 	}
 
 	// add defensive bonuses (leaving these out for bAttackingUnknownDefender case)
@@ -7012,6 +7014,14 @@ int CvUnit::rebelModifier(PlayerTypes eOtherPlayer) const
 	return iModifier;
 }
 
+int CvUnit::strengthModifier(PlayerTypes eOtherPlayer) const
+{
+	int iModifier = GET_TEAM(getTeam()).getRebelPercent();
+	iModifier *= GET_PLAYER(getOwnerINLINE()).getStrengthPercent();
+	iModifier /= 100;
+
+	return iModifier;
+}
 
 int CvUnit::bombardRate() const
 {

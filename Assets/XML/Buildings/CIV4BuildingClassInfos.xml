@@ -7,63 +7,9 @@
 <Civ4BuildingClassInfos xmlns="x-schema:CIV4BuildingsSchema.xml">
 	<BuildingClassInfos>
 		<BuildingClassInfo>
-			<Type>BUILDINGCLASS_COAL_FURNACE</Type>
-			<Description>Coal Furnace</Description>
-			<DefaultBuilding>BUILDING_COAL_FURNACE</DefaultBuilding>
-			<VictoryThresholds/>
-		</BuildingClassInfo>
-		<BuildingClassInfo>
-			<Type>BUILDINGCLASS_STEAMWORKS</Type>
-			<Description>Steamworks</Description>
-			<DefaultBuilding>BUILDING_STEAMWORKS</DefaultBuilding>
-			<VictoryThresholds/>
-		</BuildingClassInfo>
-		<BuildingClassInfo>
-			<Type>BUILDINGCLASS_INVENTORS_HOUSE</Type>
-			<Description>TXT_KEY_BUILDING_BONUS</Description>
-			<DefaultBuilding>BUILDING_INVENTORS_HOUSE</DefaultBuilding>
-			<VictoryThresholds/>
-		</BuildingClassInfo>
-		<BuildingClassInfo>
-			<Type>BUILDINGCLASS_INVENTORS_WORKSHOP</Type>
-			<Description>TXT_KEY_BUILDING_BONUS</Description>
-			<DefaultBuilding>BUILDING_INVENTORS_WORKSHOP</DefaultBuilding>
-			<VictoryThresholds/>
-		</BuildingClassInfo>
-		<BuildingClassInfo>
-			<Type>BUILDINGCLASS_INVENTORS_LABROTORY</Type>
-			<Description>TXT_KEY_BUILDING_BONUS</Description>
-			<DefaultBuilding>BUILDING_INVENTORS_LABROTORY</DefaultBuilding>
-			<VictoryThresholds/>
-		</BuildingClassInfo>
-		<BuildingClassInfo>
-		<Type>BUILDINGCLASS_OBSERVATORY</Type>
-			<Description>Observatory</Description>
-			<DefaultBuilding>BUILDING_OBSERVATORY</DefaultBuilding>
-			<VictoryThresholds/>
-		</BuildingClassInfo>
-		<BuildingClassInfo>
 			<Type>BUILDINGCLASS_WAREHOUSE</Type>
 			<Description>TXT_KEY_BUILDING_WAREHOUSE</Description>
 			<DefaultBuilding>BUILDING_WAREHOUSE</DefaultBuilding>
-			<VictoryThresholds/>
-		</BuildingClassInfo>
-		<BuildingClassInfo>
-			<Type>BUILDINGCLASS_MASSDRIVER</Type>
-			<Description>Mass Driver</Description>
-			<DefaultBuilding>BUILDING_MASSDRIVER</DefaultBuilding>
-			<VictoryThresholds/>
-		</BuildingClassInfo>
-		<BuildingClassInfo>
-			<Type>BUILDINGCLASS_SPACEELEVATOR</Type>
-			<Description>Space Elevator</Description>
-			<DefaultBuilding>BUILDING_SPACEELEVATOR</DefaultBuilding>
-			<VictoryThresholds/>
-		</BuildingClassInfo>
-		<BuildingClassInfo>
-			<Type>BUILDINGCLASS_DAM</Type>
-			<Description>Hydroelectric Facility</Description>
-			<DefaultBuilding>BUILDING_DAM</DefaultBuilding>
 			<VictoryThresholds/>
 		</BuildingClassInfo>
 		<BuildingClassInfo>
@@ -295,6 +241,60 @@
 			<VictoryThresholds/>
 		</BuildingClassInfo>
 <!-- Colonization 2071-->
+		<BuildingClassInfo>
+			<Type>BUILDINGCLASS_COAL_FURNACE</Type>
+			<Description>Coal Furnace</Description>
+			<DefaultBuilding>BUILDING_COAL_FURNACE</DefaultBuilding>
+			<VictoryThresholds/>
+		</BuildingClassInfo>
+		<BuildingClassInfo>
+			<Type>BUILDINGCLASS_STEAMWORKS</Type>
+			<Description>Steamworks</Description>
+			<DefaultBuilding>BUILDING_STEAMWORKS</DefaultBuilding>
+			<VictoryThresholds/>
+		</BuildingClassInfo>
+		<BuildingClassInfo>
+			<Type>BUILDINGCLASS_INVENTORS_HOUSE</Type>
+			<Description>TXT_KEY_BUILDING_BONUS</Description>
+			<DefaultBuilding>BUILDING_INVENTORS_HOUSE</DefaultBuilding>
+			<VictoryThresholds/>
+		</BuildingClassInfo>
+		<BuildingClassInfo>
+		<Type>BUILDINGCLASS_OBSERVATORY</Type>
+			<Description>Observatory</Description>
+			<DefaultBuilding>BUILDING_OBSERVATORY</DefaultBuilding>
+			<VictoryThresholds/>
+		</BuildingClassInfo>
+		<BuildingClassInfo>
+			<Type>BUILDINGCLASS_INVENTORS_WORKSHOP</Type>
+			<Description>TXT_KEY_BUILDING_BONUS</Description>
+			<DefaultBuilding>BUILDING_INVENTORS_WORKSHOP</DefaultBuilding>
+			<VictoryThresholds/>
+		</BuildingClassInfo>
+		<BuildingClassInfo>
+			<Type>BUILDINGCLASS_INVENTORS_LABROTORY</Type>
+			<Description>TXT_KEY_BUILDING_BONUS</Description>
+			<DefaultBuilding>BUILDING_INVENTORS_LABROTORY</DefaultBuilding>
+			<VictoryThresholds/>
+		</BuildingClassInfo>
+		<BuildingClassInfo>
+			<Type>BUILDINGCLASS_MASSDRIVER</Type>
+			<Description>Mass Driver</Description>
+			<DefaultBuilding>BUILDING_MASSDRIVER</DefaultBuilding>
+			<VictoryThresholds/>
+		</BuildingClassInfo>
+		<BuildingClassInfo>
+			<Type>BUILDINGCLASS_SPACEELEVATOR</Type>
+			<Description>Space Elevator</Description>
+			<DefaultBuilding>BUILDING_SPACEELEVATOR</DefaultBuilding>
+			<VictoryThresholds/>
+		</BuildingClassInfo>
+		<BuildingClassInfo>
+			<Type>BUILDINGCLASS_DAM</Type>
+			<Description>Hydroelectric Facility</Description>
+			<DefaultBuilding>BUILDING_DAM</DefaultBuilding>
+			<VictoryThresholds/>
+		</BuildingClassInfo>
 		<BuildingClassInfo>
 			<Type>BUILDINGCLASS_BANK</Type>
 			<Description>Interstellar Bank</Description>

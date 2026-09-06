@@ -19,7 +19,7 @@
 			<bActsAsCity>0</bActsAsCity>
 			<bHillsMakesValid>0</bHillsMakesValid>
 			<bRiverSideMakesValid>0</bRiverSideMakesValid>
-			<bRequiresFlatlands>1</bRequiresFlatlands>
+			<bRequiresFlatlands>0</bRequiresFlatlands>
 			<bRequiresRiverSide>0</bRequiresRiverSide>
 			<bRequiresFeature>0</bRequiresFeature>
 			<bWater>0</bWater>
@@ -1920,7 +1920,7 @@
 			<TerrainMakesValids/>
 			<FeatureMakesValids>
 				<FeatureMakesValid>
-					<FeatureType>FEATURE_BURIED</FeatureType>
+					<FeatureType>FEATURE_MOUND</FeatureType>
 					<bMakesValid>1</bMakesValid>
 				</FeatureMakesValid>
 			</FeatureMakesValids>
@@ -2490,10 +2490,10 @@
 			<bGraphicalOnly>0</bGraphicalOnly>
 		</ImprovementInfo>
 		<ImprovementInfo>
-			<Type>IMPROVEMENT_LUMBERMILL</Type>
-			<Description>Plasteel Mill</Description>
-			<Civilopedia>Constructed by a Hardy Laborer, a Plasteel Mill can wring added yields of building materials from forests and ruins, forming the cornerstone of a colony's growing urban infrastructure.</Civilopedia>
-			<ArtDefineTag>ART_DEF_IMPROVEMENT_LUMBERMILL</ArtDefineTag>
+			<Type>IMPROVEMENT_LODGE</Type>
+			<Description>Plasteel Mill<!--TXT_KEY_IMPROVEMENT_LODGE--></Description>
+			<Civilopedia>Constructed by a Hardy Laborer, a Plasteel Mill can wring added yields of building materials from forests and ruins, forming the cornerstone of a colony's growing urban infrastructure.<!--TXT_KEY_IMPROVEMENT_LODGE_PEDIA--></Civilopedia>
+			<ArtDefineTag>ART_DEF_IMPROVEMENT_LODGE</ArtDefineTag>
 			<PrereqNatureYields>
 				<YieldIntegerPair>
 					<YieldType>YIELD_LUMBER</YieldType>
@@ -2518,7 +2518,7 @@
 			<bRiverSideMakesValid>0</bRiverSideMakesValid>
 			<bRequiresFlatlands>0</bRequiresFlatlands>
 			<bRequiresRiverSide>0</bRequiresRiverSide>
-			<bRequiresFeature>1</bRequiresFeature>
+			<bRequiresFeature>0</bRequiresFeature>
 			<bWater>0</bWater>
 			<bGoody>0</bGoody>
 			<bPermanent>0</bPermanent>
@@ -2543,6 +2543,10 @@
 					<bMakesValid>1</bMakesValid>
 				</FeatureMakesValid>
 				<FeatureMakesValid>
+					<FeatureType>FEATURE_JUNGLE</FeatureType>
+					<bMakesValid>1</bMakesValid>
+				</FeatureMakesValid>
+				<FeatureMakesValid>
 					<FeatureType>FEATURE_FUNGAL_FOREST</FeatureType>
 					<bMakesValid>1</bMakesValid>
 				</FeatureMakesValid>
@@ -2552,10 +2556,6 @@
 				</FeatureMakesValid>
 				<FeatureMakesValid>
 					<FeatureType>FEATURE_CYCAD_FOREST</FeatureType>
-					<bMakesValid>1</bMakesValid>
-				</FeatureMakesValid>
-				<FeatureMakesValid>
-					<FeatureType>FEATURE_JUNGLE</FeatureType>
 					<bMakesValid>1</bMakesValid>
 				</FeatureMakesValid>
 			</FeatureMakesValids>
@@ -2635,7 +2635,7 @@
 			<iGoodyRange>0</iGoodyRange>
 			<iFeatureGrowth>0</iFeatureGrowth>
 			<iUpgradeTime>20</iUpgradeTime>
-			<iDefenseModifier>200</iDefenseModifier>
+			<iDefenseModifier>100</iDefenseModifier>
 			<iPillageGold>250</iPillageGold>
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
@@ -2671,7 +2671,7 @@
 			<iGoodyRange>0</iGoodyRange>
 			<iFeatureGrowth>0</iFeatureGrowth>
 			<iUpgradeTime>20</iUpgradeTime>
-			<iDefenseModifier>400</iDefenseModifier>
+			<iDefenseModifier>200</iDefenseModifier>
 			<iPillageGold>500</iPillageGold>
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
@@ -2707,7 +2707,7 @@
 			<iGoodyRange>0</iGoodyRange>
 			<iFeatureGrowth>0</iFeatureGrowth>
 			<iUpgradeTime>20</iUpgradeTime>
-			<iDefenseModifier>600</iDefenseModifier>
+			<iDefenseModifier>300</iDefenseModifier>
 			<iPillageGold>1000</iPillageGold>
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>
@@ -2743,7 +2743,7 @@
 			<iGoodyRange>0</iGoodyRange>
 			<iFeatureGrowth>0</iFeatureGrowth>
 			<iUpgradeTime>0</iUpgradeTime>
-			<iDefenseModifier>1000</iDefenseModifier>
+			<iDefenseModifier>500</iDefenseModifier>
 			<iPillageGold>2500</iPillageGold>
 			<bOutsideBorders>0</bOutsideBorders>
 			<TerrainMakesValids/>

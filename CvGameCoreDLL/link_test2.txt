@@ -1,0 +1,3 @@
+Linking DLL
+   Creating library temp_files\Release\CvGameCoreDLL.lib and object temp_files\Release\CvGameCoreDLL.exp
+LINK : warning LNK4089: all references to 'KERNEL32.dll' discarded by /OPT:REF

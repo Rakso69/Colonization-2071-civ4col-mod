@@ -239,7 +239,7 @@
 			<iImmigrationWeight>0</iImmigrationWeight>
 			<iImmigrationWeightDecay>0</iImmigrationWeightDecay>
 			<iMinAreaSize>-1</iMinAreaSize>
-			<iMoves>1</iMoves>
+			<iMoves>0</iMoves>
 			<bCapturesCargo>0</bCapturesCargo>
 			<iWorkRate>0</iWorkRate>
 			<iWorkRateModifier>0</iWorkRateModifier>
@@ -420,7 +420,7 @@
 			<LeaderPromotion>NONE</LeaderPromotion>
 			<iLeaderExperience>0</iLeaderExperience>
 		</UnitInfo>
-<!--#👑🪼Greater Warp Demon (👑BOSS Unit)-->
+<!--#👑🆕🪼Greater Warp Demon (👑BOSS Unit)-->
 		<UnitInfo>
 			<Type>UNIT_ABOMINATION</Type>
 			<Class>UNITCLASS_KILLBOT</Class>
@@ -1028,7 +1028,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -1255,7 +1255,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -1545,7 +1545,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -1748,272 +1748,6 @@
 			<LeaderPromotion>NONE</LeaderPromotion>
 			<iLeaderExperience>0</iLeaderExperience>
 		</UnitInfo>
-<!-- UFO Cultist (❌Needs removal)-->
-<!--Disabled
-		<UnitInfo>
-			<Type>UNIT_CULTIST</Type>
-			<Class>UNITCLASS_CRIMINAL</Class>
-			<UniqueNames/>
-			<Special>NONE</Special>
-			<Capture>NONE</Capture>
-			<Combat>NONE</Combat>
-			<Domain>DOMAIN_LAND</Domain>
-			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
-			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
-			<Invisible>NONE</Invisible>
-			<SeeInvisible>NONE</SeeInvisible>
-			<Description>UFO Cultist</Description>
-			<Civilopedia>TXT_KEY_UNIT_CRIMINAL_PEDIA</Civilopedia>
-			<Strategy>TXT_KEY_UNIT_CRIMINAL_STRATEGY</Strategy>
-			<bGraphicalOnly>1</bGraphicalOnly>
-			<bNoBadGoodies>0</bNoBadGoodies>
-			<bOnlyDefensive>0</bOnlyDefensive>
-			<bNoCapture>0</bNoCapture>
-			<bQuickCombat>0</bQuickCombat>
-			<bRivalTerritory>0</bRivalTerritory>
-			<bMilitaryProduction>0</bMilitaryProduction>
-			<bFound>1</bFound>
-			<bInvisible>0</bInvisible>
-			<bNoDefensiveBonus>0</bNoDefensiveBonus>
-			<bCanMoveImpassable>0</bCanMoveImpassable>
-			<bCanMoveAllTerrain>0</bCanMoveAllTerrain>
-			<bFlatMovementCost>0</bFlatMovementCost>
-			<bIgnoreTerrainCost>0</bIgnoreTerrainCost>
-			<bMechanized>0</bMechanized>
-			<bLineOfSight>0</bLineOfSight>
-			<bHiddenNationality>0</bHiddenNationality>
-			<bAlwaysHostile>0</bAlwaysHostile>
-			<bTreasure>0</bTreasure>
-			<UnitClassUpgrades/>
-			<UnitAIs>
-				<UnitAI>
-					<UnitAIType>UNITAI_COLONIST</UnitAIType>
-					<bUnitAI>1</bUnitAI>
-				</UnitAI>
-			</UnitAIs>
-			<NotUnitAIs/>
-			<Builds>
-				<Build>
-					<BuildType>BUILD_ROAD</BuildType>
-					<bBuild>1</bBuild>
-				</Build>
-				<Build>
-					<BuildType>BUILD_FARM</BuildType>
-					<bBuild>1</bBuild>
-				</Build>
-				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
-					<bBuild>1</bBuild>
-				</Build>
-				<Build>
-					<BuildType>BUILD_MINE</BuildType>
-					<bBuild>1</bBuild>
-				</Build>
-				<Build>
-					<BuildType>BUILD_OILWELL</BuildType>
-					<bBuild>1</bBuild>
-				</Build>
-				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
-					<bBuild>1</bBuild>
-				</Build>
-				<Build>
-					<BuildType>BUILD_REMOVE_JUNGLE</BuildType>
-					<bBuild>1</bBuild>
-				</Build>
-				<Build>
-					<BuildType>BUILD_REMOVE_FOREST</BuildType>
-					<bBuild>1</bBuild>
-				</Build>
-				<Build>
-					<BuildType>BUILD_REMOVE_LIGHT_FOREST</BuildType>
-					<bBuild>1</bBuild>
-				</Build>
-				<Build>
-					<BuildType>BUILD_REMOVE_FUNGAL_FOREST</BuildType>
-					<bBuild>1</bBuild>
-				</Build>
-				<Build>
-					<BuildType>BUILD_REMOVE_CYCAD_FOREST</BuildType>
-					<bBuild>1</bBuild>
-				</Build>
-				<Build>
-					<BuildType>BUILD_REMOVE_LUMINOUS_FOREST</BuildType>
-					<bBuild>1</bBuild>
-				</Build>
-			</Builds>
-			<PrereqBuilding>NONE</PrereqBuilding>
-			<PrereqOrBuildings/>
-			<ProductionTraits/>
-			<iAIWeight>0</iAIWeight>
-			<YieldCosts/>
-			<iHurryCostModifier>0</iHurryCostModifier>
-			<iAdvancedStartCost>-1</iAdvancedStartCost>
-			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
-			<iEuropeCost>-600</iEuropeCost>
-			<iEuropeCostIncrease>0</iEuropeCostIncrease>
-			<iImmigrationWeight>200</iImmigrationWeight>
-			<iImmigrationWeightDecay>0</iImmigrationWeightDecay>
-			<iMinAreaSize>-1</iMinAreaSize>
-			<iMoves>1</iMoves>
-			<bCapturesCargo>0</bCapturesCargo>
-			<iWorkRate>0</iWorkRate>
-			<iWorkRateModifier>0</iWorkRateModifier>
-			<iMissionaryRateModifier>0</iMissionaryRateModifier>
-			<TerrainImpassables/>
-			<FeatureImpassables/>
-			<EvasionBuildings/>
-			<iCombat>0</iCombat>
-			<iXPValueAttack>4</iXPValueAttack>
-			<iXPValueDefense>2</iXPValueDefense>
-			<iWithdrawalProb>0</iWithdrawalProb>
-			<iCityAttack>0</iCityAttack>
-			<iCityDefense>0</iCityDefense>
-			<iHillsAttack>0</iHillsAttack>
-			<iHillsDefense>0</iHillsDefense>
-			<TerrainAttacks/>
-			<TerrainDefenses/>
-			<FeatureAttacks/>
-			<FeatureDefenses/>
-			<UnitClassAttackMods/>
-			<UnitClassDefenseMods/>
-			<UnitCombatMods/>
-			<DomainMods/>
-			<YieldModifiers/>
-			<YieldChanges>
-				<YieldChange>
-					<YieldType>YIELD_CLOTH</YieldType>
-					<iChange>-1</iChange>
-				</YieldChange>
-				<YieldChange>
-					<YieldType>YIELD_COATS</YieldType>
-					<iChange>-1</iChange>
-				</YieldChange>
-				<YieldChange>
-					<YieldType>YIELD_RUM</YieldType>
-					<iChange>-1</iChange>
-				</YieldChange>
-				<YieldChange>
-					<YieldType>YIELD_CIGARS</YieldType>
-					<iChange>-1</iChange>
-				</YieldChange>
-				<YieldChange>
-					<YieldType>YIELD_TOOLS</YieldType>
-					<iChange>-1</iChange>
-				</YieldChange>
-				<YieldChange>
-					<YieldType>YIELD_MUSKETS</YieldType>
-					<iChange>-1</iChange>
-				</YieldChange>
-				<YieldChange>
-					<YieldType>YIELD_HAMMERS</YieldType>
-					<iChange>-1</iChange>
-				</YieldChange>
-				<YieldChange>
-					<YieldType>YIELD_BELLS</YieldType>
-					<iChange>-2</iChange>
-				</YieldChange>
-				<YieldChange>
-					<YieldType>YIELD_CROSSES</YieldType>
-					<iChange>-2</iChange>
-				</YieldChange>
-				<YieldChange>
-					<YieldType>YIELD_EDUCATION</YieldType>
-					<iChange>-2</iChange>
-				</YieldChange>
-			</YieldChanges>
-			<BonusYieldChanges/>
-			<bLandYieldChanges>1</bLandYieldChanges>
-			<bWaterYieldChanges>1</bWaterYieldChanges>
-			<iBombardRate>0</iBombardRate>
-			<SpecialCargo>NONE</SpecialCargo>
-			<DomainCargo>NONE</DomainCargo>
-			<iCargo>0</iCargo>
-			<iRequiredTransportSize>1</iRequiredTransportSize>
-			<iAsset>100</iAsset>
-			<iPower>0</iPower>
-			<iNativeLearnTime>7</iNativeLearnTime>
-			<iStudentWeight>100</iStudentWeight>
-			<iTeacherWeight>0</iTeacherWeight>
-			<ProfessionMeshGroups>
-				<UnitMeshGroups>
-					<ProfessionType>NONE</ProfessionType>
-					<fMaxSpeed>1.25</fMaxSpeed>
-					<fPadTime>1</fPadTime>
-					<iMeleeWaveSize>1</iMeleeWaveSize>
-					<iRangedWaveSize>1</iRangedWaveSize>
-					<UnitMeshGroup>
-						<iRequired>1</iRequired>
-						<ArtDefineTag>ART_DEF_UNIT_CULTIST</ArtDefineTag>
-					</UnitMeshGroup>
-				</UnitMeshGroups>
-				<UnitMeshGroups>
-					<ProfessionType>PROFESSION_SCOUT</ProfessionType>
-					<fMaxSpeed>1.75</fMaxSpeed>
-					<fPadTime>1</fPadTime>
-					<iMeleeWaveSize>4</iMeleeWaveSize>
-					<iRangedWaveSize>0</iRangedWaveSize>
-					<UnitMeshGroup>
-						<iRequired>1</iRequired>
-						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_SCOUT</ArtDefineTag>
-					</UnitMeshGroup>
-				</UnitMeshGroups>
-				<UnitMeshGroups>
-					<ProfessionType>PROFESSION_SOLDIER</ProfessionType>
-					<fMaxSpeed>1.75</fMaxSpeed>
-					<fPadTime>1</fPadTime>
-					<iMeleeWaveSize>4</iMeleeWaveSize>
-					<iRangedWaveSize>0</iRangedWaveSize>
-					<UnitMeshGroup>
-						<iRequired>1</iRequired>
-						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_SOLDIER</ArtDefineTag>
-					</UnitMeshGroup>
-				</UnitMeshGroups>
-				<UnitMeshGroups>
-					<ProfessionType>PROFESSION_DRAGOON</ProfessionType>
-					<fMaxSpeed>1.75</fMaxSpeed>
-					<fPadTime>1</fPadTime>
-					<iMeleeWaveSize>4</iMeleeWaveSize>
-					<iRangedWaveSize>0</iRangedWaveSize>
-					<UnitMeshGroup>
-						<iRequired>1</iRequired>
-						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_DRAGOON</ArtDefineTag>
-					</UnitMeshGroup>
-				</UnitMeshGroups>
-				<UnitMeshGroups>
-					<ProfessionType>PROFESSION_PIONEER</ProfessionType>
-					<fMaxSpeed>1.75</fMaxSpeed>
-					<fPadTime>1</fPadTime>
-					<iMeleeWaveSize>4</iMeleeWaveSize>
-					<iRangedWaveSize>0</iRangedWaveSize>
-					<UnitMeshGroup>
-						<iRequired>1</iRequired>
-						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_PIONEER</ArtDefineTag>
-					</UnitMeshGroup>
-				</UnitMeshGroups>
-				<UnitMeshGroups>
-					<ProfessionType>PROFESSION_MISSIONARY</ProfessionType>
-					<fMaxSpeed>1.75</fMaxSpeed>
-					<fPadTime>1</fPadTime>
-					<iMeleeWaveSize>4</iMeleeWaveSize>
-					<iRangedWaveSize>0</iRangedWaveSize>
-					<UnitMeshGroup>
-						<iRequired>1</iRequired>
-						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_MISSIONARY</ArtDefineTag>
-					</UnitMeshGroup>
-				</UnitMeshGroups>
-			</ProfessionMeshGroups>
-			<FormationType>FORMATION_TYPE_DEFAULT</FormationType>
-			<HotKey/>
-			<bAltDown>0</bAltDown>
-			<bShiftDown>0</bShiftDown>
-			<bCtrlDown>0</bCtrlDown>
-			<iHotKeyPriority>0</iHotKeyPriority>
-			<FreePromotions/>
-			<LeaderPromotion>NONE</LeaderPromotion>
-			<iLeaderExperience>0</iLeaderExperience>
-		</UnitInfo>
-/Disabled-->
 <!--# Convict-->
 		<UnitInfo>
 			<Type>UNIT_CRIMINAL</Type>
@@ -2079,7 +1813,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -2606,7 +2340,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -2831,63 +2565,63 @@
 			<iLeaderExperience>0</iLeaderExperience>
 		</UnitInfo>
 <!--#💡Visionary Researcher-->
-    <UnitInfo>
-      <Type>UNIT_INVENTOR</Type>
-      <Class>UNITCLASS_INVENTOR</Class>
-      <UniqueNames/>
-      <Special>NONE</Special>
-      <Capture>NONE</Capture>
-      <Combat>NONE</Combat>
-      <Domain>DOMAIN_LAND</Domain>
-      <DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
-      <DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
-      <bNativesInvalid>1</bNativesInvalid>
-      <bEuropeInvalid>1</bEuropeInvalid>
-      <Invisible>NONE</Invisible>
-      <SeeInvisible>NONE</SeeInvisible>
-      <Description>Visionary Researcher</Description>
-      <Civilopedia>Both coveted and despised by Earth potentates for their powerful and destabilizing creativity, the pure science practiced by an elite few Visionary Researchers could lead to breakthroughs that would reshape the destiny of humanity.</Civilopedia>
-      <Strategy>Although bringing less immediate monetary dividends than the valuable goods produced by Physicists and Biochemists, the endeavors of a Visionary Researcher can stimulate remarkable breakthroughs in a variety of fields.</Strategy>
-      <bGraphicalOnly>0</bGraphicalOnly>
-      <bNoBadGoodies>0</bNoBadGoodies>
-      <bOnlyDefensive>0</bOnlyDefensive>
-      <bNoCapture>0</bNoCapture>
-      <bQuickCombat>0</bQuickCombat>
-      <bRivalTerritory>0</bRivalTerritory>
-      <bMilitaryProduction>0</bMilitaryProduction>
-      <bFound>1</bFound>
-      <bInvisible>0</bInvisible>
-      <bNoDefensiveBonus>0</bNoDefensiveBonus>
-      <bCanMoveImpassable>0</bCanMoveImpassable>
-      <bCanMoveAllTerrain>0</bCanMoveAllTerrain>
-      <bFlatMovementCost>0</bFlatMovementCost>
-      <bIgnoreTerrainCost>0</bIgnoreTerrainCost>
-      <bMechanized>0</bMechanized>
-      <bLineOfSight>0</bLineOfSight>
-      <bHiddenNationality>0</bHiddenNationality>
-      <bAlwaysHostile>0</bAlwaysHostile>
-      <bTreasure>0</bTreasure>
-      <UnitClassUpgrades/>
-      <UnitAIs>
-        <UnitAI>
-          <UnitAIType>UNITAI_COLONIST</UnitAIType>
-          <bUnitAI>1</bUnitAI>
-        </UnitAI>
-      </UnitAIs>
-      <NotUnitAIs/>
-      <Builds>
-        <Build>
-          <BuildType>BUILD_ROAD</BuildType>
-          <bBuild>1</bBuild>
-        </Build>
-        <Build>
-          <BuildType>BUILD_FARM</BuildType>
-          <bBuild>1</bBuild>
-        </Build>
-        <Build>
-          <BuildType>BUILD_MINE</BuildType>
-          <bBuild>1</bBuild>
-        </Build>
+		<UnitInfo>
+			<Type>UNIT_INVENTOR</Type>
+			<Class>UNITCLASS_INVENTOR</Class>
+			<UniqueNames/>
+			<Special>NONE</Special>
+			<Capture>NONE</Capture>
+			<Combat>NONE</Combat>
+			<Domain>DOMAIN_LAND</Domain>
+			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
+			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
+			<bEuropeInvalid>1</bEuropeInvalid>
+			<Invisible>NONE</Invisible>
+			<SeeInvisible>NONE</SeeInvisible>
+			<Description>Visionary Researcher</Description>
+			<Civilopedia>Both coveted and despised by Earth potentates for their powerful and destabilizing creativity, the pure science practiced by an elite few Visionary Researchers could lead to breakthroughs that would reshape the destiny of humanity.</Civilopedia>
+			<Strategy>Although bringing less immediate monetary dividends than the valuable goods produced by Physicists and Biochemists, the endeavors of a Visionary Researcher can stimulate remarkable breakthroughs in a variety of fields.</Strategy>
+			<bGraphicalOnly>0</bGraphicalOnly>
+			<bNoBadGoodies>0</bNoBadGoodies>
+			<bOnlyDefensive>0</bOnlyDefensive>
+			<bNoCapture>0</bNoCapture>
+			<bQuickCombat>0</bQuickCombat>
+			<bRivalTerritory>0</bRivalTerritory>
+			<bMilitaryProduction>0</bMilitaryProduction>
+			<bFound>1</bFound>
+			<bInvisible>0</bInvisible>
+			<bNoDefensiveBonus>0</bNoDefensiveBonus>
+			<bCanMoveImpassable>0</bCanMoveImpassable>
+			<bCanMoveAllTerrain>0</bCanMoveAllTerrain>
+			<bFlatMovementCost>0</bFlatMovementCost>
+			<bIgnoreTerrainCost>0</bIgnoreTerrainCost>
+			<bMechanized>0</bMechanized>
+			<bLineOfSight>0</bLineOfSight>
+			<bHiddenNationality>0</bHiddenNationality>
+			<bAlwaysHostile>0</bAlwaysHostile>
+			<bTreasure>0</bTreasure>
+			<UnitClassUpgrades/>
+			<UnitAIs>
+				<UnitAI>
+					<UnitAIType>UNITAI_COLONIST</UnitAIType>
+					<bUnitAI>1</bUnitAI>
+				</UnitAI>
+			</UnitAIs>
+			<NotUnitAIs/>
+			<Builds>
+				<Build>
+					<BuildType>BUILD_ROAD</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_FARM</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_MINE</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
 				<Build>
 					<BuildType>BUILD_RANCH</BuildType>
 					<bBuild>1</bBuild>
@@ -2896,169 +2630,169 @@
 					<BuildType>BUILD_OILWELL</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
-        <Build>
-          <BuildType>BUILD_LUMBERMILL</BuildType>
-          <bBuild>1</bBuild>
-        </Build>
-        <Build>
-          <BuildType>BUILD_REMOVE_JUNGLE</BuildType>
-          <bBuild>1</bBuild>
-        </Build>
-        <Build>
-          <BuildType>BUILD_REMOVE_FOREST</BuildType>
-          <bBuild>1</bBuild>
-        </Build>
-        <Build>
-          <BuildType>BUILD_REMOVE_LIGHT_FOREST</BuildType>
-          <bBuild>1</bBuild>
-        </Build>
-      </Builds>
-      <PrereqBuilding>NONE</PrereqBuilding>
-      <PrereqOrBuildings/>
-      <ProductionTraits/>
-      <iAIWeight>0</iAIWeight>
-      <YieldCosts/>
-      <iHurryCostModifier>0</iHurryCostModifier>
-      <iAdvancedStartCost>-1</iAdvancedStartCost>
-      <iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
-      <iEuropeCost>-1</iEuropeCost>
-      <iEuropeCostIncrease>0</iEuropeCostIncrease>
-      <iImmigrationWeight>0</iImmigrationWeight>
-      <iImmigrationWeightDecay>0</iImmigrationWeightDecay>
-      <iMinAreaSize>-1</iMinAreaSize>
-      <iMoves>1</iMoves>
-      <bCapturesCargo>0</bCapturesCargo>
-      <iWorkRate>0</iWorkRate>
-      <iWorkRateModifier>0</iWorkRateModifier>
-      <iMissionaryRateModifier>0</iMissionaryRateModifier>
-      <TerrainImpassables/>
-      <FeatureImpassables/>
-      <EvasionBuildings/>
-      <iCombat>0</iCombat>
-      <iXPValueAttack>4</iXPValueAttack>
-      <iXPValueDefense>2</iXPValueDefense>
-      <iWithdrawalProb>0</iWithdrawalProb>
-      <iCityAttack>0</iCityAttack>
-      <iCityDefense>0</iCityDefense>
-      <iHillsAttack>0</iHillsAttack>
-      <iHillsDefense>0</iHillsDefense>
-      <TerrainAttacks/>
-      <TerrainDefenses/>
-      <FeatureAttacks/>
-      <FeatureDefenses/>
-      <UnitClassAttackMods/>
-      <UnitClassDefenseMods/>
-      <UnitCombatMods/>
-      <DomainMods/>
-      <YieldModifiers>
-        <YieldModifier>
-          <YieldType>YIELD_IDEAS</YieldType>
-          <iYieldMod>100</iYieldMod>
-        </YieldModifier>
-      </YieldModifiers>
-      <YieldChanges/>
-      <BonusYieldChanges/>
-      <bLandYieldChanges>1</bLandYieldChanges>
-      <bWaterYieldChanges>1</bWaterYieldChanges>
-      <iBombardRate>0</iBombardRate>
-      <SpecialCargo>NONE</SpecialCargo>
-      <DomainCargo>NONE</DomainCargo>
-      <iCargo>0</iCargo>
-      <iRequiredTransportSize>1</iRequiredTransportSize>
-      <iAsset>250</iAsset>
-      <iPower>0</iPower>
-      <iNativeLearnTime>-1</iNativeLearnTime>
-      <iStudentWeight>0</iStudentWeight>
-      <iTeacherWeight>2</iTeacherWeight>
-      <ProfessionMeshGroups>
-        <UnitMeshGroups>
-          <ProfessionType>NONE</ProfessionType>
-          <fMaxSpeed>1.75</fMaxSpeed>
-          <fPadTime>1</fPadTime>
-          <iMeleeWaveSize>4</iMeleeWaveSize>
-          <iRangedWaveSize>0</iRangedWaveSize>
-          <UnitMeshGroup>
-            <iRequired>1</iRequired>
-            <ArtDefineTag>ART_DEF_UNIT_INVENTOR</ArtDefineTag>
-          </UnitMeshGroup>
-        </UnitMeshGroups>
-        <UnitMeshGroups>
-          <ProfessionType>PROFESSION_COLONIST</ProfessionType>
-          <fMaxSpeed>1.75</fMaxSpeed>
-          <fPadTime>1</fPadTime>
-          <iMeleeWaveSize>4</iMeleeWaveSize>
-          <iRangedWaveSize>0</iRangedWaveSize>
-          <UnitMeshGroup>
-            <iRequired>1</iRequired>
-            <ArtDefineTag>ART_DEF_UNIT_INVENTOR</ArtDefineTag>
-          </UnitMeshGroup>
-        </UnitMeshGroups>
-        <UnitMeshGroups>
-          <ProfessionType>PROFESSION_SCOUT</ProfessionType>
-          <fMaxSpeed>1.75</fMaxSpeed>
-          <fPadTime>1</fPadTime>
-          <iMeleeWaveSize>4</iMeleeWaveSize>
-          <iRangedWaveSize>0</iRangedWaveSize>
-          <UnitMeshGroup>
-            <iRequired>1</iRequired>
-            <ArtDefineTag>ART_DEF_UNIT_PROFESSION_SCOUT</ArtDefineTag>
-          </UnitMeshGroup>
-        </UnitMeshGroups>
-        <UnitMeshGroups>
-          <ProfessionType>PROFESSION_SOLDIER</ProfessionType>
-          <fMaxSpeed>1.75</fMaxSpeed>
-          <fPadTime>1</fPadTime>
-          <iMeleeWaveSize>4</iMeleeWaveSize>
-          <iRangedWaveSize>0</iRangedWaveSize>
-          <UnitMeshGroup>
-            <iRequired>1</iRequired>
-            <ArtDefineTag>ART_DEF_UNIT_PROFESSION_SOLDIER</ArtDefineTag>
-          </UnitMeshGroup>
-        </UnitMeshGroups>
-        <UnitMeshGroups>
-          <ProfessionType>PROFESSION_DRAGOON</ProfessionType>
-          <fMaxSpeed>1.75</fMaxSpeed>
-          <fPadTime>1</fPadTime>
-          <iMeleeWaveSize>4</iMeleeWaveSize>
-          <iRangedWaveSize>0</iRangedWaveSize>
-          <UnitMeshGroup>
-            <iRequired>1</iRequired>
-            <ArtDefineTag>ART_DEF_UNIT_PROFESSION_DRAGOON</ArtDefineTag>
-          </UnitMeshGroup>
-        </UnitMeshGroups>
-        <UnitMeshGroups>
-          <ProfessionType>PROFESSION_PIONEER</ProfessionType>
-          <fMaxSpeed>1.75</fMaxSpeed>
-          <fPadTime>1</fPadTime>
-          <iMeleeWaveSize>4</iMeleeWaveSize>
-          <iRangedWaveSize>0</iRangedWaveSize>
-          <UnitMeshGroup>
-            <iRequired>1</iRequired>
-            <ArtDefineTag>ART_DEF_UNIT_PROFESSION_PIONEER</ArtDefineTag>
-          </UnitMeshGroup>
-        </UnitMeshGroups>
-        <UnitMeshGroups>
-          <ProfessionType>PROFESSION_MISSIONARY</ProfessionType>
-          <fMaxSpeed>1.75</fMaxSpeed>
-          <fPadTime>1</fPadTime>
-          <iMeleeWaveSize>4</iMeleeWaveSize>
-          <iRangedWaveSize>0</iRangedWaveSize>
-          <UnitMeshGroup>
-            <iRequired>1</iRequired>
-            <ArtDefineTag>ART_DEF_UNIT_PROFESSION_MISSIONARY</ArtDefineTag>
-          </UnitMeshGroup>
-        </UnitMeshGroups>
-      </ProfessionMeshGroups>
-      <FormationType>FORMATION_TYPE_DEFAULT</FormationType>
-      <HotKey/>
-      <bAltDown>0</bAltDown>
-      <bShiftDown>0</bShiftDown>
-      <bCtrlDown>0</bCtrlDown>
-      <iHotKeyPriority>0</iHotKeyPriority>
-      <FreePromotions/>
-      <LeaderPromotion>NONE</LeaderPromotion>
-      <iLeaderExperience>0</iLeaderExperience>
-    </UnitInfo>
+				<Build>
+					<BuildType>BUILD_LODGE</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_REMOVE_JUNGLE</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_REMOVE_FOREST</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_REMOVE_LIGHT_FOREST</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+			</Builds>
+			<PrereqBuilding>NONE</PrereqBuilding>
+			<PrereqOrBuildings/>
+			<ProductionTraits/>
+			<iAIWeight>0</iAIWeight>
+			<YieldCosts/>
+			<iHurryCostModifier>0</iHurryCostModifier>
+			<iAdvancedStartCost>-1</iAdvancedStartCost>
+			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
+			<iEuropeCost>-1</iEuropeCost>
+			<iEuropeCostIncrease>0</iEuropeCostIncrease>
+			<iImmigrationWeight>0</iImmigrationWeight>
+			<iImmigrationWeightDecay>0</iImmigrationWeightDecay>
+			<iMinAreaSize>-1</iMinAreaSize>
+			<iMoves>1</iMoves>
+			<bCapturesCargo>0</bCapturesCargo>
+			<iWorkRate>0</iWorkRate>
+			<iWorkRateModifier>0</iWorkRateModifier>
+			<iMissionaryRateModifier>0</iMissionaryRateModifier>
+			<TerrainImpassables/>
+			<FeatureImpassables/>
+			<EvasionBuildings/>
+			<iCombat>0</iCombat>
+			<iXPValueAttack>4</iXPValueAttack>
+			<iXPValueDefense>2</iXPValueDefense>
+			<iWithdrawalProb>0</iWithdrawalProb>
+			<iCityAttack>0</iCityAttack>
+			<iCityDefense>0</iCityDefense>
+			<iHillsAttack>0</iHillsAttack>
+			<iHillsDefense>0</iHillsDefense>
+			<TerrainAttacks/>
+			<TerrainDefenses/>
+			<FeatureAttacks/>
+			<FeatureDefenses/>
+			<UnitClassAttackMods/>
+			<UnitClassDefenseMods/>
+			<UnitCombatMods/>
+			<DomainMods/>
+			<YieldModifiers>
+				<YieldModifier>
+					<YieldType>YIELD_IDEAS</YieldType>
+					<iYieldMod>100</iYieldMod>
+				</YieldModifier>
+			</YieldModifiers>
+			<YieldChanges/>
+			<BonusYieldChanges/>
+			<bLandYieldChanges>1</bLandYieldChanges>
+			<bWaterYieldChanges>1</bWaterYieldChanges>
+			<iBombardRate>0</iBombardRate>
+			<SpecialCargo>NONE</SpecialCargo>
+			<DomainCargo>NONE</DomainCargo>
+			<iCargo>0</iCargo>
+			<iRequiredTransportSize>1</iRequiredTransportSize>
+			<iAsset>250</iAsset>
+			<iPower>0</iPower>
+			<iNativeLearnTime>-1</iNativeLearnTime>
+			<iStudentWeight>0</iStudentWeight>
+			<iTeacherWeight>2</iTeacherWeight>
+			<ProfessionMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>NONE</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_INVENTOR</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_COLONIST</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_INVENTOR</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_SCOUT</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_SCOUT</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_SOLDIER</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_SOLDIER</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_DRAGOON</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_DRAGOON</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_PIONEER</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_PIONEER</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_MISSIONARY</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_MISSIONARY</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+			</ProfessionMeshGroups>
+			<FormationType>FORMATION_TYPE_DEFAULT</FormationType>
+			<HotKey/>
+			<bAltDown>0</bAltDown>
+			<bShiftDown>0</bShiftDown>
+			<bCtrlDown>0</bCtrlDown>
+			<iHotKeyPriority>0</iHotKeyPriority>
+			<FreePromotions/>
+			<LeaderPromotion>NONE</LeaderPromotion>
+			<iLeaderExperience>0</iLeaderExperience>
+		</UnitInfo>
 <!--#🌾Expert Farmer-->
 		<UnitInfo>
 			<Type>UNIT_FARMER</Type>
@@ -3124,7 +2858,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -3357,7 +3091,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -3526,223 +3260,223 @@
 			<iLeaderExperience>0</iLeaderExperience>
 		</UnitInfo>
 <!--#🛢️Expert Oilman-->
-    <UnitInfo>
-      <Type>UNIT_COAL_MINER</Type>
-      <Class>UNITCLASS_COAL_MINER</Class>
-      <UniqueNames/>
-      <Special>NONE</Special>
-      <Capture>NONE</Capture>
-      <Combat>NONE</Combat>
-      <Domain>DOMAIN_LAND</Domain>
-      <DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
-      <DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
-      <bNativesInvalid>1</bNativesInvalid>
-      <bEuropeInvalid>1</bEuropeInvalid>
-      <Invisible>NONE</Invisible>
-      <SeeInvisible>NONE</SeeInvisible>
-      <Description>Expert Oilman</Description>
-      <Civilopedia>Just before the turn of the 17th century a shortage of lumber and firewood encouraged the expansion of coal mining. Coal began to be mined in the Americas in the early 1700s, and commercial mining occurred around 1730 in Midlothian, Virginia. Coal-cutting machines were invented in the 1880s. Before the invention, coal was mined from underground with a pick and shovel. By 1912 surface mining was conducted with steam shovels designed for coal mining.</Civilopedia>
-      <Strategy>[COLOR_UNIT_TEXT]Expert Oilmen[COLOR_REVERT] are able to draw a wealth of Fossil Fuels from any tile able to produce them. An Expert Oilman will double [COLOR_HIGHLIGHT_TEXT]Fossil Fuels[COLOR_REVERT] production in the tile where he works.</Strategy>
-      <bGraphicalOnly>0</bGraphicalOnly>
-      <bNoBadGoodies>0</bNoBadGoodies>
-      <bOnlyDefensive>0</bOnlyDefensive>
-      <bNoCapture>0</bNoCapture>
-      <bQuickCombat>0</bQuickCombat>
-      <bRivalTerritory>0</bRivalTerritory>
-      <bMilitaryProduction>0</bMilitaryProduction>
-      <bFound>1</bFound>
-      <bInvisible>0</bInvisible>
-      <bNoDefensiveBonus>0</bNoDefensiveBonus>
-      <bCanMoveImpassable>0</bCanMoveImpassable>
-      <bCanMoveAllTerrain>0</bCanMoveAllTerrain>
-      <bFlatMovementCost>0</bFlatMovementCost>
-      <bIgnoreTerrainCost>0</bIgnoreTerrainCost>
-      <bMechanized>0</bMechanized>
-      <bLineOfSight>0</bLineOfSight>
-      <bHiddenNationality>0</bHiddenNationality>
-      <bAlwaysHostile>0</bAlwaysHostile>
-      <bTreasure>0</bTreasure>
-      <UnitClassUpgrades/>
-      <UnitAIs>
-        <UnitAI>
-          <UnitAIType>UNITAI_COLONIST</UnitAIType>
-          <bUnitAI>1</bUnitAI>
-        </UnitAI>
-      </UnitAIs>
-      <NotUnitAIs/>
-      <Builds>
-        <Build>
-          <BuildType>BUILD_ROAD</BuildType>
-          <bBuild>1</bBuild>
-        </Build>
-        <Build>
-          <BuildType>BUILD_FARM</BuildType>
-          <bBuild>1</bBuild>
-        </Build>
-        <Build>
-          <BuildType>BUILD_MINE</BuildType>
-          <bBuild>1</bBuild>
-        </Build>
-		<Build>
-		  <BuildType>BUILD_RANCH</BuildType>
-		  <bBuild>1</bBuild>
-		</Build>
-		<Build>
-		  <BuildType>BUILD_OILWELL</BuildType>
-		  <bBuild>1</bBuild>
-		</Build>
-        <Build>
-          <BuildType>BUILD_LUMBERMILL</BuildType>
-          <bBuild>1</bBuild>
-        </Build>
-        <Build>
-          <BuildType>BUILD_REMOVE_JUNGLE</BuildType>
-          <bBuild>1</bBuild>
-        </Build>
-        <Build>
-          <BuildType>BUILD_REMOVE_FOREST</BuildType>
-          <bBuild>1</bBuild>
-        </Build>
-        <Build>
-          <BuildType>BUILD_REMOVE_LIGHT_FOREST</BuildType>
-          <bBuild>1</bBuild>
-        </Build>
-      </Builds>
-      <PrereqBuilding>NONE</PrereqBuilding>
-      <PrereqOrBuildings/>
-      <ProductionTraits/>
-      <iAIWeight>0</iAIWeight>
-      <YieldCosts/>
-      <iHurryCostModifier>0</iHurryCostModifier>
-      <iAdvancedStartCost>-1</iAdvancedStartCost>
-      <iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
-      <iEuropeCost>800</iEuropeCost>
-      <iEuropeCostIncrease>0</iEuropeCostIncrease>
-      <iImmigrationWeight>45</iImmigrationWeight>
-      <iImmigrationWeightDecay>15</iImmigrationWeightDecay>
-      <iMinAreaSize>-1</iMinAreaSize>
-      <iMoves>1</iMoves>
-      <bCapturesCargo>0</bCapturesCargo>
-      <iWorkRate>0</iWorkRate>
-      <iWorkRateModifier>0</iWorkRateModifier>
-      <iMissionaryRateModifier>0</iMissionaryRateModifier>
-      <TerrainImpassables/>
-      <FeatureImpassables/>
-      <EvasionBuildings/>
-      <iCombat>0</iCombat>
-      <iXPValueAttack>4</iXPValueAttack>
-      <iXPValueDefense>2</iXPValueDefense>
-      <iWithdrawalProb>0</iWithdrawalProb>
-      <iCityAttack>0</iCityAttack>
-      <iCityDefense>0</iCityDefense>
-      <iHillsAttack>0</iHillsAttack>
-      <iHillsDefense>0</iHillsDefense>
-      <TerrainAttacks/>
-      <TerrainDefenses/>
-      <FeatureAttacks/>
-      <FeatureDefenses/>
-      <UnitClassAttackMods/>
-      <UnitClassDefenseMods/>
-      <UnitCombatMods/>
-      <DomainMods/>
-      <YieldModifiers>
-        <YieldModifier>
-          <YieldType>YIELD_COAL</YieldType>
-          <iYieldMod>100</iYieldMod>
-        </YieldModifier>
-      </YieldModifiers>
-      <YieldChanges/>
-      <BonusYieldChanges/>
-      <bLandYieldChanges>1</bLandYieldChanges>
-      <bWaterYieldChanges>1</bWaterYieldChanges>
-      <iBombardRate>0</iBombardRate>
-      <SpecialCargo>NONE</SpecialCargo>
-      <DomainCargo>NONE</DomainCargo>
-      <iCargo>0</iCargo>
-      <iRequiredTransportSize>1</iRequiredTransportSize>
-      <iAsset>250</iAsset>
-      <iPower>0</iPower>
-      <iNativeLearnTime>-1</iNativeLearnTime>
-      <iStudentWeight>0</iStudentWeight>
-      <iTeacherWeight>4</iTeacherWeight>
-      <ProfessionMeshGroups>
-        <UnitMeshGroups>
-          <ProfessionType>NONE</ProfessionType>
-          <fMaxSpeed>1.25</fMaxSpeed>
-          <fPadTime>1</fPadTime>
-          <iMeleeWaveSize>1</iMeleeWaveSize>
-          <iRangedWaveSize>1</iRangedWaveSize>
-          <UnitMeshGroup>
-            <iRequired>1</iRequired>
-            <ArtDefineTag>ART_DEF_UNIT_COAL_MINER</ArtDefineTag>
-          </UnitMeshGroup>
-        </UnitMeshGroups>
-        <UnitMeshGroups>
-          <ProfessionType>PROFESSION_SCOUT</ProfessionType>
-          <fMaxSpeed>1.75</fMaxSpeed>
-          <fPadTime>1</fPadTime>
-          <iMeleeWaveSize>4</iMeleeWaveSize>
-          <iRangedWaveSize>0</iRangedWaveSize>
-          <UnitMeshGroup>
-            <iRequired>1</iRequired>
-            <ArtDefineTag>ART_DEF_UNIT_PROFESSION_SCOUT</ArtDefineTag>
-          </UnitMeshGroup>
-        </UnitMeshGroups>
-        <UnitMeshGroups>
-          <ProfessionType>PROFESSION_SOLDIER</ProfessionType>
-          <fMaxSpeed>1.75</fMaxSpeed>
-          <fPadTime>1</fPadTime>
-          <iMeleeWaveSize>4</iMeleeWaveSize>
-          <iRangedWaveSize>0</iRangedWaveSize>
-          <UnitMeshGroup>
-            <iRequired>1</iRequired>
-            <ArtDefineTag>ART_DEF_UNIT_PROFESSION_SOLDIER</ArtDefineTag>
-          </UnitMeshGroup>
-        </UnitMeshGroups>
-        <UnitMeshGroups>
-          <ProfessionType>PROFESSION_DRAGOON</ProfessionType>
-          <fMaxSpeed>1.75</fMaxSpeed>
-          <fPadTime>1</fPadTime>
-          <iMeleeWaveSize>4</iMeleeWaveSize>
-          <iRangedWaveSize>0</iRangedWaveSize>
-          <UnitMeshGroup>
-            <iRequired>1</iRequired>
-            <ArtDefineTag>ART_DEF_UNIT_PROFESSION_DRAGOON</ArtDefineTag>
-          </UnitMeshGroup>
-        </UnitMeshGroups>
-        <UnitMeshGroups>
-          <ProfessionType>PROFESSION_PIONEER</ProfessionType>
-          <fMaxSpeed>1.75</fMaxSpeed>
-          <fPadTime>1</fPadTime>
-          <iMeleeWaveSize>4</iMeleeWaveSize>
-          <iRangedWaveSize>0</iRangedWaveSize>
-          <UnitMeshGroup>
-            <iRequired>1</iRequired>
-            <ArtDefineTag>ART_DEF_UNIT_PROFESSION_PIONEER</ArtDefineTag>
-          </UnitMeshGroup>
-        </UnitMeshGroups>
-        <UnitMeshGroups>
-          <ProfessionType>PROFESSION_MISSIONARY</ProfessionType>
-          <fMaxSpeed>1.75</fMaxSpeed>
-          <fPadTime>1</fPadTime>
-          <iMeleeWaveSize>4</iMeleeWaveSize>
-          <iRangedWaveSize>0</iRangedWaveSize>
-          <UnitMeshGroup>
-            <iRequired>1</iRequired>
-            <ArtDefineTag>ART_DEF_UNIT_PROFESSION_MISSIONARY</ArtDefineTag>
-          </UnitMeshGroup>
-        </UnitMeshGroups>
-      </ProfessionMeshGroups>
-      <FormationType>FORMATION_TYPE_DEFAULT</FormationType>
-      <HotKey/>
-      <bAltDown>0</bAltDown>
-      <bShiftDown>0</bShiftDown>
-      <bCtrlDown>0</bCtrlDown>
-      <iHotKeyPriority>0</iHotKeyPriority>
-      <FreePromotions/>
-      <LeaderPromotion>NONE</LeaderPromotion>
-      <iLeaderExperience>0</iLeaderExperience>
-    </UnitInfo>
+		<UnitInfo>
+			<Type>UNIT_COAL_MINER</Type>
+			<Class>UNITCLASS_COAL_MINER</Class>
+			<UniqueNames/>
+			<Special>NONE</Special>
+			<Capture>NONE</Capture>
+			<Combat>NONE</Combat>
+			<Domain>DOMAIN_LAND</Domain>
+			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
+			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
+			<bEuropeInvalid>1</bEuropeInvalid>
+			<Invisible>NONE</Invisible>
+			<SeeInvisible>NONE</SeeInvisible>
+			<Description>Expert Oilman</Description>
+			<Civilopedia>Just before the turn of the 17th century a shortage of lumber and firewood encouraged the expansion of coal mining. Coal began to be mined in the Americas in the early 1700s, and commercial mining occurred around 1730 in Midlothian, Virginia. Coal-cutting machines were invented in the 1880s. Before the invention, coal was mined from underground with a pick and shovel. By 1912 surface mining was conducted with steam shovels designed for coal mining.</Civilopedia>
+			<Strategy>[COLOR_UNIT_TEXT]Expert Oilmen[COLOR_REVERT] are able to draw a wealth of Fossil Fuels from any tile able to produce them. An Expert Oilman will double [COLOR_HIGHLIGHT_TEXT]Fossil Fuels[COLOR_REVERT] production in the tile where he works.</Strategy>
+			<bGraphicalOnly>0</bGraphicalOnly>
+			<bNoBadGoodies>0</bNoBadGoodies>
+			<bOnlyDefensive>0</bOnlyDefensive>
+			<bNoCapture>0</bNoCapture>
+			<bQuickCombat>0</bQuickCombat>
+			<bRivalTerritory>0</bRivalTerritory>
+			<bMilitaryProduction>0</bMilitaryProduction>
+			<bFound>1</bFound>
+			<bInvisible>0</bInvisible>
+			<bNoDefensiveBonus>0</bNoDefensiveBonus>
+			<bCanMoveImpassable>0</bCanMoveImpassable>
+			<bCanMoveAllTerrain>0</bCanMoveAllTerrain>
+			<bFlatMovementCost>0</bFlatMovementCost>
+			<bIgnoreTerrainCost>0</bIgnoreTerrainCost>
+			<bMechanized>0</bMechanized>
+			<bLineOfSight>0</bLineOfSight>
+			<bHiddenNationality>0</bHiddenNationality>
+			<bAlwaysHostile>0</bAlwaysHostile>
+			<bTreasure>0</bTreasure>
+			<UnitClassUpgrades/>
+			<UnitAIs>
+				<UnitAI>
+					<UnitAIType>UNITAI_COLONIST</UnitAIType>
+					<bUnitAI>1</bUnitAI>
+				</UnitAI>
+			</UnitAIs>
+			<NotUnitAIs/>
+			<Builds>
+				<Build>
+					<BuildType>BUILD_ROAD</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_FARM</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_MINE</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_RANCH</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_OILWELL</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_LODGE</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_REMOVE_JUNGLE</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_REMOVE_FOREST</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_REMOVE_LIGHT_FOREST</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+			</Builds>
+			<PrereqBuilding>NONE</PrereqBuilding>
+			<PrereqOrBuildings/>
+			<ProductionTraits/>
+			<iAIWeight>0</iAIWeight>
+			<YieldCosts/>
+			<iHurryCostModifier>0</iHurryCostModifier>
+			<iAdvancedStartCost>-1</iAdvancedStartCost>
+			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
+			<iEuropeCost>800</iEuropeCost>
+			<iEuropeCostIncrease>0</iEuropeCostIncrease>
+			<iImmigrationWeight>45</iImmigrationWeight>
+			<iImmigrationWeightDecay>15</iImmigrationWeightDecay>
+			<iMinAreaSize>-1</iMinAreaSize>
+			<iMoves>1</iMoves>
+			<bCapturesCargo>0</bCapturesCargo>
+			<iWorkRate>0</iWorkRate>
+			<iWorkRateModifier>0</iWorkRateModifier>
+			<iMissionaryRateModifier>0</iMissionaryRateModifier>
+			<TerrainImpassables/>
+			<FeatureImpassables/>
+			<EvasionBuildings/>
+			<iCombat>0</iCombat>
+			<iXPValueAttack>4</iXPValueAttack>
+			<iXPValueDefense>2</iXPValueDefense>
+			<iWithdrawalProb>0</iWithdrawalProb>
+			<iCityAttack>0</iCityAttack>
+			<iCityDefense>0</iCityDefense>
+			<iHillsAttack>0</iHillsAttack>
+			<iHillsDefense>0</iHillsDefense>
+			<TerrainAttacks/>
+			<TerrainDefenses/>
+			<FeatureAttacks/>
+			<FeatureDefenses/>
+			<UnitClassAttackMods/>
+			<UnitClassDefenseMods/>
+			<UnitCombatMods/>
+			<DomainMods/>
+			<YieldModifiers>
+				<YieldModifier>
+					<YieldType>YIELD_COAL</YieldType>
+					<iYieldMod>100</iYieldMod>
+				</YieldModifier>
+			</YieldModifiers>
+			<YieldChanges/>
+			<BonusYieldChanges/>
+			<bLandYieldChanges>1</bLandYieldChanges>
+			<bWaterYieldChanges>1</bWaterYieldChanges>
+			<iBombardRate>0</iBombardRate>
+			<SpecialCargo>NONE</SpecialCargo>
+			<DomainCargo>NONE</DomainCargo>
+			<iCargo>0</iCargo>
+			<iRequiredTransportSize>1</iRequiredTransportSize>
+			<iAsset>250</iAsset>
+			<iPower>0</iPower>
+			<iNativeLearnTime>-1</iNativeLearnTime>
+			<iStudentWeight>0</iStudentWeight>
+			<iTeacherWeight>4</iTeacherWeight>
+			<ProfessionMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>NONE</ProfessionType>
+					<fMaxSpeed>1.25</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>1</iMeleeWaveSize>
+					<iRangedWaveSize>1</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_COAL_MINER</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_SCOUT</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_SCOUT</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_SOLDIER</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_SOLDIER</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_DRAGOON</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_DRAGOON</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_PIONEER</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_PIONEER</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_MISSIONARY</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_MISSIONARY</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+			</ProfessionMeshGroups>
+			<FormationType>FORMATION_TYPE_DEFAULT</FormationType>
+			<HotKey/>
+			<bAltDown>0</bAltDown>
+			<bShiftDown>0</bShiftDown>
+			<bCtrlDown>0</bCtrlDown>
+			<iHotKeyPriority>0</iHotKeyPriority>
+			<FreePromotions/>
+			<LeaderPromotion>NONE</LeaderPromotion>
+			<iLeaderExperience>0</iLeaderExperience>
+		</UnitInfo>
 <!--#🔲Master Smelter-->
 		<UnitInfo>
 			<Type>UNIT_LUMBERJACK</Type>
@@ -3812,7 +3546,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -4299,7 +4033,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -4527,7 +4261,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -4755,7 +4489,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -4987,7 +4721,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -5215,7 +4949,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -5443,7 +5177,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -5672,7 +5406,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -5900,7 +5634,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -6128,7 +5862,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -6356,7 +6090,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -6584,7 +6318,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -6816,7 +6550,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -7044,7 +6778,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -7272,7 +7006,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -7307,18 +7041,18 @@
 			<YieldCosts>
 				<YieldCost>
 					<YieldType>YIELD_HAMMERS</YieldType>
-					<iCost>300</iCost>
+					<iCost>200</iCost>
 				</YieldCost>
 				<YieldCost>
 					<YieldType>YIELD_TOOLS</YieldType>
-					<iCost>100</iCost>
+					<iCost>50</iCost>
 				</YieldCost>
 			</YieldCosts>
 			<iHurryCostModifier>0</iHurryCostModifier>
 			<iAdvancedStartCost>-1</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
-			<iEuropeCost>1300</iEuropeCost>
-			<iEuropeCostIncrease>100</iEuropeCostIncrease>
+			<iEuropeCost>900</iEuropeCost>
+			<iEuropeCostIncrease>70</iEuropeCostIncrease>
 			<iImmigrationWeight>40</iImmigrationWeight>
 			<iImmigrationWeightDecay>0</iImmigrationWeightDecay>
 			<iMinAreaSize>-1</iMinAreaSize>
@@ -7522,7 +7256,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -8072,7 +7806,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -8577,7 +8311,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -9082,7 +8816,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -9569,7 +9303,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -9846,6 +9580,251 @@
 			<FreePromotions>
 				<FreePromotion>
 					<PromotionType>PROMOTION_MINUTEMAN1</PromotionType>
+					<bFreePromotion>1</bFreePromotion>
+				</FreePromotion>
+			</FreePromotions>
+			<LeaderPromotion>NONE</LeaderPromotion>
+			<iLeaderExperience>0</iLeaderExperience>
+		</UnitInfo>
+<!--#⭐🆕⚔️Spetsnaz/Спецназ (🪆Replaces Veteran Soldier)-->
+		<UnitInfo>
+			<Type>UNIT_SPETSNAZ</Type>
+			<Class>UNITCLASS_VETERAN</Class>
+			<UniqueNames/>
+			<Special>NONE</Special>
+			<Capture>NONE</Capture>
+			<Combat>UNITCOMBAT_GUN</Combat>
+			<Domain>DOMAIN_LAND</Domain>
+			<DefaultUnitAI>UNITAI_OFFENSIVE</DefaultUnitAI>
+			<DefaultProfession>PROFESSION_SOLDIER</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
+			<Invisible>NONE</Invisible>
+			<SeeInvisible>INVISIBLE_LAND</SeeInvisible>
+			<Description>Spetsnaz</Description>
+			<Civilopedia>TXT_KEY_UNIT_VETERAN_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_VETERAN_STRATEGY</Strategy>
+			<bGraphicalOnly>0</bGraphicalOnly>
+			<bNoBadGoodies>0</bNoBadGoodies>
+			<bOnlyDefensive>0</bOnlyDefensive>
+			<bNoCapture>0</bNoCapture>
+			<bQuickCombat>0</bQuickCombat>
+			<bRivalTerritory>1</bRivalTerritory>
+			<bMilitaryProduction>0</bMilitaryProduction>
+			<bFound>1</bFound>
+			<bInvisible>0</bInvisible>
+			<bNoDefensiveBonus>0</bNoDefensiveBonus>
+			<bCanMoveImpassable>0</bCanMoveImpassable>
+			<bCanMoveAllTerrain>0</bCanMoveAllTerrain>
+			<bFlatMovementCost>0</bFlatMovementCost>
+			<bIgnoreTerrainCost>1</bIgnoreTerrainCost>
+			<bMechanized>0</bMechanized>
+			<bLineOfSight>0</bLineOfSight>
+			<bHiddenNationality>0</bHiddenNationality>
+			<bAlwaysHostile>0</bAlwaysHostile>
+			<bTreasure>0</bTreasure>
+			<UnitClassUpgrades/>
+			<UnitAIs>
+				<UnitAI>
+					<UnitAIType>UNITAI_COLONIST</UnitAIType>
+					<bUnitAI>1</bUnitAI>
+				</UnitAI>
+				<UnitAI>
+					<UnitAIType>UNITAI_OFFENSIVE</UnitAIType>
+					<bUnitAI>1</bUnitAI>
+				</UnitAI>
+				<UnitAI>
+					<UnitAIType>UNITAI_DEFENSIVE</UnitAIType>
+					<bUnitAI>1</bUnitAI>
+				</UnitAI>
+			</UnitAIs>
+			<NotUnitAIs/>
+			<Builds>
+				<Build>
+					<BuildType>BUILD_ROAD</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_FARM</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_RANCH</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_MINE</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_OILWELL</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_LODGE</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_REMOVE_JUNGLE</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_REMOVE_FOREST</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_REMOVE_LIGHT_FOREST</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_REMOVE_FUNGAL_FOREST</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_REMOVE_CYCAD_FOREST</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+				<Build>
+					<BuildType>BUILD_REMOVE_LUMINOUS_FOREST</BuildType>
+					<bBuild>1</bBuild>
+				</Build>
+			</Builds>
+			<PrereqBuilding>NONE</PrereqBuilding>
+			<PrereqOrBuildings/>
+			<ProductionTraits/>
+			<iAIWeight>0</iAIWeight>
+			<YieldCosts/>
+			<iHurryCostModifier>0</iHurryCostModifier>
+			<iAdvancedStartCost>-1</iAdvancedStartCost>
+			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
+			<iEuropeCost>2000</iEuropeCost>
+			<iEuropeCostIncrease>400</iEuropeCostIncrease>
+			<iImmigrationWeight>50</iImmigrationWeight>
+			<iImmigrationWeightDecay>25</iImmigrationWeightDecay>
+			<iMinAreaSize>-1</iMinAreaSize>
+			<iMoves>2</iMoves>
+			<bCapturesCargo>0</bCapturesCargo>
+			<iWorkRate>0</iWorkRate>
+			<iWorkRateModifier>0</iWorkRateModifier>
+			<iMissionaryRateModifier>0</iMissionaryRateModifier>
+			<TerrainImpassables/>
+			<FeatureImpassables/>
+			<EvasionBuildings/>
+			<iCombat>1</iCombat>
+			<iXPValueAttack>6</iXPValueAttack>
+			<iXPValueDefense>3</iXPValueDefense>
+			<iWithdrawalProb>0</iWithdrawalProb>
+			<iCityAttack>0</iCityAttack>
+			<iCityDefense>0</iCityDefense>
+			<iHillsAttack>0</iHillsAttack>
+			<iHillsDefense>0</iHillsDefense>
+			<TerrainAttacks/>
+			<TerrainDefenses/>
+			<FeatureAttacks/>
+			<FeatureDefenses/>
+			<UnitClassAttackMods/>
+			<UnitClassDefenseMods/>
+			<UnitCombatMods/>
+			<DomainMods/>
+			<YieldModifiers/>
+			<YieldChanges/>
+			<BonusYieldChanges/>
+			<bLandYieldChanges>1</bLandYieldChanges>
+			<bWaterYieldChanges>1</bWaterYieldChanges>
+			<iBombardRate>0</iBombardRate>
+			<SpecialCargo>NONE</SpecialCargo>
+			<DomainCargo>NONE</DomainCargo>
+			<iCargo>0</iCargo>
+			<iRequiredTransportSize>1</iRequiredTransportSize>
+			<iAsset>375</iAsset>
+			<iPower>40</iPower>
+			<iNativeLearnTime>-1</iNativeLearnTime>
+			<iStudentWeight>0</iStudentWeight>
+			<iTeacherWeight>3</iTeacherWeight>
+			<ProfessionMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>NONE</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_SPETSNAZ</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_SCOUT</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_SCOUT</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_SOLDIER</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_SPETSNAZ_SOLDIER</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_DRAGOON</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_UNIT_VETERAN_DRAGOON</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_PIONEER</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_PIONEER</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+				<UnitMeshGroups>
+					<ProfessionType>PROFESSION_MISSIONARY</ProfessionType>
+					<fMaxSpeed>1.75</fMaxSpeed>
+					<fPadTime>1</fPadTime>
+					<iMeleeWaveSize>4</iMeleeWaveSize>
+					<iRangedWaveSize>0</iRangedWaveSize>
+					<UnitMeshGroup>
+						<iRequired>1</iRequired>
+						<ArtDefineTag>ART_DEF_UNIT_PROFESSION_MISSIONARY</ArtDefineTag>
+					</UnitMeshGroup>
+				</UnitMeshGroups>
+			</ProfessionMeshGroups>
+			<FormationType>FORMATION_TYPE_DEFAULT</FormationType>
+			<HotKey/>
+			<bAltDown>0</bAltDown>
+			<bShiftDown>0</bShiftDown>
+			<bCtrlDown>0</bCtrlDown>
+			<iHotKeyPriority>0</iHotKeyPriority>
+			<FreePromotions>
+				<FreePromotion>
+					<PromotionType>PROMOTION_VETERAN1</PromotionType>
+					<bFreePromotion>1</bFreePromotion>
+				</FreePromotion>
+				<FreePromotion>
+					<PromotionType>PROMOTION_RANGER3</PromotionType>
+					<bFreePromotion>1</bFreePromotion>
+				</FreePromotion>
+				<FreePromotion>
+					<PromotionType>PROMOTION_LEADERSHIP</PromotionType>
 					<bFreePromotion>1</bFreePromotion>
 				</FreePromotion>
 			</FreePromotions>
@@ -10140,7 +10119,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -11707,6 +11686,10 @@
 				<BuildType>BUILD_MOON_COLONY1</BuildType>
 				<bBuild>1</bBuild>
 				</Build>
+				<Build>
+				<BuildType>BUILD_JANUS_DEVICE</BuildType>
+				<bBuild>1</bBuild>
+				</Build>
 			</Builds>
 			<PrereqBuilding>BUILDINGCLASS_DOCK</PrereqBuilding>
 			<PrereqOrBuildings/>
@@ -12456,19 +12439,10 @@
 				</UnitClassAttackMod>
 				<UnitClassAttackMod>
 					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<iUnitClassMod>50</iUnitClassMod>
+					<iUnitClassMod>25</iUnitClassMod>
 				</UnitClassAttackMod>
 			</UnitClassAttackMods>
-			<UnitClassDefenseMods>
-				<UnitClassDefenseMod>
-					<UnitClassType>UNITCLASS_MERCHANTMAN</UnitClassType>
-					<iUnitClassMod>50</iUnitClassMod>
-				</UnitClassDefenseMod>
-				<UnitClassDefenseMod>
-					<UnitClassType>UNITCLASS_GALLEON</UnitClassType>
-					<iUnitClassMod>50</iUnitClassMod>
-				</UnitClassDefenseMod>
-			</UnitClassDefenseMods>
+			<UnitClassDefenseMods/>
 			<UnitCombatMods/>
 			<DomainMods/>
 			<YieldModifiers/>
@@ -12795,7 +12769,7 @@
 		</UnitInfo>
 <!--#⭐🆕💸🛸Carrier (👽Replaces Freighter,🌠Amphibious)-->
 		<UnitInfo>
-			<Type>UNIT_CARRION</Type>
+			<Type>UNIT_CARRIER</Type>
 			<Class>UNITCLASS_GALLEON</Class>
 			<UniqueNames/>
 			<Special>NONE</Special>
@@ -13574,10 +13548,6 @@
 					<UnitClassType>UNITCLASS_FRIGATE</UnitClassType>
 					<iUnitClassMod>50</iUnitClassMod>
 				</UnitClassDefenseMod>
-				<UnitClassAttackMod>
-					<UnitClassType>UNITCLASS_SHIP_OF_THE_LINE</UnitClassType>
-					<iUnitClassMod>50</iUnitClassMod>
-				</UnitClassAttackMod>
 			</UnitClassDefenseMods>
 			<UnitCombatMods/>
 			<DomainMods/>
@@ -13617,11 +13587,11 @@
 			<iHotKeyPriority>0</iHotKeyPriority>
 			<FreePromotions>
 				<FreePromotion>
-					<PromotionType>PROMOTION_EVASIVE_MANEUVERS</PromotionType>
+					<PromotionType>PROMOTION_RESONANCE_SHIELDING</PromotionType>
 					<bFreePromotion>1</bFreePromotion>
 				</FreePromotion>
 				<FreePromotion>
-					<PromotionType>PROMOTION_RESONANCE_SHIELDING</PromotionType>
+					<PromotionType>PROMOTION_EVASIVE_MANEUVERS</PromotionType>
 					<bFreePromotion>1</bFreePromotion>
 				</FreePromotion>
 			</FreePromotions>
@@ -16305,7 +16275,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_LUMBERMILL</BuildType>
+					<BuildType>BUILD_LODGE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>

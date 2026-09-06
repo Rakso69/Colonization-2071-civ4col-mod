@@ -2765,6 +2765,7 @@ public:
 	DllExport int getNativeCombatModifier() const;
 	DllExport int getMissionaryModifier() const;
 	DllExport int getRebelCombatModifier() const;
+	DllExport int getStrengthModifier() const;
 	DllExport int getTaxRateThresholdModifier() const;
 	DllExport int getMercantileFactor() const;
 	DllExport int getTreasureModifier() const;
@@ -2802,10 +2803,12 @@ public:
 	DllExport bool isTaxYieldModifier(int i) const;
 	DllExport bool isFreeBuildingClass(int i) const;
 	DllExport int getBuildingYieldChange(int iBuildingClass, int iYieldType) const;
+	DllExport int getImprovementYieldChanges(int iImprovement, int iYieldType) const;
 
 	DllExport void read(FDataStreamBase* );
 	DllExport void write(FDataStreamBase* );
 	DllExport bool read(CvXMLLoadUtility* pXML);
+	DllExport bool readPass3();
 
 	//---------------------------------------PROTECTED MEMBER VARIABLES---------------------------------
 protected:
@@ -2817,6 +2820,7 @@ protected:
 	int m_iNativeCombatModifier;
 	int m_iMissionaryModifier;
 	int m_iRebelCombatModifier;
+	int m_iStrengthModifier;
 	int m_iTaxRateThresholdModifier;
 	int m_iMercantileFactor;
 	int m_iTreasureModifier;
@@ -2851,6 +2855,8 @@ protected:
 	bool* m_abFreeBuildingClass;
 
 	std::vector<int*> m_aaiBuildingYieldChanges;
+	std::vector<int*> m_aaiImprovementYieldChanges;
+	std::vector<int*> m_aaiImprovementYieldChangesPass3;
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

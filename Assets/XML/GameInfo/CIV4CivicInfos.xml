@@ -719,7 +719,7 @@
       <iCenterPlotFoodBonus>0</iCenterPlotFoodBonus>
       <AllowsBuildTypes>
         <AllowsBuildType>
-          <BuildType>IMPROVEMENT_LUMBERMILL</BuildType>
+          <BuildType>IMPROVEMENT_LODGE</BuildType>
           <iChange>1</iChange>
         </AllowsBuildType>
       </AllowsBuildTypes>
@@ -1914,7 +1914,7 @@
       <AllowsUnitClasses/>
       <AllowsBonuses>
         <AllowsBonus>
-          <BonusType>BONUS_ZIGGURAT</BonusType>
+          <BonusType>BONUS_GRANDZIGGURAT</BonusType>
           <iChange>1</iChange>
         </AllowsBonus>
       </AllowsBonuses>
@@ -2233,7 +2233,7 @@
       <Description>Planetology</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
-      <Button>Art/Interface/Buttons/Techtree/07_1_Planetology.dds</Button>
+      <Button>Art/Interface/Buttons/Techtree/07_2A_Planetology.dds</Button>
       <iAIWeight>100</iAIWeight>
       <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
       <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2342,7 +2342,7 @@
       <Description>Progenitor Symbology</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
-      <Button>Art/Interface/Buttons/Techtree/07_4A_Progenitor Symbology.dds</Button>
+      <Button>Art/Interface/Buttons/Techtree/07_3B_Progenitor Symbology.dds</Button>
       <iAIWeight>200</iAIWeight>
       <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
       <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2418,7 +2418,7 @@
       <Description>Dark Matter Physics</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
-      <Button>Art/Interface/Buttons/Techtree/07_5A_Dark Matter Physics.dds</Button>
+      <Button>Art/Interface/Buttons/Techtree/07_4B_Dark Matter Physics.dds</Button>
       <iAIWeight>300</iAIWeight>
       <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
       <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2496,7 +2496,7 @@
       <Description>Xenoarchaeology</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
-      <Button>Art/Interface/Buttons/Techtree/07_2_Xenoarchaeology.dds</Button>
+      <Button>Art/Interface/Buttons/Techtree/07_1_Xenoarchaeology.dds</Button>
       <iAIWeight>100</iAIWeight>
       <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
       <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2567,7 +2567,7 @@
       <Description>Metadimensional Theory</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
-      <Button>Art/Interface/Buttons/Techtree/07_3_Metadimensional Theory.dds</Button>
+      <Button>Art/Interface/Buttons/Techtree/07_2_Metadimensional Theory.dds</Button>
       <iAIWeight>200</iAIWeight>
       <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
       <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2654,7 +2654,7 @@
       <Description>Containment Fields</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
-      <Button>Art/Interface/Buttons/Techtree/07_4B_Containment Fields.dds</Button>
+      <Button>Art/Interface/Buttons/Techtree/07_3C_Containment Fields.dds</Button>
       <iAIWeight>300</iAIWeight>
       <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
       <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2718,7 +2718,7 @@
       <Description>Unified Field Theory</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
-      <Button>Art/Interface/Buttons/Techtree/07_5B_Unified Field Theory.dds</Button>
+      <Button>Art/Interface/Buttons/Techtree/07_4C_Unified Field Theory.dds</Button>
       <iAIWeight>300</iAIWeight>
       <iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
       <iDomesticGreatGeneralRateModifier>0</iDomesticGreatGeneralRateModifier>
@@ -2929,7 +2929,7 @@
       <SpecialBuildingNotRequireds/>
       <ImprovementYieldChanges>
 	<ImprovementYieldChange>
-		<ImprovementType>IMPROVEMENT_LUMBERMILL</ImprovementType>
+		<ImprovementType>IMPROVEMENT_LODGE</ImprovementType>
 			<ImprovementYields>
 				<YieldChange>
 					<YieldType>YIELD_LUMBER</YieldType>
@@ -3087,7 +3087,7 @@
       <SpecialBuildingNotRequireds/>
       <ImprovementYieldChanges>
 	<ImprovementYieldChange>
-		<ImprovementType>IMPROVEMENT_LUMBERMILL</ImprovementType>
+		<ImprovementType>IMPROVEMENT_LODGE</ImprovementType>
 			<ImprovementYields>
 				<YieldChange>
 					<YieldType>YIELD_LUMBER</YieldType>
