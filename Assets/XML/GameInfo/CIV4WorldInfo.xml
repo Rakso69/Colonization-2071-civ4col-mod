@@ -11,7 +11,7 @@
 			<Type>WORLDSIZE_TINY</Type>
 			<Description>TXT_KEY_WORLD_TINY</Description>
 			<Help>TXT_KEY_WORLD_TINY_HELP</Help>
-			<iDefaultPlayers>12</iDefaultPlayers>
+			<iDefaultPlayers>13</iDefaultPlayers>
 			<iDefaultNativePlayers>6</iDefaultNativePlayers>
 			<iUnitNameModifier>40</iUnitNameModifier>
 			<iTargetNumCities>4</iTargetNumCities>
@@ -27,7 +27,7 @@
 			<Type>WORLDSIZE_SMALL</Type>
 			<Description>TXT_KEY_WORLD_SMALL</Description>
 			<Help>TXT_KEY_WORLD_SMALL_HELP</Help>
-			<iDefaultPlayers>14</iDefaultPlayers>
+			<iDefaultPlayers>15</iDefaultPlayers>
 			<iDefaultNativePlayers>7</iDefaultNativePlayers>
 			<iUnitNameModifier>30</iUnitNameModifier>
 			<iTargetNumCities>5</iTargetNumCities>
@@ -43,7 +43,7 @@
 			<Type>WORLDSIZE_STANDARD</Type>
 			<Description>TXT_KEY_WORLD_STANDARD</Description>
 			<Help>TXT_KEY_WORLD_STANDARD_HELP</Help>
-			<iDefaultPlayers>16</iDefaultPlayers>
+			<iDefaultPlayers>17</iDefaultPlayers>
 			<iDefaultNativePlayers>8</iDefaultNativePlayers>
 			<iUnitNameModifier>20</iUnitNameModifier>
 			<iTargetNumCities>5</iTargetNumCities>
@@ -59,7 +59,7 @@
 			<Type>WORLDSIZE_LARGE</Type>
 			<Description>TXT_KEY_WORLD_LARGE</Description>
 			<Help>TXT_KEY_WORLD_LARGE_HELP</Help>
-			<iDefaultPlayers>18</iDefaultPlayers>
+			<iDefaultPlayers>19</iDefaultPlayers>
 			<iDefaultNativePlayers>9</iDefaultNativePlayers>
 			<iUnitNameModifier>10</iUnitNameModifier>
 			<iTargetNumCities>6</iTargetNumCities>
@@ -75,7 +75,7 @@
 			<Type>WORLDSIZE_HUGE</Type>
 			<Description>TXT_KEY_WORLD_HUGE</Description>
 			<Help>TXT_KEY_WORLD_HUGE_HELP</Help>
-			<iDefaultPlayers>19</iDefaultPlayers>
+			<iDefaultPlayers>20</iDefaultPlayers>
 			<iDefaultNativePlayers>9</iDefaultNativePlayers>
 			<iUnitNameModifier>0</iUnitNameModifier>
 			<iTargetNumCities>6</iTargetNumCities>
