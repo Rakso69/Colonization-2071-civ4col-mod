@@ -379,11 +379,11 @@ class CvEventManager:
 	        iMound = gc.getInfoTypeForString('FEATURE_MOUND')
 
 	        iNewUnit = CvUtil.findInfoTypeNum('UNIT_KILLBOT')
-	        iNewProfession = CvUtil.findInfoTypeNum('PROFESSION_SOLDIER')
-	        iExarch = gc.getInfoTypeForString('LEADER_INVASION_OUTER_GODS')
+	        iNewProfession = ProfessionTypes.NO_PROFESSION
+	        iOuterGodsLeader = gc.getInfoTypeForString('LEADER_INVASION_OUTER_GODS')
 	        for iPlayer in range(gc.getMAX_PLAYERS()):
 	            pPlayer = gc.getPlayer(iPlayer)
-	            if pPlayer.getLeaderType() == iExarch:
+	            if pPlayer.getLeaderType() == iOuterGodsLeader:
 	                bPlayer = pPlayer
 	        for i in range(CyMap().numPlots()):
 	            pPlot = CyMap().plotByIndex(i)

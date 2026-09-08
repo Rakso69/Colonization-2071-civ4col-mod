@@ -3286,7 +3286,7 @@
 			<Description><!--TXT_KEY_CIV_POLAND_DESC-->Polish Colonies</Description><!-- Polish Colonies-->
 			<ShortDescription><!--TXT_KEY_CIV_POLAND_SHORT_DESC-->Space Poland</ShortDescription>
 			<Adjective><!--TXT_KEY_CIV_POLAND_ADJECTIVE-->Polish</Adjective>
-			<Civilopedia><!--TXT_KEY_CIV_POLAND_PEDIA-->Initially, Poland prospered after its liberation from Soviet occupation and accession to the European Union. This prosperity was not to last, however, as history has shown time and time again that the people of Poland can never enjoy good times for long. Poland was the nation that put up the strongest resistance to the expanding, authoritarian EU federal government; consequently, millions of European citizens fled their home nations for Poland in pursuit of the freedoms that had slowly eroded over the decades. This increase in population resulted in Poland becoming the most populous country in the EU, with an economy surpassing even that of Germany by 2039. Seeing the writing on the wall, the people of Poland decided to leave the European Union in order to preserve the liberties that were under threat from Brussels. Tragedy would follow as a then-young staff officer in the Polish military orchestrated a coup d'état, betraying everything the Poles had spent the previous half a century fighting for. The self-styled Sovereignty of Poland boasted of the superficial freedoms retained by its populace, while repressing all meaningful forms of self-expression. Fortifying against a Nanny-State EU in the west and an expansionist Russia in the east, Poland has become increasingly militaristic alongside its libertarian platitudes.</Civilopedia>
+			<Civilopedia><!--TXT_KEY_CIV_POLAND_PEDIA-->Initially, Poland prospered after its liberation from Soviet occupation and accession to the European Union. This prosperity was not to last, however, as history has shown time and time again that the people of Poland can never enjoy good times for long. Poland was the nation that put up the strongest resistance to the expanding, authoritarian EU federal government; consequently, millions of European citizens fled their home nations for Poland in pursuit of the freedoms that had slowly eroded over the decades. This increase in population resulted in Poland becoming the most populous country in the EU, with an economy surpassing even that of Germany by 2039. Seeing the writing on the wall, the people of Poland decided to leave the European Union in order to preserve the liberties that were under threat from Brussels. Tragedy would follow as a then-young staff officer in the Polish military orchestrated a coup d'etat, betraying everything the Poles had spent the previous half a century fighting for. The self-styled Sovereignty of Poland boasted of the superficial freedoms retained by its populace, while repressing all meaningful forms of self-expression. Fortifying against a Nanny-State EU in the west and an expansionist Russia in the east, Poland has become increasingly militaristic alongside its libertarian platitudes.</Civilopedia>
 			<DefaultPlayerColor>PLAYERCOLOR_RED</DefaultPlayerColor>
 			<ArtDefineTag>ART_DEF_CIVILIZATION_POLAND</ArtDefineTag>
 			<ArtStyleType>ARTSTYLE_EUROPEAN</ArtStyleType>
@@ -9994,12 +9994,7 @@
 				<City>R’lyeh</City>
 			</Cities>
 			<Buildings/>
-			<Units>
-				<Unit><!--👑🪼Greater Warp Demon-->
-					<UnitClassType>UNITCLASS_KILLBOT</UnitClassType>
-					<UnitType>UNIT_ABOMINATION</UnitType>
-				</Unit>
-			</Units>
+			<Units/><!--👑🪼Greater Warp Demon-->
 			<Professions/>
 			<Traits/>
 			<FreeUnitClasses/>

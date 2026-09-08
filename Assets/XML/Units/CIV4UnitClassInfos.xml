@@ -293,9 +293,9 @@
 			<DefaultUnit>UNIT_PROGENITORAI</DefaultUnit>
 		</UnitClassInfo>
 		<UnitClassInfo>
-			<Type>UNITCLASS_ABOMINATION</Type>
-			<Description>Abomination</Description>
-			<DefaultUnit>UNIT_ABOMINATION</DefaultUnit>
+			<Type>UNITCLASS_BLOODTHIRSTER</Type>
+			<Description>Greater Warp Demon</Description>
+			<DefaultUnit>UNIT_BLOODTHIRSTER</DefaultUnit>
 		</UnitClassInfo>
 		<UnitClassInfo>
 			<Type>UNITCLASS_KILLBOT</Type>
@@ -339,105 +339,3 @@
 		</UnitClassInfo>
 	</UnitClassInfos>
 </Civ4UnitClassInfos>
-<!--❗🔧RESEARCH ADVISOR FIX-->
-<!--日本🗾Japanese Colonies (Human)-->
-<!--Disabled
-		<UnitClassInfo>
-			<Type>UNITCLASS_RANCHER_JAPAN</Type>
-			<Description>TXT_KEY_UNIT_RANCHER</Description>
-			<DefaultUnit>UNIT_ANDROID</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_STATESMAN_JAPAN</Type>
-			<Description>TXT_KEY_UNIT_STATESMAN</Description>
-			<DefaultUnit>UNIT_AI</DefaultUnit>
-		</UnitClassInfo>
-/Disabled-->
-<!--🉐🏴Syndicate Colonies (Human)-->
-<!--Disabled
-		<UnitClassInfo>
-			<Type>UNITCLASS_PRIVATEER_SYNDICATE</Type>
-			<Description>TXT_KEY_UNIT_PRIVATEER</Description>
-			<DefaultUnit>UNIT_SYNDICATE_GHOST</DefaultUnit>
-		</UnitClassInfo>
-/Disabled-->
-<!--👽Aliens-->
-<!--Disabled
-		<UnitClassInfo>
-			<Type>UNITCLASS_COLONIST_ALIEN</Type>
-			<Description>TXT_KEY_UNIT_COLONIST</Description>
-			<DefaultUnit>UNIT_NATIVE</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_INDENTURED_SERVANT_ALIEN</Type>
-			<Description>TXT_KEY_UNIT_INDENTURED_SERVANT</Description>
-			<DefaultUnit>UNIT_HUMANHYBRID</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_CONVERTED_NATIVE_ALIEN</Type>
-			<Description>TXT_KEY_UNIT_CONVERTED_NATIVE</Description>
-			<DefaultUnit>UNIT_ALIENCROSSBREED</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_CARPENTER_ALIEN</Type>
-			<Description>TXT_KEY_UNIT_CARPENTER</Description>
-			<DefaultUnit>UNIT_CYBORG</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_PIONEER_ALIEN</Type>
-			<Description>TXT_KEY_UNIT_PIONEER</Description>
-			<DefaultUnit>UNIT_CULTIVATOR</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_PREACHER_ALIEN</Type>
-			<Description>TXT_KEY_UNIT_PREACHER</Description>
-			<DefaultUnit>UNIT_ELDER</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_CHRISTIAN_MISSIONARY_ALIEN</Type>
-			<Description>TXT_KEY_UNIT_CHRISTIAN_MISSIONARY</Description>
-			<DefaultUnit>UNIT_POLYMATH</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_VETERAN_ALIEN</Type>
-			<Description>TXT_KEY_UNIT_VETERAN</Description>
-			<DefaultUnit>UNIT_ELITE</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_CANNON_ALIEN</Type>
-			<Description>TXT_KEY_UNIT_CANNON</Description>
-			<DefaultUnit>UNIT_MUTANT</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_CARAVEL_ALIEN</Type>
-			<Description>TXT_KEY_UNIT_CARAVEL</Description>
-			<DefaultUnit>UNIT_SAUCER</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_MERCHANTMAN_ALIEN</Type>
-			<Description>TXT_KEY_UNIT_MERCHANTMAN</Description>
-			<DefaultUnit>UNIT_SMUGGLER</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_PRIVATEER_ALIEN</Type>
-			<Description>TXT_KEY_UNIT_PRIVATEER</Description>
-			<DefaultUnit>UNIT_UFO</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_GALLEON_ALIEN</Type>
-			<Description>TXT_KEY_UNIT_GALLEON</Description>
-			<DefaultUnit>UNIT_CARRIER</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_FRIGATE_ALIEN</Type>
-			<Description>TXT_KEY_UNIT_FRIGATE</Description>
-			<DefaultUnit>UNIT_CLOAKED_WARSHIP</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_SHIP_OF_THE_LINE_ALIEN</Type>
-			<Description>TXT_KEY_UNIT_SHIP_OF_THE_LINE</Description>
-			<DefaultUnit>UNIT_BATTLESTAR</DefaultUnit>
-		</UnitClassInfo>
-/Disabled-->
-<!--🤖🔳Royal Expeditionary Force (Earth)-->
-<!--👾🔳Royal Expeditionary Force (Progenitor)-->

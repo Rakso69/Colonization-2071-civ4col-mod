@@ -4306,9 +4306,13 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 	UnitClassTypes eUnitClass;
 	eUnitClass = ((UnitClassTypes)(GC.getUnitInfo(eUnit).getUnitClassType()));
 
-	FAssert(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eUnitClass) == eUnit);
-	if (GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eUnitClass) != eUnit)
+	UnitTypes eCivilizationUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eUnitClass);
+	if (eCivilizationUnit != eUnit)
 	{
+		char szAssert[1024];
+		const char* szExpectedUnit = (eCivilizationUnit != NO_UNIT) ? GC.getUnitInfo(eCivilizationUnit).getType() : "NO_UNIT";
+		sprintf(szAssert, "CvPlayer::canTrain mismatch: Player=%d Civ=%s Unit=%s UnitClass=%s ExpectedUnit=%s", getID(), GC.getCivilizationInfo(getCivilizationType()).getType(), GC.getUnitInfo(eUnit).getType(), GC.getUnitClassInfo(eUnitClass).getType(), szExpectedUnit);
+		FAssertMsg(false, szAssert);
 		return false;
 	}
 	///TKs Invention Core Mod v 1.0 Profession Pedia
@@ -4820,7 +4824,10 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 
 				if (iChange > 0 && kTrait.getNativeAttitudeChange() > 0)
 				{
-					GET_TEAM(getTeam()).makePeace(kLoopPlayer.getTeam());
+					if (kLoopPlayer.getTeam() != getTeam())
+					{
+						forcePeace((PlayerTypes)iPlayer);
+					}
 				}
 			}
 		}
@@ -10060,7 +10067,10 @@ void CvPlayer::processCivics(CivicTypes eCivic, int iChange)
 
 				if (iChange > 0 && kCivicInfo.getNativeAttitudeChange() > 0)
 				{
-					GET_TEAM(getTeam()).makePeace(kLoopPlayer.getTeam());
+					if (kLoopPlayer.getTeam() != getTeam())
+					{
+						forcePeace((PlayerTypes)iPlayer);
+					}
 				}
 			}
 		}
@@ -14249,6 +14259,11 @@ void CvPlayer::setProfessionEquipmentModifier(ProfessionTypes eProfession, int i
 
 int CvPlayer::getYieldEquipmentAmount(ProfessionTypes eProfession, YieldTypes eYield) const
 {
+	if (eProfession == NO_PROFESSION)
+	{
+		return 0;
+	}
+	
 	FAssert(eProfession >= 0 && eProfession < GC.getNumProfessionInfos());
 	FAssert(eYield >= 0 && eYield < NUM_YIELD_TYPES);
 

@@ -496,6 +496,18 @@ void CvCityAI::AI_chooseProduction()
 		return;
 	}
 
+	// If no unit or building can be produced, convert production into Father Points. //Kaszkaj
+	for (int iI = 0; iI < GC.getNumFatherPointInfos(); ++iI)
+	{
+		FatherPointTypes eFatherPoint = (FatherPointTypes)iI;
+
+		if (canConvince(eFatherPoint))
+		{
+			pushOrder(ORDER_CONVINCE, iI, -1, false, false, false, false);
+			return;
+		}
+	}
+
 	//colonies should always be building something
 	FAssertMsg(isNative(), "AI not building anything.");
 }

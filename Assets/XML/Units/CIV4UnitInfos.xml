@@ -62,7 +62,7 @@
 <!--#🐺Mound Beast-->
 		<UnitInfo>
 			<Type>UNIT_MOUND</Type>
-			<Class>UNITCLASS_KILLBOT</Class>
+			<Class>UNITCLASS_MOUND</Class>
 			<UniqueNames/>
 			<Special>NONE</Special>
 			<Capture>NONE</Capture>
@@ -181,7 +181,7 @@
 <!--#🐺Giant Spider-->
 		<UnitInfo>
 			<Type>UNIT_SPIDER</Type>
-			<Class>UNITCLASS_KILLBOT</Class>
+			<Class>UNITCLASS_SPIDER</Class>
 			<UniqueNames/>
 			<Special>NONE</Special>
 			<Capture>NONE</Capture>
@@ -304,7 +304,7 @@
 <!--#🐺Progenitor AI-->
 		<UnitInfo>
 			<Type>UNIT_PROGENITORAI</Type>
-			<Class>UNITCLASS_KILLBOT</Class>
+			<Class>UNITCLASS_PROGENITORAI</Class>
 			<UniqueNames/>
 			<Special>NONE</Special>
 			<Capture>NONE</Capture>
@@ -422,8 +422,8 @@
 		</UnitInfo>
 <!--#👑🆕🪼Greater Warp Demon (👑BOSS Unit)-->
 		<UnitInfo>
-			<Type>UNIT_ABOMINATION</Type>
-			<Class>UNITCLASS_KILLBOT</Class>
+			<Type>UNIT_BLOODTHIRSTER</Type>
+			<Class>UNITCLASS_BLOODTHIRSTER</Class>
 			<UniqueNames>
 				<UniqueName>An'ggrath the Unbound</UniqueName>
 				<UniqueName>Skarbraand Ragefeaster</UniqueName>
@@ -16207,7 +16207,7 @@
 			<Combat>UNITCOMBAT_GUN</Combat>
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_SCOUT</DefaultUnitAI>
-			<DefaultProfession>PROFESSION_SCOUT</DefaultProfession>
+			<DefaultProfession>NONE</DefaultProfession>
 			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>INVISIBLE_LAND</Invisible>
 			<SeeInvisible>INVISIBLE_LAND</SeeInvisible>

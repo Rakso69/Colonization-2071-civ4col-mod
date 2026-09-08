@@ -8739,7 +8739,10 @@ void CvUnit::setProfession(ProfessionTypes eProfession, bool bForce)
 {
 	if (!bForce && !canHaveProfession(eProfession, false))
 	{
-		FAssertMsg(false, "Unit can not have profession");
+		char szAssert[1024];
+		const char* szProfession = (eProfession != NO_PROFESSION) ? GC.getProfessionInfo(eProfession).getType() : "NO_PROFESSION";
+		sprintf(szAssert, "CvUnit::setProfession invalid: Player=%d Civ=%s Unit=%s CurrentProfession=%s RequestedProfession=%s X=%d Y=%d", getOwnerINLINE(), GC.getCivilizationInfo(GET_PLAYER(getOwnerINLINE()).getCivilizationType()).getType(), GC.getUnitInfo(getUnitType()).getType(), (getProfession() != NO_PROFESSION) ? GC.getProfessionInfo(getProfession()).getType() : "NO_PROFESSION", szProfession, getX_INLINE(), getY_INLINE());
+		FAssertMsg(false, szAssert);
 		return;
 	}
 	///TKs Invention Core Mod v 1.0
