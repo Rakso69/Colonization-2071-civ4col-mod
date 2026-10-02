@@ -8,7 +8,7 @@
 	<HandicapInfos>
 		<HandicapInfo>
 			<Type>HANDICAP_PILGRIM</Type>
-			<Description>Convict</Description>
+			<Description>TXT_KEY_HANDICAP_PILGRIM</Description>
 			<Help>TXT_KEY_HANDICAP_PILGRIM_HELP</Help>
 			<iAdvancedStartPointsMod>150</iAdvancedStartPointsMod>
 			<iGold>1000</iGold>
@@ -64,7 +64,7 @@
 		</HandicapInfo>
 		<HandicapInfo>
 			<Type>HANDICAP_PIONEER</Type>
-			<Description>Proletarian</Description>
+			<Description>TXT_KEY_HANDICAP_PIONEER</Description>
 			<Help>TXT_KEY_HANDICAP_PIONEER_HELP</Help>
 			<iAdvancedStartPointsMod>110</iAdvancedStartPointsMod>
 			<iGold>200</iGold>
@@ -121,7 +121,7 @@
 		</HandicapInfo>
 		<HandicapInfo>
 			<Type>HANDICAP_EXPLORER</Type>
-			<Description>Colonist</Description>
+			<Description>TXT_KEY_HANDICAP_EXPLORER</Description>
 			<Help>TXT_KEY_HANDICAP_EXPLORER_HELP</Help>
 			<iAdvancedStartPointsMod>100</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
@@ -182,7 +182,7 @@
 		</HandicapInfo>
 		<HandicapInfo>
 			<Type>HANDICAP_CONQUISTADOR</Type>
-			<Description>Politician</Description>
+			<Description>TXT_KEY_HANDICAP_CONQUISTADOR</Description>
 			<Help>TXT_KEY_HANDICAP_CONQUISTADOR_HELP</Help>
 			<iAdvancedStartPointsMod>95</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
@@ -241,7 +241,7 @@
 		</HandicapInfo>
 		<HandicapInfo>
 			<Type>HANDICAP_GOVERNOR</Type>
-			<Description>Director</Description>
+			<Description>TXT_KEY_HANDICAP_GOVERNOR</Description>
 			<Help>TXT_KEY_HANDICAP_GOVERNOR_HELP</Help>
 			<iAdvancedStartPointsMod>90</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
@@ -300,7 +300,7 @@
 		</HandicapInfo>
 		<HandicapInfo>
 			<Type>HANDICAP_PATRIOT</Type>
-			<Description>Revolutionary</Description>
+			<Description>TXT_KEY_HANDICAP_PATRIOT</Description>
 			<Help>TXT_KEY_HANDICAP_PATRIOT_HELP</Help>
 			<iAdvancedStartPointsMod>85</iAdvancedStartPointsMod>
 			<iGold>0</iGold>
@@ -361,7 +361,7 @@
 		</HandicapInfo>
 		<HandicapInfo>
 			<Type>HANDICAP_REVOLUTIONARY</Type>
-			<Description>Illuminatus</Description>
+			<Description>TXT_KEY_HANDICAP_REVOLUTIONARY</Description>
 			<Help>TXT_KEY_HANDICAP_REVOLUTIONARY_HELP</Help>
 			<iAdvancedStartPointsMod>80</iAdvancedStartPointsMod>
 			<iGold>0</iGold>

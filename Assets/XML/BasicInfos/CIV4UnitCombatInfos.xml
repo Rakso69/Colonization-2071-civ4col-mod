@@ -34,12 +34,12 @@
 <!-- Colonization 2071-->
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_FERAL</Type><!-- All neutral biological-only units-->
-			<Description>Feral Units</Description>
+			<Description>TXT_KEY_UNITCOMBAT_FERAL</Description>
 			<Button>Art/Interface/Buttons/Promotions/unitcombat_feral.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_BOSS</Type><!-- This is exclusive for boss units. Boss units include; Abomination, Progenitor Angel etc.-->
-			<Description>Cosmic Horrors</Description>
+			<Description>TXT_KEY_UNITCOMBAT_BOSS</Description>
 			<Button>Art/Interface/Buttons/Promotions/unitcombat_boss.dds</Button>
 		</UnitCombatInfo>
 	</UnitCombatInfos>

@@ -7,7 +7,7 @@
 <Civ4ArtDefines xmlns="x-schema:Coal_Miner_CIV4ArtDefinesSchema.xml">
 	<BuildingArtInfos>
     <BuildingArtInfo>
-      <Type>ART_DEF_BUILDING_COAL_FURNACE</Type>
+      <Type>ART_DEF_BUILDING_POWER_PLANT</Type>
       <LSystem>LSYSTEM_3x3</LSystem>
       <bAnimated>1</bAnimated>
       <CityTexture>Art/Buttons/Buildings/CoalFurnaceCM.dds</CityTexture>
@@ -19,7 +19,7 @@
       <Button>Art/Buttons/Buildings/CoalFurnaceBut.dds</Button>
     </BuildingArtInfo>
     <BuildingArtInfo>
-      <Type>ART_DEF_BUILDING_STEAMWORKS</Type>
+      <Type>ART_DEF_BUILDING_OIL_REFINERY</Type>
       <LSystem>LSYSTEM_3x3</LSystem>
       <bAnimated>0</bAnimated>
       <CityTexture>Art/Buttons/Buildings/SteamWorksCM.dds</CityTexture>

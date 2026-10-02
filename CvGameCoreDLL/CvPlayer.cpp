@@ -1778,6 +1778,25 @@ CvUnit* CvPlayer::initUnit(UnitTypes eUnit, ProfessionTypes eProfession, int iX,
 	FAssertMsg(pUnit != NULL, "Unit is not assigned a valid value");
 	if (NULL != pUnit)
 	{
+		// Kaszkaj fix: .\.\CvUnit.cpp, Line:  8745, Expression:  false, Message: CvUnit::setProfession invalid.
+		// Replace an invalid XML default with a legal non-citizen civilization default, or NO_PROFESSION if none is available.
+		if (eProfession != NO_PROFESSION &&
+			eProfession == (ProfessionTypes) GC.getUnitInfo(eUnit).getDefaultProfession() &&
+			(!isProfessionValid(eProfession, eUnit) ||
+			 GC.getUnitInfo(eUnit).getProfessionsNotAllowed(eProfession) ||
+			 GC.getProfessionInfo(eProfession).isCitizen()))
+		{
+			ProfessionTypes eCivilizationDefaultProfession = (ProfessionTypes) GC.getCivilizationInfo(getCivilizationType()).getDefaultProfession();
+
+			eProfession = NO_PROFESSION;
+			if (eCivilizationDefaultProfession != NO_PROFESSION &&
+				isProfessionValid(eCivilizationDefaultProfession, eUnit) &&
+				!GC.getUnitInfo(eUnit).getProfessionsNotAllowed(eCivilizationDefaultProfession) &&
+				!GC.getProfessionInfo(eCivilizationDefaultProfession).isCitizen())
+			{
+				eProfession = eCivilizationDefaultProfession;
+			}
+		}
 		if (eUnitAI == NO_UNITAI && eProfession != NO_PROFESSION)
 		{
 			eUnitAI = (UnitAITypes) GC.getProfessionInfo(eProfession).getDefaultUnitAIType();
@@ -4884,14 +4903,25 @@ void CvPlayer::processFatherOnce(FatherTypes eFather)
 				else if (canTradeWithEurope())
 				{
 					CvPlot* pStartingPlot = getStartingPlot();
-					if (GC.getUnitInfo(eUnit).getDomainType() == DOMAIN_SEA && pStartingPlot != NULL)
+					CvPlot* pEuropePlot = pStartingPlot;
+					// Kaszkaj fix: .\.\CvPlayer.cpp, Line:  4907, Function: CvPlayer::processFatherOnce.
+					// Place free ships awaiting deployment from Europe on a Europe entry plot so their return trip can start.
+					if (pEuropePlot != NULL && !pEuropePlot->isEurope())
+					{
+						pEuropePlot = NULL;
+						if (getParent() != NO_PLAYER)
+						{
+							pEuropePlot = GET_PLAYER(getParent()).AI_getImperialShipSpawnPlot();
+						}
+					}
+					if (GC.getUnitInfo(eUnit).getDomainType() == DOMAIN_SEA && pEuropePlot != NULL)
 					{
 						CvUnit* pUnit = initUnit(eUnit, (ProfessionTypes) GC.getUnitInfo(eUnit).getDefaultProfession(), INVALID_PLOT_COORD, INVALID_PLOT_COORD);
 						if (pUnit != NULL)
 						{
 							pUnit->setUnitTravelState(UNIT_TRAVEL_STATE_IN_EUROPE, false);
 							//add unit to map after setting Europe state so that it doesn't bump enemy units
-							pUnit->addToMap(pStartingPlot->getX_INLINE(), pStartingPlot->getY_INLINE());
+							pUnit->addToMap(pEuropePlot->getX_INLINE(), pEuropePlot->getY_INLINE());
 						}
 					}
 					else
@@ -13510,14 +13540,25 @@ CvUnit* CvPlayer::buyEuropeUnit(UnitTypes eUnit, int iPriceModifier)
 
 	CvUnit* pUnit = NULL;
 	CvPlot* pStartingPlot = getStartingPlot();
-	if (GC.getUnitInfo(eUnit).getDomainType() == DOMAIN_SEA && pStartingPlot != NULL)
+	CvPlot* pEuropePlot = pStartingPlot;
+	// Kaszkaj fix: .\.\CvPlayer.cpp, Line:  13543, Function: CvPlayer::buyEuropeUnit.
+	// Place purchased ships on a Europe entry plot so they can return from Europe without using an inland starting plot.
+	if (pEuropePlot != NULL && !pEuropePlot->isEurope())
+	{
+		pEuropePlot = NULL;
+		if (getParent() != NO_PLAYER)
+		{
+			pEuropePlot = GET_PLAYER(getParent()).AI_getImperialShipSpawnPlot();
+		}
+	}
+	if (GC.getUnitInfo(eUnit).getDomainType() == DOMAIN_SEA && pEuropePlot != NULL)
 	{
 		pUnit = initUnit(eUnit, (ProfessionTypes) GC.getUnitInfo(eUnit).getDefaultProfession(), INVALID_PLOT_COORD, INVALID_PLOT_COORD);
         if (pUnit != NULL)
 		{
 			pUnit->setUnitTravelState(UNIT_TRAVEL_STATE_IN_EUROPE, false);
 			//add unit to map after setting Europe state so that it doesn't bump enemy units
-			pUnit->addToMap(pStartingPlot->getX_INLINE(), pStartingPlot->getY_INLINE());
+			pUnit->addToMap(pEuropePlot->getX_INLINE(), pEuropePlot->getY_INLINE());
 		}
 	}
 	else

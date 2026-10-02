@@ -237,7 +237,7 @@
 					<iValue>2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
@@ -572,7 +572,7 @@
 		</TerrainInfo>
 		<TerrainInfo>
 			<Type>TERRAIN_SNOW</Type>
-			<Description>Arctic</Description>
+			<Description>TXT_KEY_TERRAIN_ICE</Description>
 			<Civilopedia>TXT_KEY_TERRAIN_ICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_TERRAIN_SNOW</ArtDefineTag>
 			<Yields>
@@ -676,7 +676,7 @@
 		</TerrainInfo>
 		<TerrainInfo>
 			<Type>TERRAIN_COAST</Type>
-			<Description>Low Orbit</Description>
+			<Description>TXT_KEY_TERRAIN_COAST</Description>
 			<Civilopedia>TXT_KEY_TERRAIN_COAST_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_TERRAIN_COAST</ArtDefineTag>
 			<Yields>

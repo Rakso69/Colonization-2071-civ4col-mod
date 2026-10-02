@@ -26,7 +26,7 @@
 	<BuildingArtInfos>
 <!-- Power Plant-->
 		<BuildingArtInfo>
-			<Type>ART_DEF_BUILDING_COAL_FURNACE</Type>
+			<Type>ART_DEF_BUILDING_POWER_PLANT</Type>
 			<LSystem>LSYSTEM_1x2</LSystem>
 			<bAnimated>1</bAnimated>
 			<CityTexture>Art/Buttons/Buildings/SteamWorksCM.dds</CityTexture>
@@ -39,7 +39,7 @@
 		</BuildingArtInfo>
 <!-- Oil Refinery-->
 		<BuildingArtInfo>
-			<Type>ART_DEF_BUILDING_STEAMWORKS</Type>
+			<Type>ART_DEF_BUILDING_OIL_REFINERY</Type>
 			<LSystem>LSYSTEM_1x2</LSystem>
 			<bAnimated>1</bAnimated>
 			<CityTexture>Art/Buttons/Buildings/Cotton_MillCM.dds</CityTexture>
@@ -65,7 +65,7 @@
 		</BuildingArtInfo>
 <!-- Datacore-->
 		<BuildingArtInfo>
-			<Type>ART_DEF_BUILDING_OBSERVATORY</Type>
+			<Type>ART_DEF_BUILDING_DATACORE</Type>
 			<LSystem>LSYSTEM_2x2</LSystem>
 			<bAnimated>1</bAnimated>
 			<CityTexture>Art/Buttons/Buildings/ObservatoryCM.dds</CityTexture>
@@ -91,7 +91,7 @@
 		</BuildingArtInfo>
 <!-- Research Complex-->
 		<BuildingArtInfo>
-			<Type>ART_DEF_BUILDING_LABROTORY</Type>
+			<Type>ART_DEF_BUILDING_LABORATORY</Type>
 			<LSystem>LSYSTEM_2x2</LSystem>
 			<bAnimated>1</bAnimated>
 			<CityTexture>Art/Buttons/Buildings/LabrotoryCM.dds</CityTexture>
@@ -104,7 +104,7 @@
 		</BuildingArtInfo>
 <!-- Shamanic Lodge-->
 		<BuildingArtInfo>
-			<Type>ART_DEF_BUILDING_TEEPEE</Type>
+			<Type>ART_DEF_BUILDING_SHAMAN</Type>
 			<LSystem>LSYSTEM_1x1</LSystem>
 			<bAnimated>1</bAnimated>
 			<CityTexture>,Art/Buttons/Buildings/LabrotoryCM.dds</CityTexture>
@@ -633,7 +633,7 @@
 		</BuildingArtInfo>
 <!-- Elder Council-->
 		<BuildingArtInfo>
-			<Type>ART_DEF_BUILDING_WIGWAM</Type>
+			<Type>ART_DEF_BUILDING_ELDER_COUNCIL</Type>
 			<LSystem>LSYSTEM_1x1</LSystem>
 			<bAnimated>1</bAnimated>
 			<CityTexture>,Art/Interface/Screens/City_Management/city_buildings_altas.dds,1,1</CityTexture>
@@ -641,10 +641,8 @@
 			<fScale>2.0</fScale>
 			<fInterfaceScale>0.2</fInterfaceScale>
 			<NIF>Art/Structures/Buildings/_alien/14_elder_council/tallcity.nif</NIF>
-			<!--<NIF>Art/Structures/Buildings/alien/wigwam/wigwam.nif</NIF>-->
 			<KFM/>
 			<Button>Art/Interface/Buttons/Buildings/elder_council.dds</Button>
-			<!--<Button>Art/Interface/Buttons/Buildings/tribalshrine.dds</Button>-->
 		</BuildingArtInfo>
 <!-- Interstellar Bank-->
 		<BuildingArtInfo>

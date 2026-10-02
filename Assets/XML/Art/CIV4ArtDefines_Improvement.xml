@@ -229,7 +229,7 @@
 		</ImprovementArtInfo>
 <!--Pasture -->
 		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_RANCH</Type>
+			<Type>ART_DEF_IMPROVEMENT_PASTURE</Type>
 			<bExtraAnimations>1</bExtraAnimations>
 			<fScale>1.0</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
@@ -249,7 +249,7 @@
 		</ImprovementArtInfo>
 <!--Alien Fertilizers -->
 		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_ALIEN_GARDEN</Type>
+			<Type>ART_DEF_IMPROVEMENT_ALIEN_FERTILIZERS</Type>
 			<bExtraAnimations>1</bExtraAnimations>
 			<fScale>0.8</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
@@ -259,7 +259,7 @@
 		</ImprovementArtInfo>
 <!--Future Farm -->
 		<ImprovementArtInfo>
-			<Type>ART_DEF_IMPROVEMENT_ALIEN_PLANTATION</Type>
+			<Type>ART_DEF_IMPROVEMENT_ALIEN_FUTUREFARM</Type>
 			<bExtraAnimations>1</bExtraAnimations>
 			<fScale>50</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>

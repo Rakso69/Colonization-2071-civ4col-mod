@@ -335,7 +335,7 @@
 <!-- Coniferous Forest-->
 		<FeatureInfo>
 			<Type>FEATURE_LIGHT_FOREST</Type>
-			<Description>Coniferous Forest</Description>
+			<Description>TXT_KEY_FEATURE_CONIFEROUS_FOREST</Description>
 			<Civilopedia>TXT_KEY_FEATURE_LIGHT_FOREST_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_LIGHT_FOREST</ArtDefineTag>
 			<YieldChanges>
@@ -451,7 +451,7 @@
 <!-- Wormhole Flare-->
 		<FeatureInfo>
 			<Type>FEATURE_NOVA</Type>
-			<Description>Wormhole Flare</Description>
+			<Description>TXT_KEY_FEATURE_WORMHOLE</Description>
 			<Civilopedia>TXT_KEY_FEATURE_ICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_NOVA</ArtDefineTag>
 			<YieldChanges/>
@@ -532,7 +532,7 @@
 <!-- Harmonic Forcefield-->
 		<FeatureInfo>
 			<Type>FEATURE_FORCEFIELD</Type>
-			<Description>Harmonic Forcefield</Description>
+			<Description>TXT_KEY_FEATURE_FORCEFIELD</Description>
 			<Civilopedia>TXT_KEY_FEATURE_ICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_BLACKHOLE</ArtDefineTag>
 			<YieldChanges/>
@@ -613,7 +613,7 @@
 <!-- lagoon-->
 		<FeatureInfo>
 			<Type>FEATURE_LAGOON</Type>
-			<Description>Lagoon</Description>
+			<Description>TXT_KEY_FEATURE_LAGOON</Description>
 			<Civilopedia>TXT_KEY_FEATURE_ICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_LAGOON</ArtDefineTag>
 			<YieldChanges>
@@ -716,7 +716,7 @@
 <!-- Lake-->
 		<FeatureInfo>
 			<Type>FEATURE_LAKE</Type>
-			<Description>Lake</Description>
+			<Description>TXT_KEY_FEATURE_LAKE</Description>
 			<Civilopedia>TXT_KEY_FEATURE_ICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_LAKE</ArtDefineTag>
 			<YieldChanges>
@@ -819,8 +819,8 @@
 <!-- Methane Bed-->
 		<FeatureInfo>
 			<Type>FEATURE_METHANE</Type>
-			<Description>Methane Bed</Description>
-			<Civilopedia>Where conditions are right, the microorganisms deep within alien swamps and marshes can release rich seeps of methane. These could prove detrimental to the health of nearby colonists (though when properly harvested, quite beneficial to their bank accounts..)</Civilopedia>
+			<Description>TXT_KEY_FEATURE_METHANE</Description>
+			<Civilopedia>TXT_KEY_FEATURE_METHANE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_METHANE</ArtDefineTag>
 			<YieldChanges>
 				<YieldIntegerPair>
@@ -832,7 +832,7 @@
 					<iValue>-1</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>3</iValue>
 				</YieldIntegerPair>			
 			</YieldChanges>
@@ -917,7 +917,7 @@
 <!-- Ancient Mound-->
 		<FeatureInfo>
 			<Type>FEATURE_MOUND</Type>
-			<Description>Ancient Mound</Description>
+			<Description>TXT_KEY_FEATURE_MOUND</Description>
 			<Civilopedia>TXT_KEY_FEATURE_ICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_MOUND</ArtDefineTag>
 			<YieldChanges/>
@@ -1014,7 +1014,7 @@
 <!-- Volcano-->
 		<FeatureInfo>
 			<Type>FEATURE_VOLCANO</Type>
-			<Description>Volcano</Description>
+			<Description>TXT_KEY_FEATURE_VOLCANO</Description>
 			<Civilopedia>TXT_KEY_FEATURE_ICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_VOLCANO</ArtDefineTag>
 			<YieldChanges/>
@@ -1102,7 +1102,7 @@
 <!-- Geyser-->
 		<FeatureInfo>
 			<Type>FEATURE_GEYSER</Type>
-			<Description>Geyser</Description>
+			<Description>TXT_KEY_FEATURE_GEYSER</Description>
 			<Civilopedia>TXT_KEY_FEATURE_ICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_GEYSER</ArtDefineTag>
 			<YieldChanges/>
@@ -1198,7 +1198,7 @@
 <!-- Asteroid Belt-->
 		<FeatureInfo>
 			<Type>FEATURE_ASTEROID</Type>
-			<Description>Asteroid Belt</Description>
+			<Description>TXT_KEY_FEATURE_ASTEROID</Description>
 			<Civilopedia>TXT_KEY_FEATURE_ICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_ASTEROID</ArtDefineTag>
 			<YieldChanges>
@@ -1292,7 +1292,7 @@
 <!-- Space Junk-->
 		<FeatureInfo>
 			<Type>FEATURE_SPACEJUNK</Type>
-			<Description>Space Junk</Description>
+			<Description>TXT_KEY_FEATURE_SPACEJUNK</Description>
 			<Civilopedia>TXT_KEY_FEATURE_ICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_SPACEJUNK</ArtDefineTag>
 			<YieldChanges>
@@ -1390,7 +1390,7 @@
 <!-- Dark Matter-->
 		<FeatureInfo>
 			<Type>FEATURE_DARKMATTER</Type>
-			<Description>Dark Matter</Description>
+			<Description>TXT_KEY_FEATURE_DARKMATTER</Description>
 			<Civilopedia>TXT_KEY_FEATURE_ICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_DARKMATTER</ArtDefineTag>
 			<YieldChanges>
@@ -1496,7 +1496,7 @@
 <!-- Space-Time Anomaly-->
 		<FeatureInfo>
 			<Type>FEATURE_ANOMALY1</Type>
-			<Description>Space-Time Anomaly</Description>
+			<Description>TXT_KEY_FEATURE_ANOMALY1</Description>
 			<Civilopedia>TXT_KEY_FEATURE_ICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_ANOMALY1</ArtDefineTag>
 			<YieldChanges>
@@ -1602,7 +1602,7 @@
 <!-- Gravitational Anomaly-->
 		<FeatureInfo>
 			<Type>FEATURE_ANOMALY2</Type>
-			<Description>Gravitational Anomaly</Description>
+			<Description>TXT_KEY_FEATURE_ANOMALY2</Description>
 			<Civilopedia>TXT_KEY_FEATURE_ICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_ANOMALY2</ArtDefineTag>
 			<YieldChanges>
@@ -1708,7 +1708,7 @@
 <!-- Radiation Field-->
 		<FeatureInfo>
 			<Type>FEATURE_RADIATION</Type>
-			<Description>Radiation Field</Description>
+			<Description>TXT_KEY_FEATURE_RADIATION</Description>
 			<Civilopedia>TXT_KEY_FEATURE_ICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_RADIATION</ArtDefineTag>
 			<YieldChanges>
@@ -1814,7 +1814,7 @@
 <!-- Plasma Field-->
 		<FeatureInfo>
 			<Type>FEATURE_PLASMA</Type>
-			<Description>Plasma Field</Description>
+			<Description>TXT_KEY_FEATURE_PLASMA</Description>
 			<Civilopedia>TXT_KEY_FEATURE_ICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_PLASMA</ArtDefineTag>
 			<YieldChanges>
@@ -2039,7 +2039,7 @@
 <!-- Fungal Forest-->
 		<FeatureInfo>
 			<Type>FEATURE_FUNGAL_FOREST</Type>
-			<Description>Fungal Forest</Description>
+			<Description>TXT_KEY_FEATURE_FUNGAL_FOREST</Description>
 			<Civilopedia>TXT_KEY_FEATURE_LIGHT_FOREST_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_FUNGAL_FOREST</ArtDefineTag>
 			<YieldChanges>
@@ -2158,7 +2158,7 @@
 <!-- Cycad Forest-->
 		<FeatureInfo>
 			<Type>FEATURE_CYCAD_FOREST</Type>
-			<Description>Cycad Forest</Description>
+			<Description>TXT_KEY_FEATURE_CYCAD_FOREST</Description>
 			<Civilopedia>TXT_KEY_FEATURE_LIGHT_FOREST_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_CYCAD_FOREST</ArtDefineTag>
 			<YieldChanges>
@@ -2281,7 +2281,7 @@
 <!-- Luminous Forest-->
 		<FeatureInfo>
 			<Type>FEATURE_LUMINOUS_FOREST</Type>
-			<Description>Luminous Forest</Description>
+			<Description>TXT_KEY_FEATURE_LUMINOUS_FOREST</Description>
 			<Civilopedia>TXT_KEY_FEATURE_LIGHT_FOREST_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_LUMINOUS_FOREST</ArtDefineTag>
 			<YieldChanges>
@@ -2404,7 +2404,7 @@
 <!-- Petrified Forest-->
 		<FeatureInfo>
 			<Type>FEATURE_PETRIFIED_FOREST</Type>
-			<Description>Petrified Forest</Description>
+			<Description>TXT_KEY_FEATURE_PETRIFIED_FOREST</Description>
 			<Civilopedia>TXT_KEY_FEATURE_LIGHT_FOREST_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_PETRIFIED_FOREST</ArtDefineTag>
 			<YieldChanges>
@@ -2417,7 +2417,7 @@
 					<iValue>-2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>3</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
@@ -2531,7 +2531,7 @@
 <!-- Scrub-->
 		<FeatureInfo>
 			<Type>FEATURE_SCRUB</Type>
-			<Description>Scrub</Description>
+			<Description>TXT_KEY_FEATURE_SCRUB</Description>
 			<Civilopedia>TXT_KEY_FEATURE_LIGHT_FOREST_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_SCRUB</ArtDefineTag>
 			<YieldChanges>
@@ -2658,7 +2658,7 @@
 <!-- Corrosive Atmosphere-->
 		<FeatureInfo>
 			<Type>FEATURE_ATMOS_CORROSIVE</Type>
-			<Description>Corrosive Atmosphere</Description>
+			<Description>TXT_KEY_FEATURE_ATMOS_CORROSIVE</Description>
 			<Civilopedia>TXT_KEY_FEATURE_ATMOSPHERE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_FEATURE_ATMOS_CORROSIVE</ArtDefineTag>
 			<YieldChanges>
@@ -2667,7 +2667,7 @@
 					<iValue>-2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>-2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
@@ -2768,7 +2768,7 @@
 <!-- Earthlike Atmosphere-->
 		<FeatureInfo>
 			<Type>FEATURE_ATMOS_EARTHLIKE</Type>
-			<Description>Earthlike Atmosphere</Description>
+			<Description>TXT_KEY_FEATURE_ATMOS_EARTHLIKE</Description>
 			<Civilopedia/>
 			<ArtDefineTag>ART_DEF_FEATURE_ATMOS_EARTHLIKE</ArtDefineTag>
 			<YieldChanges>
@@ -2854,7 +2854,7 @@
 <!-- Toxic Atmosphere-->
 		<FeatureInfo>
 			<Type>FEATURE_ATMOS_TOXIC</Type>
-			<Description>Toxic Atmosphere</Description>
+			<Description>TXT_KEY_FEATURE_ATMOS_TOXIC</Description>
 			<Civilopedia/>
 			<ArtDefineTag>ART_DEF_FEATURE_ATMOS_TOXIC</ArtDefineTag>
 			<YieldChanges>
@@ -2863,7 +2863,7 @@
 					<iValue>-2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>-2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
@@ -2964,7 +2964,7 @@
 <!-- Infected Atmosphere-->
 		<FeatureInfo>
 			<Type>FEATURE_ATMOS_INFECTED</Type>
-			<Description>Infected Atmosphere</Description>
+			<Description>TXT_KEY_FEATURE_ATMOS_INFECTED</Description>
 			<Civilopedia/>
 			<ArtDefineTag>ART_DEF_FEATURE_ATMOS_INFECTED</ArtDefineTag>
 			<YieldChanges>
@@ -2973,7 +2973,7 @@
 					<iValue>-2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>-2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
@@ -3074,7 +3074,7 @@
 <!-- Methanogen Atmosphere-->
 		<FeatureInfo>
 			<Type>FEATURE_ATMOS_METHANOGEN</Type>
-			<Description>Methanogen Atmosphere</Description>
+			<Description>TXT_KEY_FEATURE_ATMOS_METHANOGEN</Description>
 			<Civilopedia/>
 			<ArtDefineTag>ART_DEF_FEATURE_ATMOS_METHANOGEN</ArtDefineTag>
 			<YieldChanges>
@@ -3083,7 +3083,7 @@
 					<iValue>-2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>1</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
@@ -3184,7 +3184,7 @@
 <!-- Radioactive Atmosphere-->
 		<FeatureInfo>
 			<Type>FEATURE_ATMOS_RADIOACTIVE</Type>
-			<Description>Radioactive Atmosphere</Description>
+			<Description>TXT_KEY_FEATURE_ATMOS_RADIOACTIVE</Description>
 			<Civilopedia/>
 			<ArtDefineTag>ART_DEF_FEATURE_ATMOS_RADIOACTIVE</ArtDefineTag>
 			<YieldChanges>
@@ -3193,7 +3193,7 @@
 					<iValue>-2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>-2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
@@ -3294,7 +3294,7 @@
 <!-- Dust Storms-->
 		<FeatureInfo>
 			<Type>FEATURE_ATMOS_DUSTSTORM</Type>
-			<Description>Dust Storms</Description>
+			<Description>TXT_KEY_FEATURE_ATMOS_DUSTSTORM</Description>
 			<Civilopedia/>
 			<ArtDefineTag>ART_DEF_FEATURE_ATMOS_DUSTSTORM</ArtDefineTag>
 			<YieldChanges>
@@ -3303,7 +3303,7 @@
 					<iValue>-2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>-2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>

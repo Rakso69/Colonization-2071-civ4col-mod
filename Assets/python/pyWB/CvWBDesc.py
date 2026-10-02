@@ -410,7 +410,7 @@ class CvPlayerDesc:
 
 			# write City List
 			for i in range(gc.getPlayer(idx).getNumCityNames()):
-				f.write("\tCityList=%s\n" %(gc.getPlayer(idx).getCityName(i)))
+				f.write("\tCityList=%s\n" %(gc.getPlayer(idx).getCityName(i).encode(fileencoding)))
 
 		if (gc.getPlayer(idx).getHandicapType() == HandicapTypes.NO_HANDICAP):
 			f.write("\tHandicap=%s\n" %(gc.getHandicapInfo(gc.getDefineINT("STANDARD_HANDICAP")).getType()))
@@ -527,7 +527,7 @@ class CvPlayerDesc:
 
 				v = parser.findTokenValue(toks, "CityList")
 				if v!=-1:
-					self.aszCityList.append(v)
+					self.aszCityList.append(v.decode(fileencoding))
 					continue
 
 				if parser.findTokenValue(toks, "EndPlayer") != -1:

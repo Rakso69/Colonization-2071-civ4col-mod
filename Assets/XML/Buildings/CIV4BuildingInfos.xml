@@ -57,14 +57,14 @@
 <BuildingInfos>
 <!-- ⭐0 Power Plant🔸Converts🛢️into🔨🔸6🔨per Citizen, +25%🔨️ (🧑‍🚀Human only)-->
 <BuildingInfo>
-<Type>BUILDING_COAL_FURNACE</Type>
-<BuildingClass>BUILDINGCLASS_COAL_FURNACE</BuildingClass>
-<SpecialBuildingType>SPECIALBUILDING_COAL_FURNACE</SpecialBuildingType>
+<Type>BUILDING_POWER_PLANT</Type>
+<BuildingClass>BUILDINGCLASS_POWER_PLANT</BuildingClass>
+<SpecialBuildingType>SPECIALBUILDING_POWER_PLANT</SpecialBuildingType>
 <iSpecialBuildingPriority>0</iSpecialBuildingPriority>
-<Description>TXT_KEY_BUILDING_COAL_FURNACE</Description>
-<Civilopedia>TXT_KEY_BUILDING_COAL_FURNACE_PEDIA</Civilopedia>
-<Strategy>TXT_KEY_BUILDING_COAL_FURNACE_STRAT</Strategy>
-<ArtDefineTag>ART_DEF_BUILDING_COAL_FURNACE</ArtDefineTag>
+<Description>TXT_KEY_BUILDING_POWER_PLANT</Description>
+<Civilopedia>TXT_KEY_BUILDING_POWER_PLANT_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_POWER_PLANT_STRATEGY</Strategy>
+<ArtDefineTag>ART_DEF_BUILDING_POWER_PLANT</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
 <FreeStartEra>NONE</FreeStartEra>
@@ -85,7 +85,7 @@
 <iCost>150</iCost>
 </YieldCost>
 <YieldCost>
-<YieldType>YIELD_COAL</YieldType>
+<YieldType>YIELD_HYDROCARBONS</YieldType>
 <iCost>50</iCost>
 </YieldCost>
 </YieldCosts>
@@ -135,14 +135,14 @@
 </BuildingInfo>
 <!-- ⭐→1 Oil Refinery🔸Converts🛢️into🔨🔸6🔨per Citizen, +3💎, +6🪨, +50%🔨️🔸+1 Production of Manufactured Goods for every 3🛢️consumed (🧑‍🚀Human only)-->
 <BuildingInfo>
-<Type>BUILDING_STEAMWORKS</Type>
-<BuildingClass>BUILDINGCLASS_STEAMWORKS</BuildingClass>
-<SpecialBuildingType>SPECIALBUILDING_COAL_FURNACE</SpecialBuildingType>
+<Type>BUILDING_OIL_REFINERY</Type>
+<BuildingClass>BUILDINGCLASS_OIL_REFINERY</BuildingClass>
+<SpecialBuildingType>SPECIALBUILDING_POWER_PLANT</SpecialBuildingType>
 <iSpecialBuildingPriority>1</iSpecialBuildingPriority>
-<Description>Oil Refinery</Description>
-<Civilopedia>TXT_KEY_BUILDING_STEAMWORKS_PEDIA</Civilopedia>
-<Strategy>TXT_KEY_BUILDING_STEAMWORKS_STRATEGY</Strategy>
-<ArtDefineTag>ART_DEF_BUILDING_STEAMWORKS</ArtDefineTag>
+<Description>TXT_KEY_BUILDING_OIL_REFINERY</Description>
+<Civilopedia>TXT_KEY_BUILDING_OIL_REFINERY_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_OIL_REFINERY_STRATEGY</Strategy>
+<ArtDefineTag>ART_DEF_BUILDING_OIL_REFINERY</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
 <FreeStartEra>NONE</FreeStartEra>
@@ -163,7 +163,7 @@
 <iCost>300</iCost>
 </YieldCost>
 <YieldCost>
-<YieldType>YIELD_COAL</YieldType>
+<YieldType>YIELD_HYDROCARBONS</YieldType>
 <iCost>100</iCost>
 </YieldCost>
 <YieldCost>
@@ -239,9 +239,9 @@
 <BuildingClass>BUILDINGCLASS_INVENTORS_HOUSE</BuildingClass>
 <SpecialBuildingType>SPECIALBUILDING_IDEAS</SpecialBuildingType>
 <iSpecialBuildingPriority>0</iSpecialBuildingPriority>
-<Description>Research Lab</Description>
-<Civilopedia>Often acting as havens for free-thinking Researchers working in self-imposed exile from the repressive Earth governments, each human colony contains a small Research Lab equipped for the rudiments of pure scientific inquiry in a variety of fields.</Civilopedia>
-<Strategy>TXT_KEY_BULIDING_INVENTOR</Strategy>
+<Description>TXT_KEY_BUILDING_INVENTORS_HOUSE</Description>
+<Civilopedia>TXT_KEY_BUILDING_INVENTORS_HOUSE_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_INVENTORS_HOUSE_STRATEGY</Strategy>
 <ArtDefineTag>ART_DEF_BUILDING_INVENTORS_HOUSE</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
@@ -309,14 +309,14 @@
 </BuildingInfo>
 <!-- →# Datacore🔸+50%💡🔹Requires Research Lab-->
 <BuildingInfo>
-<Type>BUILDING_OBSERVATORY</Type>
-<BuildingClass>BUILDINGCLASS_OBSERVATORY</BuildingClass>
-<SpecialBuildingType>SPECIALBUILDING_OBSERVATORY</SpecialBuildingType>
+<Type>BUILDING_DATACORE</Type>
+<BuildingClass>BUILDINGCLASS_DATACORE</BuildingClass>
+<SpecialBuildingType>SPECIALBUILDING_DATACORE</SpecialBuildingType>
 <iSpecialBuildingPriority>0</iSpecialBuildingPriority>
-<Description>Datacore</Description>
-<Civilopedia>TXT_KEY_BUILDING_OBSERVATORY_PEDIA</Civilopedia>
-<Strategy>TXT_KEY_BUILDING_OBSERVATORY_STRATEGY</Strategy>
-<ArtDefineTag>ART_DEF_BUILDING_OBSERVATORY</ArtDefineTag>
+<Description>TXT_KEY_BUILDING_DATACORE</Description>
+<Civilopedia>TXT_KEY_BUILDING_DATACORE_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_DATACORE_STRATEGY</Strategy>
+<ArtDefineTag>ART_DEF_BUILDING_DATACORE</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
 <FreeStartEra>NONE</FreeStartEra>
@@ -391,9 +391,9 @@
 <BuildingClass>BUILDINGCLASS_INVENTORS_WORKSHOP</BuildingClass>
 <SpecialBuildingType>SPECIALBUILDING_IDEAS</SpecialBuildingType>
 <iSpecialBuildingPriority>1</iSpecialBuildingPriority>
-<Description>Research Institute</Description>
-<Civilopedia>TXT_KEY_NEED_DESCRIPTION</Civilopedia>
-<Strategy>TXT_KEY_BULIDING_INVENTOR</Strategy>
+<Description>TXT_KEY_BUILDING_INVENTORS_WORKSHOP</Description>
+<Civilopedia>TXT_KEY_BUILDING_INVENTORS_WORKSHOP_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_INVENTORS_WORKSHOP_STRATEGY</Strategy>
 <ArtDefineTag>ART_DEF_BUILDING_WORKSHOP</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
@@ -469,14 +469,14 @@
 </BuildingInfo>
 <!-- →→2 Research Complex🔸6💡per Citizen, +25%🔔,💡-->
 <BuildingInfo>
-<Type>BUILDING_INVENTORS_LABROTORY</Type>
-<BuildingClass>BUILDINGCLASS_INVENTORS_LABROTORY</BuildingClass>
+<Type>BUILDING_INVENTORS_LABORATORY</Type>
+<BuildingClass>BUILDINGCLASS_INVENTORS_LABORATORY</BuildingClass>
 <SpecialBuildingType>SPECIALBUILDING_IDEAS</SpecialBuildingType>
 <iSpecialBuildingPriority>2</iSpecialBuildingPriority>
-<Description>Research Complex</Description>
-<Civilopedia>TXT_KEY_NEED_DESCRIPTION</Civilopedia>
-<Strategy>TXT_KEY_BULIDING_INVENTOR</Strategy>
-<ArtDefineTag>ART_DEF_BUILDING_LABROTORY</ArtDefineTag>
+<Description>TXT_KEY_BUILDING_INVENTORS_LABORATORY</Description>
+<Civilopedia>TXT_KEY_BUILDING_INVENTORS_LABORATORY_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_INVENTORS_LABORATORY_STRATEGY</Strategy>
+<ArtDefineTag>ART_DEF_BUILDING_LABORATORY</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
 <FreeStartEra>NONE</FreeStartEra>
@@ -565,13 +565,13 @@
 <!-- ⭐🆕→→3 Shamanic Lodge🔸6💡per Citizen, +50%💡, +25%🔔 (👽Replaces Research Complex)-->
 <BuildingInfo>
 <Type>BUILDING_SHAMAN</Type>
-<BuildingClass>BUILDINGCLASS_INVENTORS_LABROTORY</BuildingClass>
+<BuildingClass>BUILDINGCLASS_INVENTORS_LABORATORY</BuildingClass>
 <SpecialBuildingType>SPECIALBUILDING_IDEAS</SpecialBuildingType>
 <iSpecialBuildingPriority>2</iSpecialBuildingPriority>
-<Description>Shamanic Lodge</Description>
-<Civilopedia>Strewn with a bewildering assortment of Progenitor artifacts and native fungi, the shamanic lodges of the aliens are centers for scientific learning blended with traditional ritual.</Civilopedia>
-<Strategy>TXT_KEY_BULIDING_INVENTOR</Strategy>
-<ArtDefineTag>ART_DEF_BUILDING_TEEPEE</ArtDefineTag>
+<Description>TXT_KEY_BUILDING_SHAMAN</Description>
+<Civilopedia>TXT_KEY_BUILDING_SHAMAN_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_SHAMAN_STRATEGY</Strategy>
+<ArtDefineTag>ART_DEF_BUILDING_SHAMAN</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
 <FreeStartEra>NONE</FreeStartEra>
@@ -819,9 +819,9 @@
 <BuildingClass>BUILDINGCLASS_WAREHOUSE_EXPANSION</BuildingClass>
 <SpecialBuildingType>SPECIALBUILDING_WAREHOUSE</SpecialBuildingType>
 <iSpecialBuildingPriority>1</iSpecialBuildingPriority>
-<Description>Ziggurat</Description>
-<Civilopedia>At the center of each alien settlement sits a structure of weathered stone, in a style strangely reminiscent of early Earth civilizations. Representing the first efforts at cohesion among scattered and disorganized alien race, the Ziggurat serves as a forum for internal barter of various goods, and provides a focus for coordinated efforts at further construction. Dismissed by anthropologists as largely of ceremonial importance, the natives will nonetheless defend these structures to the death.</Civilopedia>
-<Strategy>Alone for centuries, our people have grown disorganized and weak. We must build a Ziggurat to focus the spirit of our race against the Earthling threat.</Strategy>
+<Description>TXT_KEY_BUILDING_ZIGGURAT</Description>
+<Civilopedia>TXT_KEY_BUILDING_ZIGGURAT_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_ZIGGURAT_STRATEGY</Strategy>
 <ArtDefineTag>ART_DEF_BUILDING_MAUSOCUP</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
@@ -1374,9 +1374,9 @@
 <BuildingClass>BUILDINGCLASS_SHIPYARD</BuildingClass>
 <SpecialBuildingType>SPECIALBUILDING_DOCK</SpecialBuildingType>
 <iSpecialBuildingPriority>2</iSpecialBuildingPriority>
-<Description>Alien Shipyard</Description>
-<Civilopedia>TXT_KEY_BUILDING_SHIPYARD_PEDIA</Civilopedia>
-<Strategy>TXT_KEY_BUILDING_SHIPYARD_STRATEGY</Strategy>
+<Description>TXT_KEY_BUILDING_ALIEN_SHIPYARD</Description>
+<Civilopedia>TXT_KEY_BUILDING_ALIEN_SHIPYARD_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_ALIEN_SHIPYARD_STRATEGY</Strategy>
 <ArtDefineTag>ART_DEF_BUILDING_SNAKEPILLAR</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
@@ -2919,13 +2919,13 @@
 </BuildingInfo>
 <!-- 900🔨100🦠100🛠️⭐🆕→→→3️🌃Midgar🔸6🔫per Citizen, +6💎, +6⚙️, +50%💎🔫🔔✝️, +1🔓🔸150%🛡️🔸-50% Damage to🛡️Defenses from Bombardment🔸Makes this Colony the Capital🔸+50% Military Unit Production🔸New Units Receive +10 Experience Points (🧑‍🚀Replaces Arsenal) (MEGASTRUCTURE)-->
 <BuildingInfo>
-<Type>BUILDING_PYLON</Type>
+<Type>BUILDING_MIDGAR</Type>
 <BuildingClass>BUILDINGCLASS_ARSENAL</BuildingClass>
 <SpecialBuildingType>SPECIALBUILDING_MUSKETS</SpecialBuildingType>
 <iSpecialBuildingPriority>2</iSpecialBuildingPriority>
-<Description>Midgar</Description>
-<Civilopedia>Although unfamiliar with the heavy industry of Otherwordly Planets, careful adaptation of Biotech enabled many Human species to develop larger and more efficient versions of arsenals.</Civilopedia>
-<Strategy>Construct Midgar to let our species labor to produce great wonders.</Strategy>
+<Description>TXT_KEY_BUILDING_MIDGAR</Description>
+<Civilopedia>TXT_KEY_BUILDING_MIDGAR_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_MIDGAR_STRATEGY</Strategy>
 <ArtDefineTag>ART_DEF_BUILDING_GAURISHRINE</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
@@ -3415,9 +3415,9 @@
 <BuildingClass>BUILDINGCLASS_MASSDRIVER</BuildingClass>
 <SpecialBuildingType/>
 <iSpecialBuildingPriority>0</iSpecialBuildingPriority>
-<Description>Mass Driver</Description>
-<Civilopedia>Although too slow to prove of use during a head-on assault, the threat posed by a Mass Driver's lethal salvos is enough to significantly disrupt an attempt at bombardment from afar.</Civilopedia>
-<Strategy>The threat posed by a Mass Driver helps keep heavy orbital and ground artillery from mounting a full-scale bombardment.</Strategy>
+<Description>TXT_KEY_BUILDING_MASSDRIVER</Description>
+<Civilopedia>TXT_KEY_BUILDING_MASSDRIVER_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_MASSDRIVER_STRATEGY</Strategy>
 <ArtDefineTag>ART_DEF_BUILDING_MASSDRIVER</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
@@ -3497,9 +3497,9 @@
 <BuildingClass>BUILDINGCLASS_SPACEELEVATOR</BuildingClass>
 <SpecialBuildingType/>
 <iSpecialBuildingPriority>0</iSpecialBuildingPriority>
-<Description>Space Elevator</Description>
-<Civilopedia>Although construction of a Space Elevator was a massive undertaking, these massive structures of plasteel and nanofibers could prove a vital lifeline for colonies far from the orbital paths accessible by Resonace Drive starships.</Civilopedia>
-<Strategy>For colonies far from the trade lanes accessible by major starships, constructing a Space Elevator will allow transport and sale of excess goods directly through an orbital waystation.</Strategy>
+<Description>TXT_KEY_BUILDING_SPACEELEVATOR</Description>
+<Civilopedia>TXT_KEY_BUILDING_SPACEELEVATOR_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_SPACEELEVATOR_STRATEGY</Strategy>
 <ArtDefineTag>ART_DEF_BUILDING_SPACEELEVATOR</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
@@ -3575,9 +3575,9 @@
 <BuildingClass>BUILDINGCLASS_DAM</BuildingClass>
 <SpecialBuildingType/>
 <iSpecialBuildingPriority>0</iSpecialBuildingPriority>
-<Description>Hydroelectric Plant</Description>
-<Civilopedia>Although construction of a Space Elevator was a massive undertaking, these massive structures of plasteel and nanofibers could prove a vital lifeline for colonies far from the orbital paths accessible by Resonace Drive starships.</Civilopedia>
-<Strategy>For colonies far from the trade lanes accessible by major starships, constructing a Space Elevator will allow transport and sale of excess goods directly through an orbital waystation.</Strategy>
+<Description>TXT_KEY_BUILDING_DAM</Description>
+<Civilopedia>TXT_KEY_BUILDING_DAM_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_DAM_STRATEGY</Strategy>
 <ArtDefineTag>ART_DEF_BUILDING_DAM</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
@@ -3672,12 +3672,12 @@
 <!-- 450🔨150🩻100🛠️⭐🆕→→2️🌃Progenitor Autofab🔸6🔨per Citizen, +6💎, +6🛢️, +50%💎🛢️, +25%🔔, +1🔓🔸Makes this Colony the Capital🔸+1 Production of Manufactured Goods for every 3🛢️consumed🔸New Units Receive +10 Experience Points (👽Replaces Oil Refinery) (MEGASTRUCTURE)-->
 <BuildingInfo>
 <Type>BUILDING_ALIEN_LUMBER_MILL</Type>
-<BuildingClass>BUILDINGCLASS_STEAMWORKS</BuildingClass>
+<BuildingClass>BUILDINGCLASS_OIL_REFINERY</BuildingClass>
 <SpecialBuildingType>SPECIALBUILDING_HAMMERS</SpecialBuildingType>
 <iSpecialBuildingPriority>2</iSpecialBuildingPriority>
-<Description>Progenitor Autofab</Description>
-<Civilopedia>Although unfamiliar with the heavy industry of Earth, careful adaptation of Progenitor technology enabled many alien species to develop larger and more efficient versions of Earthling factories.</Civilopedia>
-<Strategy>Construct a Progenitor Autofab to let our species labor to produce great wonders.</Strategy>
+<Description>TXT_KEY_BUILDING_ALIEN_LUMBER_MILL</Description>
+<Civilopedia>TXT_KEY_BUILDING_ALIEN_LUMBER_MILL_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_ALIEN_LUMBER_MILL_STRATEGY</Strategy>
 <ArtDefineTag>ART_DEF_BUILDING_PROTOSSFORGE</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
@@ -3738,7 +3738,7 @@
 <iYieldChange>6</iYieldChange>
 </YieldChange>
 <YieldChange>
-<YieldType>YIELD_COAL</YieldType>
+<YieldType>YIELD_HYDROCARBONS</YieldType>
 <iYieldChange>6</iYieldChange>
 </YieldChange>
 </YieldChanges>
@@ -3748,7 +3748,7 @@
 <iModifier>50</iModifier>
 </YieldModifier>
 <YieldModifier>
-<YieldType>YIELD_COAL</YieldType>
+<YieldType>YIELD_HYDROCARBONS</YieldType>
 <iModifier>50</iModifier>
 </YieldModifier>
 <YieldModifier>
@@ -3854,13 +3854,13 @@
 <!-- 40🔨⭐🆕→1️ Elder Council🔸3🔔per Citizen, +1🔓🔸Goods over storage capacity are sold at 10% of the price on Earth (👽Replaces Power Plant)-->
 <BuildingInfo>
 <Type>BUILDING_ELDER_COUNCIL</Type>
-<BuildingClass>BUILDINGCLASS_COAL_FURNACE</BuildingClass>
+<BuildingClass>BUILDINGCLASS_POWER_PLANT</BuildingClass>
 <SpecialBuildingType>SPECIALBUILDING_BELLS</SpecialBuildingType>
 <iSpecialBuildingPriority>1</iSpecialBuildingPriority>
-<Description>Elder Council</Description>
-<Civilopedia>Long accustomed to living in unquestioning obedience to their distant Progenitor overlords, the arrival of the humans stimulated many alien elders to begin to develop an autonomous government for their race.</Civilopedia>
-<Strategy>Build an Elder Council to begin to guide our people to independence from the tyranny of the absent Progenitors. With time, our wise Elders may even establish diplomatic contacts with certain highly-placed leaders in Earthling society.</Strategy>
-<ArtDefineTag>ART_DEF_BUILDING_WIGWAM</ArtDefineTag>
+<Description>TXT_KEY_BUILDING_ELDER_COUNCIL</Description>
+<Civilopedia>TXT_KEY_BUILDING_ELDER_COUNCIL_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_ELDER_COUNCIL_STRATEGY</Strategy>
+<ArtDefineTag>ART_DEF_BUILDING_ELDER_COUNCIL</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
 <FreeStartEra>NONE</FreeStartEra>
@@ -3931,9 +3931,9 @@
 <BuildingClass>BUILDINGCLASS_BANK</BuildingClass>
 <SpecialBuildingType>NONE</SpecialBuildingType>
 <iSpecialBuildingPriority>0</iSpecialBuildingPriority>
-<Description>Interstellar Bank</Description>
-<Civilopedia>After investing 100 units of Hard Currency to build an Interstellar Bank, colonists can work as an Offworld Banker to generate a return on investment in the form of additional Hard Currency profits. However, too much of an increase in the amounts of previously scarce Hard Currency can be self-defeating - with growing imports from offworld, metals prices may decline rapidly on Earth as the underlying economic weakness asserts itself.</Civilopedia>
-<Strategy>After investing 100 units of Hard Currency to build an Interstellar Bank, local colonists can work as an Offworld Banker in Low Orbit tiles to generate a return on investment in the form of additional Hard Currency profits.</Strategy>
+<Description>TXT_KEY_BUILDING_BANK</Description>
+<Civilopedia>TXT_KEY_BUILDING_BANK_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_BANK_STRATEGY</Strategy>
 <ArtDefineTag>ART_DEF_BUILDING_BANK</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
@@ -4194,9 +4194,9 @@
 <BuildingClass>BUILDINGCLASS_NEWSPAPER</BuildingClass>
 <SpecialBuildingType>SPECIALBUILDING_PRINT</SpecialBuildingType>
 <iSpecialBuildingPriority>1</iSpecialBuildingPriority>
-<Description>Illuminati Lodge</Description>
-<Civilopedia>Though long dismissed as the rantings of conspiracy theorists, many believe that the aliens of the New Worlds have clandestine contacts with certain secret societies on Earth, making deep inroads among highly placed members of the corporate, governmental and scientific elite. Reawakening the ancient teachings of the Illuminati through the ritual use of refined Narcotics to achieve transcendental enlightenment, some among the aliens began in secret to challenge and undermine the tyranny of their Progenitor masters.</Civilopedia>
-<Strategy>The eldest among our people had deep and secret contacts among the Earth elites. Return to the ancient ways and let our people become Illuminated; we may yet persuade some among the earthling Illuminati to conspire with our agenda.</Strategy>
+<Description>TXT_KEY_BUILDING_ILLUMINATI_LODGE</Description>
+<Civilopedia>TXT_KEY_BUILDING_ILLUMINATI_LODGE_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_ILLUMINATI_LODGE_STRATEGY</Strategy>
 <ArtDefineTag>ART_DEF_BUILDING_GAURILIBRARY</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>
@@ -4438,9 +4438,9 @@
 <BuildingClass>BUILDINGCLASS_CATHEDRAL</BuildingClass>
 <SpecialBuildingType>SPECIALBUILDING_CROSSES</SpecialBuildingType>
 <iSpecialBuildingPriority>1</iSpecialBuildingPriority>
-<Description>Earthling Habitat</Description>
-<Civilopedia>Desperate for the mysterious knowledge of the Earthlings, some alien species would erect a so-called Human Quarter in their settlements modeled after their idea of life on Earth. Although life in these offworld ghettos was seldom as idyllic as planned, they did attract a steady trickle of Earth emigrants, from fringe UFO cultists to those so ruthlessly oppressed that no human colony would accept them.</Civilopedia>
-<Strategy>Construct an Earthling Habitat to lure outcast thinskins to live among your race.</Strategy>
+<Description>TXT_KEY_BUILDING_HABITAT</Description>
+<Civilopedia>TXT_KEY_BUILDING_HABITAT_PEDIA</Civilopedia>
+<Strategy>TXT_KEY_BUILDING_HABITAT_STRATEGY</Strategy>
 <ArtDefineTag>ART_DEF_BUILDING_HABITAT</ArtDefineTag>
 <MovieDefineTag>NONE</MovieDefineTag>
 <VictoryPrereq>NONE</VictoryPrereq>

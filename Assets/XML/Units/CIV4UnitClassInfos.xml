@@ -83,7 +83,7 @@
 		</UnitClassInfo>
 		<UnitClassInfo>
 			<Type>UNITCLASS_FUR_TRADER</Type>
-			<Description><!--TXT_KEY_UNIT_FUR_TRADER-->Brilliant Theorist</Description>
+			<Description>TXT_KEY_UNIT_FUR_TRADER</Description>
 			<DefaultUnit>UNIT_FUR_TRADER</DefaultUnit>
 		</UnitClassInfo>
 		<UnitClassInfo>
@@ -279,47 +279,52 @@
 <!-- Colonization 2071-->
 		<UnitClassInfo>
 			<Type>UNITCLASS_MOUND</Type>
-			<Description>Mound Beast</Description>
+			<Description>TXT_KEY_UNIT_MOUND</Description>
 			<DefaultUnit>UNIT_MOUND</DefaultUnit>
 		</UnitClassInfo>
 		<UnitClassInfo>
 			<Type>UNITCLASS_SPIDER</Type>
-			<Description>Giant Spider</Description>
+			<Description>TXT_KEY_UNIT_SPIDER</Description>
 			<DefaultUnit>UNIT_SPIDER</DefaultUnit>
 		</UnitClassInfo>
 		<UnitClassInfo>
 			<Type>UNITCLASS_PROGENITORAI</Type>
-			<Description>Progenitor AI</Description>
+			<Description>TXT_KEY_UNIT_PROGENITORAI</Description>
 			<DefaultUnit>UNIT_PROGENITORAI</DefaultUnit>
 		</UnitClassInfo>
 		<UnitClassInfo>
 			<Type>UNITCLASS_BLOODTHIRSTER</Type>
-			<Description>Greater Warp Demon</Description>
+			<Description>TXT_KEY_UNIT_BLOODTHIRSTER</Description>
 			<DefaultUnit>UNIT_BLOODTHIRSTER</DefaultUnit>
 		</UnitClassInfo>
 		<UnitClassInfo>
 			<Type>UNITCLASS_KILLBOT</Type>
-			<Description>Progenitor Killbots</Description>
+			<Description>TXT_KEY_UNIT_KILLBOT</Description>
 			<DefaultUnit>UNIT_KILLBOT</DefaultUnit>
 		</UnitClassInfo>
 		<UnitClassInfo>
-			<Type>UNITCLASS_COAL_MINER</Type>
-			<Description>Coal Miner</Description>
-			<DefaultUnit>UNIT_COAL_MINER</DefaultUnit>
+			<Type>UNITCLASS_INVENTOR</Type>
+			<Description>TXT_KEY_UNIT_INVENTOR</Description>
+			<DefaultUnit>UNIT_INVENTOR</DefaultUnit>
+		</UnitClassInfo>
+		<UnitClassInfo>
+			<Type>UNITCLASS_OILMAN</Type>
+			<Description>TXT_KEY_UNIT_OILMAN</Description>
+			<DefaultUnit>UNIT_OILMAN</DefaultUnit>
 		</UnitClassInfo>
 		<UnitClassInfo>
 			<Type>UNITCLASS_GARRISON</Type>
-			<Description>Militia Garrison</Description>
+			<Description>TXT_KEY_UNIT_GARRISON</Description>
 			<DefaultUnit>UNIT_GARRISON</DefaultUnit>
 		</UnitClassInfo>
 		<UnitClassInfo>
 			<Type>UNITCLASS_MININGVESSEL</Type>
-			<Description>Mining Vessel</Description>
+			<Description>TXT_KEY_UNIT_MININGVESSEL</Description>
 			<DefaultUnit>UNIT_MININGVESSEL</DefaultUnit>
 		</UnitClassInfo>
 		<UnitClassInfo>
 			<Type>UNITCLASS_SCIENCEVESSEL</Type>
-			<Description>Science Vessel</Description>
+			<Description>TXT_KEY_UNIT_SCIENCEVESSEL</Description>
 			<DefaultUnit>UNIT_SCIENCEVESSEL</DefaultUnit>
 		</UnitClassInfo>
 		<UnitClassInfo>
@@ -328,14 +333,9 @@
 			<DefaultUnit>UNIT_COLONYSHIP</DefaultUnit>
 		</UnitClassInfo>
 		<UnitClassInfo>
-			<Type>UNITCLASS_INVENTOR</Type>
-			<Description>Visionary Researcher</Description>
-			<DefaultUnit>UNIT_INVENTOR</DefaultUnit>
-		</UnitClassInfo>
-		<UnitClassInfo>
-			<Type>UNITCLASS_COAL</Type>
-			<Description>Coal</Description>
-			<DefaultUnit>UNIT_COAL</DefaultUnit>
+			<Type>UNITCLASS_HYDROCARBONS</Type>
+			<Description>TXT_KEY_UNIT_HYDROCARBONS</Description>
+			<DefaultUnit>UNIT_HYDROCARBONS</DefaultUnit>
 		</UnitClassInfo>
 	</UnitClassInfos>
 </Civ4UnitClassInfos>

@@ -3048,8 +3048,17 @@ int CvUnitInfo::getDomainModifier(int i) const
 }
 int CvUnitInfo::getYieldModifier(int i) const
 {
-	FAssertMsg(i < NUM_YIELD_TYPES, "Index out of bounds");
-	FAssertMsg(i > -1, "Index out of bounds");
+	// Kaszkaj fix: .\.\CvInfos.cpp, Line:  3051, Expression:  i < NUM_YIELD_TYPES.
+	// Invalid yield indices return a neutral modifier and are logged instead of reading outside the array.
+	if (i < 0 || i >= NUM_YIELD_TYPES)
+	{
+		if (gDLL != NULL)
+		{
+			CvString szMessage = CvString::format("CvUnitInfo::getYieldModifier: Unit=%s YieldIndex=%d NumYieldTypes=%d; using 0.", getType() != NULL ? getType() : "UNKNOWN", i, NUM_YIELD_TYPES);
+			gDLL->logMsg("KaszkajFix.log", szMessage.c_str());
+		}
+		return 0;
+	}
 	return m_aiYieldModifier ? m_aiYieldModifier[i] : -1;
 }
 //Androrc Domestic Market

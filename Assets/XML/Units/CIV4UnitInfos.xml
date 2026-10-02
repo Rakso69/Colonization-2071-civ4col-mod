@@ -70,11 +70,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Mound Beast</Description>
-			<Civilopedia>Some of the subterranean tunnels delved by our excavators have in fact proved to be orifices of an unspeakably vast organism.</Civilopedia>
-			<Strategy>The horror! What have we unearthed?</Strategy>
+			<Description>TXT_KEY_UNIT_MOUND</Description>
+			<Civilopedia>TXT_KEY_UNIT_MOUND_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_MOUND_STRATEGY</Strategy>
 			<bGraphicalOnly>1</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -189,11 +190,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Giant Spider</Description>
-			<Civilopedia>This enormous feral arachnid is relentless both in defense of its lair and pursuit of its next meal..</Civilopedia>
-			<Strategy>The horror! What have we unearthed?</Strategy>
+			<Description>TXT_KEY_UNIT_SPIDER</Description>
+			<Civilopedia>TXT_KEY_UNIT_SPIDER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_SPIDER_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -312,11 +314,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Progenitor AI</Description>
-			<Civilopedia>Of the advanced sentient computer systems left by the Progenitors, those few that are still functional have been largely driven insane by millenia of solitude.</Civilopedia>
-			<Strategy>I'm sorry Dave, I can't let you do that..</Strategy>
+			<Description>TXT_KEY_UNIT_PROGENITORAI</Description>
+			<Civilopedia>TXT_KEY_UNIT_PROGENITORAI_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_PROGENITORAI_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -448,11 +451,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Greater Warp Demon</Description>
-			<Civilopedia>This hideous being can only be the result of a truly unspeakable anomaly occuring in extraterrestrial space.</Civilopedia>
-			<Strategy>The horror! What have we unearthed?</Strategy>
+			<Description>TXT_KEY_UNIT_BLOODTHIRSTER</Description>
+			<Civilopedia>TXT_KEY_UNIT_BLOODTHIRSTER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_BLOODTHIRSTER_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -588,11 +592,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Progenitor Killbots</Description>
-			<Civilopedia>Deceptively harmless at first glance, these nasty little droids appear to be part of an ancient Progenitor security system.</Civilopedia>
-			<Strategy>Beware the spinning blades..</Strategy>
+			<Description>TXT_KEY_UNIT_KILLBOT</Description>
+			<Civilopedia>TXT_KEY_UNIT_KILLBOT_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_KILLBOT_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -711,6 +716,7 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_BRAVE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_NATIVE</Description>
@@ -1016,7 +1022,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -1197,11 +1203,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_BRAVE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>INVISIBLE_LAND</Invisible>
 			<SeeInvisible>INVISIBLE_LAND</SeeInvisible>
-			<Description>Human Hybrid</Description>
-			<Civilopedia>The product of gene splicing experiments by alien scientists, Human Hybrids could range from the beautiful to the grotesque. When successful, the hybridization of DNA gave rise to offspring who were quick to learn a variety of tasks, and prodigiously talented in shaping the natural resources of the New Worlds into the high technology of Earth. Many could use their adaptable genetic makeup to pass unnoticed into human territory.</Civilopedia>
-			<Strategy>Human Hybrids are quick to learn, and apt in the technical wisdom of the Earthlings.</Strategy>
+			<Description>TXT_KEY_UNIT_HUMANHYBRID</Description>
+			<Civilopedia>TXT_KEY_UNIT_HUMANHYBRID_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_HUMANHYBRID_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>1</bOnlyDefensive>
@@ -1251,7 +1258,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -1493,7 +1500,7 @@
 			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Proletarian</Description>
+			<Description>TXT_KEY_UNIT_INDENTURED_SERVANT</Description>
 			<Civilopedia>TXT_KEY_UNIT_INDENTURED_SERVANT_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_UNIT_INDENTURED_SERVANT_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
@@ -1533,7 +1540,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -1801,7 +1808,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -2027,11 +2034,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_OFFENSIVE</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_BRAVE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Alien Crossbreed</Description>
-			<Civilopedia>The product of gene fusion between two alien races, Alien Crossbreeds are often infused with a feral vigor that could make them deadly on the battlefield. They can also make strong and capable laborers, but are far too wild to master the delicate workings of human technology.</Civilopedia>
-			<Strategy>The interspecies Alien Crossbreeds are unusually large and fierce in combat, and their mixed genetic heritage often leaves foes unable to identify the source of an attack.</Strategy>
+			<Description>TXT_KEY_UNIT_ALIENCROSSBREED</Description>
+			<Civilopedia>TXT_KEY_UNIT_ALIENCROSSBREED_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_ALIENCROSSBREED_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -2184,10 +2192,6 @@
 					<YieldType>YIELD_EDUCATION</YieldType>
 					<iChange>-3</iChange>
 				</YieldChange>
-				<YieldChange>
-					<YieldType>YIELD_IDEAS</YieldType>
-					<iChange>-3</iChange>
-				</YieldChange>
 			</YieldChanges>
 			<BonusYieldChanges>
 				<BonusYieldChange>
@@ -2336,7 +2340,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -2579,9 +2583,9 @@
 			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Visionary Researcher</Description>
-			<Civilopedia>Both coveted and despised by Earth potentates for their powerful and destabilizing creativity, the pure science practiced by an elite few Visionary Researchers could lead to breakthroughs that would reshape the destiny of humanity.</Civilopedia>
-			<Strategy>Although bringing less immediate monetary dividends than the valuable goods produced by Physicists and Biochemists, the endeavors of a Visionary Researcher can stimulate remarkable breakthroughs in a variety of fields.</Strategy>
+			<Description>TXT_KEY_UNIT_INVENTOR</Description>
+			<Civilopedia>TXT_KEY_UNIT_INVENTOR_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_INVENTOR_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -2623,7 +2627,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -2846,7 +2850,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -3087,7 +3091,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -3261,8 +3265,8 @@
 		</UnitInfo>
 <!--#🛢️Expert Oilman-->
 		<UnitInfo>
-			<Type>UNIT_COAL_MINER</Type>
-			<Class>UNITCLASS_COAL_MINER</Class>
+			<Type>UNIT_OILMAN</Type>
+			<Class>UNITCLASS_OILMAN</Class>
 			<UniqueNames/>
 			<Special>NONE</Special>
 			<Capture>NONE</Capture>
@@ -3270,13 +3274,11 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
-			<bNativesInvalid>1</bNativesInvalid>
-			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Expert Oilman</Description>
-			<Civilopedia>Just before the turn of the 17th century a shortage of lumber and firewood encouraged the expansion of coal mining. Coal began to be mined in the Americas in the early 1700s, and commercial mining occurred around 1730 in Midlothian, Virginia. Coal-cutting machines were invented in the 1880s. Before the invention, coal was mined from underground with a pick and shovel. By 1912 surface mining was conducted with steam shovels designed for coal mining.</Civilopedia>
-			<Strategy>[COLOR_UNIT_TEXT]Expert Oilmen[COLOR_REVERT] are able to draw a wealth of Fossil Fuels from any tile able to produce them. An Expert Oilman will double [COLOR_HIGHLIGHT_TEXT]Fossil Fuels[COLOR_REVERT] production in the tile where he works.</Strategy>
+			<Description>TXT_KEY_UNIT_OILMAN</Description>
+			<Civilopedia>TXT_KEY_UNIT_OILMAN_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_OILMAN_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -3318,7 +3320,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -3381,7 +3383,7 @@
 			<DomainMods/>
 			<YieldModifiers>
 				<YieldModifier>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iYieldMod>100</iYieldMod>
 				</YieldModifier>
 			</YieldModifiers>
@@ -3408,7 +3410,7 @@
 					<iRangedWaveSize>1</iRangedWaveSize>
 					<UnitMeshGroup>
 						<iRequired>1</iRequired>
-						<ArtDefineTag>ART_DEF_UNIT_COAL_MINER</ArtDefineTag>
+						<ArtDefineTag>ART_DEF_UNIT_OILMAN</ArtDefineTag>
 					</UnitMeshGroup>
 				</UnitMeshGroups>
 				<UnitMeshGroups>
@@ -3530,7 +3532,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -3724,11 +3726,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_BRAVE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Industrious Cyborg</Description>
-			<Civilopedia>With their fine bodies poorly adapted to the technical labors of Earth, the most daring of alien craftsmen integrated their bodies into fusion-powered exoskeletons that proved resilient and adaptable to a variety of heavy industrial tasks.</Civilopedia>
-			<Strategy>To master the crude heavy industry of Earth, our traditional artisans must enmesh their bodies into fusion-powered armatures. It is a sacrifice, but there is no other way.</Strategy>
+			<Description>TXT_KEY_UNIT_CYBORG</Description>
+			<Civilopedia>TXT_KEY_UNIT_CYBORG_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_CYBORG_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -4029,7 +4032,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -4249,7 +4252,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -4477,7 +4480,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -4717,7 +4720,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -4937,7 +4940,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -5165,7 +5168,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -5351,7 +5354,6 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
-			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
 			<Description>TXT_KEY_UNIT_TRAPPER</Description>
@@ -5394,7 +5396,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -5582,7 +5584,7 @@
 			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Brilliant Theorist</Description>
+			<Description>TXT_KEY_UNIT_FUR_TRADER</Description>
 			<Civilopedia>TXT_KEY_UNIT_FUR_TRADER_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_UNIT_FUR_TRADER_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
@@ -5622,7 +5624,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -5850,7 +5852,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -6078,7 +6080,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -6306,7 +6308,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -6546,7 +6548,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -6766,7 +6768,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -6952,11 +6954,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Android</Description>
-			<Civilopedia>Initially specialized for use in automotive and heavy equipment plants, the Mitsubishi X-9100 series of semisynthetic workers have become progressively more ubiquitous, and are adaptable to a variety of industrial tasks. Due to their organic brains and several other vestigial organ systems, they continue to require food for sustenance and maintain full citizenship rights.</Civilopedia>
-			<Strategy>Construct or purchase Android citizens to bolster our industrial might.</Strategy>
+			<Description>TXT_KEY_UNIT_ANDROID</Description>
+			<Civilopedia>TXT_KEY_UNIT_ANDROID_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_ANDROID_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -7002,7 +7005,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -7054,7 +7057,7 @@
 			<iEuropeCost>900</iEuropeCost>
 			<iEuropeCostIncrease>70</iEuropeCostIncrease>
 			<iImmigrationWeight>40</iImmigrationWeight>
-			<iImmigrationWeightDecay>0</iImmigrationWeightDecay>
+			<iImmigrationWeightDecay>40</iImmigrationWeightDecay>
 			<iMinAreaSize>-1</iMinAreaSize>
 			<iMoves>1</iMoves>
 			<bCapturesCargo>0</bCapturesCargo>
@@ -7252,7 +7255,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -7430,11 +7433,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_WORKER</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_PIONEER</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Cultivator</Description>
-			<Civilopedia>Through traditional wisdom mingled with the application of advanced Biotech, an alien Cultivator could achieve subtle miracles amid the myriad forests of the New Worlds. Teh Cultivator is the only unit that can create Alien Garden improvements. When settled in a colony, he can harvest richer yields from indigenous plants and animals.</Civilopedia>
-			<Strategy>Train an Adept Cultivator to create forest gardens that will spread the noble forests of our planet and enable great harvests.</Strategy>
+			<Description>TXT_KEY_UNIT_CULTIVATOR</Description>
+			<Civilopedia>TXT_KEY_UNIT_CULTIVATOR_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_CULTIVATOR_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -7468,7 +7472,7 @@
 			<NotUnitAIs/>
 			<Builds>
 				<Build>
-					<BuildType>BUILD_ALIEN_GARDEN</BuildType>
+					<BuildType>BUILD_ALIEN_FERTILIZERS</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -7794,7 +7798,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -8004,11 +8008,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
+			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>INVISIBLE_LAND</SeeInvisible>
-			<Description>Artificial Intelligence</Description>
-			<Civilopedia>Japanese society is administered by powerful self-aware AIs capable of advanced sentient behavior. These can initially be purchased from the homeworld, but their supply is tightly limited by the Emperor to ensure his continued dominance. Though they cannot be gained through education, development of a Neural Interface can eventually allow them to be manufactured at great expense. Each AI resides in a large stationary computing cluster, and must be transported by ship or convoy to be installed elsewhere.</Civilopedia>
-			<Strategy>Construct or purchase sentient AIs to enable our colonies to be administered independently of the home planet.</Strategy>
+			<Description>TXT_KEY_UNIT_AI</Description>
+			<Civilopedia>TXT_KEY_UNIT_AI_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_AI_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>1</bOnlyDefensive>
@@ -8056,8 +8061,8 @@
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<iEuropeCost>1500</iEuropeCost>
 			<iEuropeCostIncrease>500</iEuropeCostIncrease>
-			<iImmigrationWeight>0</iImmigrationWeight>
-			<iImmigrationWeightDecay>0</iImmigrationWeightDecay>
+			<iImmigrationWeight>30</iImmigrationWeight>
+			<iImmigrationWeightDecay>30</iImmigrationWeightDecay>
 			<iMinAreaSize>-1</iMinAreaSize>
 			<iMoves>1</iMoves>
 			<bCapturesCargo>0</bCapturesCargo>
@@ -8299,7 +8304,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -8485,11 +8490,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_BRAVE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Venerable Elder</Description>
-			<Civilopedia>Although more frail at hard labor than their vigorous younger descendents, the most powerful Elders posessed vast secret knowledge and power. Through decades of meditation and the ritual use of certain powerful Narcotics, the Elders gained great skills both in directing covert Illuminati conspiracies to further the ascendancy of their race, and in organizing the abduction of human servants from Earth.</Civilopedia>
-			<Strategy>Train a Venerable Elder who can lead our race to independence and victory.</Strategy>
+			<Description>TXT_KEY_UNIT_ELDER</Description>
+			<Civilopedia>TXT_KEY_UNIT_ELDER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_ELDER_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -8812,7 +8818,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -8990,11 +8996,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_COLONIST</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_BRAVE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Brilliant Polymath</Description>
-			<Civilopedia>Through decades of study of Progenitor technology, the most focused and persistent of alien minds could reach a level of technological skill that approached near-mastery of every scientific discipline. Although behind the cutting edge of Earth in each individual discipline; the range and versatility of an alien Polymath could outmatch any human specialist.</Civilopedia>
-			<Strategy>Adapt the lost wisdom of the Progenitors to train a Brilliant Polymath with skills in every area of science and industry.</Strategy>
+			<Description>TXT_KEY_UNIT_POLYMATH</Description>
+			<Civilopedia>TXT_KEY_UNIT_POLYMATH_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_POLYMATH_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -9299,7 +9306,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -9475,9 +9482,9 @@
 			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Colonial Garrison</Description>
-			<Civilopedia>Colonial Garrisons are small, relatively unskilled military detachments pressed into service by Earth governments to protect their offworld posessions. Additional units can be requisitioned from Earth as a serviceable line of early defense; but their gradually escalating cost and limited offensive capability will eventually necessitate the development of a colonial militia.</Civilopedia>
-			<Strategy>Garrison forces can be requisitioned from Earth as a serviceable line of early defense; but their gradually escalating cost and limited offensive capability will eventually necessitate the development of a colonial militia.</Strategy>
+			<Description>TXT_KEY_UNIT_GARRISON</Description>
+			<Civilopedia>TXT_KEY_UNIT_GARRISON_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_GARRISON_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -9600,9 +9607,9 @@
 			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>INVISIBLE_LAND</SeeInvisible>
-			<Description>Spetsnaz</Description>
-			<Civilopedia>TXT_KEY_UNIT_VETERAN_PEDIA</Civilopedia>
-			<Strategy>TXT_KEY_UNIT_VETERAN_STRATEGY</Strategy>
+			<Description>TXT_KEY_UNIT_SPETSNAZ</Description>
+			<Civilopedia>TXT_KEY_UNIT_SPETSNAZ_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_SPETSNAZ_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -9648,7 +9655,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -9842,11 +9849,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_OFFENSIVE</DefaultUnitAI>
 			<DefaultProfession>PROFESSION_ARMED_BRAVE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Elite Warrior</Description>
-			<Civilopedia>With skills honed over decades of ritual combat and bodies heavily modified by alien technology, the elites of the alien warrior castes could prove a deadly threat to even the most hardened human military forces.</Civilopedia>
-			<Strategy>Train an Elite Warrior to bolster our races' military might.</Strategy>
+			<Description>TXT_KEY_UNIT_ELITE</Description>
+			<Civilopedia>TXT_KEY_UNIT_ELITE_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_ELITE_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -10107,7 +10115,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
@@ -10299,9 +10307,9 @@
 			<DefaultProfession>PROFESSION_DRAGOON</DefaultProfession>
 			<Invisible>INVISIBLE_LAND</Invisible>
 			<SeeInvisible>INVISIBLE_LAND</SeeInvisible>
-			<Description>Progenitor Naytiba</Description>
-			<Civilopedia>TXT_KEY_UNIT_REGULAR_PEDIA</Civilopedia>
-			<Strategy>The horror! What have we unearthed?</Strategy>
+			<Description>TXT_KEY_UNIT_NAYTIBA</Description>
+			<Civilopedia>TXT_KEY_UNIT_NAYTIBA_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_NAYTIBA_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -10703,11 +10711,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_OFFENSIVE</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Mutant</Description>
-			<Civilopedia>Bred by alien elders by incubating offspring with carefully prepared Xenospore extract, packs of gibbering Mutants were often used as cannon fodder in a frontal assault, their mindless ferocity overwhelming defenses that would have held off any saner foe.</Civilopedia>
-			<Strategy>Instill the spores into our younglings, following the ancient ways. The Earthling walls will never stand against their strength!</Strategy>
+			<Description>TXT_KEY_UNIT_MUTANT</Description>
+			<Civilopedia>TXT_KEY_UNIT_MUTANT_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_MUTANT_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -10856,9 +10865,9 @@
 			<DefaultProfession>NONE</DefaultProfession>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Progenitor Angel</Description>
-			<Civilopedia>"Humans constantly feel pain in their hearts. Because the heart is so sensitive to pain, humans also feel that to live is to suffer."</Civilopedia>
-			<Strategy>The horror! What have we unearthed?</Strategy>
+			<Description>TXT_KEY_UNIT_EVANGELION_ANGEL</Description>
+			<Civilopedia>TXT_KEY_UNIT_EVANGELION_ANGEL_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_EVANGELION_ANGEL_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -11168,7 +11177,7 @@
 			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Artillery</Description>
+			<Description>TXT_KEY_UNIT_CANNON</Description>
 			<Civilopedia>TXT_KEY_UNIT_CANNON_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_UNIT_CANNON_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
@@ -11309,9 +11318,9 @@
 			<DefaultProfession>NONE</DefaultProfession>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Mining Vessel</Description>
-			<Civilopedia>The robotic armatures of a Mining Vessel can extract valuable resources from the various asteroid belts and space debris scattered across the deep space surrounding the New Worlds.</Civilopedia>
-			<Strategy>Build a Mining Vessel to harvest valuable resources from asteroid belts and space debris.</Strategy>
+			<Description>TXT_KEY_UNIT_MININGVESSEL</Description>
+			<Civilopedia>TXT_KEY_UNIT_MININGVESSEL_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_MININGVESSEL_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>1</bOnlyDefensive>
@@ -11463,9 +11472,9 @@
 			<DefaultProfession>NONE</DefaultProfession>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Science Vessel</Description>
-			<Civilopedia>The advanced but delicate instruments carried by a Science Vessel can harvest valuable research data from the strange deep space anomalies prevalent in close proximity to the wormhole, and with appropriate technology can permit successful terraforming of the noxious atmospheres common to the New Worlds' resource-rich moons.</Civilopedia>
-			<Strategy>Build a Science Vessel to harvest valuable resources from anomalies in deep space, and allow terraforming of moon colonies plagued by a hostile atmosphere.</Strategy>
+			<Description>TXT_KEY_UNIT_SCIENCEVESSEL</Description>
+			<Civilopedia>TXT_KEY_UNIT_SCIENCEVESSEL_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_SCIENCEVESSEL_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>1</bOnlyDefensive>
@@ -11651,9 +11660,9 @@
 			<DefaultProfession>NONE</DefaultProfession>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Colony Ship</Description>
-			<Civilopedia>Although colonizing the tiny planetoids orbiting the New Worlds required a huge upfront investment in time and supplies, a mature Lunar Colony could eventually yield rich resources for export to its parent settlement on the planet below.</Civilopedia>
-			<Strategy>Construct a Colony Ship to found a Lunar Outpost that can be worked for resources by a nearby planetary settlement.</Strategy>
+			<Description>TXT_KEY_UNIT_COLONYSHIP</Description>
+			<Civilopedia>TXT_KEY_UNIT_COLONYSHIP_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_COLONYSHIP_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>1</bOnlyDefensive>
@@ -11792,11 +11801,12 @@
 			<Domain>DOMAIN_SEA</Domain>
 			<DefaultUnitAI>UNITAI_TRANSPORT_SEA</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Saucer</Description>
-			<Civilopedia>Although relatively small and weak in combat, the versatile alien saucers were able to navigate through the heavy atmosphere of the Outer Worlds, and could often outmaneuver the heavy Earth starships limited to a single orbit by the sensitive Resonance Drives used to navigate the wormhole.</Civilopedia>
-			<Strategy>Construct a Saucer to transport troops and materials between our planets. With our limited understanding of Human technology, we would be well served to establish a limited trade with Earth, and abduct Earthling servitors to further our cause.</Strategy>
+			<Description>TXT_KEY_UNIT_SAUCER</Description>
+			<Civilopedia>TXT_KEY_UNIT_SAUCER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_SAUCER_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>1</bOnlyDefensive>
@@ -12065,9 +12075,9 @@
 			<DefaultProfession>NONE</DefaultProfession>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Smuggler</Description>
-			<Civilopedia>Although smaller than the commercial merchant ships of Earth, the sleek vessels of alien smugglers were often fast enough to outrun an Earthling blockade and establish sporadic trading routes with disenfranchised Third World nations.</Civilopedia>
-			<Strategy>Construct a swift smuggling vessel to establish off-world shipping for our goods.</Strategy>
+			<Description>TXT_KEY_UNIT_SMUGGLER</Description>
+			<Civilopedia>TXT_KEY_UNIT_SMUGGLER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_SMUGGLER_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>1</bOnlyDefensive>
@@ -12117,8 +12127,8 @@
 			<iHurryCostModifier>0</iHurryCostModifier>
 			<iAdvancedStartCost>500</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>1000</iAdvancedStartCostIncrease>
-			<iEuropeCost>-1</iEuropeCost>
-			<iEuropeCostIncrease>0</iEuropeCostIncrease>
+			<iEuropeCost>1000</iEuropeCost>
+			<iEuropeCostIncrease>250</iEuropeCostIncrease>
 			<iImmigrationWeight>0</iImmigrationWeight>
 			<iImmigrationWeightDecay>0</iImmigrationWeightDecay>
 			<iMinAreaSize>20</iMinAreaSize>
@@ -12355,9 +12365,9 @@
 			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Privateer MKII</Description>
-			<Civilopedia>TXT_KEY_UNIT_PRIVATEER_PEDIA</Civilopedia>
-			<Strategy>TXT_KEY_UNIT_PRIVATEER_STRATEGY</Strategy>
+			<Description>TXT_KEY_UNIT_SYNDICATE_GHOST</Description>
+			<Civilopedia>TXT_KEY_UNIT_SYNDICATE_GHOST_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_SYNDICATE_GHOST_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -12503,11 +12513,12 @@
 			<Domain>DOMAIN_SEA</Domain>
 			<DefaultUnitAI>UNITAI_PIRATE_SEA</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>UFO</Description>
-			<Civilopedia>Using technology developed over centuries of concealment to obscure their identity, unknown alien UFOs could strike colonial ships at any moment, bearing back precious industrial cargo to the alien homeworlds.</Civilopedia>
-			<Strategy>Construct a UFO to seize precious cargo from the Earthlings without revealing our involvement.</Strategy>
+			<Description>TXT_KEY_UNIT_UFO</Description>
+			<Civilopedia>TXT_KEY_UNIT_UFO_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_UFO_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -12778,11 +12789,12 @@
 			<Domain>DOMAIN_SEA</Domain>
 			<DefaultUnitAI>UNITAI_TRANSPORT_SEA</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Carrier</Description>
-			<Civilopedia>TXT_KEY_UNIT_GALLEON_PEDIA</Civilopedia>
-			<Strategy>TXT_KEY_UNIT_GALLEON_STRATEGY</Strategy>
+			<Description>TXT_KEY_UNIT_CARRIER</Description>
+			<Civilopedia>TXT_KEY_UNIT_CARRIER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_CARRIER_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>1</bOnlyDefensive>
@@ -13043,11 +13055,12 @@
 			<Domain>DOMAIN_SEA</Domain>
 			<DefaultUnitAI>UNITAI_COMBAT_SEA</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>INVISIBLE_SPACE</Invisible>
 			<SeeInvisible>INVISIBLE_SPACE</SeeInvisible>
-			<Description>Cloaked Warship</Description>
-			<Civilopedia>Although inferior in combat to the larger vessels of Earth, the most advanced alien warships incorporated cloaking technology that was a bane to human naval strategists.</Civilopedia>
-			<Strategy>Construct a Cloaked Warship to take the Earthling vessels by surprise.</Strategy>
+			<Description>TXT_KEY_UNIT_CLOAKED_WARSHIP</Description>
+			<Civilopedia>TXT_KEY_UNIT_CLOAKED_WARSHIP_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_CLOAKED_WARSHIP_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -13312,11 +13325,12 @@
 			<Domain>DOMAIN_SEA</Domain>
 			<DefaultUnitAI>UNITAI_COMBAT_SEA</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Battlestar</Description>
-			<Civilopedia>Enormous planetoid-sized vessels bristling with Progenitor weaponry and often requiring decades to construct, the massive alien battlestars were slow to venture from the orbit of their home planet, but proved lethal to all but the most determined Earthling assault.</Civilopedia>
-			<Strategy>Construct a massive Battlestar to ensure our planet remains safe from Earthling attack.</Strategy>
+			<Description>TXT_KEY_UNIT_BATTLESTAR</Description>
+			<Civilopedia>TXT_KEY_UNIT_BATTLESTAR_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_BATTLESTAR_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -13456,9 +13470,9 @@
 			<DefaultProfession>NONE</DefaultProfession>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Progenitor FTL Warp Voyager</Description>
-			<Civilopedia>"I transcend simple physical space"</Civilopedia>
-			<Strategy>The horror! What have we unearthed?</Strategy>
+			<Description>TXT_KEY_UNIT_PROGENITOR_FTL</Description>
+			<Civilopedia>TXT_KEY_UNIT_PROGENITOR_FTL_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_PROGENITOR_FTL_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -14004,20 +14018,20 @@
 		</UnitInfo>
 <!--#🛢️	Hydrocarbons (Oil)-->
 		<UnitInfo>
-			<Type>UNIT_COAL</Type>
-			<Class>UNITCLASS_COAL</Class>
+			<Type>UNIT_HYDROCARBONS</Type>
+			<Class>UNITCLASS_HYDROCARBONS</Class>
 			<UniqueNames/>
 			<Special>SPECIALUNIT_YIELD_CARGO</Special>
-			<Capture>UNITCLASS_COAL</Capture>
+			<Capture>UNITCLASS_HYDROCARBONS</Capture>
 			<Combat>NONE</Combat>
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_YIELD</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
 			<Invisible>NONE</Invisible>
 			<SeeInvisible>NONE</SeeInvisible>
-			<Description>Coal</Description>
-			<Civilopedia>TXT_KEY_UNIT_ORE_PEDIA</Civilopedia>
-			<Strategy>TXT_KEY_UNIT_ORE_STRATEGY</Strategy>
+			<Description>TXT_KEY_UNIT_HYDROCARBONS</Description>
+			<Civilopedia>TXT_KEY_UNIT_HYDROCARBONS_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_HYDROCARBONS_STRATEGY</Strategy>
 			<bGraphicalOnly>1</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -14107,7 +14121,7 @@
 					<iRangedWaveSize>1</iRangedWaveSize>
 					<UnitMeshGroup>
 						<iRequired>1</iRequired>
-						<ArtDefineTag>ART_DEF_UNIT_COAL</ArtDefineTag>
+						<ArtDefineTag>ART_DEF_UNIT_HYDROCARBONS</ArtDefineTag>
 					</UnitMeshGroup>
 				</UnitMeshGroups>
 			</ProfessionMeshGroups>
@@ -15917,11 +15931,12 @@
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_WAGON</DefaultUnitAI>
 			<DefaultProfession>NONE</DefaultProfession>
+			<bEuropeInvalid>1</bEuropeInvalid>
 			<Invisible>INVISIBLE_LAND</Invisible>
 			<SeeInvisible>INVISIBLE_LAND</SeeInvisible>
-			<Description>Alien Palanquin</Description>
-			<Civilopedia>The aliens of the New Worlds transport precious goods between their settlements on stately palanquins, moving far more slowly than Earthling vehicles but able to remain hidden on a myriad of paths across the wilderness.</Civilopedia>
-			<Strategy>TXT_KEY_UNIT_WAGON_TRAIN_STRATEGY</Strategy>
+			<Description>TXT_KEY_UNIT_PALANQUIN</Description>
+			<Civilopedia>TXT_KEY_UNIT_PALANQUIN_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_UNIT_PALANQUIN_STRATEGY</Strategy>
 			<bGraphicalOnly>0</bGraphicalOnly>
 			<bNoBadGoodies>0</bNoBadGoodies>
 			<bOnlyDefensive>0</bOnlyDefensive>
@@ -16095,7 +16110,7 @@
 					<iCost>40</iCost>
 				</YieldCost>
 				<YieldCost>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iCost>40</iCost>
 				</YieldCost>
 				<YieldCost>
@@ -16207,7 +16222,7 @@
 			<Combat>UNITCOMBAT_GUN</Combat>
 			<Domain>DOMAIN_LAND</Domain>
 			<DefaultUnitAI>UNITAI_SCOUT</DefaultUnitAI>
-			<DefaultProfession>NONE</DefaultProfession>
+			<DefaultProfession>PROFESSION_COLONIST</DefaultProfession>
 			<bNativesInvalid>1</bNativesInvalid>
 			<Invisible>INVISIBLE_LAND</Invisible>
 			<SeeInvisible>INVISIBLE_LAND</SeeInvisible>
@@ -16259,7 +16274,7 @@
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>
-					<BuildType>BUILD_RANCH</BuildType>
+					<BuildType>BUILD_PASTURE</BuildType>
 					<bBuild>1</bBuild>
 				</Build>
 				<Build>

@@ -72,16 +72,16 @@
 		</CivilizationArtInfo>
 		<CivilizationArtInfo>
 			<Type>ART_DEF_CIVILIZATION_TUPI</Type>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,5,1</Button>
-			<Path>Art/Interface/TeamColor/Colonization_Flags/FlagDECAL_Arawak.dds</Path>
+			<Button>Art/Interface/TeamColor/Colonization_Flags/tupi.dds</Button>
+			<Path>Art/Interface/TeamColor/Colonization_Flags/FlagDECAL_Tupi.dds</Path>
 			<bWhiteFlag>0</bWhiteFlag>
 			<bInvertFlag>0</bInvertFlag>
 			<iFontButtonIndex>0</iFontButtonIndex>
 		</CivilizationArtInfo>
 		<CivilizationArtInfo>
 			<Type>ART_DEF_CIVILIZATION_ARAWAK</Type>
-			<Button>Art/Interface/TeamColor/Colonization_Flags/tupi.dds</Button>
-			<Path>Art/Interface/TeamColor/Colonization_Flags/FlagDECAL_Tupi.dds</Path>
+			<Button>Art/Interface/TeamColor/Colonization_Flags/arawak.dds</Button>
+			<Path>Art/Interface/TeamColor/Colonization_Flags/FlagDECAL_Arawak.dds</Path>
 			<bWhiteFlag>0</bWhiteFlag>
 			<bInvertFlag>1</bInvertFlag>
 			<iFontButtonIndex>0</iFontButtonIndex>
@@ -128,7 +128,7 @@
 		</CivilizationArtInfo>
 		<CivilizationArtInfo>
 			<Type>ART_DEF_CIVILIZATION_IROQUOIS</Type>
-			<Button>,Art/Interface/Buttons/Civilizations/Colonization_Civilizations_Leaders.dds,3,1</Button>
+			<Button>Art/Interface/TeamColor/Colonization_Flags/iroquois.dds</Button>
 			<Path>Art/Interface/TeamColor/Colonization_Flags/FlagDECAL_Iroquois.dds</Path>
 			<bWhiteFlag>0</bWhiteFlag>
 			<bInvertFlag>0</bInvertFlag>

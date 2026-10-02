@@ -350,40 +350,40 @@
 		</HintInfo>
 <!-- Colonization 2071-->
 		<HintInfo>
-			<Description>To discover the technologies needed to harvest alien resources like Soma, Xenospores, and Progenitor Tech, trade for samples of resources in alien settlements and analyze them in your Research Labs.</Description>
+			<Description>TXT_KEY_HINT_50</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>To discover the technologies needed to harvest alien resources like Soma, Xenospores, and Progenitor Tech, trade for samples of these precious materials in alien settlements, then ship them to your Research Labs for analysis.</Description>
+			<Description>TXT_KEY_HINT_51</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>To start learning new techs, assign one of your colonists to the Research Lab in your city screen. Production of each unit of Research consumes one unit of one or more different resources, depending on the tech. See the Game Concepts entry in the Civilopedia for more details.</Description>
+			<Description>TXT_KEY_HINT_52</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>Survival on the harsh frontiers of outer space is far more challenging than regular Colonization. You will start with very few resources, colonists, and profession types available, and must invest in research to unlock new possibilities.</Description>
+			<Description>TXT_KEY_HINT_53</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>Some advanced technologies require that a specific colonist type, such as a Brilliant Physicist or Alien Hybrid, be assisting on the project in order to make progress.</Description>
+			<Description>TXT_KEY_HINT_54</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>By building a Saucer and traveling across the wormhole, alien empires can establish trade with Earth, and even kidnap human servitors to do their bidding.</Description>
+			<Description>TXT_KEY_HINT_55</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>With the proper technology, capturing a unique site such as a Progenitor Reactor can allow direct extraction of Fusion Cores and other advanced goods without the need for time-consuming manufacture from raw materials.</Description>
+			<Description>TXT_KEY_HINT_56</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>With the proper technology, a Colonist assigned to the Hacker profession can hack into a Communications Array to produce Propaganda luring waves of new emigrants from Earth.</Description>
+			<Description>TXT_KEY_HINT_57</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>A Power Plant can greatly increase a colony's industrial output, especially if there is a shortage of Plasteel. The Power Plant generates no production on its own, but laborers burning Hydrocarbons in the Power Plant add a significant percentage bonus to all Industry (hammers) being generated in that colony.</Description>
+			<Description>TXT_KEY_HINT_58</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>Sacred indigenous sites like the Alien Totem, Abduction Site, and Menhir can be sacked for treasure by Earthling explorers, or if preserved can be used by the alien empires to produce goods, Liberty, or Propaganda.</Description>
+			<Description>TXT_KEY_HINT_59</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>The unique sites found in a Progenitor Metropolis can hold a wealth of valuable goods and treasure, but are often guarded by centuries-old security systems.</Description>
+			<Description>TXT_KEY_HINT_60</Description>
 		</HintInfo>
 		<HintInfo>
-			<Description>With supplies of Weapons jealously guarded by the Earth superpowers, post military units are not available early on, leaving colonies vulnerable to alien attack. In planning your technological research, balance the needs for a powerful military and a strong colonial economy.</Description>
+			<Description>TXT_KEY_HINT_61</Description>
 		</HintInfo>
 	</HintInfos>
 </Civ4Hints>

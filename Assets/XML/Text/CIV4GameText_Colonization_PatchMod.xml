@@ -31,7 +31,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_YOU_UNITS_EUROPE_INTERCEPTED</Tag>
-		<English>Your %s1_UnitName was intercepted on Earth by the government.</English>
+		<English>Your %s1_UnitName was intercepted on Earth by the State.</English>
 		<French>Votre %s1_UnitName a &#233;t&#233; intercept&#233; en Europe par le Roi.</French>
 		<German>Ihre Einheit %s1_UnitName wurde in Europa vom K&#246;nig abgefangen.</German>
 		<Italian>La tua unit&#224; %s1_UnitName &#232; stata intercettata in Europa dal Re.</Italian>

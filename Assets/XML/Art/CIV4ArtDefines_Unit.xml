@@ -365,13 +365,13 @@
 		</UnitArtInfo>
 <!--#🛢️Expert Oilman-->
 		<UnitArtInfo>
-			<Type>ART_DEF_UNIT_COAL_MINER</Type>
-			<Button>Art/Buttons/Units/CoalMinerBut.dds</Button>
-			<FullLengthIcon>Art/Buttons/Units/CoalMinerCM.dds</FullLengthIcon>
+			<Type>ART_DEF_UNIT_OILMAN</Type>
+			<Button>Art/Interface/Buttons/Units/expert_oilman.dds</Button>
+			<FullLengthIcon>Art/Interface/Buttons/Units/expert_oilman_city.dds</FullLengthIcon>
 			<fScale>0.48</fScale>
 			<fInterfaceScale>0.9</fInterfaceScale>
-			<NIF>Art/Units/Expert_Coal_Miner/Expert_Coal_Miner.nif</NIF>
-			<KFM>Art/Units/Expert_Coal_Miner/Expert_Silver_Miner.kfm</KFM>
+			<NIF>Art/Units/_citizen/Oilman/Expert_Coal_Miner.nif</NIF>
+			<KFM>Art/Units/_citizen/Oilman/Expert_Silver_Miner.kfm</KFM>
 			<fBattleDistance>0.35</fBattleDistance>
 			<fRangedDeathTime>0.31</fRangedDeathTime>
 			<bActAsRanged>0</bActAsRanged>
@@ -1753,13 +1753,12 @@
 		</UnitArtInfo>
 <!--#🛢️	Hydrocarbons (Oil)-->
 		<UnitArtInfo>
-			<Type>ART_DEF_UNIT_COAL</Type>
+			<Type>ART_DEF_UNIT_HYDROCARBONS</Type>
 			<Button>Art/Interface/Buttons/Resources/hydrocarbonsunit.dds</Button>
 			<FullLengthIcon>,Art/Interface/Game Hud/Actions/need_button.dds</FullLengthIcon>
 			<fScale>1.2</fScale>
 			<fInterfaceScale>1.2</fInterfaceScale>
-			<NIF>Art/Units/Coal/Ore.nif</NIF>
-			<!--<NIF>Art/Units/Trade_Goods/02_hydrocarbons/Ore.nif</NIF>-->
+			<NIF>Art/Units/Trade_Goods/02_hydrocarbons/Ore.nif</NIF>
 			<KFM/>
 			<TrailDefinition>
 				<Texture>Art/Shared/wheeltread.dds</Texture>

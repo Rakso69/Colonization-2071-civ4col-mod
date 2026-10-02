@@ -5555,7 +5555,7 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, BuildingTypes eBu
     if (kBuilding.getBuildingClassType()  == (BuildingClassTypes)GC.getDefineINT("STEAMWORKS_CLASS_TYPE"))
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_FROM_STEAMWORKS_TEXT", GC.getDefineINT("TK_STEAMWORKS_MODIFIER"), GC.getYieldInfo(YIELD_COAL).getChar()));
+		szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_FROM_STEAMWORKS_TEXT", GC.getDefineINT("TK_STEAMWORKS_MODIFIER"), GC.getYieldInfo(YIELD_HYDROCARBONS).getChar()));
 	}
     ///TKe
 
@@ -7022,10 +7022,10 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
     }
 
 	int Bonus = 0;
-	if (city.isHasRealBuilding((BuildingTypes)GC.getDefineINT("STEAMWORKS_BUILDING")) && eYieldType != YIELD_HAMMERS && eYieldType != YIELD_COAL)
+	if (city.isHasRealBuilding((BuildingTypes)GC.getDefineINT("STEAMWORKS_BUILDING")) && eYieldType != YIELD_HAMMERS && eYieldType != YIELD_HYDROCARBONS)
 	{
-	    int iConsumedCoal = city.getRawYieldConsumed(YIELD_COAL);
-        int iCoalMod = city.getYieldStored(YIELD_COAL) + city.getBaseRawYieldProduced(YIELD_COAL) * city.getBaseYieldRateModifier(YIELD_COAL) / 100 - iConsumedCoal;
+	    int iConsumedCoal = city.getRawYieldConsumed(YIELD_HYDROCARBONS);
+        int iCoalMod = city.getYieldStored(YIELD_HYDROCARBONS) + city.getBaseRawYieldProduced(YIELD_HYDROCARBONS) * city.getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedCoal;
 
         if (iConsumedCoal > 0)
         {
@@ -7225,8 +7225,8 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
     ///TK Coal
 	if (Bonus > 0)
 	{
-	    int iConsumedCoal = city.getRawYieldConsumed(YIELD_COAL);
-        int iCoalMod = city.getYieldStored(YIELD_COAL) + city.getBaseRawYieldProduced(YIELD_COAL) * city.getBaseYieldRateModifier(YIELD_COAL) / 100 - iConsumedCoal;
+	    int iConsumedCoal = city.getRawYieldConsumed(YIELD_HYDROCARBONS);
+        int iCoalMod = city.getYieldStored(YIELD_HYDROCARBONS) + city.getBaseRawYieldProduced(YIELD_HYDROCARBONS) * city.getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedCoal;
         if (iConsumedCoal > 0)
         {
             int SteamWorksMod = std::max(1, GC.getDefineINT("TK_STEAMWORKS_MODIFIER"));

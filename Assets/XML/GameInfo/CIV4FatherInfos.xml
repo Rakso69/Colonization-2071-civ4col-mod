@@ -60,7 +60,7 @@
 			<Type>FATHER_GONZALO_JIMENEZ_DE_QUESADA</Type>
 			<Portrait>Art/Interface/Screens/Founding_Fathers/new/blue.dds</Portrait>
 			<Description>TXT_KEY_FATHER_GONZALO_JIMENEZ_DE_QUESADA</Description>
-			<Civilopedia>The jungles of the New Worlds are dotted with hidden shrines and ruins carefully maintained by alien species for mysterious reasons. Decoding the intricate systems of ritual symbolism used by alien cultures could guide Earthling explorers to these sacred sites, perhaps to ransack them of their contents..</Civilopedia>
+			<Civilopedia><!--TXT_KEY_FATHER_GONZALO_JIMENEZ_DE_QUESADA_PEDIA-->The jungles of the New Worlds are dotted with hidden shrines and ruins carefully maintained by alien species for mysterious reasons. Decoding the intricate systems of ritual symbolism used by alien cultures could guide Earthling explorers to these sacred sites, perhaps to ransack them of their contents..</Civilopedia>
 			<Strategy>TXT_KEY_FATHER_GONZALO_JIMENEZ_DE_QUESADA_STRATEGY</Strategy>
 			<FatherCategory>FATHERCATEGORY_EXPLORATION</FatherCategory>
 			<RevealImprovements>
@@ -248,7 +248,7 @@
 		<FatherInfo>
 			<Type>FATHER_LEWIS_AND_CLARK</Type>
 			<Portrait>Art/Interface/Screens/Founding_Fathers/new/cyb1.dds</Portrait>
-			<Description>Industrial Cyberlogistician</Description>
+			<Description>TXT_KEY_FATHER_LEWIS_AND_CLARK</Description>
 			<Civilopedia>TXT_KEY_FATHER_LEWIS_AND_CLARK_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_FATHER_LEWIS_AND_CLARK_STRATEGY</Strategy>
 			<FatherCategory>FATHERCATEGORY_EXPLORATION</FatherCategory>
@@ -354,7 +354,7 @@
 			<Type>FATHER_THOMAS_HOOKER</Type>
 			<Portrait>Art/Interface/Screens/Founding_Fathers/new/explead.dds</Portrait>
 			<Description>TXT_KEY_FATHER_THOMAS_HOOKER</Description>
-			<Civilopedia>Mass media outlets on Earth could be cynically manipulated by those with the right connections, inspiring the launch of mass expeditions by idealistic would-be explorers.</Civilopedia>
+			<Civilopedia><!--TXT_KEY_FATHER_THOMAS_HOOKER_PEDIA-->Mass media outlets on Earth could be cynically manipulated by those with the right connections, inspiring the launch of mass expeditions by idealistic would-be explorers.</Civilopedia>
 			<Strategy>TXT_KEY_FATHER_THOMAS_HOOKER_STRATEGY</Strategy>
 			<FatherCategory>FATHERCATEGORY_RELIGION</FatherCategory>
 			<RevealImprovements/>
@@ -434,7 +434,7 @@
 			<Type>FATHER_WILLIAM_PENN</Type>
 			<Portrait>Art/Interface/Screens/Founding_Fathers/new/girl1.dds</Portrait>
 			<Description>TXT_KEY_FATHER_WILLIAM_PENN</Description>
-			<Civilopedia>The dystopian cities of Earth were not without their committed idealists, even those who sometimes placed the rights of alien species ahead of those of the unwashed masses on Earth.</Civilopedia>
+			<Civilopedia><!--TXT_KEY_FATHER_WILLIAM_PENN_PEDIA-->The dystopian cities of Earth were not without their committed idealists, even those who sometimes placed the rights of alien species ahead of those of the unwashed masses on Earth.</Civilopedia>
 			<Strategy>TXT_KEY_FATHER_WILLIAM_PENN_STRATEGY</Strategy>
 			<FatherCategory>FATHERCATEGORY_RELIGION</FatherCategory>
 			<RevealImprovements/>
@@ -533,7 +533,7 @@
 		<FatherInfo>
 			<Type>FATHER_NATHANIAL_HAWTHORNE</Type>
 			<Portrait>Art/Interface/Screens/Founding_Fathers/new/black.dds</Portrait>
-			<Description>Machiavellian Consultant</Description>
+			<Description>TXT_KEY_FATHER_NATHANIAL_HAWTHORNE</Description>
 			<Civilopedia>TXT_KEY_FATHER_NATHANIAL_HAWTHORNE_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_FATHER_NATHANIAL_HAWTHORNE_STRATEGY</Strategy>
 			<FatherCategory>FATHERCATEGORY_RELIGION</FatherCategory>
@@ -613,8 +613,8 @@
 		<FatherInfo>
 			<Type>FATHER_DEIGO_VELAZQUEZ_DE_CUELLAR</Type>
 			<Portrait>Art/Interface/Screens/Founding_Fathers/new/roach.dds</Portrait>
-			<Description>Mind Control Parasite</Description>
-			<Civilopedia>Certain experiments conducted by Earth military scientists have had the convenient side effect of producing a ready supply of cheap and unusually docile laborers. Let's just hope there aren't any latent side effects..</Civilopedia>
+			<Description>TXT_KEY_FATHER_DEIGO_VELAZQUEZ_DE_CUELLAR</Description>
+			<Civilopedia>TXT_KEY_FATHER_DEIGO_VELAZQUEZ_DE_CUELLAR_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_FATHER_DEIGO_VELAZQUEZ_DE_CUELLAR_STRATEGY</Strategy>
 			<FatherCategory>FATHERCATEGORY_MILITARY</FatherCategory>
 			<RevealImprovements/>
@@ -973,8 +973,8 @@
 		<FatherInfo>
 			<Type>FATHER_ALEXANDER_HAMILTON</Type>
 			<Portrait>Art/Interface/Screens/Founding_Fathers/new/robot1.dds</Portrait>
-			<Description>Cyborg Prototype</Description>
-			<Civilopedia>Access to a cutting-edge industrial cyborg prototype could rapidly speed industrialization for the food-starved colonies of the New Worlds - or even, perhaps, for an enterprising Alien empire.</Civilopedia>
+			<Description>TXT_KEY_FATHER_ALEXANDER_HAMILTON</Description>
+			<Civilopedia>TXT_KEY_FATHER_ALEXANDER_HAMILTON_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_FATHER_ALEXANDER_HAMILTON_STRATEGY</Strategy>
 			<FatherCategory>FATHERCATEGORY_TRADE</FatherCategory>
 			<RevealImprovements/>
@@ -1136,7 +1136,7 @@
 		<FatherInfo>
 			<Type>FATHER_SAMUEL_ADAMS</Type>
 			<Portrait>Art/Interface/Screens/Founding_Fathers/new/eliza.dds</Portrait>
-			<Description>Econometric AI</Description>
+			<Description>TXT_KEY_FATHER_SAMUEL_ADAMS</Description>
 			<Civilopedia>TXT_KEY_FATHER_SAMUEL_ADAMS_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_FATHER_SAMUEL_ADAMS_STRATEGY</Strategy>
 			<FatherCategory>FATHERCATEGORY_POLITICS</FatherCategory>
@@ -1178,7 +1178,7 @@
 		<FatherInfo>
 			<Type>FATHER_JOHN_JAY</Type>
 			<Portrait>Art/Interface/Screens/Founding_Fathers/new/jimmy.dds</Portrait>
-			<Description>Libertarian Philosopher</Description>
+			<Description>TXT_KEY_FATHER_JOHN_JAY</Description>
 			<Civilopedia>TXT_KEY_FATHER_JOHN_JAY_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_FATHER_JOHN_JAY_STRATEGY</Strategy>
 			<FatherCategory>FATHERCATEGORY_POLITICS</FatherCategory>

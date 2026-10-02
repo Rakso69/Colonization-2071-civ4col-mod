@@ -83,8 +83,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_BOREHOLE</Type>
-			<Description>Progenitor Borehole</Description>
-			<Civilopedia>A testament to the Progenitor's industrial might, this gargantuan machine is composed of a rare titanium alloy. So skillful was its construction that the mine shaft appears to still be operable.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_BOREHOLE</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_BOREHOLE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_BOREHOLE</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases>
@@ -145,8 +145,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_KEEP</Type>
-			<Description>Progenitor Keep</Description>
-			<Civilopedia>The leathery eggs atop the summit of this ancient ziggurat appear to be home to a race of venomous and semi-intelligent salamanders. Although fierce and savage, if tamed their secretions may prove an invaluable source of potent neurochemicals.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_KEEP</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_KEEP_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_KEEP</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases>
@@ -199,8 +199,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_CITADEL</Type>
-			<Description>Progenitor Citadel</Description>
-			<Civilopedia>The leathery eggs atop the summit of this ancient ziggurat appear to be home to a race of venomous and semi-intelligent salamanders. Although fierce and savage, if tamed their secretions may prove an invaluable source of potent neurochemicals.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_CITADEL</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_CITADEL_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_CITADEL</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases>
@@ -253,8 +253,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_LIBRARY</Type>
-			<Description>Ancient Databank</Description>
-			<Civilopedia>The leathery eggs atop the summit of this ancient ziggurat appear to be home to a race of venomous and semi-intelligent salamanders. Although fierce and savage, if tamed their secretions may prove an invaluable source of potent neurochemicals.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_LIBRARY</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_LIBRARY_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_LIBRARY</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases>
@@ -307,8 +307,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_REACTOR</Type>
-			<Description>Progenitor Reactor</Description>
-			<Civilopedia>The leathery eggs atop the summit of this ancient ziggurat appear to be home to a race of venomous and semi-intelligent salamanders. Although fierce and savage, if tamed their secretions may prove an invaluable source of potent neurochemicals.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_REACTOR</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_REACTOR_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_REACTOR</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases>
@@ -361,8 +361,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_INSTALLATION</Type>
-			<Description>Progenitor Installation</Description>
-			<Civilopedia>The leathery eggs atop the summit of this ancient ziggurat appear to be home to a race of venomous and semi-intelligent salamanders. Although fierce and savage, if tamed their secretions may prove an invaluable source of potent neurochemicals.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_INSTALLATION</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_INSTALLATION_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_INSTALLATION</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases>
@@ -415,8 +415,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_PROIN1</Type>
-			<Description>Ruined Autofab</Description>
-			<Civilopedia>The leathery eggs atop the summit of this ancient ziggurat appear to be home to a race of venomous and semi-intelligent salamanders. Although fierce and savage, if tamed their secretions may prove an invaluable source of potent neurochemicals.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_PROIN1</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_PROIN1_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_PROIN1</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases>
@@ -477,8 +477,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_PROIN2</Type>
-			<Description>Industrial Complex</Description>
-			<Civilopedia>The leathery eggs atop the summit of this ancient ziggurat appear to be home to a race of venomous and semi-intelligent salamanders. Although fierce and savage, if tamed their secretions may prove an invaluable source of potent neurochemicals.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_PROIN2</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_PROIN2_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_PROIN2</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases>
@@ -531,8 +531,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_BUNKER</Type>
-			<Description>Ruined Bunker</Description>
-			<Civilopedia>The leathery eggs atop the summit of this ancient ziggurat appear to be home to a race of venomous and semi-intelligent salamanders. Although fierce and savage, if tamed their secretions may prove an invaluable source of potent neurochemicals.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_BUNKER</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_BUNKER_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_BUNKER</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases/>
@@ -610,8 +610,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_MENHIR</Type>
-			<Description>Menhir</Description>
-			<Civilopedia>Scattered across the New Worlds are rings of great standing stones that appear to predate even the Progenitors. Held in great spiritual significance by the aliens, a major such circle could attract fervent worshippers from miles around. For the human colonists, such icons were of interest mainly for the traces of high-grade platinum at each monument's core.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_MENHIR</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_MENHIR_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_STONECIRCLE</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases/>
@@ -668,8 +668,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_ALTAR</Type>
-			<Description>Abduction Site</Description>
-			<Civilopedia>In secret locations across the New Worlds lie a series of hidden bases once used in interplanetary surveillance. Alien Elders working at such a site could engineer the covert abduction of scores of human servitors from Earth.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_ALTAR</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_ALTAR_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_ALTAR</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases/>
@@ -936,8 +936,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_MOON_COLONY1</Type>
-			<Description>Lunar Outpost</Description>
-			<Civilopedia>The numerous planetoids orbiting the New Worlds were rich in resources but difficult for Earthlings or aliens to colonize. With enough technology many of these tiny moons could grow enough food to support a small population, enabling the gradual development of moon colonies that could yield rich resources for export to settlements on their home planet.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_MOON_COLONY1</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_MOON_COLONY_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_MOON_COLONY1</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases/>
@@ -1054,8 +1054,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_MOON_COLONY2</Type>
-			<Description>Lunar Settlement</Description>
-			<Civilopedia>The numerous planetoids orbiting the New Worlds were rich in resources but difficult for Earthlings or aliens to colonize. With enough technology many of these tiny moons could grow enough food to support a small population, enabling the gradual development of moon colonies that could yield rich resources for export to settlements on their home planet.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_MOON_COLONY2</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_MOON_COLONY_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_MOON_COLONY2</ArtDefineTag>
 			<PrereqNatureYields>
 				<YieldIntegerPair>
@@ -1181,8 +1181,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_MOON_COLONY3</Type>
-			<Description>Lunar Colony</Description>
-			<Civilopedia>The numerous planetoids orbiting the New Worlds were rich in resources but difficult for Earthlings or aliens to colonize. With enough technology many of these tiny moons could grow enough food to support a small population, enabling the gradual development of moon colonies that could yield rich resources for export to settlements on their home planet.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_MOON_COLONY3</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_MOON_COLONY_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_MOON_COLONY3</ArtDefineTag>
 			<PrereqNatureYields>
 				<YieldIntegerPair>
@@ -1311,10 +1311,10 @@
 			<bGraphicalOnly>0</bGraphicalOnly>
 		</ImprovementInfo>	
 		<ImprovementInfo>
-			<Type>IMPROVEMENT_RANCH</Type>
-			<Description>Pasture</Description>
-			<Civilopedia>The painstakingly crafted forest gardens of the aliens were of little use to human colonists, but through years of cultivation could provide a bounty of resources in alien hands.</Civilopedia>
-			<ArtDefineTag>ART_DEF_IMPROVEMENT_RANCH</ArtDefineTag>
+			<Type>IMPROVEMENT_PASTURE</Type>
+			<Description>TXT_KEY_IMPROVEMENT_PASTURE</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_PASTURE_PEDIA</Civilopedia>
+			<ArtDefineTag>ART_DEF_IMPROVEMENT_PASTURE</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases>
 				<YieldIntegerPair>
@@ -1407,8 +1407,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_AQUACULTURE</Type>
-			<Description>Aquaculture</Description>
-			<Civilopedia>The painstakingly crafted forest gardens of the aliens were of little use to human colonists, but through years of cultivation could provide a bounty of resources in alien hands.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_AQUACULTURE</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_AQUACULTURE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_AQUACULTURE</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases>
@@ -1486,10 +1486,10 @@
 			<bGraphicalOnly>0</bGraphicalOnly>
 		</ImprovementInfo>
 		<ImprovementInfo>
-			<Type>IMPROVEMENT_ALIEN_GARDEN</Type>
-			<Description>Alien Fertilizers</Description>
-			<Civilopedia>The painstakingly crafted forest structures of the aliens were of little use to human colonists, but through years of cultivation could provide a bounty of resources in alien hands.</Civilopedia>
-			<ArtDefineTag>ART_DEF_IMPROVEMENT_ALIEN_GARDEN</ArtDefineTag>
+			<Type>IMPROVEMENT_ALIEN_FERTILIZERS</Type>
+			<Description>TXT_KEY_IMPROVEMENT_ALIEN_FERTILIZERS</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_ALIEN_FUTUREFARM_PEDIA</Civilopedia>
+			<ArtDefineTag>ART_DEF_IMPROVEMENT_ALIEN_FERTILIZERS</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases/>
 			<RiverSideYieldChanges>
@@ -1566,15 +1566,15 @@
 				</BonusTypeStruct>
 			</BonusTypeStructs>
 			<ImprovementPillage/>
-			<ImprovementUpgrade>IMPROVEMENT_ALIEN_PLANTATION</ImprovementUpgrade>
+			<ImprovementUpgrade>IMPROVEMENT_ALIEN_FUTUREFARM</ImprovementUpgrade>
 			<RouteYieldChanges/>
 			<bGraphicalOnly>0</bGraphicalOnly>
 		</ImprovementInfo>
 		<ImprovementInfo>
-			<Type>IMPROVEMENT_ALIEN_PLANTATION</Type>
-			<Description>Future Farm</Description>
-			<Civilopedia>The painstakingly crafted forest structures of the aliens were of little use to human colonists, but through years of cultivation could provide a bounty of resources in alien hands.</Civilopedia>
-			<ArtDefineTag>ART_DEF_IMPROVEMENT_ALIEN_PLANTATION</ArtDefineTag>
+			<Type>IMPROVEMENT_ALIEN_FUTUREFARM</Type>
+			<Description>TXT_KEY_IMPROVEMENT_ALIEN_FUTUREFARM</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_ALIEN_FUTUREFARM_PEDIA</Civilopedia>
+			<ArtDefineTag>ART_DEF_IMPROVEMENT_ALIEN_FUTUREFARM</ArtDefineTag>
 			<PrereqNatureYields>
 				<YieldIntegerPair>
 					<YieldType>YIELD_LUMBER</YieldType>
@@ -1692,15 +1692,15 @@
 					<YieldChanges/>
 				</BonusTypeStruct>
 			</BonusTypeStructs>
-			<ImprovementPillage>IMPROVEMENT_ALIEN_GARDEN</ImprovementPillage>
+			<ImprovementPillage>IMPROVEMENT_ALIEN_FERTILIZERS</ImprovementPillage>
 			<ImprovementUpgrade/>
 			<RouteYieldChanges/>
 			<bGraphicalOnly>0</bGraphicalOnly>
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_ALIEN_BURROW</Type>
-			<Description>Alien Burrow</Description>
-			<Civilopedia>Carved from the native rock over the course of centuries, the secret tunnel systems of the aliens could extend into enormous caverns that enabled rich harvest from below the ground, and served as excellent defenses in times of war.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_ALIEN_BURROW</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_ALIEN_CAVERN_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_ALIEN_BURROW</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases/>
@@ -1777,8 +1777,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_ALIEN_CAVERN</Type>
-			<Description>Alien Cavern</Description>
-			<Civilopedia>Carved from the native rock over the course of centuries, the secret tunnel systems of the aliens could extend into enormous caverns that enabled rich harvest from below the ground, and served as excellent defenses in times of war.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_ALIEN_CAVERN</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_ALIEN_CAVERN_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_ALIEN_CAVERN</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases>
@@ -1878,8 +1878,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_EXCAVATION</Type>
-			<Description>Excavation</Description>
-			<Civilopedia>TXT_KEY_IMPROVEMENT_LODGE_PEDIA</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_EXCAVATION</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_EXCAVATION_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_EXCAVATION</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases>
@@ -1992,7 +1992,7 @@
 					<YieldChanges/>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_MTRUSHMORE</BonusType>
+					<BonusType>BONUS_OBSIDIAN</BonusType>
 					<bBonusMakesValid>0</bBonusMakesValid>
 					<iDiscoverRand>100</iDiscoverRand>
 					<YieldChanges/>
@@ -2012,8 +2012,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_EXPEDITION</Type>
-			<Description>Expedition</Description>
-			<Civilopedia>TXT_KEY_IMPROVEMENT_LODGE_PEDIA</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_EXPEDITION</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_EXPEDITION_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_EXPEDITION</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases/>
@@ -2282,7 +2282,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_MTRUSHMORE</BonusType>
+					<BonusType>BONUS_OBSIDIAN</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<iDiscoverRand>0</iDiscoverRand>
 					<YieldChanges>
@@ -2407,24 +2407,24 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_OILWELL</Type>
-			<Description>Oil Well</Description>
-			<Civilopedia>TXT_KEY_IMPROVEMENT_MINE_PEDIA</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_OILWELL</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_OILWELL_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_OILWELL</ArtDefineTag>
 			<PrereqNatureYields>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>1</iValue>
 				</YieldIntegerPair>
 			</PrereqNatureYields>
 			<YieldIncreases>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>2</iValue>
 				</YieldIntegerPair>
 			</YieldIncreases>
 			<RiverSideYieldChanges>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>-1</iValue>
 				</YieldIntegerPair>
 			</RiverSideYieldChanges>
@@ -2491,8 +2491,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_LODGE</Type>
-			<Description>Plasteel Mill<!--TXT_KEY_IMPROVEMENT_LODGE--></Description>
-			<Civilopedia>Constructed by a Hardy Laborer, a Plasteel Mill can wring added yields of building materials from forests and ruins, forming the cornerstone of a colony's growing urban infrastructure.<!--TXT_KEY_IMPROVEMENT_LODGE_PEDIA--></Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_LODGE</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_LODGE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_LODGE</ArtDefineTag>
 			<PrereqNatureYields>
 				<YieldIntegerPair>
@@ -2567,8 +2567,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_DEVICE1</Type>
-			<Description>Janus Device Stage I</Description>
-			<Civilopedia>Some theorists postulate that given enough time, knowledge, and effort, certain lost technologies of the Progenitors can be assembled into a massive gateway reaching to unknown dimensions.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_DEVICE1</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_DEVICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_DEVICE1</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases/>
@@ -2612,8 +2612,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_DEVICE2</Type>
-			<Description>Janus Device Stage II</Description>
-			<Civilopedia>Some theorists postulate that given enough time, knowledge, and effort, certain lost technologies of the Progenitors can be assembled into a massive gateway reaching to unknown dimensions.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_DEVICE2</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_DEVICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_DEVICE2</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases/>
@@ -2648,8 +2648,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_DEVICE3</Type>
-			<Description>Janus Device Stage III</Description>
-			<Civilopedia>Some theorists postulate that given enough time, knowledge, and effort, certain lost technologies of the Progenitors can be assembled into a massive gateway reaching to unknown dimensions.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_DEVICE3</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_DEVICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_DEVICE3</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases/>
@@ -2684,8 +2684,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_DEVICE4</Type>
-			<Description>Janus Device Stage IV</Description>
-			<Civilopedia>Some theorists postulate that given enough time, knowledge, and effort, certain lost technologies of the Progenitors can be assembled into a massive gateway reaching to unknown dimensions.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_DEVICE4</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_DEVICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_DEVICE4</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases/>
@@ -2720,8 +2720,8 @@
 		</ImprovementInfo>
 		<ImprovementInfo>
 			<Type>IMPROVEMENT_DEVICE5</Type>
-			<Description>Janus Device Stage V</Description>
-			<Civilopedia>Some theorists postulate that given enough time, knowledge, and effort, certain lost technologies of the Progenitors can be assembled into a massive gateway reaching to unknown dimensions.</Civilopedia>
+			<Description>TXT_KEY_IMPROVEMENT_DEVICE5</Description>
+			<Civilopedia>TXT_KEY_IMPROVEMENT_DEVICE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_IMPROVEMENT_DEVICE5</ArtDefineTag>
 			<PrereqNatureYields/>
 			<YieldIncreases/>

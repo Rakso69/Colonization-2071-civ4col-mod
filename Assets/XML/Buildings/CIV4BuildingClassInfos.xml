@@ -242,62 +242,62 @@
 		</BuildingClassInfo>
 <!-- Colonization 2071-->
 		<BuildingClassInfo>
-			<Type>BUILDINGCLASS_COAL_FURNACE</Type>
-			<Description>Coal Furnace</Description>
-			<DefaultBuilding>BUILDING_COAL_FURNACE</DefaultBuilding>
+			<Type>BUILDINGCLASS_POWER_PLANT</Type>
+			<Description>TXT_KEY_BUILDING_POWER_PLANT</Description>
+			<DefaultBuilding>BUILDING_POWER_PLANT</DefaultBuilding>
 			<VictoryThresholds/>
 		</BuildingClassInfo>
 		<BuildingClassInfo>
-			<Type>BUILDINGCLASS_STEAMWORKS</Type>
-			<Description>Steamworks</Description>
-			<DefaultBuilding>BUILDING_STEAMWORKS</DefaultBuilding>
+			<Type>BUILDINGCLASS_OIL_REFINERY</Type>
+			<Description>TXT_KEY_BUILDING_OIL_REFINERY</Description>
+			<DefaultBuilding>BUILDING_OIL_REFINERY</DefaultBuilding>
 			<VictoryThresholds/>
 		</BuildingClassInfo>
 		<BuildingClassInfo>
 			<Type>BUILDINGCLASS_INVENTORS_HOUSE</Type>
-			<Description>TXT_KEY_BUILDING_BONUS</Description>
+			<Description>TXT_KEY_BUILDING_INVENTORS_HOUSE</Description>
 			<DefaultBuilding>BUILDING_INVENTORS_HOUSE</DefaultBuilding>
 			<VictoryThresholds/>
 		</BuildingClassInfo>
 		<BuildingClassInfo>
-		<Type>BUILDINGCLASS_OBSERVATORY</Type>
-			<Description>Observatory</Description>
-			<DefaultBuilding>BUILDING_OBSERVATORY</DefaultBuilding>
+		<Type>BUILDINGCLASS_DATACORE</Type>
+			<Description>TXT_KEY_BUILDING_DATACORE</Description>
+			<DefaultBuilding>BUILDING_DATACORE</DefaultBuilding>
 			<VictoryThresholds/>
 		</BuildingClassInfo>
 		<BuildingClassInfo>
 			<Type>BUILDINGCLASS_INVENTORS_WORKSHOP</Type>
-			<Description>TXT_KEY_BUILDING_BONUS</Description>
+			<Description>TXT_KEY_BUILDING_INVENTORS_WORKSHOP</Description>
 			<DefaultBuilding>BUILDING_INVENTORS_WORKSHOP</DefaultBuilding>
 			<VictoryThresholds/>
 		</BuildingClassInfo>
 		<BuildingClassInfo>
-			<Type>BUILDINGCLASS_INVENTORS_LABROTORY</Type>
-			<Description>TXT_KEY_BUILDING_BONUS</Description>
-			<DefaultBuilding>BUILDING_INVENTORS_LABROTORY</DefaultBuilding>
+			<Type>BUILDINGCLASS_INVENTORS_LABORATORY</Type>
+			<Description>TXT_KEY_BUILDING_INVENTORS_LABORATORY</Description>
+			<DefaultBuilding>BUILDING_INVENTORS_LABORATORY</DefaultBuilding>
 			<VictoryThresholds/>
 		</BuildingClassInfo>
 		<BuildingClassInfo>
 			<Type>BUILDINGCLASS_MASSDRIVER</Type>
-			<Description>Mass Driver</Description>
+			<Description>TXT_KEY_BUILDING_MASSDRIVER</Description>
 			<DefaultBuilding>BUILDING_MASSDRIVER</DefaultBuilding>
 			<VictoryThresholds/>
 		</BuildingClassInfo>
 		<BuildingClassInfo>
 			<Type>BUILDINGCLASS_SPACEELEVATOR</Type>
-			<Description>Space Elevator</Description>
+			<Description>TXT_KEY_BUILDING_SPACEELEVATOR</Description>
 			<DefaultBuilding>BUILDING_SPACEELEVATOR</DefaultBuilding>
 			<VictoryThresholds/>
 		</BuildingClassInfo>
 		<BuildingClassInfo>
 			<Type>BUILDINGCLASS_DAM</Type>
-			<Description>Hydroelectric Facility</Description>
+			<Description>TXT_KEY_BUILDING_DAM</Description>
 			<DefaultBuilding>BUILDING_DAM</DefaultBuilding>
 			<VictoryThresholds/>
 		</BuildingClassInfo>
 		<BuildingClassInfo>
 			<Type>BUILDINGCLASS_BANK</Type>
-			<Description>Interstellar Bank</Description>
+			<Description>TXT_KEY_BUILDING_BANK</Description>
 			<DefaultBuilding>BUILDING_BANK</DefaultBuilding>
 			<VictoryThresholds/>
 		</BuildingClassInfo>

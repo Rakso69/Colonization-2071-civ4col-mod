@@ -64,8 +64,8 @@
 <!--Native Omnivores🔸-1🔲🦠☣️🪨+2🌾 -->
 		<BonusInfo>
 			<Type>BONUS_DEER</Type>
-			<Description><!--TXT_KEY_BONUS_DEER-->Native Omnivores</Description>
-			<Civilopedia><!--TXT_KEY_BONUS_DEER_PEDIA-->These herds of sinewy quadrupeds are a reliable source of edible meat, though their frenzied stampedes can often interfere with other industrial pursuits.</Civilopedia>
+			<Description>TXT_KEY_BONUS_DEER</Description>
+			<Civilopedia>TXT_KEY_BONUS_DEER_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_DEER</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_DEER</BuildingType>
 			<YieldChanges>
@@ -195,8 +195,8 @@
 <!--Native Anthropods🔸+3🔲+1🌾 -->
 		<BonusInfo>
 			<Type>BONUS_CRAB</Type>
-			<Description><!--TXT_KEY_BONUS_CRAB-->Native Arthropods</Description>
-			<Civilopedia><!--TXT_KEY_BONUS_CRAB_PEDIA-->The chitinous exoskeleton of these small but vicious creatures became prized for its unexpected utility in Plasteel alloys and a variety of industrial biopolymers.</Civilopedia>
+			<Description>TXT_KEY_BONUS_CRAB</Description>
+			<Civilopedia>TXT_KEY_BONUS_CRAB_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_CRAB</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_DEER</BuildingType>
 			<YieldChanges>
@@ -257,8 +257,8 @@
 <!--Native Lungfish🔸-1🧬+2🌾 -->
 		<BonusInfo>
 			<Type>BONUS_FISH</Type>
-			<Description><!--TXT_KEY_BONUS_FISH-->Native Lungfish</Description>
-			<Civilopedia><!--TXT_KEY_BONUS_FISH_PEDIA-->With their frenetic leaping supercharged by the faintly narcotic ooze, the carnivorous lungfish found in the marshes of certain New World planets drove up wage costs for would-be Soma smugglers, lending new meaning to the phrase "an arm and a leg".</Civilopedia>
+			<Description>TXT_KEY_BONUS_FISH</Description>
+			<Civilopedia>TXT_KEY_BONUS_FISH_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_FISH</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_DEER</BuildingType>
 			<YieldChanges>
@@ -615,8 +615,8 @@
 <!--Native Shrubs🔸+3🔲+1🌾 -->
 		<BonusInfo>
 			<Type>BONUS_TOBACCO</Type>
-			<Description><!--TXT_KEY_BONUS_TOBACCO-->Native Shrubs</Description>
-			<Civilopedia><!--TXT_KEY_YIELD_TOBACCO_PEDIA-->These hardy native succulents can be harvested for their cellulose-rich fibrous husks for use in plasteel building materials, or in a pinch can be pulverized into a nutritious if repellent-tasting gruel.</Civilopedia>
+			<Description>TXT_KEY_BONUS_TOBACCO</Description>
+			<Civilopedia>TXT_KEY_YIELD_TOBACCO_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_TOBACCO</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_TOBACCO</BuildingType>
 			<YieldChanges>
@@ -746,8 +746,8 @@
 <!--Progenitor Metropolis🔸+1💎🦠🩻🧬[🦠][🩻][🧬]🛠️🔫⚙️🔔✝️💡 -->
 		<BonusInfo>
 			<Type>BONUS_METROPOLIS</Type>
-			<Description>Progenitor Metropolis</Description>
-			<Civilopedia>This towering cluster of monoliths is remarkably well preserved. One can only hope that doesn't apply to the security systems as well..</Civilopedia>
+			<Description>TXT_KEY_BONUS_METROPOLIS</Description>
+			<Civilopedia>TXT_KEY_BONUS_METROPOLIS_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_METROPOLIS</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_FUR</BuildingType>
 			<YieldChanges>
@@ -859,8 +859,8 @@
 <!--Ruined Temple🔸+1💎🩻💡 -->
 		<BonusInfo>
 			<Type>BONUS_TEMPLE</Type>
-			<Description>Ruined Temple</Description>
-			<Civilopedia>The bowels of this crumbling temple complex are home to countless bizarre idols and artworks forged of precious metal, in addition to a wealth of technological artifacts from the Progenitor homeworlds.</Civilopedia>
+			<Description>TXT_KEY_BONUS_TEMPLE</Description>
+			<Civilopedia>TXT_KEY_BONUS_TEMPLE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_TEMPLE</ArtDefineTag>
 			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
 			<YieldChanges>
@@ -940,8 +940,8 @@
 <!--Grand Ziggurat🔸+2💎🩻🔔+1[🩻]💡 -->
 		<BonusInfo>
 			<Type>BONUS_GRANDZIGGURAT</Type>
-			<Description>Grand Ziggurat</Description>
-			<Civilopedia>Long since seized during the Progenitor conquest and overgrown by tangles of poisonous vines, this ancient complex was once of unparallelled religious significance to the aliens of the New Worlds. An alien Empire reconquering the Grand Ziggurat can gain awesome political and technological power, while Human colonies dream of sacking it for its untold stores of wealth.</Civilopedia>
+			<Description>TXT_KEY_BONUS_GRANDZIGGURAT</Description>
+			<Civilopedia>TXT_KEY_BONUS_GRANDZIGGURAT_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_GRANDZIGGURAT</ArtDefineTag>
 			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
 			<YieldChanges>
@@ -1025,8 +1025,8 @@
 <!--Nesting Grounds🔸+2🌾🦠+1[🦠] -->
 		<BonusInfo>
 			<Type>BONUS_HATCHERY</Type>
-			<Description>Nesting Grounds</Description>
-			<Civilopedia>The leathery eggs atop the summit of this ancient ziggurat appear to be home to a race of venomous and semi-intelligent salamanders. Although fierce and savage, if tamed their secretions may prove an invaluable source of potent neurochemicals.</Civilopedia>
+			<Description>TXT_KEY_BONUS_HATCHERY</Description>
+			<Civilopedia>TXT_KEY_BONUS_HATCHERY_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_HATCHERY</ArtDefineTag>
 			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
 			<YieldChanges>
@@ -1102,8 +1102,8 @@
 <!--Spider Lair🔸+3🔲+2🦠+1[🦠] -->
 		<BonusInfo>
 			<Type>BONUS_SPIDERLAIR</Type>
-			<Description>Spider Lair</Description>
-			<Civilopedia>Enormous cocoons spun of unbreakable silksteel hang from the trees nearby, home to thousands alien spiders.</Civilopedia>
+			<Description>TXT_KEY_BONUS_SPIDERLAIR</Description>
+			<Civilopedia>TXT_KEY_BONUS_SPIDERLAIR_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_SPIDERLAIR</ArtDefineTag>
 			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
 			<YieldChanges>
@@ -1200,8 +1200,8 @@
 <!--Iridescent Pyramid🔸+2🩻[🩻]💡 -->
 		<BonusInfo>
 			<Type>BONUS_PYRAMID</Type>
-			<Description>Iridescent Pyramids</Description>
-			<Civilopedia>These crumbling structures, carved of lapis lazuli and jet, bear an uncanny resemblance to those of ancient Earth, and are etched with strange four-dimensional hieroglyphics which reach below the surface of the translucent structure and fluctuate slowly with the passage of time. What mysteries could lie inside?</Civilopedia>
+			<Description>TXT_KEY_BONUS_PYRAMID</Description>
+			<Civilopedia>TXT_KEY_BONUS_PYRAMID_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_PYRAMID</ArtDefineTag>
 			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
 			<YieldChanges>
@@ -1294,8 +1294,8 @@
 <!--Limestone Spire🔸+2🧬+2[🧬]+1💡 -->
 		<BonusInfo>
 			<Type>BONUS_SPIRE</Type>
-			<Description>Limestone Spire</Description>
-			<Civilopedia>This primitive yet elegant prehistoric structure is hewn from strange minerals clearly not derived from the surrounding geology. To merely approach the crumbling tower and breath in its chalky dust is somehow.. exhilarating.</Civilopedia>
+			<Description>TXT_KEY_BONUS_SPIRE</Description>
+			<Civilopedia>TXT_KEY_BONUS_SPIRE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_SPIRE</ArtDefineTag>
 			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
 			<YieldChanges>
@@ -1346,8 +1346,8 @@
 <!--Antediluvian Catacomb🔸+2🩻✝️+1💎💡 -->
 		<BonusInfo>
 			<Type>BONUS_CATACOMB</Type>
-			<Description>Antediluvian Catacomb</Description>
-			<Civilopedia>The endless tunnels carved into this desert outcrop do indeed provide a small but inexhaustible trickle of rare artifacts; media sensationalism about their contents may provide an even greater source of greedy Earth emigrants in search of treasure.</Civilopedia>
+			<Description>TXT_KEY_BONUS_CATACOMB</Description>
+			<Civilopedia>TXT_KEY_BONUS_CATACOMB_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_CATACOMB</ArtDefineTag>
 			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
 			<YieldChanges>
@@ -1406,8 +1406,8 @@
 <!--Sacred Grove🔸+2🦠[🦠]+1💡 -->
 		<BonusInfo>
 			<Type>BONUS_SACREDGROVE</Type>
-			<Description>Sacred Grove</Description>
-			<Civilopedia>Half bioengineering laboratory and half meditative shrine, this well-preserved complex appears to have been tended by a species of semisentient vines with mobile tendrils.</Civilopedia>
+			<Description>TXT_KEY_BONUS_SACREDGROVE</Description>
+			<Civilopedia>TXT_KEY_BONUS_SACREDGROVE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_SACREDGROVE</ArtDefineTag>
 			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
 			<YieldChanges>
@@ -1470,8 +1470,8 @@
 <!--Ruined Biosphere🔸+3🔔✝️+2🦠💡+1[🦠] -->
 		<BonusInfo>
 			<Type>BONUS_BIOSPHERE</Type>
-			<Description>Ruined Biosphere</Description>
-			<Civilopedia>Incredibly, this abandoned research station appears to be evidence of a failed expedition undertaken by clandestine Earth government organizations several decades before public knowledge of the wormhole to the New Worlds. Further investigation is sure to provoke a media sensation, and perhaps significant leverage over the highly placed politicians behind this well-managed coverup.</Civilopedia>
+			<Description>TXT_KEY_BONUS_BIOSPHERE</Description>
+			<Civilopedia>TXT_KEY_BONUS_BIOSPHERE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_BIOSPHERE</ArtDefineTag>
 			<BuildingType>BUILDING_WEAVERS_HOUSE</BuildingType>
 			<YieldChanges>
@@ -1576,8 +1576,8 @@
 <!--Plinth Circle🔸+2☣️[☣️]+1🩻 -->
 		<BonusInfo>
 			<Type>BONUS_STONEHENGE</Type>
-			<Description>Plinth Circle</Description>
-			<Civilopedia>This incongrous circle of standing stones are faintly luminous and warm to the touch. Whatever purpose could they serve?</Civilopedia>
+			<Description>TXT_KEY_BONUS_STONEHENGE</Description>
+			<Civilopedia>TXT_KEY_BONUS_STONEHENGE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_STONEHENGE</ArtDefineTag>
 			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
 			<YieldChanges>
@@ -1682,8 +1682,8 @@
 <!--Sacrificial Pit🔸+3🔔+2✝️+1🦠 -->
 		<BonusInfo>
 			<Type>BONUS_VOLCANOTEMPLE</Type>
-			<Description>Sacrificial Pit</Description>
-			<Civilopedia>Inside the bowels of this ancient temple complex, cryptic glyphs and diagrams are chiseled down the inner walls of an active volcano, its jagged slopes stained with the dried blood of a dozen species. What sort of fiendish rituals went on here, and for what purpose? Decoding its eldritch mysteries may prove illuminating in many ways..</Civilopedia>
+			<Description>TXT_KEY_BONUS_VOLCANOTEMPLE</Description>
+			<Civilopedia>TXT_KEY_BONUS_VOLCANOTEMPLE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_VOLCANOTEMPLE</ArtDefineTag>
 			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
 			<YieldChanges>
@@ -1745,10 +1745,10 @@
 		</BonusInfo>
 <!--Obsidian Faces🔸+2💡+1🔔✝️ -->
 		<BonusInfo>
-			<Type>BONUS_MTRUSHMORE</Type>
-			<Description>Obsidian Faces</Description>
-			<Civilopedia>These huge but seemingly inert stone carvings nevertheless have an unsettling presence, seeming to fix passersby with a distant gaze. Those visitors inclined to stay and meditate can often hear hollow voices whispering strange secrets that seem remembered from long ago..</Civilopedia>
-			<ArtDefineTag>ART_DEF_BONUS_MTRUSHMORE</ArtDefineTag>
+			<Type>BONUS_OBSIDIAN</Type>
+			<Description>TXT_KEY_BONUS_OBSIDIAN</Description>
+			<Civilopedia>TXT_KEY_BONUS_OBSIDIAN_PEDIA</Civilopedia>
+			<ArtDefineTag>ART_DEF_BONUS_OBSIDIAN</ArtDefineTag>
 			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
 			<YieldChanges>
 				<YieldIntegerPair>
@@ -1798,8 +1798,8 @@
 <!--Malachite Idols🔸+1🪨🔔💡 -->
 		<BonusInfo>
 			<Type>BONUS_MOAI</Type>
-			<Description>Malachite Idols</Description>
-			<Civilopedia>These ancient sculptures appear to be forged from a strange mineral alloy and resonate hauntingly with the slightest breeze, their pitch modulating subtly with the phases of the moons..</Civilopedia>
+			<Description>TXT_KEY_BONUS_MOAI</Description>
+			<Civilopedia>TXT_KEY_BONUS_MOAI_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_MOAI</ArtDefineTag>
 			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
 			<YieldChanges>
@@ -1892,8 +1892,8 @@
 <!--Calcified Being🔸+2🪨+1[🦠][🩻]💡 -->
 		<BonusInfo>
 			<Type>BONUS_GIANT</Type>
-			<Description>Calcified Being</Description>
-			<Civilopedia>Lips open in a silent howl of despair, the form of a colossal humanoid titan looms out of the surrounding rock - further study reveals that this is no carving, but the remains of an enormous being whose tissues somehow appear to have been spontanously mineralized.</Civilopedia>
+			<Description>TXT_KEY_BONUS_GIANT</Description>
+			<Civilopedia>TXT_KEY_BONUS_GIANT_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_GIANT</ArtDefineTag>
 			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
 			<YieldChanges>
@@ -1956,8 +1956,8 @@
 <!--Ominous Effigy🔸+3🔔+2✝️ -->
 		<BonusInfo>
 			<Type>BONUS_EFFIGY</Type>
-			<Description>Ominous Effigy</Description>
-			<Civilopedia>This baleful statue casts a lambent gaze across the alien countryside. its iconic appearance becoming the object of great veneration among certain of the numerous fringe religions and apocalyptic mystery cults of Earth. Perhaps this could be turned to some advantage..</Civilopedia>
+			<Description>TXT_KEY_BONUS_EFFIGY</Description>
+			<Civilopedia>TXT_KEY_BONUS_EFFIGY_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_EFFIGY</ArtDefineTag>
 			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
 			<YieldChanges>
@@ -2046,8 +2046,8 @@
 <!--Abandoned Redoubt🔸+1🔫🔔💡 -->
 		<BonusInfo>
 			<Type>BONUS_MALI</Type>
-			<Description>Abandoned Redoubt</Description>
-			<Civilopedia>Decoding the hieroglyphs gouged into this ancient structure reveals the story of a long-dead alien species embroiled in a futile campaign of resistance against the Progenitors. The fortifications appear to have been suddenly abandoned - or perhaps their inhabitants were just as suddenly exterminated.</Civilopedia>
+			<Description>TXT_KEY_BONUS_MALI</Description>
+			<Civilopedia>TXT_KEY_BONUS_MALI_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_MALI</ArtDefineTag>
 			<BuildingType>BUILDING_ZIGGURAT</BuildingType>
 			<YieldChanges>
@@ -2127,8 +2127,8 @@
 <!--Edible Berries🔸+1🌾🧬[🧬] -->
 		<BonusInfo>
 			<Type>BONUS_BERRIES</Type>
-			<Description>Edible Berries</Description>
-			<Civilopedia>These hard and bitter berries are difficult to digest, but popular among certain sectors for their vaguely euphoric aftereffects.</Civilopedia>
+			<Description>TXT_KEY_BONUS_BERRIES</Description>
+			<Civilopedia>TXT_KEY_BONUS_BERRIES_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_BERRIES</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_BANANA</BuildingType>
 			<YieldChanges>
@@ -2196,8 +2196,8 @@
 <!--Alien Fungi🔸+2🦠+1🌾 -->
 		<BonusInfo>
 			<Type>BONUS_FUNGI</Type>
-			<Description>Alien Fungi</Description>
-			<Civilopedia>This cluster of unusually large mushrooms appears strangely Earthlike, and may even be edible.</Civilopedia>
+			<Description>TXT_KEY_BONUS_FUNGI</Description>
+			<Civilopedia>TXT_KEY_BONUS_FUNGI_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_FUNGI</ArtDefineTag>
 			<BuildingType></BuildingType>
 			<YieldChanges>
@@ -2257,8 +2257,8 @@
 <!--Native Tubers🔸-1🌾+3🧬+2[🧬] -->
 		<BonusInfo>
 			<Type>BONUS_TUBERS</Type>
-			<Description>Native Tubers</Description>
-			<Civilopedia>These tangled masses of dense subterranean roots can significantly complicate life for local farmers, but with the proper extraction techniques can provide rich yields of a mild neurotoxin that proves surprisingly addictive.</Civilopedia>
+			<Description>TXT_KEY_BONUS_TUBERS</Description>
+			<Civilopedia>TXT_KEY_BONUS_TUBERS_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_TUBERS</ArtDefineTag>
 			<BuildingType></BuildingType>
 			<YieldChanges>
@@ -2331,8 +2331,8 @@
 <!--Native Ruminants🔸+2🌾 -->
 		<BonusInfo>
 			<Type>BONUS_BISON</Type>
-			<Description>Native Ruminants</Description>
-			<Civilopedia>These placid animals are easy prey for hunting or herding; though their nutritious but stringy flesh often requires hours of irradiation before it becomes palatable.</Civilopedia>
+			<Description>TXT_KEY_BONUS_BISON</Description>
+			<Civilopedia>TXT_KEY_BONUS_BISON_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_BISON</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_DEER</BuildingType>
 			<YieldChanges>
@@ -2379,8 +2379,8 @@
 <!--Native Ungulates🔸+3🌾 -->
 		<BonusInfo>
 			<Type>BONUS_ARCTICDEER</Type>
-			<Description>Native Ungulates</Description>
-			<Civilopedia>These arctic mammals store a form of remarkably energy-rich fat in their flesh and marrow. A single herd could often provide lifesaving sustenance for small colonies stranded in the frozen reaches of the Outer Worlds.</Civilopedia>
+			<Description>TXT_KEY_BONUS_ARCTICDEER</Description>
+			<Civilopedia>TXT_KEY_BONUS_ARCTICDEER_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_ARCTICDEER</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_DEER</BuildingType>
 			<YieldChanges>
@@ -2441,9 +2441,9 @@
 <!--Native Pinnipeds🔸+4🌾 -->
 		<BonusInfo>
 			<Type>BONUS_WALRUS</Type>
-			<Description>Native Pinnipeds</Description>
-			<Civilopedia>These large and savage walrus-like creatures have incredibly thick hides and enormous tusks, and can prove a true challenge for even the most well-equipped hunter to take down. For those with sufficient weaponry, the energy-rich blubber of a single bull can be sufficient to sustain a small colony for a month.</Civilopedia>
-			<ArtDefineTag>ART_DEF_BONUS_MONSTERWALRUS</ArtDefineTag>
+			<Description>TXT_KEY_BONUS_WALRUS</Description>
+			<Civilopedia>TXT_KEY_BONUS_WALRUS_PEDIA</Civilopedia>
+			<ArtDefineTag>ART_DEF_BONUS_WALRUS</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_DEER</BuildingType>
 			<YieldChanges>
 				<YieldIntegerPair>
@@ -2503,8 +2503,8 @@
 <!--Electrolytic Mollusks🔸+3🪨+1🌾 -->
 		<BonusInfo>
 			<Type>BONUS_CLAM</Type>
-			<Description>Electrolytic Mollusks</Description>
-			<Civilopedia>The heavily mineralized shells of these sour-tasting shellfish appear to use organic acids to concentrate and precipitate trace metal ions from the surrounding bogs.</Civilopedia>
+			<Description>TXT_KEY_BONUS_CLAM</Description>
+			<Civilopedia>TXT_KEY_BONUS_CLAM_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_CLAM</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_DEER</BuildingType>
 			<YieldChanges>
@@ -2569,8 +2569,8 @@
 <!--Mantrap Clams🔸-1🌾+1💎 -->
 		<BonusInfo>
 			<Type>BONUS_PEARL</Type>
-			<Description>Mantrap Clams</Description>
-			<Civilopedia>Encased by strangely beautiful but razor-jawed shells holding an immense pearl which could sell for a small fortune on Earth, these large carnivorous shellfish float tauntingly in the mire, luring many a prospector to an early death. Specimens that have recently fed are particularly prized by collectors for the telltale traces of golden-red throughout their iridescent nacre.</Civilopedia>
+			<Description>TXT_KEY_BONUS_PEARL</Description>
+			<Civilopedia>TXT_KEY_BONUS_PEARL_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_PEARL</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_DEER</BuildingType>
 			<YieldChanges>
@@ -2639,8 +2639,8 @@
 <!--Native Rodents🔸+3🩻-1🌾 -->
 		<BonusInfo>
 			<Type>BONUS_RODENT</Type>
-			<Description>Native Rodents</Description>
-			<Civilopedia>The rapacious swarms of vermin infesting certain New World planets proved almost impossible to exterminate. However, many of these dimly intelligent creatures shared a penchant for rooting out shiny Artifacts from hidden places, making their fetid burrows an unexpected treasure trove for less squeamish Archaeologists.</Civilopedia>
+			<Description>TXT_KEY_BONUS_RODENT</Description>
+			<Civilopedia>TXT_KEY_BONUS_RODENT_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_RODENT</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_DEER</BuildingType>
 			<YieldChanges>
@@ -2709,8 +2709,8 @@
 <!--Intelligent Mammals🔸+2💡 -->
 		<BonusInfo>
 			<Type>BONUS_ELEPHANT</Type>
-			<Description>Intelligent Mammals</Description>
-			<Civilopedia>These large albino creatures unmistakably must be distant relatives of the long-extinct elephants of Earth. With faintly bulbous skulls and large, sad eyes, in passing Human settlements they gesture sinuously with their trunks, perhaps as if in silent reproach..</Civilopedia>
+			<Description>TXT_KEY_BONUS_ELEPHANT</Description>
+			<Civilopedia>TXT_KEY_BONUS_ELEPHANT_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_ELEPHANT</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_DEER</BuildingType>
 			<YieldChanges>
@@ -2783,8 +2783,8 @@
 <!--Native Aurochs🔸+1🌾🔲🦠☣️🪨 -->
 		<BonusInfo>
 			<Type>BONUS_HORSE</Type>
-			<Description>Native Aurochs</Description>
-			<Civilopedia>These herds of two-toed mammals proved surprisingly easy to domesticate and were adaptable to use in a variety of basic tasks, particularly when employed by a skilled colonist or Alien Hybrid.</Civilopedia>
+			<Description>TXT_KEY_BONUS_HORSE</Description>
+			<Civilopedia>TXT_KEY_BONUS_HORSE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_HORSE</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_DEER</BuildingType>
 			<YieldChanges>
@@ -2851,8 +2851,8 @@
 <!--Native Bipeds🔸+1🌾[🦠] -->
 		<BonusInfo>
 			<Type>BONUS_PIG</Type>
-			<Description>Native Bipeds</Description>
-			<Civilopedia>These oddly misshapen semi-intelligent creatures appear to be in the early stages of evolution toward a bipedal body structure, with the beginnings of crude opposable thumbs. Initial research indicates that their genomes contain a series of unusual retrotransposons which may have been engineered to artificially boost their evolutionary rate.</Civilopedia>
+			<Description>TXT_KEY_BONUS_PIG</Description>
+			<Civilopedia>TXT_KEY_BONUS_PIG_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_PIG</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_DEER</BuildingType>
 			<YieldChanges>
@@ -2925,8 +2925,8 @@
 <!--Native Beetles🔸+1🌾🦠 -->
 		<BonusInfo>
 			<Type>BONUS_SHEEP</Type>
-			<Description>Native Beetles</Description>
-			<Civilopedia>These strange-bodied beings proved a serviceable (if barely palatable) source of protein, although the spores and mycelia concentrated in their wiry carapace took lengthy cooking to detoxify.</Civilopedia>
+			<Description>TXT_KEY_BONUS_SHEEP</Description>
+			<Civilopedia>TXT_KEY_BONUS_SHEEP_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_SHEEP</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_DEER</BuildingType>
 			<YieldChanges>
@@ -2994,10 +2994,10 @@
 		</BonusInfo>
 <!--Exotic Aphrodisiac🔸+3✝️+1🧬 -->
 		<BonusInfo>
-			<Type>BONUS_AFRO</Type>
-			<Description>Exotic Aphrodisiac</Description>
-			<Civilopedia>Although their volatile peptides need to be ingested immediately after harvest, limiting use as an export crop, the unique properties of these luminous reeds are rumored to be so effective that some will cross a galaxy to sample them.</Civilopedia>
-			<ArtDefineTag>ART_DEF_BONUS_AFRO</ArtDefineTag>
+			<Type>BONUS_APHRO</Type>
+			<Description>TXT_KEY_BONUS_APHRO</Description>
+			<Civilopedia>TXT_KEY_BONUS_APHRO_PEDIA</Civilopedia>
+			<ArtDefineTag>ART_DEF_BONUS_APHRO</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_CORN</BuildingType>
 			<YieldChanges>
 				<YieldIntegerPair>
@@ -3051,10 +3051,10 @@
 		</BonusInfo>
 <!--Subterranean Fungus🔸-2🌾🧬+3🦠 -->
 		<BonusInfo>
-			<Type>BONUS_RICE</Type>
-			<Description>Subterranean Fungus</Description>
-			<Civilopedia>This gigantic organism is believed to spread its filamentous hyphae throughout countless acres of underground soil, and proves highly resistant to conventional agricultural chemicals.</Civilopedia>
-			<ArtDefineTag>ART_DEF_BONUS_RICE</ArtDefineTag>
+			<Type>BONUS_SUBFUNGI</Type>
+			<Description>TXT_KEY_BONUS_SUBFUNGI</Description>
+			<Civilopedia>TXT_KEY_BONUS_SUBFUNGI_PEDIA</Civilopedia>
+			<ArtDefineTag>ART_DEF_BONUS_SUBFUNGI</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_CORN</BuildingType>
 			<YieldChanges>
 				<YieldIntegerPair>
@@ -3113,8 +3113,8 @@
 <!--Native Mosses🔸+1🌾🦠🧬 -->
 		<BonusInfo>
 			<Type>BONUS_MOSS</Type>
-			<Description>Native Mosses</Description>
-			<Civilopedia>The astonishing biodiversity of these resilient tendrils can provide versatile if meager sustenance for a growing colony.</Civilopedia>
+			<Description>TXT_KEY_BONUS_MOSS</Description>
+			<Civilopedia>TXT_KEY_BONUS_MOSS_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_MOSS</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_CORN</BuildingType>
 			<YieldChanges>
@@ -3173,10 +3173,10 @@
 		</BonusInfo>
 <!--Communications Array🔸+3✝️+2🔲 -->
 		<BonusInfo>
-			<Type>BONUS_COMM1</Type>
-			<Description>Communications Array</Description>
-			<Civilopedia>This ancient orbital facility is welded out of a near-indestructible polymer. While its resilience is frustrating to would-be plasteel scavengers, its spintronic relays have weathered the centuries remarkably well.</Civilopedia>
-			<ArtDefineTag>ART_DEF_BONUS_COMM1</ArtDefineTag>
+			<Type>BONUS_COMMS</Type>
+			<Description>TXT_KEY_BONUS_COMMS</Description>
+			<Civilopedia>TXT_KEY_BONUS_COMMS_PEDIA</Civilopedia>
+			<ArtDefineTag>ART_DEF_BONUS_COMMS</ArtDefineTag>
 			<BuildingType>NONE</BuildingType>
 			<YieldChanges>
 				<YieldIntegerPair>
@@ -3222,8 +3222,8 @@
 <!--Orbital Platform🔸+1🌾🔲🛍️ -->
 		<BonusInfo>
 			<Type>BONUS_ORBITALPLATFORM</Type>
-			<Description>Orbital Platform</Description>
-			<Civilopedia>Gaping holes in this crumbling shell of a former space station have left the decks no longer habitable, but its strategic position in low orbit can make it easily adaptable as a hydroponics platform or a waystation for orbital traders.</Civilopedia>
+			<Description>TXT_KEY_BONUS_ORBITALPLATFORM</Description>
+			<Civilopedia>TXT_KEY_BONUS_ORBITALPLATFORM_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_ORBITALPLATFORM</ArtDefineTag>
 			<BuildingType>NONE</BuildingType>
 			<YieldChanges>
@@ -3274,8 +3274,8 @@
 <!--Derelict Satellite🔸+2✝️🔲 -->
 		<BonusInfo>
 			<Type>BONUS_SATELLITE</Type>
-			<Description>Derelict Satellite</Description>
-			<Civilopedia>This swarm of tiny satellites must be centuries old, but is a servicable source of spare parts, and several still appear capable of functional transmissions.</Civilopedia>
+			<Description>TXT_KEY_BONUS_SATELLITE</Description>
+			<Civilopedia>TXT_KEY_BONUS_SATELLITE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_SATELLITE</ArtDefineTag>
 			<BuildingType>NONE</BuildingType>
 			<YieldChanges>
@@ -3326,8 +3326,8 @@
 <!--Gold Vein🔸+2💎+1🪨 -->
 		<BonusInfo>
 			<Type>BONUS_GOLD</Type>
-			<Description>Gold Vein</Description>
-			<Civilopedia>Frequently found in proximity to copper deposits, gold is in increasingly high demand as the wealthy elites of Earth hoard it against the constant debasement of government currencies.</Civilopedia>
+			<Description>TXT_KEY_BONUS_GOLD</Description>
+			<Civilopedia>TXT_KEY_BONUS_GOLD_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_GOLD</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_SILVER</BuildingType>
 			<YieldChanges>
@@ -3404,8 +3404,8 @@
 <!--Copper Vein🔸+1💎+2🪨 -->
 		<BonusInfo>
 			<Type>BONUS_COPPER</Type>
-			<Description>Copper Vein</Description>
-			<Civilopedia>Frequently found alloyed with trace amounts of gold, copper is in high demand for a variety of industrial uses.</Civilopedia>
+			<Description>TXT_KEY_BONUS_COPPER</Description>
+			<Civilopedia>TXT_KEY_BONUS_COPPER_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_COPPER</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_SILVER</BuildingType>
 			<YieldChanges>
@@ -3482,8 +3482,8 @@
 <!--Precious Stones🔸+2💎+1🛢️ -->
 		<BonusInfo>
 			<Type>BONUS_GEMS</Type>
-			<Description>Precious Stones</Description>
-			<Civilopedia>The unusual carnelian and azurite gemstones found deep in the crust of certain New World planets are made all the more precious by the inability of Earth geochemists to synthesize convincing replicas.</Civilopedia>
+			<Description>TXT_KEY_BONUS_GEMS</Description>
+			<Civilopedia>TXT_KEY_BONUS_GEMS_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_GEMS</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_SILVER</BuildingType>
 			<YieldChanges>
@@ -3492,7 +3492,7 @@
 					<iValue>2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>1</iValue>
 				</YieldIntegerPair>
 			</YieldChanges>
@@ -3559,10 +3559,10 @@
 		</BonusInfo>
 <!--Scrapyard🔸-2🩻+2🔲 -->
 		<BonusInfo>
-			<Type>BONUS_DEPOT</Type>
-			<Description>Scrapyard</Description>
-			<Civilopedia>TXT_KEY_BONUS_DEPOT_PEDIA</Civilopedia>
-			<ArtDefineTag>ART_DEF_BONUS_DEPOT</ArtDefineTag>
+			<Type>BONUS_SCRAP</Type>
+			<Description>TXT_KEY_BONUS_SCRAP</Description>
+			<Civilopedia>TXT_KEY_BONUS_SCRAP_PEDIA</Civilopedia>
+			<ArtDefineTag>ART_DEF_BONUS_SCRAP</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_FUR</BuildingType>
 			<YieldChanges>
 				<YieldIntegerPair>
@@ -3638,8 +3638,8 @@
 <!--Uranium Vein🔸+3☣️ -->
 		<BonusInfo>
 			<Type>BONUS_URANIUM</Type>
-			<Description>TXT_KEY_BONUS_TOBACCO</Description>
-			<Civilopedia>TXT_KEY_YIELD_TOBACCO_PEDIA</Civilopedia>
+			<Description>TXT_KEY_BONUS_URANIUM</Description>
+			<Civilopedia>TXT_KEY_BONUS_URANIUM_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_URANIUM</ArtDefineTag>
 			<BuildingType></BuildingType>
 			<YieldChanges>
@@ -3700,13 +3700,13 @@
 <!--Natural Gas🔸-1🌾+2🛢️ -->
 		<BonusInfo>
 			<Type>BONUS_NATURALGAS</Type>
-			<Description>Natural Gas</Description>
-			<Civilopedia>The plentiful natural gas deposits buried deep in the ancient crust of the New Worlds could be a valuable source of export wealth for a struggling colony. With Earth's industrial base starved for feedstocks, most Human colonists cared little that the seismic fracking necessary to extract it could often poison the nearby groundwater.</Civilopedia>
+			<Description>TXT_KEY_BONUS_NATURALGAS</Description>
+			<Civilopedia>TXT_KEY_BONUS_NATURALGAS_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_GAS</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_IRON</BuildingType>
 			<YieldChanges>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>2</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
@@ -3757,13 +3757,13 @@
 <!--Oil🔸+3🛢️ -->
 		<BonusInfo>
 			<Type>BONUS_OIL</Type>
-			<Description>Oil</Description>
-			<Civilopedia>The abundant sources of light sweet crude discovered deep in the crust of the New Worlds proved a godsend to industry, coming decades after the advent of peak oil on Earth. However, the richest oilfields were often found beneath barren desert wastelands or petrified forests far from the most habitable regions, making large-scale extraction a logistical challenge to coordinate.</Civilopedia>
+			<Description>TXT_KEY_BONUS_OIL</Description>
+			<Civilopedia>TXT_KEY_BONUS_OIL_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_OIL</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_IRON</BuildingType>
 			<YieldChanges>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>3</iValue>
 				</YieldIntegerPair>
 			</YieldChanges>
@@ -3806,8 +3806,8 @@
 <!--Impact Crater🔸+1🛢️💎🪨 -->
 		<BonusInfo>
 			<Type>BONUS_CRATER</Type>
-			<Description>Impact Crater</Description>
-			<Civilopedia>Left by a long-ago collision with a massive meteor, this enormous impact crater still carries traces of valuable metals buried deep within its crust.</Civilopedia>
+			<Description>TXT_KEY_BONUS_CRATER</Description>
+			<Civilopedia>TXT_KEY_BONUS_CRATER_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_CRATER</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_IRON</BuildingType>
 			<YieldChanges>
@@ -3820,7 +3820,7 @@
 					<iValue>1</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>1</iValue>
 				</YieldIntegerPair>
 			</YieldChanges>
@@ -3870,8 +3870,8 @@
 <!--Meteorite🔸+2☣️+1💎🪨 -->
 		<BonusInfo>
 			<Type>BONUS_METEOR</Type>
-			<Description>Meteorite</Description>
-			<Civilopedia>This site bears witness to the relatively recent impact of a massive meteor. Still radiating an unusual warmth, the fault lines surrounding the central core are rich in valuable metals and uranium.</Civilopedia>
+			<Description>TXT_KEY_BONUS_METEOR</Description>
+			<Civilopedia>TXT_KEY_BONUS_METEOR_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_METEOR</ArtDefineTag>
 			<BuildingType>BUILDING_BONUS_IRON</BuildingType>
 			<YieldChanges>
@@ -3934,8 +3934,8 @@
 <!--Paleontology Site🔸+2🦠+1🛢️🩻[🦠] -->
 		<BonusInfo>
 			<Type>BONUS_BONES</Type>
-			<Description>Paleontology Site</Description>
-			<Civilopedia>Scholars speculate that this enormous skeleton may be the remnant of a failed genetic experiment by the Progenitors.</Civilopedia>
+			<Description>TXT_KEY_BONUS_BONES</Description>
+			<Civilopedia>TXT_KEY_BONUS_BONES_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_BONES</ArtDefineTag>
 			<BuildingType></BuildingType>
 			<YieldChanges>
@@ -3952,7 +3952,7 @@
 					<iValue>1</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>1</iValue>
 				</YieldIntegerPair>
 			</YieldChanges>
@@ -3998,8 +3998,8 @@
 <!--Gargantuan Fossil🔸+2🦠+1🛢️☣️[🦠] -->
 		<BonusInfo>
 			<Type>BONUS_CARAPACE</Type>
-			<Description>Gargantuan Fossil</Description>
-			<Civilopedia>This enormous carapace appears to have been left by a truly colossal prehistoric arthropod. The trace radioactive metals in its exoskeleton suggest it may have functioned as some form of living power source.</Civilopedia>
+			<Description>TXT_KEY_BONUS_CARAPACE</Description>
+			<Civilopedia>TXT_KEY_BONUS_CARAPACE_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_CARAPACE</ArtDefineTag>
 			<BuildingType></BuildingType>
 			<YieldChanges>
@@ -4016,7 +4016,7 @@
 					<iValue>1</iValue>
 				</YieldIntegerPair>
 				<YieldIntegerPair>
-					<YieldType>YIELD_COAL</YieldType>
+					<YieldType>YIELD_HYDROCARBONS</YieldType>
 					<iValue>1</iValue>
 				</YieldIntegerPair>
 			</YieldChanges>
@@ -4062,8 +4062,8 @@
 <!--Arctic Moon🔸+2🦠🩻+1🌾 -->
 		<BonusInfo>
 			<Type>BONUS_ARCTICMOON</Type>
-			<Description>Arctic Moon</Description>
-			<Civilopedia>Covered with a thick layer of freezing ice, this planetoid bears several well preserved remnants of a long-ago Progenitor outpost.</Civilopedia>
+			<Description>TXT_KEY_BONUS_ARCTICMOON</Description>
+			<Civilopedia>TXT_KEY_BONUS_ARCTICMOON_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_ARCTICMOON</ArtDefineTag>
 			<BuildingType>NONE</BuildingType>
 			<YieldChanges>
@@ -4114,8 +4114,8 @@
 <!--Artifact Moon - greyed out icon🔸+4🩻 -->
 		<BonusInfo>
 			<Type>BONUS_ARTIFACTMOON</Type>
-			<Description>Artifact Moon</Description>
-			<Civilopedia>Cunningly hidden by an ancient cloaking device, the crust of this artificial moon is riddled with subterranean tunnels and laboratories rich in the knowledge of the Progenitors.</Civilopedia>
+			<Description>TXT_KEY_BONUS_ARTIFACTMOON</Description>
+			<Civilopedia>TXT_KEY_BONUS_ARTIFACTMOON_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_ARTIFACTMOON</ArtDefineTag>
 			<BuildingType>NONE</BuildingType>
 			<YieldChanges>
@@ -4158,8 +4158,8 @@
 <!--Barren Moon🔸-1🌾+4🪨 -->
 		<BonusInfo>
 			<Type>BONUS_BARRENMOON</Type>
-			<Description>Barren Moon</Description>
-			<Civilopedia>Little more than a hunk of barren rock, the crust and mantle of this tiny planetoid nevertheless contains rich deposits of several useful industrial metals.</Civilopedia>
+			<Description>TXT_KEY_BONUS_BARRENMOON</Description>
+			<Civilopedia>TXT_KEY_BONUS_BARRENMOON_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_BARRENMOON</ArtDefineTag>
 			<BuildingType>NONE</BuildingType>
 			<YieldChanges>
@@ -4206,8 +4206,8 @@
 <!--Primordial Moon🔸+3🦠+1🧬 -->
 		<BonusInfo>
 			<Type>BONUS_TOXICMOON</Type>
-			<Description>Primordial Moon</Description>
-			<Civilopedia>Apparently the site of long-ago Progenitor experimentation, the murky surface of this tiny planetoid seethes with toxic bacterial spores and viral particles. Although highly inimical to outside life, this primordial ooze proves to be a rich source of scientifically valuable nucleic acids and neurochemicals.</Civilopedia>
+			<Description>TXT_KEY_BONUS_TOXICMOON</Description>
+			<Civilopedia>TXT_KEY_BONUS_TOXICMOON_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_TOXICMOON</ArtDefineTag>
 			<BuildingType>NONE</BuildingType>
 			<YieldChanges>
@@ -4254,8 +4254,8 @@
 <!--Verdant Moon🔸+2🌾+1🦠 -->
 		<BonusInfo>
 			<Type>BONUS_VERDANTMOON</Type>
-			<Description>Verdant Moon</Description>
-			<Civilopedia>A tiny oasis amidst the hositle environment of the New Worlds, this strangely Earthlike planetoid somehow maintains an atmosphere hospitable to Terran fauna and flora. It is rumored that discoveries of trace early hominid fossils in its crust were quickly suppressed by highly-placed Earth government officials.</Civilopedia>
+			<Description>TXT_KEY_BONUS_VERDANTMOON</Description>
+			<Civilopedia>TXT_KEY_BONUS_VERDANTMOON_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_VERDANTMOON</ArtDefineTag>
 			<BuildingType>NONE</BuildingType>
 			<YieldChanges>
@@ -4302,8 +4302,8 @@
 <!--Aquatic Moon🔸+3🧬+1🌾 -->
 		<BonusInfo>
 			<Type>BONUS_AQUATICMOON</Type>
-			<Description>Aquatic Moon</Description>
-			<Civilopedia>The oceans and swamps of this aquatic planetoid could provide a fertile staging ground for would-be narcotraffickers to establish clandestine offworld Soma plantations.</Civilopedia>
+			<Description>TXT_KEY_BONUS_AQUATICMOON</Description>
+			<Civilopedia>TXT_KEY_BONUS_AQUATICMOON_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_AQUATICMOON</ArtDefineTag>
 			<BuildingType>NONE</BuildingType>
 			<YieldChanges>
@@ -4350,8 +4350,8 @@
 <!--Volcanic Moon🔸+3☣️🪨 -->
 		<BonusInfo>
 			<Type>BONUS_VOLCANICMOON</Type>
-			<Description>Volcanic Moon</Description>
-			<Civilopedia>With its core superheated by dense deposits of radioactive metals, this rocky planetoid proves a veritable gold mine for uranium prospectors.</Civilopedia>
+			<Description>TXT_KEY_BONUS_VOLCANICMOON</Description>
+			<Civilopedia>TXT_KEY_BONUS_VOLCANICMOON_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_BONUS_VOLCANICMOON</ArtDefineTag>
 			<BuildingType>NONE</BuildingType>
 			<YieldChanges>

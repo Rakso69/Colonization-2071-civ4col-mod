@@ -130,7 +130,7 @@
 							<iYield>10</iYield>
 						</Yield>
 						<Yield>
-							<YieldType>YIELD_COAL</YieldType>
+							<YieldType>YIELD_HYDROCARBONS</YieldType>
 							<iYield>10</iYield>
 						</Yield>
 					</Yields>
@@ -146,7 +146,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_LODGE</Type>
-			<Description>Build Plasteel Mill<!--TXT_KEY_BUILD_LODGE--></Description>
+			<Description>TXT_KEY_BUILD_LODGE</Description>
 			<Help/>
 			<iTime>1000</iTime>
 			<iCost>20</iCost>
@@ -256,7 +256,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_JUNGLE</Type>
-			<Description>Chop Jungle<!--TXT_KEY_BUILD_REMOVE_JUNGLE--></Description>
+			<Description>TXT_KEY_BUILD_REMOVE_JUNGLE</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>0</iCost>
@@ -281,7 +281,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_FOREST</Type>
-			<Description>Clear Ruins<!--TXT_KEY_BUILD_REMOVE_FOREST--></Description>
+			<Description>TXT_KEY_BUILD_REMOVE_FOREST</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>0</iCost>
@@ -311,7 +311,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_LIGHT_FOREST</Type>
-			<Description>Chop Coniferous Forest<!--TXT_KEY_BUILD_REMOVE_FOREST--></Description>
+			<Description>TXT_KEY_BUILD_REMOVE_LIGHT_FOREST</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>0</iCost>
@@ -342,7 +342,7 @@
 <!-- Colonization 2071-->
 		<BuildInfo>
 			<Type>BUILD_OILWELL</Type>
-			<Description>Drill Oil Well</Description>
+			<Description>TXT_KEY_BUILD_OILWELL</Description>
 			<Help/>
 			<iTime>1000</iTime>
 			<iCost>30</iCost>
@@ -448,7 +448,7 @@
 					<iTime>400</iTime>
 					<Yields>
 						<Yield>
-							<YieldType>YIELD_COAL</YieldType>
+							<YieldType>YIELD_HYDROCARBONS</YieldType>
 							<iYield>10</iYield>
 						</Yield>
 					</Yields>
@@ -463,13 +463,13 @@
 			<Button>Art\Interface\Game Hud\Actions\build_well.dds</Button>
 		</BuildInfo>
 		<BuildInfo>
-			<Type>BUILD_RANCH</Type>
-			<Description>Build Pasture</Description>
+			<Type>BUILD_PASTURE</Type>
+			<Description>TXT_KEY_BUILD_PASTURE</Description>
 			<Help/>
 			<iTime>1000</iTime>
 			<iCost>30</iCost>
 			<bKill>0</bKill>
-			<ImprovementType>IMPROVEMENT_RANCH</ImprovementType>
+			<ImprovementType>IMPROVEMENT_PASTURE</ImprovementType>
 			<RouteType>NONE</RouteType>
 			<EntityEvent>ENTITY_EVENT_IRRIGATE</EntityEvent>
 			<FeatureStructs>
@@ -568,7 +568,7 @@
 							<iYield>10</iYield>
 						</Yield>
 						<Yield>
-							<YieldType>YIELD_COAL</YieldType>
+							<YieldType>YIELD_HYDROCARBONS</YieldType>
 							<iYield>10</iYield>
 						</Yield>
 					</Yields>
@@ -584,7 +584,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_EXCAVATION</Type>
-			<Description>Begin Excavation</Description>
+			<Description>TXT_KEY_BUILD_EXCAVATION</Description>
 			<Help/>
 			<iTime>2000</iTime>
 			<iCost>100</iCost>
@@ -633,7 +633,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_EXPEDITION</Type>
-			<Description>Launch Expedition</Description>
+			<Description>TXT_KEY_BUILD_EXPEDITION</Description>
 			<Help/>
 			<iTime>2000</iTime>
 			<iCost>100</iCost>
@@ -694,7 +694,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_MOON_COLONY1</Type>
-			<Description>Found Lunar Outpost</Description>
+			<Description>TXT_KEY_BUILD_MOON_COLONY1</Description>
 			<Help/>
 			<iTime>1500</iTime>
 			<iCost>100</iCost>
@@ -747,7 +747,7 @@
 					<iTime>200</iTime>
 					<Yields>
 						<Yield>
-							<YieldType>YIELD_COAL</YieldType>
+							<YieldType>YIELD_HYDROCARBONS</YieldType>
 							<iYield>10</iYield>
 						</Yield>
 					</Yields>
@@ -784,13 +784,13 @@
 			<Button>Art\Interface\Game Hud\Actions\build_mooncolony.dds</Button>
 		</BuildInfo>
 		<BuildInfo>
-			<Type>BUILD_ALIEN_GARDEN</Type>
-			<Description>Cultivate Alien Garden</Description>
+			<Type>BUILD_ALIEN_FERTILIZERS</Type>
+			<Description>TXT_KEY_BUILD_ALIEN_FERTILIZERS</Description>
 			<Help/>
 			<iTime>1500</iTime>
 			<iCost>50</iCost>
 			<bKill>0</bKill>
-			<ImprovementType>IMPROVEMENT_ALIEN_GARDEN</ImprovementType>
+			<ImprovementType>IMPROVEMENT_ALIEN_FERTILIZERS</ImprovementType>
 			<RouteType>NONE</RouteType>
 			<EntityEvent>ENTITY_EVENT_IRRIGATE</EntityEvent>
 			<FeatureStructs>
@@ -840,7 +840,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_ALIEN_BURROW</Type>
-			<Description>Dig Alien Burrow</Description>
+			<Description>TXT_KEY_BUILD_ALIEN_BURROW</Description>
 			<Help/>
 			<iTime>2000</iTime>
 			<iCost>50</iCost>
@@ -895,7 +895,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_MOUND</Type>
-			<Description>Remove Mound</Description>
+			<Description>TXT_KEY_BUILD_REMOVE_MOUND</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>10</iCost>
@@ -929,7 +929,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_FUNGAL_FOREST</Type>
-			<Description>Chop Fungal Forest</Description>
+			<Description>TXT_KEY_BUILD_REMOVE_FUNGAL_FOREST</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>0</iCost>
@@ -963,7 +963,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_LUMINOUS_FOREST</Type>
-			<Description>Chop Luminous Forest</Description>
+			<Description>TXT_KEY_BUILD_REMOVE_LUMINOUS_FOREST</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>0</iCost>
@@ -997,7 +997,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_CYCAD_FOREST</Type>
-			<Description>Chop Cycad Forest</Description>
+			<Description>TXT_KEY_BUILD_REMOVE_CYCAD_FOREST</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>0</iCost>
@@ -1031,7 +1031,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_ASTEROID</Type>
-			<Description>Mine Asteroid Belt</Description>
+			<Description>TXT_KEY_BUILD_REMOVE_ASTEROID</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>0</iCost>
@@ -1065,7 +1065,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_SPACEJUNK</Type>
-			<Description>Salvage Space Junk</Description>
+			<Description>TXT_KEY_BUILD_REMOVE_SPACEJUNK</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>0</iCost>
@@ -1103,7 +1103,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_RADIATION</Type>
-			<Description>Absorb Radiation</Description>
+			<Description>TXT_KEY_BUILD_REMOVE_RADIATION</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>0</iCost>
@@ -1133,7 +1133,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_PLASMA</Type>
-			<Description>Absorb Plasma</Description>
+			<Description>TXT_KEY_BUILD_REMOVE_PLASMA</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>0</iCost>
@@ -1167,7 +1167,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_DARKMATTER</Type>
-			<Description>Absorb Dark Matter</Description>
+			<Description>TXT_KEY_BUILD_REMOVE_DARKMATTER</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>0</iCost>
@@ -1201,7 +1201,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_NEBULA</Type>
-			<Description>Dissipate Nebula</Description>
+			<Description>TXT_KEY_BUILD_REMOVE_NEBULA</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>0</iCost>
@@ -1219,7 +1219,7 @@
 							<iYield>5</iYield>
 						</Yield>
 						<Yield>
-							<YieldType>YIELD_COAL</YieldType>
+							<YieldType>YIELD_HYDROCARBONS</YieldType>
 							<iYield>5</iYield>
 						</Yield>
 					</Yields>
@@ -1235,7 +1235,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_ANOMALY1</Type>
-			<Description>Collapse Space-Time Anomaly</Description>
+			<Description>TXT_KEY_BUILD_REMOVE_ANOMALY1</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>0</iCost>
@@ -1265,7 +1265,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_REMOVE_ANOMALY2</Type>
-			<Description>Collapse Gravitational Anomaly</Description>
+			<Description>TXT_KEY_BUILD_REMOVE_ANOMALY2</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>0</iCost>
@@ -1295,7 +1295,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_TERRAFORM_INFECTED</Type>
-			<Description>Sterilize Infected Atmosphere</Description>
+			<Description>TXT_KEY_BUILD_TERRAFORM_INFECTED</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>200</iCost>
@@ -1329,7 +1329,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_TERRAFORM_TOXIC</Type>
-			<Description>Terraform Toxic Atmosphere</Description>
+			<Description>TXT_KEY_BUILD_TERRAFORM_TOXIC</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>200</iCost>
@@ -1363,7 +1363,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_TERRAFORM_METHANOGEN</Type>
-			<Description>Terraform Methanogen Atmosphere</Description>
+			<Description>TXT_KEY_BUILD_TERRAFORM_METHANOGEN</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>200</iCost>
@@ -1377,7 +1377,7 @@
 					<iTime>100</iTime>
 					<Yields>
 						<Yield>
-							<YieldType>YIELD_COAL</YieldType>
+							<YieldType>YIELD_HYDROCARBONS</YieldType>
 							<iYield>80</iYield>
 						</Yield>
 					</Yields>
@@ -1393,7 +1393,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_TERRAFORM_CORROSIVE</Type>
-			<Description>Terraform Corrosive Atmosphere</Description>
+			<Description>TXT_KEY_BUILD_TERRAFORM_CORROSIVE</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>200</iCost>
@@ -1423,7 +1423,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_TERRAFORM_RADIOACTIVE</Type>
-			<Description>Terraform Radioactive Atmosphere</Description>
+			<Description>TXT_KEY_BUILD_TERRAFORM_RADIOACTIVE</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>200</iCost>
@@ -1457,7 +1457,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_TERRAFORM_DUSTSTORM</Type>
-			<Description>Terraform Dust Storms</Description>
+			<Description>TXT_KEY_BUILD_TERRAFORM_DUSTSTORM</Description>
 			<Help/>
 			<iTime>0</iTime>
 			<iCost>200</iCost>
@@ -1487,7 +1487,7 @@
 		</BuildInfo>
 		<BuildInfo>
 			<Type>BUILD_JANUS_DEVICE</Type>
-			<Description>Build the Janus Device</Description>
+			<Description>TXT_KEY_BUILD_JANUS_DEVICE</Description>
 			<Help/>
 			<iTime>1500</iTime>
 			<iCost>5000</iCost>

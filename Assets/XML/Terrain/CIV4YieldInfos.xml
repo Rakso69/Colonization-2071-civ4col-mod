@@ -63,9 +63,9 @@
 		</YieldInfo>
 <!--Colonization 2071--><!--#🛢️	Hydrocarbons (Oil)-->
 		<YieldInfo>
-			<Type>YIELD_COAL</Type>
-			<Description>Hydrocarbons</Description>
-			<Civilopedia>Although growing scarcity caused Earth's dwindling store of hydrocarbons to be mainly diverted as chemical feedstocks, the canny readaption of old 20th-Century technology allowed many colonies to develop vast advantages in heavy industry through the large-scale extraction of plentiful fossil fuels from the New Worlds' virgin crust.</Civilopedia>
+			<Type>YIELD_HYDROCARBONS</Type>
+			<Description>TXT_KEY_YIELD_HYDROCARBONS</Description>
+			<Civilopedia>TXT_KEY_YIELD_HYDROCARBONS_PEDIA</Civilopedia>
 			<bCargo>1</bCargo>
 			<iBuyPriceLow>3</iBuyPriceLow>
 			<iBuyPriceHigh>5</iBuyPriceHigh>
@@ -87,7 +87,7 @@
 			<iPower>0</iPower>
 			<iAsset>1</iAsset>
 			<ColorType>COLOR_YIELD_FOOD</ColorType>
-			<UnitClass>UNITCLASS_COAL</UnitClass>
+			<UnitClass>UNITCLASS_HYDROCARBONS</UnitClass>
 			<iTextureIndex>9</iTextureIndex>
 			<iWaterTextureIndex>9</iWaterTextureIndex>
 			<Icon>Art/Interface/Buttons/Resources/hydrocarbons.dds</Icon>
@@ -724,8 +724,8 @@
 <!--Colonization 2071--><!--#💡	Ideas/Research-->
 		<YieldInfo>
 			<Type>YIELD_IDEAS</Type>
-			<Description>Research</Description>
-			<Civilopedia>TXT_KEY_YIELD_EDUCATION_PEDIA</Civilopedia>
+			<Description>TXT_KEY_YIELD_IDEAS</Description>
+			<Civilopedia>TXT_KEY_YIELD_IDEAS_PEDIA</Civilopedia>
 			<bCargo>0</bCargo>
 			<iBuyPriceLow>0</iBuyPriceLow>
 			<iBuyPriceHigh>0</iBuyPriceHigh>

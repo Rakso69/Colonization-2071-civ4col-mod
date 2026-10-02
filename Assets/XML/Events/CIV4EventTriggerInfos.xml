@@ -1524,7 +1524,7 @@
 			<WorldNewsTexts/>
 			<TriggerTexts>
 				<TriggerText>
-					<Text>Encouraged by our growing numbers on these worlds, an expedition from our race has returned from a distant star, piloting a sleek Hidden Saucer swathed in sheets of mystic metal.</Text>
+					<Text>TXT_KEY_EVENTTRIGGER_ALIENUFO</Text>
 					<Era>NONE</Era>
 				</TriggerText>
 			</TriggerTexts>
@@ -1588,7 +1588,7 @@
 			<WorldNewsTexts/>
 			<TriggerTexts>
 				<TriggerText>
-					<Text>Our people may have grown decadent and weak, but we still have powerful resources to draw upon. What special advantage shall we choose to face the Earthling threat?</Text>
+					<Text>TXT_KEY_EVENTTRIGGER_ALIENSTART</Text>
 					<Era>NONE</Era>
 				</TriggerText>
 			</TriggerTexts>
@@ -1658,7 +1658,7 @@
 			<WorldNewsTexts/>
 			<TriggerTexts>
 				<TriggerText>
-					<Text>A military detachment sent by your superiors arrives on a cutter from Earth. "Our compliments on founding your first colony. You may requisition additional forces from Earth; provided our considerable costs are reimbursed."</Text>
+					<Text>TXT_KEY_EVENTTRIGGER_HUMANSTART</Text>
 					<Era>NONE</Era>
 				</TriggerText>
 			</TriggerTexts>
@@ -1722,7 +1722,7 @@
 			<WorldNewsTexts/>
 			<TriggerTexts>
 				<TriggerText>
-					<Text>Through long years of toil, our laborers have excavated a Progenitor reactor complex!</Text>
+					<Text>TXT_KEY_EVENTTRIGGER_EXCAV_REACTOR</Text>
 					<Era>NONE</Era>
 				</TriggerText>
 			</TriggerTexts>
@@ -1789,7 +1789,7 @@
 			<WorldNewsTexts/>
 			<TriggerTexts>
 				<TriggerText>
-					<Text>Through long years of toil, our laborers have excavated an ancient datacore of the Progenitors!</Text>
+					<Text>TXT_KEY_EVENTTRIGGER_EXCAV_LIBRARY</Text>
 					<Era>NONE</Era>
 				</TriggerText>
 			</TriggerTexts>
@@ -1856,7 +1856,7 @@
 			<WorldNewsTexts/>
 			<TriggerTexts>
 				<TriggerText>
-					<Text>Through long years of toil, our laborers have excavated a lost keep of the Progenitors!</Text>
+					<Text>TXT_KEY_EVENTTRIGGER_EXCAV_KEEP</Text>
 					<Era>NONE</Era>
 				</TriggerText>
 			</TriggerTexts>
@@ -1923,7 +1923,7 @@
 			<WorldNewsTexts/>
 			<TriggerTexts>
 				<TriggerText>
-					<Text>Through long years of toil, our laborers have excavated a lost citadel of the Progenitors!</Text>
+					<Text>TXT_KEY_EVENTTRIGGER_EXCAV_CITADEL</Text>
 					<Era>NONE</Era>
 				</TriggerText>
 			</TriggerTexts>
@@ -1990,7 +1990,7 @@
 			<WorldNewsTexts/>
 			<TriggerTexts>
 				<TriggerText>
-					<Text>Through long years of toil, our laborers have excavated a subterranean bunker!</Text>
+					<Text>TXT_KEY_EVENTTRIGGER_EXCAV_BUNKER</Text>
 					<Era>NONE</Era>
 				</TriggerText>
 			</TriggerTexts>
@@ -2057,7 +2057,7 @@
 			<WorldNewsTexts/>
 			<TriggerTexts>
 				<TriggerText>
-					<Text>Through long years of toil, our laborers have excavated an enormous mineshaft!</Text>
+					<Text>TXT_KEY_EVENTTRIGGER_EXCAV_BOREHOLE</Text>
 					<Era>NONE</Era>
 				</TriggerText>
 			</TriggerTexts>
@@ -2124,7 +2124,7 @@
 			<WorldNewsTexts/>
 			<TriggerTexts>
 				<TriggerText>
-					<Text>Through long years of toil, our laborers have excavated a lost industrial facility of the Progenitors!</Text>
+					<Text>TXT_KEY_EVENTTRIGGER_EXCAV_PROIN1</Text>
 					<Era>NONE</Era>
 				</TriggerText>
 			</TriggerTexts>
@@ -2191,7 +2191,7 @@
 			<WorldNewsTexts/>
 			<TriggerTexts>
 				<TriggerText>
-					<Text>Through long years of toil, our laborers have excavated a lost industrial facility of the Progenitors!</Text>
+					<Text>TXT_KEY_EVENTTRIGGER_EXCAV_PROIN2</Text>
 					<Era>NONE</Era>
 				</TriggerText>
 			</TriggerTexts>

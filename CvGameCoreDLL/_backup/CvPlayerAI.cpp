@@ -7746,7 +7746,7 @@ bool CvPlayerAI::AI_isYieldForSale(YieldTypes eYield) const
 		case YIELD_FOOD:
 		case YIELD_LUMBER:
 		///TKs Invention Core Mod v 1.0
-        case YIELD_COAL:
+        case YIELD_HYDROCARBONS:
             break;
         ///TKe
 			return false;
@@ -7814,7 +7814,7 @@ bool CvPlayerAI::AI_isYieldFinalProduct(YieldTypes eYield) const
 		case YIELD_TOBACCO:
 		case YIELD_ORE:
 		///TKs Invention Core Mod v 1.0
-        case YIELD_COAL:
+        case YIELD_HYDROCARBONS:
         ///TKe
 			{
 				int iLoop;
@@ -7875,7 +7875,7 @@ bool CvPlayerAI::AI_shouldBuyFromEurope(YieldTypes eYield) const
 	{
 		case YIELD_FOOD:
 		///TKs Invention Core Mod v 1.0
-        case YIELD_COAL:
+        case YIELD_HYDROCARBONS:
         ///TKe
 		case YIELD_LUMBER:
 		case YIELD_SILVER:
@@ -7988,7 +7988,7 @@ int CvPlayerAI::AI_yieldValue(YieldTypes eYield, bool bProduce, int iAmount)
 				break;
 			case YIELD_LUMBER:
 				///TKs Invention Core Mod v 1.0
-			case YIELD_COAL:
+			case YIELD_HYDROCARBONS:
 			///TKe
 				iValue *= 100;
 				iValue /= iGoodsMultiplier;
@@ -8101,7 +8101,7 @@ void CvPlayerAI::AI_updateYieldValues()
 				break;
 			case YIELD_LUMBER:
 			///TKs Invention Core Mod v 1.0
-            case YIELD_COAL:
+            case YIELD_HYDROCARBONS:
             ///TKe
 				iValue += (kParent.getYieldSellPrice(eYield) + kParent.getYieldBuyPrice(eYield)) / 2;
 				break;

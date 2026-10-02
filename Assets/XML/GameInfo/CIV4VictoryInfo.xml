@@ -28,7 +28,7 @@
 		</VictoryInfo>
 		<VictoryInfo>
 			<Type>VICTORY_EUROPE</Type>
-			<Description>Stagnation</Description>
+			<Description>TXT_KEY_VICTORY_EUROPE</Description>
 			<Civilopedia>TXT_KEY_VICTORY_EUROPE_PEDIA</Civilopedia>
 			<bDefault>0</bDefault>
 			<bIndustrialization>0</bIndustrialization>
@@ -89,8 +89,8 @@
 <!-- Colonization 2071-->
 		<VictoryInfo>
 			<Type>VICTORY_INDUSTRIALISATION</Type>
-			<Description>Transcendence</Description>
-			<Civilopedia>TXT_KEY_VICTORY_INDUSTRIAL_PEDIA</Civilopedia>
+			<Description>TXT_KEY_VICTORY_TRANSCENDENCE</Description>
+			<Civilopedia>TXT_KEY_VICTORY_TRANSCENDENCE_PEDIA</Civilopedia>
 			<bDefault>1</bDefault>
 			<bIndustrialization>1</bIndustrialization>
 			<bTargetScore>0</bTargetScore>
@@ -109,8 +109,8 @@
 		</VictoryInfo>
 		<VictoryInfo>
 			<Type>VICTORY_HEGEMONY</Type>
-			<Description>Hegemony</Description>
-			<Civilopedia>TXT_KEY_VICTORY_REVOLUTION_PEDIA</Civilopedia>
+			<Description>TXT_KEY_VICTORY_HEGEMONY</Description>
+			<Civilopedia>TXT_KEY_VICTORY_HEGEMONY_PEDIA</Civilopedia>
 			<bDefault>1</bDefault>
 			<bIndustrialization>0</bIndustrialization>
 			<bTargetScore>0</bTargetScore>

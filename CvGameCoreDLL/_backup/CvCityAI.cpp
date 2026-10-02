@@ -3668,7 +3668,7 @@ int CvCityAI::AI_estimateYieldValue(YieldTypes eYield, int iAmount) const
 		case YIELD_TRADE_GOODS:
 		case YIELD_HAMMERS:
 		 ///TKs Invention Core Mod v 1.0
-		case YIELD_COAL:
+		case YIELD_HYDROCARBONS:
 		case YIELD_IDEAS:
             break;
 		///TKe

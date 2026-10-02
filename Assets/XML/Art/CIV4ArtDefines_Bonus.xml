@@ -207,8 +207,8 @@
 			<fInterfaceScale>1</fInterfaceScale>
 			<NIF>Art/Terrain/Resources/iridescent_pyramid/pyramid.nif</NIF>
 			<KFM/>
-			<Button>Art/Interface/Buttons/resources/progenitor_tech.dds</Button>
-			<!--<Button>Art/Interface/Buttons/terrainfeatures/iridescent_pyramid.dds</Button>-->
+			<!--<Button>Art/Interface/Buttons/resources/progenitor_tech.dds</Button>-->
+			<Button>Art/Interface/Buttons/terrainfeatures/iridescent_pyramid.dds</Button>
 			<FontButtonIndex>4</FontButtonIndex>
 			<bShadowCastor>1</bShadowCastor>
 			<bRefractionCastor>0</bRefractionCastor>
@@ -287,7 +287,7 @@
 		</BonusArtInfo>
 <!--Obsidian Faces -->
 		<BonusArtInfo>
-			<Type>ART_DEF_BONUS_MTRUSHMORE</Type>
+			<Type>ART_DEF_BONUS_OBSIDIAN</Type>
 			<fScale>1</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Terrain/Resources/obsidian_faces/mtrushmore.nif</NIF>
@@ -407,7 +407,7 @@
 		</BonusArtInfo>
 <!--Native Pinnipeds -->
 		<BonusArtInfo>
-			<Type>ART_DEF_BONUS_MONSTERWALRUS</Type>
+			<Type>ART_DEF_BONUS_WALRUS</Type>
 			<fScale>1.0</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Terrain/Resources/native_pinnipeds/Sea_Lions_fx.nif</NIF>
@@ -503,7 +503,7 @@
 		</BonusArtInfo>
 <!--Exotic Aphrodisiac -->
 		<BonusArtInfo>
-			<Type>ART_DEF_BONUS_AFRO</Type>
+			<Type>ART_DEF_BONUS_APHRO</Type>
 			<fScale>1.0</fScale>
 			<fInterfaceScale>1</fInterfaceScale>
 			<NIF>Art/Terrain/Resources/exotic_aphrodisiac/corn.nif</NIF>
@@ -515,7 +515,7 @@
 		</BonusArtInfo>
 <!--Subterranean Fungus -->
 		<BonusArtInfo>
-			<Type>ART_DEF_BONUS_RICE</Type>
+			<Type>ART_DEF_BONUS_SUBFUNGI</Type>
 			<fScale>0.5</fScale>
 			<fInterfaceScale>1</fInterfaceScale>
 			<NIF>Art/Terrain/Resources/subterranean_fungus/rice.nif</NIF>
@@ -539,7 +539,7 @@
 		</BonusArtInfo>
 <!--Communications Array -->
 		<BonusArtInfo>
-			<Type>ART_DEF_BONUS_COMM1</Type>
+			<Type>ART_DEF_BONUS_COMMS</Type>
 			<fScale>0.4</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Terrain/Resources/communications_array/commlight.nif</NIF>
@@ -611,7 +611,7 @@
 		</BonusArtInfo>
 <!--Scrapyard -->
 		<BonusArtInfo>
-			<Type>ART_DEF_BONUS_DEPOT</Type>
+			<Type>ART_DEF_BONUS_SCRAP</Type>
 			<fScale>1.95</fScale>
 			<fInterfaceScale>1.0</fInterfaceScale>
 			<NIF>Art/Terrain/Resources/scrapyard/depot_ruined.nif</NIF>

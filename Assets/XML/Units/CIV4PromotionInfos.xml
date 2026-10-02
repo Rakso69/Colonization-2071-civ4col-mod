@@ -8,7 +8,7 @@
 	<PromotionInfos>
 		<PromotionInfo>
 			<Type>PROMOTION_VULNERABLE</Type>
-			<Description>Vulnerable</Description>
+			<Description>TXT_KEY_PROMOTION_VULNERABLE</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -60,7 +60,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_BOMBI</Type>
-			<Description>Plasma Missiles I</Description>
+			<Description>TXT_KEY_PROMOTION_BOMBI</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -125,7 +125,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_BOMBII</Type>
-			<Description>Plasma Missiles II</Description>
+			<Description>TXT_KEY_PROMOTION_BOMBII</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_BOMBI</PromotionPrereqOr1>
@@ -190,7 +190,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_BOMBIII</Type>
-			<Description>Plasma Missiles III</Description>
+			<Description>TXT_KEY_PROMOTION_BOMBIII</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>PROMOTION_LEADER</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_BOMBII</PromotionPrereqOr1>
@@ -255,7 +255,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_CANNISTER_SHOT</Type>
-			<Description>Bioweapons I</Description>
+			<Description>TXT_KEY_PROMOTION_CANNISTER_SHOTI</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -325,7 +325,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_CANNISTER_SHOTII</Type>
-			<Description>Bioweapons II</Description>
+			<Description>TXT_KEY_PROMOTION_CANNISTER_SHOTII</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_CANNISTER_SHOT</PromotionPrereqOr1>
@@ -395,7 +395,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_CANNISTER_SHOTIII</Type>
-			<Description>Bioweapons III</Description>
+			<Description>TXT_KEY_PROMOTION_CANNISTER_SHOTIII</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>PROMOTION_LEADER</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_CANNISTER_SHOTII</PromotionPrereqOr1>
@@ -465,7 +465,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_SOLID_SHOTI</Type>
-			<Description>Orbital Bombardment I</Description>
+			<Description>TXT_KEY_PROMOTION_SOLID_SHOTI</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -530,7 +530,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_SOLID_SHOTII</Type>
-			<Description>Orbital Bombardment II</Description>
+			<Description>TXT_KEY_PROMOTION_SOLID_SHOTII</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_SOLID_SHOTI</PromotionPrereqOr1>
@@ -595,7 +595,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_SOLID_SHOTIII</Type>
-			<Description>Orbital Bombardment III</Description>
+			<Description>TXT_KEY_PROMOTION_SOLID_SHOTIII</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>PROMOTION_LEADER</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_SOLID_SHOTII</PromotionPrereqOr1>
@@ -891,7 +891,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_NAVIGATION1</Type>
-			<Description>Sensor Array</Description>
+			<Description>TXT_KEY_PROMOTION_NAVIGATION1</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -956,7 +956,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_NAVIGATION2</Type>
-			<Description>Ion Drives</Description>
+			<Description>TXT_KEY_PROMOTION_NAVIGATION2</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_NAVIGATION1</PromotionPrereqOr1>
@@ -1021,7 +1021,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_NAVIGATION3</Type>
-			<Description>Neutron Drives</Description>
+			<Description>TXT_KEY_PROMOTION_NAVIGATION3</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_NAVIGATION2</PromotionPrereqOr1>
@@ -1086,7 +1086,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_TACTICAL_COMPUTER</Type>
-			<Description>Tactical Computer</Description>
+			<Description>TXT_KEY_PROMOTION_TACTICAL_COMPUTER</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -1151,7 +1151,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_AERODYNAMIC_HULL</Type>
-			<Description>Aerodynamic Hull</Description>
+			<Description>TXT_KEY_PROMOTION_AERODYNAMIC_HULL</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -1231,7 +1231,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_RESONANCE_SHIELDING</Type>
-			<Description>Resonance Shielding</Description>
+			<Description>TXT_KEY_PROMOTION_RESONANCE_SHIELDING</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -1323,7 +1323,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_EVASIVE_MANEUVERS</Type>
-			<Description>Evasive Maneuvers</Description>
+			<Description>TXT_KEY_PROMOTION_EVASIVE_MANEUVERS</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -1415,7 +1415,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_EXPLORER1</Type>
-			<Description>Alien Guide</Description>
+			<Description>TXT_KEY_PROMOTION_EXPLORER1</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -1485,7 +1485,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_EXPLORER2</Type>
-			<Description>Survey Probes</Description>
+			<Description>TXT_KEY_PROMOTION_EXPLORER2</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_EXPLORER1</PromotionPrereqOr1>
@@ -1550,7 +1550,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_EXPLORER3</Type>
-			<Description>Antigrav Units</Description>
+			<Description>TXT_KEY_PROMOTION_EXPLORER3</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>PROMOTION_LEADER</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_EXPLORER2</PromotionPrereqOr1>
@@ -2101,7 +2101,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_SURGEON1</Type>
-			<Description>Medipacks</Description>
+			<Description>TXT_KEY_PROMOTION_SURGEON1</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_VETERAN1</PromotionPrereqOr1>
@@ -2174,7 +2174,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_SURGEON2</Type>
-			<Description>Stem Cell Cores</Description>
+			<Description>TXT_KEY_PROMOTION_SURGEON2</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_SURGEON1</PromotionPrereqOr1>
@@ -2247,7 +2247,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_SURGEON3</Type>
-			<Description>Nanosurgeons</Description>
+			<Description>TXT_KEY_PROMOTION_SURGEON3</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>PROMOTION_LEADER</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_SURGEON2</PromotionPrereqOr1>
@@ -2320,7 +2320,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_COLDBLOODED</Type>
-			<Description>Cold Blooded</Description>
+			<Description>TXT_KEY_PROMOTION_COLDBLOODED</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -2417,7 +2417,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_PSIONIC</Type>
-			<Description>Psionic</Description>
+			<Description>TXT_KEY_PROMOTION_PSIONIC</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -2492,7 +2492,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_RECOMBINANT</Type>
-			<Description>Recombinant DNA</Description>
+			<Description>TXT_KEY_PROMOTION_RECOMBINANT</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -2563,7 +2563,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_RANGER1</Type>
-			<Description>Survivalist I</Description>
+			<Description>TXT_KEY_PROMOTION_RANGER1</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -2650,7 +2650,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_RANGER2</Type>
-			<Description>Survivalist II</Description>
+			<Description>TXT_KEY_PROMOTION_RANGER2</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_RANGER1</PromotionPrereqOr1>
@@ -2746,7 +2746,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_RANGER3</Type>
-			<Description>Survivalist III</Description>
+			<Description>TXT_KEY_PROMOTION_RANGER3</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>PROMOTION_LEADER</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_RANGER2</PromotionPrereqOr1>
@@ -2833,7 +2833,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_MOUNTAINEER1</Type>
-			<Description>Guerilla Tactics I</Description>
+			<Description>TXT_KEY_PROMOTION_MOUNTAINEER1</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -2902,7 +2902,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_MOUNTAINEER2</Type>
-			<Description>Guerilla Tactics II</Description>
+			<Description>TXT_KEY_PROMOTION_MOUNTAINEER2</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_MOUNTAINEER1</PromotionPrereqOr1>
@@ -2971,7 +2971,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_MOUNTAINEER3</Type>
-			<Description>Guerilla Tactics III</Description>
+			<Description>TXT_KEY_PROMOTION_MOUNTAINEER3</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>PROMOTION_LEADER</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_MOUNTAINEER2</PromotionPrereqOr1>
@@ -3040,7 +3040,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_SWAMP_FOX1</Type>
-			<Description>Amphibious I</Description>
+			<Description>TXT_KEY_PROMOTION_SWAMP_FOX1</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -3129,7 +3129,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_SWAMP_FOX2</Type>
-			<Description>Amphibious II</Description>
+			<Description>TXT_KEY_PROMOTION_SWAMP_FOX2</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_SWAMP_FOX1</PromotionPrereqOr1>
@@ -3228,7 +3228,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_SWAMP_FOX3</Type>
-			<Description>Amphibious III</Description>
+			<Description>TXT_KEY_PROMOTION_SWAMP_FOX3</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>PROMOTION_LEADER</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_SWAMP_FOX2</PromotionPrereqOr1>
@@ -3317,7 +3317,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_MINUTEMAN1</Type>
-			<Description>Point Defense I</Description>
+			<Description>TXT_KEY_PROMOTION_MINUTEMAN1</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -3386,7 +3386,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_MINUTEMAN2</Type>
-			<Description>Point Defense II</Description>
+			<Description>TXT_KEY_PROMOTION_MINUTEMAN2</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_MINUTEMAN1</PromotionPrereqOr1>
@@ -3455,7 +3455,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_MINUTEMAN3</Type>
-			<Description>Point Defense III</Description>
+			<Description>TXT_KEY_PROMOTION_MINUTEMAN3</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>PROMOTION_LEADER</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_MINUTEMAN2</PromotionPrereqOr1>
@@ -3529,7 +3529,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_ANTIFERAL</Type>
-			<Description>Xenotoxins</Description>
+			<Description>TXT_KEY_PROMOTION_ANTIFERAL</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -3610,8 +3610,8 @@
 			<Button>,Art/Interface/Buttons/Promotions/unitcombat_feral.dds</Button>
 		</PromotionInfo>
 		<PromotionInfo>
-			<Type>PROMOTION_ANTIPROG</Type>
-			<Description>Phase Desequencers</Description>
+			<Type>PROMOTION_ANTIBOSS</Type>
+			<Description>TXT_KEY_PROMOTION_ANTIBOSS</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -3693,7 +3693,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_GRENADIER1</Type>
-			<Description>Urban Assault I</Description>
+			<Description>TXT_KEY_PROMOTION_GRENADIER1</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -3766,7 +3766,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_GRENADIER2</Type>
-			<Description>Urban Assault II</Description>
+			<Description>TXT_KEY_PROMOTION_GRENADIER2</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_GRENADIER1</PromotionPrereqOr1>
@@ -3839,7 +3839,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_GRENADIER3</Type>
-			<Description>Urban Assault III</Description>
+			<Description>TXT_KEY_PROMOTION_GRENADIER3</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>PROMOTION_LEADER</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_GRENADIER2</PromotionPrereqOr1>
@@ -3994,7 +3994,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_FORMATION</Type>
-			<Description>EMP Cannons</Description>
+			<Description>TXT_KEY_PROMOTION_FORMATION</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_VETERAN2</PromotionPrereqOr1>
@@ -4072,7 +4072,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_CHARGE</Type>
-			<Description>Antitank Rounds</Description>
+			<Description>TXT_KEY_PROMOTION_CHARGE</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>PROMOTION_VETERAN1</PromotionPrereqOr1>
@@ -4455,7 +4455,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_ARQUEBUSIER</Type>
-			<Description>Arquebusier</Description>
+			<Description>TXT_KEY_PROMOTION_ARQUEBUSIER</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>
@@ -4512,7 +4512,7 @@
 		</PromotionInfo>
 		<PromotionInfo>
 			<Type>PROMOTION_CUIRASSIER</Type>
-			<Description>Cuirassier</Description>
+			<Description>TXT_KEY_PROMOTION_CUIRASSIER</Description>
 			<Sound>AS2D_IF_LEVELUP</Sound>
 			<PromotionPrereq>NONE</PromotionPrereq>
 			<PromotionPrereqOr1>NONE</PromotionPrereqOr1>

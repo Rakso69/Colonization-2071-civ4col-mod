@@ -3932,13 +3932,13 @@ int CvCity::getBaseRawYieldProduced(YieldTypes eYieldType) const
 	CvPlayer& owner = GET_PLAYER(getOwnerINLINE());
     ///TK Coal
 	int iExtra = 0;
-	if (eYieldType != YIELD_COAL && isHasRealBuilding((BuildingTypes)GC.getDefineINT("STEAMWORKS_BUILDING")))
+	if (eYieldType != YIELD_HYDROCARBONS && isHasRealBuilding((BuildingTypes)GC.getDefineINT("STEAMWORKS_BUILDING")))
 	{
-        int iConsumedCoal = getRawYieldConsumed(YIELD_COAL);
+        int iConsumedCoal = getRawYieldConsumed(YIELD_HYDROCARBONS);
 
         if (iConsumedCoal > 0)
         {
-            int iCoalMod = getYieldStored(YIELD_COAL) + getBaseRawYieldProduced(YIELD_COAL) * getBaseYieldRateModifier(YIELD_COAL) / 100 - iConsumedCoal;
+            int iCoalMod = getYieldStored(YIELD_HYDROCARBONS) + getBaseRawYieldProduced(YIELD_HYDROCARBONS) * getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedCoal;
             if (iCoalMod != -iConsumedCoal)
             {
                 int SteamWorksMod = std::max(1, GC.getDefineINT("TK_STEAMWORKS_MODIFIER"));
@@ -3986,7 +3986,7 @@ int CvCity::getBaseRawYieldProduced(YieldTypes eYieldType) const
 	}
 
 	 ///TK Coal
-	if (iCityYieldProduction > 0 && GC.getYieldInfo(eYieldType).getUnitClass() != NO_UNITCLASS && eYieldType != YIELD_COAL)
+	if (iCityYieldProduction > 0 && GC.getYieldInfo(eYieldType).getUnitClass() != NO_UNITCLASS && eYieldType != YIELD_HYDROCARBONS)
 	{
 
 	    iCityYieldProduction += iExtra;
@@ -4053,12 +4053,12 @@ int CvCity::getRawYieldConsumed(YieldTypes eYieldType) const
 	}
     ///TK Coal
 	int iExtra = 0;
-	if (eYieldType != YIELD_COAL && isHasRealBuilding((BuildingTypes)GC.getDefineINT("STEAMWORKS_BUILDING")))
+	if (eYieldType != YIELD_HYDROCARBONS && isHasRealBuilding((BuildingTypes)GC.getDefineINT("STEAMWORKS_BUILDING")))
 	{
-        int iConsumedCoal = getRawYieldConsumed(YIELD_COAL);
+        int iConsumedCoal = getRawYieldConsumed(YIELD_HYDROCARBONS);
         if (iConsumedCoal > 0)
         {
-            int iCoalMod = getYieldStored(YIELD_COAL) + getBaseRawYieldProduced(YIELD_COAL) * getBaseYieldRateModifier(YIELD_COAL) / 100 - iConsumedCoal;
+            int iCoalMod = getYieldStored(YIELD_HYDROCARBONS) + getBaseRawYieldProduced(YIELD_HYDROCARBONS) * getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedCoal;
             int SteamWorksMod = std::max(1, GC.getDefineINT("TK_STEAMWORKS_MODIFIER"));
             if (iCoalMod != -iConsumedCoal)
             {
@@ -4115,7 +4115,7 @@ int CvCity::getRawYieldConsumed(YieldTypes eYieldType) const
 	}
 
     ///TK COAL
-	if (iYieldConsumed > 0 && GC.getYieldInfo(eYieldType).getUnitClass() != NO_UNITCLASS && eYieldType != YIELD_COAL)
+	if (iYieldConsumed > 0 && GC.getYieldInfo(eYieldType).getUnitClass() != NO_UNITCLASS && eYieldType != YIELD_HYDROCARBONS)
 	{
 	    iYieldConsumed += iExtra;
 	}
@@ -4436,10 +4436,10 @@ void CvCity::calculateNetYields(int aiYields[NUM_YIELD_TYPES], int* aiProducedYi
 	int iExtra = 0;
 	if (isHasRealBuilding((BuildingTypes)GC.getDefineINT("STEAMWORKS_BUILDING")))
 	{
-        int iConsumedCoal = getRawYieldConsumed(YIELD_COAL);
+        int iConsumedCoal = getRawYieldConsumed(YIELD_HYDROCARBONS);
         if (iConsumedCoal > 0)
         {
-            int iCoalMod = getYieldStored(YIELD_COAL) + getBaseRawYieldProduced(YIELD_COAL) * getBaseYieldRateModifier(YIELD_COAL) / 100 - iConsumedCoal;
+            int iCoalMod = getYieldStored(YIELD_HYDROCARBONS) + getBaseRawYieldProduced(YIELD_HYDROCARBONS) * getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedCoal;
             int SteamWorksMod = std::max(1, GC.getDefineINT("TK_STEAMWORKS_MODIFIER"));
             if (iCoalMod != -iConsumedCoal)
             {

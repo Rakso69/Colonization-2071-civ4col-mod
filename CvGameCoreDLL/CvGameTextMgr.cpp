@@ -3934,7 +3934,12 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 
 	szHelpText.clear();
 
-	FAssert(GC.getGameINLINE().getActivePlayer() != NO_PLAYER || !bPlayerContext);
+	// Kaszkaj fix: .\.\CvGameTextMgr.cpp, Line:  3937, Expression:  GC.getGameINLINE().getActivePlayer() != NO_PLAYER || !bPlayerContext.
+	// Use general civic help when no active player exists, allowing Civilopedia to open without player context.
+	if (GC.getGameINLINE().getActivePlayer() == NO_PLAYER)
+	{
+		bPlayerContext = false;
+	}
 
 	if (!bSkipName)
 	{
@@ -4026,7 +4031,14 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	if (kCivicInfo.getAllowsTrait() != NO_TRAIT)
 	{
 	    CvWStringBuffer szHelpString;
-	    CivilizationTypes eCivilization = GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCivilizationType();
+	    // Kaszkaj fix: .\.\CvPlayerAI.h, Line:  24, Expression:  ePlayer >= 0.
+	    // Show generic trait effects without an active player; use the player's civilization when available.
+	    CivilizationTypes eCivilization = NO_CIVILIZATION;
+	    PlayerTypes eActivePlayer = GC.getGameINLINE().getActivePlayer();
+	    if (eActivePlayer != NO_PLAYER)
+	    {
+	        eCivilization = GET_PLAYER(eActivePlayer).getCivilizationType();
+	    }
 	    parseTraits(szHelpString, ((TraitTypes)kCivicInfo.getAllowsTrait()), eCivilization, false, false);
 	    szHelpText.append(szHelpString);
 	}
@@ -5637,7 +5649,7 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, BuildingTypes eBu
     if (kBuilding.getBuildingClassType()  == (BuildingClassTypes)GC.getDefineINT("STEAMWORKS_CLASS_TYPE"))
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_FROM_STEAMWORKS_TEXT", GC.getDefineINT("TK_STEAMWORKS_MODIFIER"), GC.getYieldInfo(YIELD_COAL).getChar()));
+		szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_FROM_STEAMWORKS_TEXT", GC.getDefineINT("TK_STEAMWORKS_MODIFIER"), GC.getYieldInfo(YIELD_HYDROCARBONS).getChar()));
 	}
     ///TKe
 
@@ -7106,10 +7118,10 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
     }
 
 	int Bonus = 0;
-	if (city.isHasRealBuilding((BuildingTypes)GC.getDefineINT("STEAMWORKS_BUILDING")) && eYieldType != YIELD_HAMMERS && eYieldType != YIELD_COAL)
+	if (city.isHasRealBuilding((BuildingTypes)GC.getDefineINT("STEAMWORKS_BUILDING")) && eYieldType != YIELD_HAMMERS && eYieldType != YIELD_HYDROCARBONS)
 	{
-	    int iConsumedCoal = city.getRawYieldConsumed(YIELD_COAL);
-        int iCoalMod = city.getYieldStored(YIELD_COAL) + city.getBaseRawYieldProduced(YIELD_COAL) * city.getBaseYieldRateModifier(YIELD_COAL) / 100 - iConsumedCoal;
+	    int iConsumedCoal = city.getRawYieldConsumed(YIELD_HYDROCARBONS);
+        int iCoalMod = city.getYieldStored(YIELD_HYDROCARBONS) + city.getBaseRawYieldProduced(YIELD_HYDROCARBONS) * city.getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedCoal;
 
         if (iConsumedCoal > 0)
         {
@@ -7138,6 +7150,8 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 	aaiProfessionYields.resize(GC.getNumProfessionInfos());
 
 	// Indoor professions
+	// Kaszkaj fix: .\.\CvGameTextMgr.cpp, Line:  7141, Function: CvGameTextMgr::setYieldHelp.
+	// Skip YIELD_IDEAS profession output in the tooltip when no research is selected or the required research unit class is missing.
 
 	int iNoReasearch = 0;
     int iCitizenYield = 0;
@@ -7157,36 +7171,31 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 				{
 					if (kProfessionInfo.getYieldsProduced(j) == eYieldType)
 					{
-						int iCityYieldProduction = city.getProfessionOutput(eProfession, pUnit);
-						if (iCityYieldProduction != 0)
+					if (eYieldProduced == YIELD_IDEAS && city.canResearch() <= 0)
+					{
+						continue;
+					}
+
+					int iCityYieldProduction = city.getProfessionOutput(eProfession, pUnit);
+					if (iCityYieldProduction != 0)
+					{
+						if (eYieldConsumed != NO_YIELD && GC.getYieldInfo(eYieldProduced).getUnitClass() != NO_UNITCLASS && eYieldProduced != YIELD_HAMMERS)
 						{
-
-                            if (eYieldProduced == YIELD_IDEAS)
-                            {
-                                if (city.canResearch() <= 0)
-                                {
-                                    iCityYieldProduction = 0;
-                                }
-                            }
-
-                            if (eYieldConsumed != NO_YIELD && GC.getYieldInfo(eYieldProduced).getUnitClass() != NO_UNITCLASS && eYieldProduced != YIELD_HAMMERS)
-                            {
-                                iCitizenYield = city.getProfessionOutput(eProfession, pUnit) + Bonus;
-                            }
-                            else
-                            {
-                                iCitizenYield = city.getProfessionOutput(eProfession, pUnit);
-                            }
-
-
-                            aaiProfessionYields[eProfession][j] += iCitizenYield;
-                            iBaseProduction += iCitizenYield;
+							iCitizenYield = iCityYieldProduction + Bonus;
 						}
+						else
+						{
+							iCitizenYield = iCityYieldProduction;
+						}
+
+						aaiProfessionYields[eProfession][j] += iCitizenYield;
+						iBaseProduction += iCitizenYield;
 					}
 				}
 			}
 		}
 	}
+}
      ///TKe
 	// From plots
 	int iPlotYield = 0;
@@ -7309,8 +7318,8 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
     ///TK Coal
 	if (Bonus > 0)
 	{
-	    int iConsumedCoal = city.getRawYieldConsumed(YIELD_COAL);
-        int iCoalMod = city.getYieldStored(YIELD_COAL) + city.getBaseRawYieldProduced(YIELD_COAL) * city.getBaseYieldRateModifier(YIELD_COAL) / 100 - iConsumedCoal;
+	    int iConsumedCoal = city.getRawYieldConsumed(YIELD_HYDROCARBONS);
+        int iCoalMod = city.getYieldStored(YIELD_HYDROCARBONS) + city.getBaseRawYieldProduced(YIELD_HYDROCARBONS) * city.getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedCoal;
         if (iConsumedCoal > 0)
         {
             int SteamWorksMod = std::max(1, GC.getDefineINT("TK_STEAMWORKS_MODIFIER"));

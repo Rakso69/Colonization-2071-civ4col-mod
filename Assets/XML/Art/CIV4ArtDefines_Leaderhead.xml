@@ -149,46 +149,11 @@
 
 <!-- Colonization 2071-->
 		<LeaderheadArtInfo>
-			<Type>ART_DEF_LEADER_MIRANDA</Type><!-- The lady in Black-->
-			<Button>Art/Interface/Buttons/Leaderheads/miranda.dds</Button>
-			<NIF>art/LeaderHeads/miranda/peter.nif</NIF>
-			<KFM>art/LeaderHeads/miranda/peter.kfm</KFM>
-			<BackgroundKFM>art/LeaderHeads/miranda/peter_bg.kfm</BackgroundKFM>
-		</LeaderheadArtInfo>
-		<LeaderheadArtInfo>
-			<Type>ART_DEF_LEADER_SYNDICATE_KING</Type><!--🤖Syndicate Crimelord-->
-			<Button>Art/Interface/Buttons/Leaderheads/cavour.dds</Button>
-			<NIF>art/LeaderHeads/Cavour/winston_churchill.nif</NIF>
-			<KFM>art/LeaderHeads/Cavour/winston_churchill.kfm</KFM>
-			<BackgroundKFM>art/LeaderHeads/Cavour/winston_churchill_bg.kfm</BackgroundKFM>
-		</LeaderheadArtInfo>
-		<LeaderheadArtInfo>
-			<Type>ART_DEF_LEADER_MODELCITIZEN</Type><!-- The Model Citizen-->
-			<Button>Art/Interface/Buttons/Leaderheads/meiji.dds</Button>
-			<NIF>art/LeaderHeads/Meiji/meiji.nif</NIF>
-			<KFM>art/LeaderHeads/Meiji/meiji.kfm</KFM>
-			<BackgroundKFM>art/LeaderHeads/Meiji/meiji_bg.kfm</BackgroundKFM>
-		</LeaderheadArtInfo>
-		<LeaderheadArtInfo>
-			<Type>ART_DEF_LEADER_JAPAN_KING</Type><!--🤖Japanese Everemperor-->
-			<Button>Art/Interface/Buttons/Leaderheads/everemperor.dds</Button>
-			<NIF>art/LeaderHeads/japanking/tokugawa.nif</NIF>
-			<KFM>art/LeaderHeads/japanking/tokugawa.kfm</KFM>
-			<BackgroundKFM>Art/Leaderheads/japanking/fdr_bg.kfm</BackgroundKFM>
-		</LeaderheadArtInfo>
-		<LeaderheadArtInfo>
 			<Type>ART_DEF_LEADER_SAYYADINA</Type><!-- Sayyadina-->
 			<Button>Art/Interface/Buttons/Leaderheads/zenobia.dds</Button>
 			<NIF>art/LeaderHeads/zenobia/zenobia.nif</NIF>
 			<KFM>art/LeaderHeads/zenobia/zenobia.kfm</KFM>
 			<BackgroundKFM>art/LeaderHeads/zenobia/zenobia_BG.kfm</BackgroundKFM>
-		</LeaderheadArtInfo>
-		<LeaderheadArtInfo>
-			<Type>ART_DEF_LEADER_ADENAUER</Type><!--🤖Consortium CEO-->
-			<Button>Art/Interface/Buttons/Leaderheads/consortium_ceo.dds</Button>
-			<NIF>art/LeaderHeads/Adenauer/Chancelor.nif</NIF>
-			<KFM>art/LeaderHeads/Adenauer/Chancelor.kfm</KFM>
-			<BackgroundKFM>art/LeaderHeads/bg/spectrum/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
 		</LeaderheadArtInfo>
 		<LeaderheadArtInfo>
 			<Type>ART_DEF_LEADER_IBNSAUD</Type><!-- His Highness-->
@@ -198,25 +163,11 @@
 			<BackgroundKFM>art/LeaderHeads/bg/arab/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
 		</LeaderheadArtInfo>
 		<LeaderheadArtInfo>
-			<Type>ART_DEF_LEADER_QUAYLE</Type><!-- Director Green-->
-			<Button>Art/Interface/Buttons/Leaderheads/dirgreen.dds</Button>
-			<NIF>art/LeaderHeads/Quayle/alexander.nif</NIF>
-			<KFM>art/LeaderHeads/Quayle/alexander.kfm</KFM>
-			<BackgroundKFM>art/LeaderHeads/bg/courtyard/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
-		</LeaderheadArtInfo>
-		<LeaderheadArtInfo>
-			<Type>ART_DEF_LEADER_MINISTER</Type><!-- Minister of Liberty-->
-			<Button>Art/Interface/Buttons/Leaderheads/walesa.dds</Button>
-			<NIF>Art/LeaderHeads/Libertarian_minister/walesa.nif</NIF>
-			<KFM>Art/LeaderHeads/Libertarian_minister/fdr.kfm</KFM>
-			<BackgroundKFM>Art/LeaderHeads/Libertarian_minister/FDR_BG.kfm</BackgroundKFM>
-		</LeaderheadArtInfo>
-		<LeaderheadArtInfo>
-			<Type>ART_DEF_LEADER_POLISH_KING</Type><!--🤖Chief of State-->
-			<Button>Art/Interface/Buttons/Leaderheads/pilsudski.dds</Button>
-			<NIF>Art/LeaderHeads/pilsudski/pilsudski.nif</NIF>
-			<KFM>Art/LeaderHeads/pilsudski/pilsudski.kfm</KFM>
-			<BackgroundKFM>Art/LeaderHeads/pilsudski/peter_bg.kfm</BackgroundKFM>
+			<Type>ART_DEF_LEADER_CALIPH</Type><!--🤖Caliphate Ayatollah-->
+			<Button>Art/Interface/Buttons/Leaderheads/ayatollah.dds</Button>
+			<NIF>art/LeaderHeads/Khomeini/saladin.nif</NIF>
+			<KFM>art/LeaderHeads/Khomeini/saladin.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/mosque/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
 		</LeaderheadArtInfo>
 		<LeaderheadArtInfo>
 			<Type>ART_DEF_LEADER_CURTIN</Type><!-- Director Black-->
@@ -226,11 +177,18 @@
 			<BackgroundKFM>art/LeaderHeads/bg/bluepipes/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
 		</LeaderheadArtInfo>
 		<LeaderheadArtInfo>
-			<Type>ART_DEF_LEADER_CALIPH</Type><!--🤖Caliphate Ayatollah-->
-			<Button>Art/Interface/Buttons/Leaderheads/ayatollah.dds</Button>
-			<NIF>art/LeaderHeads/Khomeini/saladin.nif</NIF>
-			<KFM>art/LeaderHeads/Khomeini/saladin.kfm</KFM>
-			<BackgroundKFM>art/LeaderHeads/bg/mosque/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+			<Type>ART_DEF_LEADER_QUAYLE</Type><!-- Director Green-->
+			<Button>Art/Interface/Buttons/Leaderheads/dirgreen.dds</Button>
+			<NIF>art/LeaderHeads/Quayle/alexander.nif</NIF>
+			<KFM>art/LeaderHeads/Quayle/alexander.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/courtyard/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_ADENAUER</Type><!--🤖Consortium CEO-->
+			<Button>Art/Interface/Buttons/Leaderheads/consortium_ceo.dds</Button>
+			<NIF>art/LeaderHeads/Adenauer/Chancelor.nif</NIF>
+			<KFM>art/LeaderHeads/Adenauer/Chancelor.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/bg/spectrum/Samuel_de_Champlain_BG.kfm</BackgroundKFM>
 		</LeaderheadArtInfo>
 		<LeaderheadArtInfo>
 			<Type>ART_DEF_LEADER_NIGHTINGGALE</Type><!--👽Nightinggale-->
@@ -259,6 +217,48 @@
 			<NIF>Art/LeaderHeads/India_Rastrapati/victoria.nif</NIF>
 			<KFM>Art/LeaderHeads/India_Rastrapati/victoria.kfm</KFM>
 			<BackgroundKFM>Art/LeaderHeads/India_Rastrapati/victoria_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_MODELCITIZEN</Type><!-- The Model Citizen-->
+			<Button>Art/Interface/Buttons/Leaderheads/meiji.dds</Button>
+			<NIF>art/LeaderHeads/Meiji/meiji.nif</NIF>
+			<KFM>art/LeaderHeads/Meiji/meiji.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/Meiji/meiji_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_JAPAN_KING</Type><!--🤖Japanese Everemperor-->
+			<Button>Art/Interface/Buttons/Leaderheads/everemperor.dds</Button>
+			<NIF>art/LeaderHeads/japanking/tokugawa.nif</NIF>
+			<KFM>art/LeaderHeads/japanking/tokugawa.kfm</KFM>
+			<BackgroundKFM>Art/Leaderheads/japanking/fdr_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_MINISTER</Type><!-- Minister of Liberty-->
+			<Button>Art/Interface/Buttons/Leaderheads/walesa.dds</Button>
+			<NIF>Art/LeaderHeads/Libertarian_minister/walesa.nif</NIF>
+			<KFM>Art/LeaderHeads/Libertarian_minister/fdr.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/Libertarian_minister/FDR_BG.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_POLISH_KING</Type><!--🤖Chief of State-->
+			<Button>Art/Interface/Buttons/Leaderheads/pilsudski.dds</Button>
+			<NIF>Art/LeaderHeads/pilsudski/pilsudski.nif</NIF>
+			<KFM>Art/LeaderHeads/pilsudski/pilsudski.kfm</KFM>
+			<BackgroundKFM>Art/LeaderHeads/pilsudski/peter_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_MIRANDA</Type><!-- The lady in Black-->
+			<Button>Art/Interface/Buttons/Leaderheads/miranda.dds</Button>
+			<NIF>art/LeaderHeads/miranda/peter.nif</NIF>
+			<KFM>art/LeaderHeads/miranda/peter.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/miranda/peter_bg.kfm</BackgroundKFM>
+		</LeaderheadArtInfo>
+		<LeaderheadArtInfo>
+			<Type>ART_DEF_LEADER_SYNDICATE_KING</Type><!--🤖Syndicate Crimelord-->
+			<Button>Art/Interface/Buttons/Leaderheads/cavour.dds</Button>
+			<NIF>art/LeaderHeads/Cavour/winston_churchill.nif</NIF>
+			<KFM>art/LeaderHeads/Cavour/winston_churchill.kfm</KFM>
+			<BackgroundKFM>art/LeaderHeads/Cavour/winston_churchill_bg.kfm</BackgroundKFM>
 		</LeaderheadArtInfo>
 		<LeaderheadArtInfo>
 			<Type>ART_DEF_LEADER_INVASION_OUTER_GODS</Type><!--🪼Outer Gods Pantheon-->

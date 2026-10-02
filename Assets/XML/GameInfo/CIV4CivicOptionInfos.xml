@@ -28,7 +28,7 @@
 		</CivicOptionInfo>
 		<CivicOptionInfo>
 			<Type>CIVICOPTION_INVENTIONS</Type>
-			<Description>Inventions</Description>
+			<Description>TXT_KEY_CIVICOPTION_INVENTIONS</Description>
 		</CivicOptionInfo>
 	</CivicOptionInfos>
 </Civ4CivicOptionInfos>

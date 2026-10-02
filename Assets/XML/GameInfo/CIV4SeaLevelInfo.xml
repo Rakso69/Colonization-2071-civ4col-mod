@@ -8,17 +8,17 @@
 	<SeaLevelInfos>
 		<SeaLevelInfo>
 			<Type>SEALEVEL_LOW</Type>
-			<Description>Dense</Description>
+			<Description>TXT_KEY_SEALEVEL_LOW</Description>
 			<iSeaLevelChange>-8</iSeaLevelChange>
 		</SeaLevelInfo>
 		<SeaLevelInfo>
 			<Type>SEALEVEL_MEDIUM</Type>
-			<Description>Moderate</Description>
+			<Description>TXT_KEY_SEALEVEL_MEDIUM</Description>
 			<iSeaLevelChange>0</iSeaLevelChange>
 		</SeaLevelInfo>
 		<SeaLevelInfo>
 			<Type>SEALEVEL_HIGH</Type>
-			<Description>Sparse</Description>
+			<Description>TXT_KEY_SEALEVEL_HIGH</Description>
 			<iSeaLevelChange>6</iSeaLevelChange>
 		</SeaLevelInfo>
 	</SeaLevelInfos>

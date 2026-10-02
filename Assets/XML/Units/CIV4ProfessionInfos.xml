@@ -93,7 +93,7 @@
 <!--#🌾Offworld Hydroponicist-->
 		<ProfessionInfo>
 			<Type>PROFESSION_FISHERMAN</Type>
-			<Description>Offworld Hydroponicist</Description>
+			<Description>TXT_KEY_PROFESSION_FISHERMAN</Description>
 			<Civilopedia>TXT_KEY_UNIT_FISHERMAN_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_PROFESSION_FISHERMAN_STRATEGY</Strategy>
 			<Help/>
@@ -399,7 +399,7 @@
 <!--#🩻Theorist:Theorists-->
 		<ProfessionInfo>
 			<Type>PROFESSION_FUR_TRADER</Type>
-			<Description>Theorist</Description>
+			<Description>TXT_KEY_PROFESSION_FUR_TRADER</Description>
 			<Civilopedia>TXT_KEY_PROFESSION_FUR_TRADER_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_PROFESSION_FUR_TRADER_STRATEGY</Strategy>
 			<Help/>
@@ -1132,9 +1132,9 @@
 <!--1132 Colonization 2071-->
 <!--#🛢️Oilman-->
 		<ProfessionInfo>
-			<Type>PROFESSION_COAL_MINER</Type>
-			<Description>TXT_KEY_PROFESSION_COAL_MINER</Description>
-			<Civilopedia>TXT_KEY_UNIT_COAL_MINER_PEDIA</Civilopedia>
+			<Type>PROFESSION_OILMAN</Type>
+			<Description>TXT_KEY_PROFESSION_OILMAN</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_OILMAN_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_UNIT_COAL_MINER_STRATEGY</Strategy>
 			<Help/>
 			<bNativesInvalid>1</bNativesInvalid>
@@ -1159,25 +1159,25 @@
 			<YieldEquipedNums/>
 			<FreePromotions/>
 			<YieldsProduced>
-				<YieldType>YIELD_COAL</YieldType>
+				<YieldType>YIELD_HYDROCARBONS</YieldType>
 			</YieldsProduced>
 			<YieldsConsumed>
 				<YieldType>NONE</YieldType>
 			</YieldsConsumed>
-			<Button>Art/Buttons/Professions/CoalMinerPro.dds</Button>
+			<Button>Art/Interface/Buttons/Civilizations/oilmanpro.dds</Button>
 		</ProfessionInfo>
-<!--#🛢️Furnace Worker-->
+<!--#🛢️Refinery Worker-->
 		<ProfessionInfo>
-			<Type>PROFESSION_COAL_BURNER</Type>
-			<Description>Furnace Worker</Description>
-			<Civilopedia>[TAB]For much of human history, victory has gone to those with access to the finest metals. From the Bronze Age onwards, metal tools, weapons and alloys have been an inherent part of the rise of civilization, spurring conquests and construction by the world's greatest empires. And while metal mining has had an impressive history, it was not until the nineteenth century that industrial mining truly began to take root.[PARAGRAPH:1]Two reasons explain this sudden intensification in mining operations. The first was the almost daily revolutions in the production of tools and consumer items, requiring a continual source of metal to produce them. The second was that the fuel that powered the Industrial Revolution was coal, nestled deep within the earth. In modern times, enormous excavators like the Bagger 288 have it possible to mine a pit three-hundred feet long and one-hundred feet deep in a day, a feat that, in the past, would have required the mobilization of nations.</Civilopedia>
-			<Strategy>[TAB]You can assign any Colonist to work as a Furnace Worker in a Power Plant or Oil Refinery to generate bonuses to industrial production in your colony through the consumption of Fossil Fuels. Hardy Laborers are even more effective in this role.</Strategy>
+			<Type>PROFESSION_REFINERY_WORKER</Type>
+			<Description>TXT_KEY_PROFESSION_REFINERY_WORKER</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_REFINERY_WORKER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_REFINERY_WORKER_STRATEGY</Strategy>
 			<Help/>
 			<bNativesInvalid>1</bNativesInvalid>
 			<bEuropeInvalid>1</bEuropeInvalid>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
-			<SpecialBuilding>SPECIALBUILDING_COAL_FURNACE</SpecialBuilding>
+			<SpecialBuilding>SPECIALBUILDING_POWER_PLANT</SpecialBuilding>
 			<bWorkPlot>0</bWorkPlot>
 			<bCitizen>1</bCitizen>
 			<bWater>0</bWater>
@@ -1198,14 +1198,14 @@
 				<YieldType>YIELD_HAMMERS</YieldType>
 			</YieldsProduced>
 			<YieldsConsumed>
-				<YieldType>YIELD_COAL</YieldType>
+				<YieldType>YIELD_HYDROCARBONS</YieldType>
 			</YieldsConsumed>
-			<Button>Art/Buttons/Professions/CoalWorker.dds</Button>
+			<Button>Art/Interface/Buttons/Civilizations/refinery_workerpro.dds</Button>
 		</ProfessionInfo>
 <!--#🔲Offworld Scavenger-->
 		<ProfessionInfo>
 			<Type>PROFESSION_LUMBERJACK_MOON</Type>
-			<Description>Offworld Scavenger</Description>
+			<Description>TXT_KEY_PROFESSION_LUMBERJACK_MOON</Description>
 			<Civilopedia>TXT_KEY_UNIT_LUMBERJACK_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_PROFESSION_LUMBERJACK_STRATEGY</Strategy>
 			<Help/>
@@ -1239,9 +1239,9 @@
 <!--#💎Offworld Banker-->
 		<ProfessionInfo>
 			<Type>PROFESSION_BANKER</Type>
-			<Description>Offworld Banker</Description>
-			<Civilopedia>After investing 100 units of Hard Currency to build an Interstellar Bank, colonists can work as an Offworld Banker to generate a return on investment in the form of additional Hard Currency profits. However, too much of an increase in the amounts of previously scarce Hard Currency can be self-defeating - with growing imports from offworld, metals prices may decline rapidly on Earth as the underlying economic weakness asserts itself.</Civilopedia>
-			<Strategy>After investing 100 units of Hard Currency to build an Interstellar Bank, local colonists can work as an Offworld Banker in Low Orbit tiles to generate a return on investment in the form of additional Hard Currency profits.</Strategy>
+			<Description>TXT_KEY_PROFESSION_BANKER</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_BANKER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_BANKER_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1273,7 +1273,7 @@
 <!--#🦠Offworld Xenobotanist-->
 		<ProfessionInfo>
 			<Type>PROFESSION_COTTON_PLANTER_MOON</Type>
-			<Description>Offworld Xenobotanist</Description>
+			<Description>TXT_KEY_PROFESSION_COTTON_PLANTER_MOON</Description>
 			<Civilopedia>TXT_KEY_UNIT_COTTON_PLANTER_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_PROFESSION_COTTON_PLANTER_STRATEGY</Strategy>
 			<Help/>
@@ -1307,7 +1307,7 @@
 <!--#🩻Artifact Smuggler-->
 		<ProfessionInfo>
 			<Type>PROFESSION_FUR_TRAPPER_MOON</Type>
-			<Description>Artifact Smuggler</Description>
+			<Description>TXT_KEY_PROFESSION_FUR_TRAPPER_MOON</Description>
 			<Civilopedia>TXT_KEY_UNIT_TRAPPER_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_PROFESSION_FUR_TRAPPER_STRATEGY</Strategy>
 			<Help/>
@@ -1341,7 +1341,7 @@
 <!--#🧬Soma Smuggler-->
 		<ProfessionInfo>
 			<Type>PROFESSION_SUGAR_PLANTER_MOON</Type>
-			<Description>Soma Smuggler</Description>
+			<Description>TXT_KEY_PROFESSION_SUGAR_PLANTER_MOON</Description>
 			<Civilopedia>TXT_KEY_UNIT_SUGAR_PLANTER_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_PROFESSION_SUGAR_PLANTER_STRATEGY</Strategy>
 			<Help/>
@@ -1375,7 +1375,7 @@
 <!--#☣️Offworld Uranium Miner-->
 		<ProfessionInfo>
 			<Type>PROFESSION_TOBACCO_PLANTER_MOON</Type>
-			<Description>Offworld Uranium Miner</Description>
+			<Description>TXT_KEY_PROFESSION_TOBACCO_PLANTER_MOON</Description>
 			<Civilopedia>TXT_KEY_UNIT_TOBACCO_PLANTER_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_PROFESSION_TOBACCO_PLANTER_STRATEGY</Strategy>
 			<Help/>
@@ -1409,7 +1409,7 @@
 <!--#🪨Offworld Ore Miner-->
 		<ProfessionInfo>
 			<Type>PROFESSION_ORE_MINER_MOON</Type>
-			<Description>Offworld Ore Miner</Description>
+			<Description>TXT_KEY_PROFESSION_ORE_MINER_MOON</Description>
 			<Civilopedia>TXT_KEY_UNIT_MINER_PEDIA</Civilopedia>
 			<Strategy>TXT_KEY_PROFESSION_ORE_MINER_STRATEGY</Strategy>
 			<Help/>
@@ -1443,9 +1443,9 @@
 <!--#🦠Xenogeneticist-->
 		<ProfessionInfo>
 			<Type>PROFESSION_XENOGENETICIST</Type>
-			<Description>Xenogeneticist</Description>
-			<Civilopedia>Although the bizarre living bioreactors bred by the Progenitors proved extremely fragile; a detailed understanding of Xenogenetics enabled some of the most advanced human Biochemists to sustain several of these organisms in culture under controlled conditions, enabling direct production of valuable Biotech without the time-consuming harvest and refining of Xenospores.</Civilopedia>
-			<Strategy>Assign Colonists to the Xenogeneticist profession to directly synthesize Biotech from tiles containing Progenitor biotechnology. A Brilliant Biochemist will have particular success at this task.</Strategy>
+			<Description>TXT_KEY_PROFESSION_XENOGENETICIST</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_XENOGENETICIST_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_XENOGENETICIST_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1477,9 +1477,9 @@
 <!--#🩻Theoretician-->
 		<ProfessionInfo>
 			<Type>PROFESSION_THEORETICIAN</Type>
-			<Description>Theoretician</Description>
-			<Civilopedia>As research into the incomprehensible technology of the Progenitors advanced, the most visionary of human Theorists were able to take their work from colonial Containment Facilities directly into the field. After capturing particularly well-preserved sites such as a Progenitor Installation, a colonist assigned to work the tile as a Theoretician can salvage usable Progenitor Tech directly without the need for processing of Artifacts inside a colonial lab.</Civilopedia>
-			<Strategy>Assign Colonists to the Quantum Physicist profession to directly create Fusion Cores from tiles containing Progenitor power sources. A Brilliant Physicist will have particular success at this task.</Strategy>
+			<Description>TXT_KEY_PROFESSION_THEORETICIAN</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_THEORETICIAN_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_THEORETICIAN_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1511,9 +1511,9 @@
 <!--#🧬Neuroscientist-->
 		<ProfessionInfo>
 			<Type>PROFESSION_NEUROSCIENTIST</Type>
-			<Description>Neuroscientist</Description>
-			<Civilopedia>After capturing certain rare map sites rich in neurochemicals; nations with an advanced understanding of human and alien neurochemistry can order colonists to work as a Neuroscientist, extracting valuable Narcotics directly from the map tile without the need for processing of Soma inside a colonial Narcotics Lab.</Civilopedia>
-			<Strategy>Assign Colonists to the Quantum Physicist profession to directly create Fusion Cores from tiles containing Progenitor power sources. A Brilliant Physicist will have particular success at this task.</Strategy>
+			<Description>TXT_KEY_PROFESSION_NEUROSCIENTIST</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_NEUROSCIENTIST_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_NEUROSCIENTIST_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1545,9 +1545,9 @@
 <!--#☣️Quantum Physicist-->
 		<ProfessionInfo>
 			<Type>PROFESSION_QUANTUMPHYSICIST</Type>
-			<Description>Quantum Physicist</Description>
-			<Civilopedia>The vast centralized Reactors of the Progenitors appear to function on a principle that transcends human understanding of conventional fusion power. Armed with sufficient knowledge, the best human Physicists could work efficiently as a Quantum Physicist inside a captured Reactor, salvaging functioning Fusion Cores directly without the need for manufacture from raw Uranium.</Civilopedia>
-			<Strategy>Assign Colonists to the Quantum Physicist profession to directly create Fusion Cores from tiles containing Progenitor power sources. A Brilliant Physicist will have particular success at this task.</Strategy>
+			<Description>TXT_KEY_PROFESSION_QUANTUMPHYSICIST</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_QUANTUMPHYSICIST_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_QUANTUMPHYSICIST_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1579,9 +1579,9 @@
 <!--#🛠️Nanotechnologist-->
 		<ProfessionInfo>
 			<Type>PROFESSION_NANOTECHNOLOGIST</Type>
-			<Description>Nanotechnologist</Description>
-			<Civilopedia>The abandoned industrial facilities left by the Progenitors contained vast pools of metallic slurry that appears to be composed of primitive nanobots with a limited capacity for self-assembly. With the appropriate technology, a skilled Nanotechnologist could resynthesize these nanites into versatile Tools that could be adapted for industrial uses, without the need for costly smelting and machining of raw Ore.</Civilopedia>
-			<Strategy>Assign a Nanotechnologist to tiles containing Progenitor industrial compounds to synthesize usable Tools from their dormant nanobots. A Master Machinist will have particular success at this task.</Strategy>
+			<Description>TXT_KEY_PROFESSION_NANOTECHNOLOGIST</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_NANOTECHNOLOGIST_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_NANOTECHNOLOGIST_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1613,9 +1613,9 @@
 <!--#🔫Artificer-->
 		<ProfessionInfo>
 			<Type>PROFESSION_ARTIFICER</Type>
-			<Description>Artificer</Description>
-			<Civilopedia>The strange armaments found in the Progenitors' abandoned Citadels and Keeps were seldom usable directly, their power source long since drained. With enough understanding of their lost technology, a skilled Artificer could recombine their parts directly into deadly Weapons fit for human use, without the need for time-consuming manufacture from raw Ore and Tools.</Civilopedia>
-			<Strategy>Assign Colonists to the Artificer profession to reverse-engineer functioning Weapons from tiles containing Progenitor munitions stockpiles. A Master Arms Dealer will have particular success at this task.</Strategy>
+			<Description>TXT_KEY_PROFESSION_ARTIFICER</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_ARTIFICER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_ARTIFICER_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1647,9 +1647,9 @@
 <!--#🛍️Offworld Trader-->
 		<ProfessionInfo>
 			<Type>PROFESSION_TRADER</Type>
-			<Description>Offworld Trader</Description>
-			<Civilopedia>Deteriorating market conditions on Earth lured many small-time independent traders to try their hand at making a living bartering a wide variety of trade goods between the myriad spaceports of the New Worlds.</Civilopedia>
-			<Strategy>Colonists working as an Offworld Trader on a Low Orbit tile will generate a small but steady stream of profits in the form of imported trade goods from Earth. Building a Spaceport will significantly increase the profits of local Traders.</Strategy>
+			<Description>TXT_KEY_PROFESSION_TRADER</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_TRADER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_TRADER_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1681,9 +1681,9 @@
 <!--#🔨Matrix Engineer-->
 		<ProfessionInfo>
 			<Type>PROFESSION_MATRIXENGINEER</Type>
-			<Description>Matrix Engineer</Description>
-			<Civilopedia>The abandoned industrial facilities left by the Progenitors contained vast pools of metallic slurry that appears to be composed of primitive nanobots with a limited capacity for self-assembly. With the appropriate technology, a skilled Engineer can program a control matrix directing these nanites to perform construction tasks for a nearby colony, creating ships and structures directly from the surrounding environment without the need for harvesting and smelting of raw Plasteel.</Civilopedia>
-			<Strategy>Assign a Nanotechnologist to tiles containing Progenitor industrial compounds to synthesize usable Tools from their dormant nanobots. A Master Machinist will have particular success at this task.</Strategy>
+			<Description>TXT_KEY_PROFESSION_MATRIXENGINEER</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_MATRIXENGINEER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_MATRIXENGINEER_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1715,9 +1715,9 @@
 <!--#🔔Conspirator-->
 		<ProfessionInfo>
 			<Type>PROFESSION_CONSPIRATOR</Type>
-			<Description>Conspirator</Description>
-			<Civilopedia>The most closely guarded of Progenitor facilities are rumored to contain secrets of the Illuminati, revealing intricate Alien and Human conspiracies that intertwine the power structures of Earth and the New Worlds. A Conspirator willing to face the risks can leverage these secrets to liberate his people from the Earthbound establishment, and call upon valuable aid from among the Illuminated elites.</Civilopedia>
-			<Strategy>You may assign a Conspirator to produce Liberty from rare Illuminated sites.. or perhaps it would be best to let sleeping dogs lie.</Strategy>
+			<Description>TXT_KEY_PROFESSION_CONSPIRATOR</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_CONSPIRATOR_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_CONSPIRATOR_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1749,9 +1749,9 @@
 <!--#✝️Hacker-->
 		<ProfessionInfo>
 			<Type>PROFESSION_HACKER</Type>
-			<Description>Hacker</Description>
-			<Civilopedia>With understanding of the complex spintronic relay systems used by the Progenitors, human Hackers can hijack long-dormant communication arrays to beam data directly across the wormhole. Tapping into Earth's tightly regulated media networks can weaken the stranglehold of Earthbound governments, releasing a tide of hopeful immigrants.</Civilopedia>
-			<Strategy>Colonists assigned to the Hacker profession can tap into Progenitor orbital facilities such as a Derelict Satellite or Communications Array to produce Propaganda.</Strategy>
+			<Description>TXT_KEY_PROFESSION_HACKER</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_HACKER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_HACKER_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1783,9 +1783,9 @@
 <!--#✝️Field Journalist-->
 		<ProfessionInfo>
 			<Type>PROFESSION_JOURNALIST</Type>
-			<Description>Field Journalist</Description>
-			<Civilopedia>The bizarre environments and allegedly boundless riches of the New Worlds served as a popular topic for sensationalist coverage by Earth media, forbidden to focus on the many problems closer to home. Only a few unique resource sites on the map provide unique opportunities in this regard; a Field Journalist willing to exploit these sites can generate a potent stream of Propaganda. Without direct access to Earth media, the alien empires cannot employ Journalists, however their Venerable Elders can work certain areas such as Abduction Sites to plot the abduction of human servitors.</Civilopedia>
-			<Strategy>After acquiring a resource tile with a potential source of Propaganda, you may assign a Field Journalist to lure new colonists from Earth.</Strategy>
+			<Description>TXT_KEY_PROFESSION_JOURNALIST</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_JOURNALIST_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_JOURNALIST_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1817,9 +1817,9 @@
 <!--#🏗️Mechanized Laborer-->
 		<ProfessionInfo>
 			<Type>PROFESSION_MECHANIZED_LABORER</Type>
-			<Description>Mechanized Laborer</Description>
-			<Civilopedia>By taking advantage of heavy construction equipment and advanced machine tools, providing Laborers with both Tools and Vehicles can significantly speed up the development of a sophisticated planetary infrastructure.</Civilopedia>
-			<Strategy>A Laborer equipped with both Tools and Vehicles can construct tile improvements and clear map features at twice the usual rate.</Strategy>
+			<Description>TXT_KEY_PROFESSION_MECHANIZED_LABORER</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_MECHANIZED_LABORER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_MECHANIZED_LABORER_STRATEGY</Strategy>
 			<Help/>
 			<Combat>UNITCOMBAT_MELEE</Combat>
 			<DefaultUnitAI>UNITAI_WORKER</DefaultUnitAI>
@@ -1860,9 +1860,9 @@
 <!--#💡Inventor-->
 		<ProfessionInfo>
 			<Type>PROFESSION_INVENTOR</Type>
-			<Description>Inventor</Description>
-			<Civilopedia>TXT_KEY_UNIT_STUDENT_PEDIA</Civilopedia>
-			<Strategy>TXT_KEY_PROFESSION_STUDENT_STRATEGY</Strategy>
+			<Description>TXT_KEY_PROFESSION_INVENTOR</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_INVENTOR_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_INVENTOR_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1894,9 +1894,9 @@
 <!--#💡Symbologist-->
 		<ProfessionInfo>
 			<Type>PROFESSION_CRYPTOGRAPHER</Type>
-			<Description>Symbologist</Description>
-			<Civilopedia>The vast amounts of data housed in the Progenitors' vacant Libraries is recorded by its enigmatic creators in an alien language requiring literally millions of intricate multicolored 3-dimensional hieroglyphs. Through decades of careful study, the most erudite human Symbologists could eventually decode a wealth of valuable data from these mysterious archives.</Civilopedia>
-			<Strategy>After seizing control of a Progenitor Datacore, assigning a Symbologist to analyze the facility can produce staggering breakthroughs in Research, without consuming raw materials to recreate experiments in Research Labs. A Visionary Researcher will prove particularly adept at this demanding task.</Strategy>
+			<Description>TXT_KEY_PROFESSION_CRYPTOGRAPHER</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_CRYPTOGRAPHER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_CRYPTOGRAPHER_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1928,9 +1928,9 @@
 <!--#💡Astronomer-->
 		<ProfessionInfo>
 			<Type>PROFESSION_ASTRONOMER</Type>
-			<Description>Astronomer</Description>
-			<Civilopedia>The inexplicable distortions surrounding the New Worlds wormhole posed a growing challenge to prior human concepts of astrophysics and space-time. With sufficient technology, Astronomers operating from New Worlds colonies in the right location could make scientific progress far exceeding their colleagues on Earth.</Civilopedia>
-			<Strategy>Colonists working as an Astronomer on a Deep Space or Low Orbit tile containing scientific resources such as a Space-Time Anomaly can directly generate a steady stream of Research without the need for consumption of raw resources in a colonial Research Lab. Visionary Researchers will be particularly adept at this task.</Strategy>
+			<Description>TXT_KEY_PROFESSION_ASTRONOMER</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_ASTRONOMER_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_ASTRONOMER_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1962,9 +1962,9 @@
 <!--#👽🔔Ritualist (👽Alien only)-->
 		<ProfessionInfo>
 			<Type>PROFESSION_RITUALIST</Type>
-			<Description>Ritualist</Description>
-			<Civilopedia>After controlling one of the sacred Menhirs dotted across the landscape of the New Worlds, an alien Venerable Elder can work as a Ritualist to act as a powerful unifying force, producing a great surge of Liberty to free its people from the tyranny of the long-absent Progenitors.</Civilopedia>
-			<Strategy>Assign our Venerable Elders to meditate at the sacred Menhirs, where their focused minds can traverse a mystic window to the stars to plot the downfall of the Progenitors, and even call on the aid of select human Illuminati to join our cause.</Strategy>
+			<Description>TXT_KEY_PROFESSION_RITUALIST</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_RITUALIST_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_RITUALIST_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>
@@ -1996,9 +1996,9 @@
 <!--#👽✝Abductor (👽Alien only)-->
 		<ProfessionInfo>
 			<Type>PROFESSION_ABDUCTOR</Type>
-			<Description>Abductor</Description>
-			<Civilopedia>By accessing one of the covert Abduction Sites hidden across the New Worlds, an alien Venerable Elder can work as an Abductor to coordinate the kidnapping of valuable Human servants from Earth. Once captured, the alien race must still visit Earth with a Saucer to collect its new servitors.</Civilopedia>
-			<Strategy>Take care to seize control of the valuable Abduction Sites before they are ransacked by Earthling colonists. Therein, our Venerable Elders or select Earthling abductees will be able to plot the abduction of more Human servitors, who may be easily taken when our Saucer next visits Earth.</Strategy>
+			<Description>TXT_KEY_PROFESSION_ABDUCTOR</Description>
+			<Civilopedia>TXT_KEY_PROFESSION_ABDUCTOR_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_PROFESSION_ABDUCTOR_STRATEGY</Strategy>
 			<Help/>
 			<Combat>NONE</Combat>
 			<DefaultUnitAI>NONE</DefaultUnitAI>

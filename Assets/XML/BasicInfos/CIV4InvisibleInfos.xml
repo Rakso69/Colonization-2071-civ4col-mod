@@ -8,11 +8,11 @@
 	<InvisibleInfos>
 		<InvisibleInfo>
 			<Type>INVISIBLE_LAND</Type>
-			<Description>Hidden Units</Description>
+			<Description>TXT_KEY_INVISIBLE_LAND</Description>
 		</InvisibleInfo>
 		<InvisibleInfo>
 			<Type>INVISIBLE_SPACE</Type>
-			<Description>Cloaked Vessels</Description>
+			<Description>TXT_KEY_INVISIBLE_SPACE</Description>
 		</InvisibleInfo>
 	</InvisibleInfos>
 </Civ4InvisibleInfos>

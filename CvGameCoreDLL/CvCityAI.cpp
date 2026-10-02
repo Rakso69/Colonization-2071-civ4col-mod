@@ -496,7 +496,8 @@ void CvCityAI::AI_chooseProduction()
 		return;
 	}
 
-	// If no unit or building can be produced, convert production into Father Points. //Kaszkaj
+	// Kaszkaj fix: .\.\CvCityAI.cpp, Line:  499, Function: CvCityAI::AI_chooseProduction.
+	// Try an available Father Point order when no unit or building is selected, giving the AI a production fallback.
 	for (int iI = 0; iI < GC.getNumFatherPointInfos(); ++iI)
 	{
 		FatherPointTypes eFatherPoint = (FatherPointTypes)iI;
@@ -2463,7 +2464,8 @@ CvUnit* CvCityAI::AI_bestPopulationUnit(UnitAITypes eUnitAI, ProfessionTypes ePr
 		eProfession = kOwner.AI_idealProfessionForUnitAIType(eUnitAI, this);
 	}
 
-	FAssert(eProfession != NO_PROFESSION);
+	// Kaszkaj fix: .\.\CvCityAI.cpp, Line:  2466, Expression:  eProfession != NO_PROFESSION.
+	// Return NULL when no valid profession exists so the caller can skip population ejection.
 	if (eProfession == NO_PROFESSION)
 	{
 		return NULL;
@@ -3698,7 +3700,7 @@ int CvCityAI::AI_estimateYieldValue(YieldTypes eYield, int iAmount) const
 		case YIELD_TRADE_GOODS:
 		case YIELD_HAMMERS:
 		 ///TKs Invention Core Mod v 1.0
-		case YIELD_COAL:
+		case YIELD_HYDROCARBONS:
 		case YIELD_IDEAS:
             break;
 		///TKe

@@ -225,9 +225,9 @@
 		<CivicInfo>
 			<CivicOptionType>CIVICOPTION_NATIVES</CivicOptionType>
 			<Type>CIVIC_ALIEN_SUPREMACY</Type>
-			<Description>Alien Supremacy</Description>
-			<Civilopedia>The aliens of the New Worlds live in highly stratified societies where millenia of ritual and tradition could reap great benefits from the native soil, but often proved inimical to human ideals of technology and progress.</Civilopedia>
-			<Strategy>Alien Supremacy</Strategy>
+			<Description>TXT_KEY_CIVIC_ALIEN_SUPREMACY</Description>
+			<Civilopedia>TXT_KEY_CIVIC_ALIEN_SUPREMACY_PEDIA</Civilopedia>
+			<Strategy>TXT_KEY_CIVIC_ALIEN_SUPREMACY_STRATEGY</Strategy>
 			<Button>,Art/Interface/Buttons/Civilizations/alien_supremacy.dds</Button>
 			<iAIWeight>0</iAIWeight>
 			<iGreatGeneralRateModifier>0</iGreatGeneralRateModifier>
@@ -266,7 +266,7 @@
 					</ImprovementYields>
 				</ImprovementYieldChange>
 				<ImprovementYieldChange>
-					<ImprovementType>IMPROVEMENT_ALIEN_GARDEN</ImprovementType>
+					<ImprovementType>IMPROVEMENT_ALIEN_FERTILIZERS</ImprovementType>
 					<ImprovementYields>
 						<YieldChange>
 							<YieldType>YIELD_FOOD</YieldType>
@@ -275,7 +275,7 @@
 					</ImprovementYields>
 				</ImprovementYieldChange>
 				<ImprovementYieldChange>
-					<ImprovementType>IMPROVEMENT_ALIEN_PLANTATION</ImprovementType>
+					<ImprovementType>IMPROVEMENT_ALIEN_FUTUREFARM</ImprovementType>
 					<ImprovementYields>
 						<YieldChange>
 							<YieldType>YIELD_FOOD</YieldType>
@@ -478,7 +478,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_NAT</Type>
-      <Description>Alien Knowledge</Description>
+      <Description>TXT_KEY_BRANCH_ALIEN_KNOWLEDGE</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/Alien Knowledge.dds</Button>
@@ -531,7 +531,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PHY</Type>
-      <Description>Physical Science</Description>
+      <Description>TXT_KEY_BRANCH_PHYSICALSCIENCE</Description>
       <Civilopedia>TXT_KEY_YIELD_TOBACCO_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/Physical Science.dds</Button>
@@ -584,7 +584,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PHYA1</Type>
-      <Description>Hydrocarbon Geology</Description>
+      <Description>TXT_KEY_01_1_Hydrocarbon_Geology</Description>
       <Civilopedia>TXT_KEY_YIELD_TOBACCO_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/01_1_Hydrocarbon Geology.dds</Button>
@@ -620,7 +620,7 @@
       </RequiredYields>
       <AllowsYields>
         <AllowsYield>
-          <YieldType>YIELD_COAL</YieldType>
+          <YieldType>YIELD_HYDROCARBONS</YieldType>
           <iChange>1</iChange>
         </AllowsYield>
       </AllowsYields>
@@ -629,7 +629,7 @@
       <AllowsPromotions/>
       <AllowsProfessions>
         <AllowsProfession>
-          <ProfessionType>PROFESSION_COAL_MINER</ProfessionType>
+          <ProfessionType>PROFESSION_OILMAN</ProfessionType>
           <iChange>1</iChange>
         </AllowsProfession>
       </AllowsProfessions>
@@ -646,7 +646,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PHYA2</Type>
-      <Description>Organic Chemistry</Description>
+      <Description>TXT_KEY_01_2_Organic_Chemistry</Description>
       <Civilopedia>TXT_KEY_YIELD_TOBACCO_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/01_2_Organic Chemistry.dds</Button>
@@ -683,7 +683,7 @@
       <RequiredUnitType/>
       <RequiredYields>
         <RequiredYield>
-          <RequiredYieldType>YIELD_COAL</RequiredYieldType>
+          <RequiredYieldType>YIELD_HYDROCARBONS</RequiredYieldType>
           <iYieldCost>60</iYieldCost>
         </RequiredYield>
         <RequiredYield>
@@ -695,7 +695,7 @@
       <AllowsYields/>
       <AllowsBuildingTypes>
         <AllowsBuildingType>
-          <BuildingType>BUILDING_COAL_FURNACE</BuildingType>
+          <BuildingType>BUILDING_POWER_PLANT</BuildingType>
           <iChange>1</iChange>
         </AllowsBuildingType>
         <AllowsBuildingType>
@@ -705,13 +705,13 @@
       </AllowsBuildingTypes>
       <AllowsUnitClasses>
         <AllowsUnitClass>
-          <AllowsUnit>UNITCLASS_COAL_MINER</AllowsUnit>
+          <AllowsUnit>UNITCLASS_OILMAN</AllowsUnit>
           <iChange>1</iChange>
         </AllowsUnitClass>
       </AllowsUnitClasses>
       <AllowsProfessions>
         <AllowsProfession>
-          <ProfessionType>PROFESSION_COAL_BURNER</ProfessionType>
+          <ProfessionType>PROFESSION_REFINERY_WORKER</ProfessionType>
           <iChange>1</iChange>
         </AllowsProfession>
       </AllowsProfessions>
@@ -727,7 +727,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PHYA3</Type>
-      <Description>Chemical Engineering</Description>
+      <Description>TXT_KEY_01_3_Chemical_Engineering</Description>
       <Civilopedia>TXT_KEY_YIELD_TOBACCO_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/01_3_Chemical Engineering.dds</Button>
@@ -753,7 +753,7 @@
 					<ImprovementType>IMPROVEMENT_MINE</ImprovementType>
 					<ImprovementYields>
 						<YieldChange>
-							<YieldType>YIELD_COAL</YieldType>
+							<YieldType>YIELD_HYDROCARBONS</YieldType>
 							<iYieldChange>1</iYieldChange>
 						</YieldChange>
 					</ImprovementYields>
@@ -766,10 +766,10 @@
       <iX_Location>3</iX_Location>
       <iY_Location>1</iY_Location>
       <RequiredInvention>TECH_PHYA2</RequiredInvention>
-      <RequiredUnitType>UNITCLASS_COAL_MINER</RequiredUnitType>
+      <RequiredUnitType>UNITCLASS_OILMAN</RequiredUnitType>
       <RequiredYields>
         <RequiredYield>
-          <RequiredYieldType>YIELD_COAL</RequiredYieldType>
+          <RequiredYieldType>YIELD_HYDROCARBONS</RequiredYieldType>
           <iYieldCost>80</iYieldCost>
         </RequiredYield>
         <RequiredYield>
@@ -785,7 +785,7 @@
       <AllowsYields/>
       <AllowsBuildingTypes>
         <AllowsBuildingType>
-          <BuildingType>BUILDING_STEAMWORKS</BuildingType>
+          <BuildingType>BUILDING_OIL_REFINERY</BuildingType>
           <iChange>1</iChange>
         </AllowsBuildingType>
         <AllowsBuildingType>
@@ -799,7 +799,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PHY1</Type>
-      <Description>Radiation Geology</Description>
+      <Description>TXT_KEY_02_1_Radiation_Geology</Description>
       <Civilopedia>TXT_KEY_YIELD_TOBACCO_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/02_1_Radiation Geology.dds</Button>
@@ -860,7 +860,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PHY2</Type>
-      <Description>Nuclear Physics</Description>
+      <Description>TXT_KEY_02_2_Nuclear_Physics</Description>
       <Civilopedia>TXT_KEY_YIELD_TOBACCO_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/02_2_Nuclear Physics.dds</Button>
@@ -931,7 +931,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PHY3</Type>
-      <Description>Nuclear Engineering</Description>
+      <Description>TXT_KEY_02_3_Nuclear_Engineering</Description>
       <Civilopedia>TXT_KEY_YIELD_TOBACCO_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/02_3_Nuclear Engineering.dds</Button>
@@ -989,7 +989,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PHY4</Type>
-      <Description>Cold Fusion</Description>
+      <Description>TXT_KEY_02_4_Cold_Fusion</Description>
       <Civilopedia>TXT_KEY_YIELD_TOBACCO_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/02_4_Cold Fusion.dds</Button>
@@ -1057,7 +1057,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_LIF</Type>
-      <Description>Life Science</Description>
+      <Description>TXT_KEY_BRANCH_LIFESCIENCE</Description>
       <Civilopedia>TXT_KEY_YIELD_COTTON_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/Life Science.dds</Button>
@@ -1110,7 +1110,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_LIFA0</Type>
-      <Description>Interstellar Ecology</Description>
+      <Description>TXT_KEY_03_1_Interstellar_Ecology</Description>
       <Civilopedia>TXT_KEY_YIELD_COTTON_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/03_1_Interstellar Ecology.dds</Button>
@@ -1165,7 +1165,7 @@
       <iCenterPlotFoodBonus>1</iCenterPlotFoodBonus>
       <AllowsBuildTypes>
         <AllowsBuildType>
-          <BuildType>IMPROVEMENT_RANCH</BuildType>
+          <BuildType>IMPROVEMENT_PASTURE</BuildType>
           <iChange>1</iChange>
         </AllowsBuildType>
       </AllowsBuildTypes>
@@ -1187,7 +1187,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_LIFA1</Type>
-      <Description>Soil Enrichment</Description>
+      <Description>TXT_KEY_03_2_Soil_Enrichment</Description>
       <Civilopedia>TXT_KEY_YIELD_COTTON_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/03_2_Soil Enrichment.dds</Button>
@@ -1264,7 +1264,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_LIFA2</Type>
-      <Description>Advanced Hydroponics</Description>
+      <Description>TXT_KEY_03_3_Advanced_Hydroponics</Description>
       <Civilopedia>TXT_KEY_YIELD_COTTON_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/03_3_Advanced Hydroponics.dds</Button>
@@ -1348,7 +1348,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_LIFA3</Type>
-      <Description>Nanomedicine</Description>
+      <Description>TXT_KEY_03_4_Nanomedicine</Description>
       <Civilopedia>TXT_KEY_YIELD_COTTON_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/03_4_Nanomedicine.dds</Button>
@@ -1418,7 +1418,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_LIF1</Type>
-      <Description>Xenomycology</Description>
+      <Description>TXT_KEY_04_1_Xenomycology</Description>
       <Civilopedia>TXT_KEY_YIELD_COTTON_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/04_1_Xenomycology.dds</Button>
@@ -1479,7 +1479,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_LIF2</Type>
-      <Description>Alien Biochemistry</Description>
+      <Description>TXT_KEY_04_2_Alien_Biochemistry</Description>
       <Civilopedia>TXT_KEY_YIELD_COTTON_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/04_2_Alien Biochemistry.dds</Button>
@@ -1550,7 +1550,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_LIF3</Type>
-      <Description>Molecular Xenobiology</Description>
+      <Description>TXT_KEY_04_3_Molecular_Xenobiology</Description>
       <Civilopedia>TXT_KEY_YIELD_COTTON_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/04_3_Molecular Xenobiology.dds</Button>
@@ -1614,7 +1614,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_LIF4</Type>
-      <Description>Industrial Biotech</Description>
+      <Description>TXT_KEY_04_4_Industrial_Biotech</Description>
       <Civilopedia>TXT_KEY_YIELD_COTTON_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/04_4_Industrial Biotech.dds</Button>
@@ -1682,7 +1682,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_NEU</Type>
-      <Description>Neuroscience</Description>
+      <Description>TXT_KEY_BRANCH_NEUROSCIENCE</Description>
       <Civilopedia>TXT_KEY_YIELD_SUGAR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/Neuroscience.dds</Button>
@@ -1736,7 +1736,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_NEUA1</Type>
-      <Description>Xenolinguistics</Description>
+      <Description>TXT_KEY_05_1_Xenolinguistics</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/05_1_Xenolinguistics.dds</Button>
@@ -1801,7 +1801,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_NEUA2</Type>
-      <Description>Alien Autopsy</Description>
+      <Description>TXT_KEY_05_2_Alien_Autopsy</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/05_2_Alien Autopsy.dds</Button>
@@ -1845,7 +1845,7 @@
       <AllowsYields/>
       <AllowsBuildingTypes>
         <AllowsBuildingType>
-          <BuildingType>BUILDING_OBSERVATORY</BuildingType>
+          <BuildingType>BUILDING_DATACORE</BuildingType>
           <iChange>1</iChange>
         </AllowsBuildingType>
       </AllowsBuildingTypes>
@@ -1868,7 +1868,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_NEUA3</Type>
-      <Description>Alien Psychology</Description>
+      <Description>TXT_KEY_05_3_Alien_Psychology</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/05_3_Alien Psychology.dds</Button>
@@ -1923,7 +1923,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_NEU1</Type>
-      <Description>Alien Neurotransmitters</Description>
+      <Description>TXT_KEY_06_1_Alien_Neurotransmitters</Description>
       <Civilopedia>TXT_KEY_YIELD_SUGAR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/06_1_Alien Neurotransmitters.dds</Button>
@@ -1984,7 +1984,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_NEU2</Type>
-      <Description>Psychopharmacology</Description>
+      <Description>TXT_KEY_06_2_Psychopharmacology</Description>
       <Civilopedia>TXT_KEY_YIELD_SUGAR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/06_2_Psychopharmacology.dds</Button>
@@ -2055,7 +2055,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_NEU3</Type>
-      <Description>Neurochemistry</Description>
+      <Description>TXT_KEY_06_3_Neurochemistry</Description>
       <Civilopedia>TXT_KEY_YIELD_SUGAR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/06_3_Neurochemistry.dds</Button>
@@ -2113,7 +2113,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_NEU4</Type>
-      <Description>Neuromodulation</Description>
+      <Description>TXT_KEY_06_4_Neuromodulation</Description>
       <Civilopedia>TXT_KEY_YIELD_SUGAR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/06_4_Neuromodulation.dds</Button>
@@ -2177,7 +2177,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PRO</Type>
-      <Description>Progenitor Secrets</Description>
+      <Description>TXT_KEY_BRANCH_PROGENITOR_SECRETS</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/Progenitor Secrets.dds</Button>
@@ -2230,7 +2230,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PROA1</Type>
-      <Description>Planetology</Description>
+      <Description>TXT_KEY_07_2A_Planetology</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/07_2A_Planetology.dds</Button>
@@ -2253,7 +2253,7 @@
       <SpecialBuildingNotRequireds/>
 			<ImprovementYieldChanges>
 				<ImprovementYieldChange>
-					<ImprovementType>IMPROVEMENT_RANCH</ImprovementType>
+					<ImprovementType>IMPROVEMENT_PASTURE</ImprovementType>
 					<ImprovementYields>
 						<YieldChange>
 							<YieldType>YIELD_FOOD</YieldType>
@@ -2339,7 +2339,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PROA2</Type>
-      <Description>Progenitor Symbology</Description>
+      <Description>TXT_KEY_07_3B_Progenitor_Symbology</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/07_3B_Progenitor Symbology.dds</Button>
@@ -2403,7 +2403,7 @@
       <iCenterPlotFoodBonus>0</iCenterPlotFoodBonus>
       <AllowsBonuses>
         <AllowsBonus>
-          <BonusType>BONUS_MTRUSHMORE</BonusType>
+          <BonusType>BONUS_OBSIDIAN</BonusType>
           <iChange>1</iChange>
         </AllowsBonus>
          <AllowsBonus>
@@ -2415,7 +2415,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PROA3</Type>
-      <Description>Dark Matter Physics</Description>
+      <Description>TXT_KEY_07_4B_Dark_Matter_Physics</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/07_4B_Dark Matter Physics.dds</Button>
@@ -2473,7 +2473,7 @@
       </AllowsUnitClasses>
       <AllowsPromotions>
         <AllowsPromotion>
-          <PromotionType>PROMOTION_ANTIPROG</PromotionType>
+          <PromotionType>PROMOTION_ANTIBOSS</PromotionType>
           <iChange>1</iChange>
         </AllowsPromotion>
         <AllowsPromotion>
@@ -2493,7 +2493,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PRO1</Type>
-      <Description>Xenoarchaeology</Description>
+      <Description>TXT_KEY_07_1_Xenoarchaeology</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/07_1_Xenoarchaeology.dds</Button>
@@ -2564,7 +2564,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PRO2</Type>
-      <Description>Metadimensional Theory</Description>
+      <Description>TXT_KEY_07_2_Metadimensional_Theory</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/07_2_Metadimensional Theory.dds</Button>
@@ -2651,7 +2651,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PRO3</Type>
-      <Description>Containment Fields</Description>
+      <Description>TXT_KEY_07_3C_Containment_Fields</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/07_3C_Containment Fields.dds</Button>
@@ -2715,7 +2715,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PRO4</Type>
-      <Description>Unified Field Theory</Description>
+      <Description>TXT_KEY_07_4C_Unified_Field_Theory</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/07_4C_Unified Field Theory.dds</Button>
@@ -2793,7 +2793,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_MAT</Type>
-      <Description>Materials Science</Description>
+      <Description>TXT_KEY_BRANCH_MATSCIENCE</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/Materials Science.dds</Button>
@@ -2845,7 +2845,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_MAT1</Type>
-      <Description>Metallurgy</Description>
+      <Description>TXT_KEY_08_1_Metallurgy</Description>
       <Civilopedia>TXT_KEY_YIELD_ORE_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/08_1_Metallurgy.dds</Button>
@@ -2906,7 +2906,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_MAT2</Type>
-      <Description>Plasteel Polymers</Description>
+      <Description>TXT_KEY_08_2_Plasteel_Polymers</Description>
       <Civilopedia>TXT_KEY_YIELD_ORE_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/08_2_Plasteel Polymers.dds</Button>
@@ -2948,7 +2948,7 @@
       <RequiredUnitType/>
       <RequiredYields>
         <RequiredYield>
-          <RequiredYieldType>YIELD_COAL</RequiredYieldType>
+          <RequiredYieldType>YIELD_HYDROCARBONS</RequiredYieldType>
           <iYieldCost>60</iYieldCost>
         </RequiredYield>
         <RequiredYield>
@@ -2982,7 +2982,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_MAT3</Type>
-      <Description>Duralloy Polymers</Description>
+      <Description>TXT_KEY_08_3_Duralloy_Polymers</Description>
       <Civilopedia>TXT_KEY_YIELD_ORE_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/08_3_Duralloy Polymers.dds</Button>
@@ -3064,7 +3064,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_MAT4</Type>
-      <Description>Polymorphic Alloys</Description>
+      <Description>TXT_KEY_08_4_Polymorphic_Alloys</Description>
       <Civilopedia>TXT_KEY_YIELD_ORE_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/08_4_Polymorphic Alloys.dds</Button>
@@ -3137,7 +3137,7 @@
           <iYieldCost>100</iYieldCost>
         </RequiredYield>
         <RequiredYield>
-          <RequiredYieldType>YIELD_COAL</RequiredYieldType>
+          <RequiredYieldType>YIELD_HYDROCARBONS</RequiredYieldType>
           <iYieldCost>100</iYieldCost>
         </RequiredYield>
         <RequiredYield>
@@ -3160,7 +3160,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_ENG</Type>
-      <Description>Engineering</Description>
+      <Description>TXT_KEY_BRANCH_ENGINEERING</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/Engineering.dds</Button>
@@ -3212,7 +3212,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_ENG1</Type>
-      <Description>Mechanical Engineering</Description>
+      <Description>TXT_KEY_09_1_Mechanical_Engineering</Description>
       <Civilopedia>TXT_KEY_YIELD_ORE_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/09_1_Mechanical Engineering.dds</Button>
@@ -3278,7 +3278,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_ENG2</Type>
-      <Description>Structural Engineering</Description>
+      <Description>TXT_KEY_09_2_Structural_Engineering</Description>
       <Civilopedia>TXT_KEY_YIELD_ORE_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/09_2_Structural Engineering.dds</Button>
@@ -3339,12 +3339,12 @@
       <AllowsProfessions/>
       <iCheaperPopulationGrowth>0</iCheaperPopulationGrowth>
       <iCenterPlotFoodBonus>0</iCenterPlotFoodBonus>
-      <AllowsTrait>TRAIT_COLONYDEFENSE5</AllowsTrait>
+      <AllowsTrait>TRAIT_RESILIENT</AllowsTrait>
     </CivicInfo>
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_ENG3</Type>
-      <Description>Heavy Industry</Description>
+      <Description>TXT_KEY_09_3_Heavy_Industry</Description>
       <Civilopedia>TXT_KEY_YIELD_ORE_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/09_3_Heavy Industry.dds</Button>
@@ -3406,7 +3406,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_ENG4</Type>
-      <Description>Nanofabrication</Description>
+      <Description>TXT_KEY_09_4_Nanofabrication</Description>
       <Civilopedia>TXT_KEY_YIELD_ORE_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/09_4_Nanofabrication.dds</Button>
@@ -3484,7 +3484,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_MIL</Type>
-      <Description>Military</Description>
+      <Description>TXT_KEY_BRANCH_MILITARY</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/Military.dds</Button>
@@ -3536,7 +3536,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_MIL1</Type>
-      <Description>Organized Militia</Description>
+      <Description>TXT_KEY_10_1_Organized_Militia</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/10_1_Organized Militia.dds</Button>
@@ -3598,7 +3598,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_MIL2</Type>
-      <Description>Arms Trading</Description>
+      <Description>TXT_KEY_10_2_Arms_Trading</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/10_2_Arms Trading.dds</Button>
@@ -3672,7 +3672,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_MIL3</Type>
-      <Description>Munitions Industry</Description>
+      <Description>TXT_KEY_10_3_Munitions_Industry</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/10_3_Munitions Industry.dds</Button>
@@ -3734,7 +3734,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_MIL4</Type>
-      <Description>Military-Industrial Complex</Description>
+      <Description>TXT_KEY_10_4_Military_Industrial_Complex</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/10_4_Military-Industrial Complex.dds</Button>
@@ -3805,14 +3805,14 @@
           <iChange>1</iChange>
         </AllowsBuildingType>
         <AllowsBuildingType>
-          <BuildingType>BUILDING_PYLON</BuildingType>
+          <BuildingType>BUILDING_MIDGAR</BuildingType>
           <iChange>1</iChange>
         </AllowsBuildingType>
       </AllowsBuildingTypes>
       <AllowsUnitClasses/>
       <AllowsPromotions>
         <AllowsPromotion>
-          <PromotionType>PROMOTION_ANTIPROG</PromotionType>
+          <PromotionType>PROMOTION_ANTIBOSS</PromotionType>
           <iChange>1</iChange>
         </AllowsPromotion>
       </AllowsPromotions>
@@ -3827,7 +3827,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_SPA</Type>
-      <Description>Space</Description>
+      <Description>TXT_KEY_BRANCH_SPACE</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,1,4</Button>
@@ -3879,7 +3879,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_SPA1</Type>
-      <Description>Orbital Operations</Description>
+      <Description>TXT_KEY_11_1_Orbital_Operations</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/11_1_Orbital Operations.dds</Button>
@@ -3968,7 +3968,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_SPA2</Type>
-      <Description>Orbital Industry</Description>
+      <Description>TXT_KEY_11_2_Orbital_Industry</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/11_2_Orbital Industry.dds</Button>
@@ -4073,7 +4073,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_SPA3</Type>
-      <Description>Advanced Hull Design</Description>
+      <Description>TXT_KEY_11_3_Advanced_Hull_Design</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/11_3_Advanced Hull Design.dds</Button>
@@ -4141,7 +4141,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_SPA4</Type>
-      <Description>Nanomolecular Architecture</Description>
+      <Description>TXT_KEY_11_4_Nanomolecular_Architecture</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/11_4_Nanomolecular Architecture.dds</Button>
@@ -4229,7 +4229,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_ECO</Type>
-      <Description>Economics</Description>
+      <Description>TXT_KEY_BRANCH_ECONOMICS</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/Economics.dds</Button>
@@ -4281,7 +4281,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_ECO1</Type>
-      <Description>Venture Capital</Description>
+      <Description>TXT_KEY_12_1_Venture_Capital</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/12_1_Venture Capital.dds</Button>
@@ -4351,7 +4351,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_ECO2</Type>
-      <Description>Interstellar Trade</Description>
+      <Description>TXT_KEY_12_2_Interstellar_Trade</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/12_2_Interstellar Trade.dds</Button>
@@ -4441,7 +4441,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_ECO3</Type>
-      <Description>Corporate Investment</Description>
+      <Description>TXT_KEY_12_3_Corporate_Investment</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/12_3_Corporate Investment.dds</Button>
@@ -4499,7 +4499,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_ECO4</Type>
-      <Description>Offworld Banking</Description>
+      <Description>TXT_KEY_12_4_Offworld_Banking</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/12_4_Offworld Banking.dds</Button>
@@ -4563,7 +4563,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_SOC</Type>
-      <Description>Sociology</Description>
+      <Description>TXT_KEY_BRANCH_SOCIOLOGY</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/Sociology.dds</Button>
@@ -4615,7 +4615,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_SOC1</Type>
-      <Description>Civil Rights</Description>
+      <Description>TXT_KEY_13_1_Civil_Rights</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/13_1_Civil Rights.dds</Button>
@@ -4676,7 +4676,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_SOC2</Type>
-      <Description>Literacy</Description>
+      <Description>TXT_KEY_13_2_Literacy</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/13_2_Literacy.dds</Button>
@@ -4751,7 +4751,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_SOC3</Type>
-      <Description>Higher Education</Description>
+      <Description>TXT_KEY_13_3_Higher_Education</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/13_3_Higher Education.dds</Button>
@@ -4827,7 +4827,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_SOC4</Type>
-      <Description>Enlightenment</Description>
+      <Description>TXT_KEY_13_4_Enlightenment</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/13_4_Enlightenment.dds</Button>
@@ -4888,7 +4888,7 @@
       <AllowsYields/>
       <AllowsBuildingTypes>
         <AllowsBuildingType>
-          <BuildingType>BUILDING_INVENTORS_LABROTORY</BuildingType>
+          <BuildingType>BUILDING_INVENTORS_LABORATORY</BuildingType>
           <iChange>1</iChange>
         </AllowsBuildingType>
         <AllowsBuildingType>
@@ -4903,7 +4903,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PSY</Type>
-      <Description>Psychology</Description>
+      <Description>TXT_KEY_BRANCH_PSYCHOLOGY</Description>
       <Civilopedia>TXT_KEY_YIELD_FUR_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/Psychology.dds</Button>
@@ -4955,7 +4955,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PSY1</Type>
-      <Description>Mass Media</Description>
+      <Description>TXT_KEY_14_1_Mass_Media</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/14_1_Mass Media.dds</Button>
@@ -5019,7 +5019,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PSY2</Type>
-      <Description>Cognitive Science</Description>
+      <Description>TXT_KEY_14_2_Cognitive_Science</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/14_2_Cognitive Science.dds</Button>
@@ -5104,7 +5104,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PSY3</Type>
-      <Description>Memetics</Description>
+      <Description>TXT_KEY_14_3_Memetics</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/14_3_Memetics.dds</Button>
@@ -5170,7 +5170,7 @@
     <CivicInfo>
       <CivicOptionType>CIVICOPTION_INVENTIONS</CivicOptionType>
       <Type>TECH_PSY4</Type>
-      <Description>Neurosyntactic Priming</Description>
+      <Description>TXT_KEY_14_4_Neurosyntactic_Priming</Description>
       <Civilopedia>TXT_KEY_YIELD_TOOLS_PEDIA</Civilopedia>
       <Strategy>TXT_KEY_NEED_DESCRIPTION</Strategy>
       <Button>Art/Interface/Buttons/Techtree/14_4_Neurosyntactic Priming.dds</Button>
@@ -5231,7 +5231,7 @@
       <AllowsYields/>
       <AllowsBuildingTypes>
         <AllowsBuildingType>
-          <BuildingType>BUILDING_OBSERVATORY</BuildingType>
+          <BuildingType>BUILDING_DATACORE</BuildingType>
           <iChange>1</iChange>
         </AllowsBuildingType>
       </AllowsBuildingTypes>

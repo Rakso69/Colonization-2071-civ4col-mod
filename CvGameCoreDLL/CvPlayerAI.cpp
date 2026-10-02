@@ -7748,7 +7748,7 @@ bool CvPlayerAI::AI_isYieldForSale(YieldTypes eYield) const
 		case YIELD_FOOD:
 		case YIELD_LUMBER:
 		///TKs Invention Core Mod v 1.0
-        case YIELD_COAL:
+        case YIELD_HYDROCARBONS:
             break;
         ///TKe
 			return false;
@@ -7816,7 +7816,7 @@ bool CvPlayerAI::AI_isYieldFinalProduct(YieldTypes eYield) const
 		case YIELD_TOBACCO:
 		case YIELD_ORE:
 		///TKs Invention Core Mod v 1.0
-        case YIELD_COAL:
+        case YIELD_HYDROCARBONS:
         ///TKe
 			{
 				int iLoop;
@@ -7877,7 +7877,7 @@ bool CvPlayerAI::AI_shouldBuyFromEurope(YieldTypes eYield) const
 	{
 		case YIELD_FOOD:
 		///TKs Invention Core Mod v 1.0
-        case YIELD_COAL:
+        case YIELD_HYDROCARBONS:
         ///TKe
 		case YIELD_LUMBER:
 		case YIELD_SILVER:
@@ -7990,7 +7990,7 @@ int CvPlayerAI::AI_yieldValue(YieldTypes eYield, bool bProduce, int iAmount)
 				break;
 			case YIELD_LUMBER:
 				///TKs Invention Core Mod v 1.0
-			case YIELD_COAL:
+			case YIELD_HYDROCARBONS:
 			///TKe
 				iValue *= 100;
 				iValue /= iGoodsMultiplier;
@@ -8106,7 +8106,7 @@ void CvPlayerAI::AI_updateYieldValues()
 				break;
 			case YIELD_LUMBER:
 			///TKs Invention Core Mod v 1.0
-            case YIELD_COAL:
+            case YIELD_HYDROCARBONS:
             ///TKe
 				iValue += (kParent.getYieldSellPrice(eYield) + kParent.getYieldBuyPrice(eYield)) / 2;
 				break;
@@ -9231,6 +9231,15 @@ int CvPlayerAI::AI_professionValue(ProfessionTypes eProfession, UnitAITypes eUni
 	}
 
 	int iValue = 0;
+	// Kaszkaj fix: .\.\CvGlobals.cpp, Line:  1814, Expression:  eProfessionNum > -1.
+	// Use zero base combat when no default profession exists; never look up NO_PROFESSION.
+	ProfessionTypes eDefaultProfession = (ProfessionTypes) GC.getCivilizationInfo(getCivilizationType()).getDefaultProfession();
+	int iDefaultCombatChange = 0;
+	if (eDefaultProfession != NO_PROFESSION)
+	{
+		iDefaultCombatChange = GC.getProfessionInfo(eDefaultProfession).getCombatChange();
+	}
+
 	switch (eUnitAI)
 	{
 		case UNITAI_UNKNOWN:
@@ -9289,7 +9298,7 @@ int CvPlayerAI::AI_professionValue(ProfessionTypes eProfession, UnitAITypes eUni
 
 		case UNITAI_DEFENSIVE:
 			{
-				int iExtraCombatStrength = kProfession.getCombatChange() - GC.getProfessionInfo((ProfessionTypes) GC.getCivilizationInfo(getCivilizationType()).getDefaultProfession()).getCombatChange();
+				int iExtraCombatStrength = kProfession.getCombatChange() - iDefaultCombatChange;
 				if (isNative())
 				{
 					iValue += 10;
@@ -9309,7 +9318,7 @@ int CvPlayerAI::AI_professionValue(ProfessionTypes eProfession, UnitAITypes eUni
 			if (isNative())
 			{
 				iValue += 10;
-				int iExtraCombatStrength = kProfession.getCombatChange() - GC.getProfessionInfo((ProfessionTypes) GC.getCivilizationInfo(getCivilizationType()).getDefaultProfession()).getCombatChange();
+				int iExtraCombatStrength = kProfession.getCombatChange() - iDefaultCombatChange;
 				if (!kProfession.isUnarmed() && iExtraCombatStrength > 0)
 				{
 					iValue += iExtraCombatStrength * 15;
@@ -9319,11 +9328,12 @@ int CvPlayerAI::AI_professionValue(ProfessionTypes eProfession, UnitAITypes eUni
 			break;
 		case UNITAI_COUNTER:
 			{
-				int iExtraCombatStrength = kProfession.getCombatChange() - GC.getProfessionInfo((ProfessionTypes) GC.getCivilizationInfo(getCivilizationType()).getDefaultProfession()).getCombatChange();
-//orlanth aliens				if (isNative())
-//				{
-//					iValue += 10;
-//orlanth aliens				}
+				int iExtraCombatStrength = kProfession.getCombatChange() - iDefaultCombatChange;
+				// Kaszkaj fix: Add a +10 base score for native counter professions so eligible professions can be considered by the AI.
+				if (isNative())
+				{
+					iValue += 10;
+				}
 
 				if (isNative() || (!kProfession.isUnarmed() && iExtraCombatStrength > 0))
 				{
@@ -10905,6 +10915,7 @@ void CvPlayerAI::AI_doNativeArmy(TeamTypes eTeam)
 	{
 		int iBestValue = 0;
 		UnitAITypes eBestUnitAI = NO_UNITAI;
+		ProfessionTypes eBestProfession = NO_PROFESSION;
 		CvCity* pBestCity = NULL;
 
 
@@ -10924,15 +10935,42 @@ void CvPlayerAI::AI_doNativeArmy(TeamTypes eTeam)
 
 					if (iOffenseValue > 0 || iCounterValue > 0)
 					{
-						int iValue = (100 * pLoopCity->getPopulation()) / pLoopCity->getHighestPopulation();
+						// Kaszkaj fix: .\.\CvPlayerAI.cpp, Line:  10954, Expression:  false, Message: Could not eject unit.
+						// Select a city with an eligible population unit and reuse the checked profession when ejecting it.
+						UnitAITypes eLoopUnitAI = (iOffenseValue > iCounterValue) ? UNITAI_OFFENSIVE : UNITAI_COUNTER;
+						ProfessionTypes eLoopProfession = AI_idealProfessionForUnitAIType(eLoopUnitAI, pLoopCity);
+						bool bCanEjectUnit = false;
 
-						iValue /= (3 + kTeam.AI_enemyCityDistance(pLoopCity->plot()));
-
-						if (iValue > iBestValue)
+						if (eLoopProfession != NO_PROFESSION)
 						{
-							iBestValue = iValue;
-							pBestCity = pLoopCity;
-							eBestUnitAI = (iOffenseValue > iCounterValue) ? UNITAI_OFFENSIVE : UNITAI_COUNTER;
+							for (int iPopulation = 0; iPopulation < pLoopCity->getPopulation(); ++iPopulation)
+							{
+								CvUnit* pPopulationUnit = pLoopCity->getPopulationUnitByIndex(iPopulation);
+								if (pPopulationUnit != NULL && pPopulationUnit->canHaveProfession(eLoopProfession, false))
+								{
+									int iSuitability = AI_professionSuitability(pPopulationUnit, eLoopProfession, pLoopCity->plot(), eLoopUnitAI);
+									if (iSuitability > 0)
+									{
+										bCanEjectUnit = true;
+										break;
+									}
+								}
+							}
+						}
+
+						if (bCanEjectUnit)
+						{
+							int iValue = (100 * pLoopCity->getPopulation()) / pLoopCity->getHighestPopulation();
+
+							iValue /= (3 + kTeam.AI_enemyCityDistance(pLoopCity->plot()));
+
+							if (iValue > iBestValue)
+							{
+								iBestValue = iValue;
+								pBestCity = pLoopCity;
+								eBestUnitAI = eLoopUnitAI;
+								eBestProfession = eLoopProfession;
+							}
 						}
 					}
 				}
@@ -10948,7 +10986,7 @@ void CvPlayerAI::AI_doNativeArmy(TeamTypes eTeam)
 			FAssertMsg(false, "Infinite Loop in Native War Preperations");
 			break;
 		}
-		CvUnit* pEjectUnit = pBestCity->AI_bestPopulationUnit(eBestUnitAI);
+		CvUnit* pEjectUnit = pBestCity->AI_bestPopulationUnit(eBestUnitAI, eBestProfession);
 		if (pEjectUnit == NULL)
 		{
 			FAssertMsg(false, "Could not eject unit");

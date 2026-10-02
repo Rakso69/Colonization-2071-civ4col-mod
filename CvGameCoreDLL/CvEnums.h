@@ -627,7 +627,7 @@ enum DllExport YieldTypes
 
 	YIELD_FOOD,
 	///TKs Invention Core Mod v 1.0
-	YIELD_COAL,
+	YIELD_HYDROCARBONS,
 	///TKe
 	YIELD_LUMBER,
 	YIELD_SILVER,

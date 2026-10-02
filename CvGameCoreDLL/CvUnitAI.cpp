@@ -4046,8 +4046,40 @@ bool CvUnitAI::AI_europe()
 
 	AI_europeBuyYields();
 
-	FAssert(plot()->isEurope());
-	FAssert(canCrossOcean(plot(), UNIT_TRAVEL_STATE_FROM_EUROPE));
+	// Kaszkaj fix: .\.\CvUnitAI.cpp, Line:  4049, Expression:  plot()->isEurope().
+	// Move AI ships in Europe and their cargo from a non-Europe plot to a Europe entry plot; cross only when the plot and travel state are valid.
+	if (plot() != NULL && !plot()->isEurope() && kOwner.getParent() != NO_PLAYER)
+	{
+		CvPlot* pEuropePlot = GET_PLAYER(kOwner.getParent()).AI_getImperialShipSpawnPlot();
+		if (pEuropePlot != NULL)
+		{
+			std::vector<CvUnit*> apCargo;
+			CvPlot* pOldPlot = plot();
+			CLLNode<IDInfo>* pCargoNode = pOldPlot->headUnitNode();
+			while (pCargoNode != NULL)
+			{
+				CvUnit* pCargoUnit = ::getUnit(pCargoNode->m_data);
+				pCargoNode = pOldPlot->nextUnitNode(pCargoNode);
+				if (pCargoUnit != NULL && pCargoUnit->getTransportUnit() == this)
+				{
+					apCargo.push_back(pCargoUnit);
+				}
+			}
+
+			setXY(pEuropePlot->getX_INLINE(), pEuropePlot->getY_INLINE(), false, false);
+			for (uint i = 0; i < apCargo.size(); ++i)
+			{
+				apCargo[i]->setXY(pEuropePlot->getX_INLINE(), pEuropePlot->getY_INLINE(), false, false);
+			}
+		}
+	}
+
+	// Kaszkaj fix: .\.\CvUnitAI.cpp, Line:  4050, Expression:  canCrossOcean(plot(), UNIT_TRAVEL_STATE_FROM_EUROPE).
+	// Return false before crossing or consuming moves if the plot or return trip is invalid.
+	if (plot() == NULL || !plot()->isEurope() || !canCrossOcean(plot(), UNIT_TRAVEL_STATE_FROM_EUROPE))
+	{
+		return false;
+	}
 
 	crossOcean(UNIT_TRAVEL_STATE_FROM_EUROPE);
 	finishMoves();
@@ -5332,9 +5364,16 @@ bool CvUnitAI::AI_betterJob()
 		return false;
 	}
 
+	// Kaszkaj fix: .\.\CvUnitAI.cpp, Line:  5400, Expression:  false, Message: AI_betterJob NO_PROFESSION.
+	// Skip job swaps for NO_PROFESSION before changing the city's workforce override counter.
+	ProfessionTypes eOriginalProfession = getProfession();
+	if (eOriginalProfession == NO_PROFESSION)
+	{
+		return false;
+	}
+
 	pCity->AI_setWorkforceHack(true);
 
-	ProfessionTypes eOriginalProfession = getProfession();
 	std::vector<CvUnit*> units;
 	int iOriginalMovePriority = AI_getMovePriority();
 	UnitAITypes eOriginalAI = AI_getUnitAIType();
@@ -5353,7 +5392,7 @@ bool CvUnitAI::AI_betterJob()
 		CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
 		pUnitNode = pPlot->nextUnitNode(pUnitNode);
 
-		if (pLoopUnit != this && pLoopUnit->getOwnerINLINE() == getOwnerINLINE())
+		if (pLoopUnit != this && pLoopUnit->getOwnerINLINE() == getOwnerINLINE() && pLoopUnit->getProfession() != NO_PROFESSION)
 		{
 			if (!pLoopUnit->AI_hasAIChanged(5) && pLoopUnit->canJoinCity(pPlot))
 			{

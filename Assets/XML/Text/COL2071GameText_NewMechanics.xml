@@ -1,0 +1,1246 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by lcollins (Firaxis Games) -->
+<!-- Sid Meier's Civilization 4 -->
+<!-- Copyright Firaxis Games 2005 -->
+<!-- Please always list in order; Alphabet (files) -->
+<!-- Game Text - Colonization 2071 New Mechanics -->
+<Civ4GameText xmlns="http://www.firaxis.com">
+<!-- XML/Text/CIV4GameText_Colonization.xml-->
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_NO_REVEAL_MAP</Tag>
+		<English>[ICON_BULLET]Cannot explore unrevealed tiles</English>
+		<French>[ICON_BULLET]Cannot explore unrevealed tiles</French>
+		<German>[ICON_BULLET]Cannot explore unrevealed tiles</German>
+		<Italian>[ICON_BULLET]Cannot explore unrevealed tiles</Italian>
+		<Spanish>[ICON_BULLET]Cannot explore unrevealed tiles</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BONUS_DEPOT_PEDIA</Tag>
+		<English>[TAB]The New Worlds are littered with the ruins of an ancient civilization, dubbed the Progenitors by some. Hidden deep within the plasteel rubble are remnants of an incredibly advanced technology. The ruins are often extensively scavenged by the primitive aliens who now inhabit the New Worlds, perhaps simply using the ancient technology as ceremonial baubles, or perhaps harboring a deeper understanding than the humans realize. The remnants of a picked-over Progenitor ruin often hold heaps of durable Plasteel suitable for colonial construction.</English>
+		<French>[TAB]Les fourrures ont toujours &#233;t&#233; des marchandises tr&#232;s recherch&#233;es. De nombreux animaux, comme le lapin, le vison ou le castor sont chass&#233;s pour leur fourrure, utilis&#233;e dans la fabrication de v&#234;tements. L'exploration et la colonisation du Nouveau Monde ont provoqu&#233; un boom de l'industrie de la fourrure en augmentant consid&#233;rablement les ressources disponibles. Vers la fin du XIXe si&#232;cle, apparaissent les premiers &#233;levages d'animaux directement destin&#233;s &#224; l'industrie textile. Depuis les ann&#233;es 1970, des associations de d&#233;fense des animaux et de la nature m&#232;nent des campagnes de sensibilisation de l'opinion publique visant &#224; interdire ou &#224; r&#233;glementer la collecte et la vente des fourrures. N&#233;anmoins, l'industrie de la fourrure reste tr&#232;s rentable et tr&#232;s r&#233;pandue dans le monde.</French>
+		<German>[TAB]Schon von jeher galten Tierpelze als wertvolle Gebrauchsartikel und Handelsg&#252;ter. Viele verschiedene Tierarten wie Nerze, Kaninchen und Biber wurden wegen ihrer Felle von Pelzj&#228;gern gefangen, damit daraus Kleidung und andere Erzeugnisse hergestellt werden konnten. Die Entdeckung und Kolonisierung der Neuen Welt f&#252;hrte zu einem regelrechten Boom in der Pelzindustrie, da nun eine gr&#246;&#223;ere Vielfalt an Pelzsorten f&#252;r den Markt zur Verf&#252;gung stand. Ende des 19. Jahrhunderts errichtete man sogar spezielle Farmen zur Aufzucht von Tieren, die einzig f&#252;r die Pelzindustrie gedacht waren. In den 70er Jahren des 20. Jahrhunderts etablierten sich schlie&#223;lich Umwelt- und Tierschutzgruppen, die sich um eine &#196;nderung der &#246;ffentlichen Meinung hinsichtlich der Beschaffung und Vermarktung von Pelzen bem&#252;hten. Trotz dieser Proteste bleibt die Pelzindustrie weiterhin profitabel, wenngleich sie heute nicht mehr so weit verbreitet ist.</German>
+		<Italian>[TAB]In passato, le pellicce animali rappresentavano dei beni di valore per il commercio e la vendita. Molti tipi di animali, come visoni, conigli e castori, venivano catturati dai cacciatori per la realizzazione di vestiti e altri oggetti. L'espolarazione e la colonizzazione del Nuovo Mondo diedero una grande spinta al mercato di nuovi tipi di pellicce. Verso la fine del 1800, vennero realizzate delle aziende dedicate esclusivamente all'allevamento di animali per le industrie delle pellicce. A partire dal 1970, ambientalisti e gruppi di difesa per i diritti degli animali si sono uniti per sensibilizzare l'opinione pubblica sull'industria delle pellicce. Malgrado l'attivit&#224; di questi gruppi, l'industria delle pellicce rimane una delle imprese pi&#249; remunerative dei giorni nostri.</Italian>
+		<Spanish>[TAB]A lo largo de la historia, las pieles de los animales han sido art&#237;culos valiosos para el comercio y las ventas. Muchos tipos de animales, incluyendo visones, conejos y castores, han sido capturados por tramperos con el prop&#243;sito de obtener sus pieles y usarlas en la confecci&#243;n de ropa y otros art&#237;culos. La exploraci&#243;n y colonizaci&#243;n del Nuevo Mundo supuso el auge de la industria peletera, que pon&#237;a a la disposici&#243;n del p&#250;blico una amplia gama de pieles. Al final del siglo XIX, se crearon granjas espec&#237;ficas de cr&#237;a de animales para la industria de la piel. Los a&#241;os 70 vieron el nacimiento de grupos ecologistas y de defensores de los derechos de los animales que han ejercido presi&#243;n para cambiar la opini&#243;n p&#250;blica en lo referente a la obtenci&#243;n y venta de pieles. A pesar de estos grupos de protesta, la industria peletera sigue dando beneficios hoy en d&#237;a, aunque no est&#233; tan extendida.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_NEW_IMMIGRANT_AVAILABLE_NEW_WORLD</Tag>
+		<English>Generous economic incentives have attracted a %s1 to the spaceport on Earth.</English>
+		<French>Enticed by Riches in the New World, new immigrants have arrived at the Docks. A %s1 is waiting in Europe.</French>
+		<German>Enticed by Riches in the New World, new immigrants have arrived at the Docks. A %s1 is waiting in Europe.</German>
+		<Italian>Enticed by Riches in the New World, new immigrants have arrived at the Docks. A %s1 is waiting in Europe.</Italian>
+		<Spanish>Enticed by Riches in the New World, new immigrants have arrived at the Docks. A %s1 is waiting in Europe.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IMMIGRATION_BAR_NATIVE</Tag>
+		<English>Earthling Abduction (%d1/%d2%F3)</English>
+		<French>Immigrant (%d1/%d2%F3)</French>
+		<German>Immigrant (%d1/%d2%F3)</German>
+		<Italian>Immigranti (%d1/%d2%F3)</Italian>
+		<Spanish>Inmigrante (%d1/%d2%F3)</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HURRY_IMMIGRATION_NATIVE</Tag>
+		<English>Hurry Earthling Abduction</English>
+		<French>Acc&#233;l&#233;rer Immigration</French>
+		<German>Emigration beschleunigen</German>
+		<Italian>Accelera l'immigrazione</Italian>
+		<Spanish>Acelerar la inmigraci&#243;n</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EUROPE_TRANSACTIONS_ALIEN</Tag>
+		<English>Black Market</English>
+		<French>Transactions</French>
+		<German>Transaktionen</German>
+		<Italian>Transazioni</Italian>
+		<Spanish>Transacciones</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_NEWERA_ALIENS</Tag>
+		<English>From across the Great Sea they came, in their ships of fiery metal. It is told that others of our race once journeyed to their star, watched them in secret from our sleek saucers. But now it is we who are watched. Lost on these forgotten planets, we have grown weak and backward, the secrets of the ancients lost to us. Sleeping among the sweet fungus, our people heed not the words of their elders as the Earthlings settle on our home, perhaps to drain it as they drained their own. What will it portend, the arrival of these thin-skinned creatures?[NEWLINE][NEWLINE][BOLD]For rules and strategy about playing an alien species, consult [LINK=CONCEPT_ALIENS]Alien Civilizations[\LINK] under the Game Concepts section in the Civilopedia.[\BOLD][NEWLINE][NEWLINE]Place the settlements of your race. Living in a state of pastoral anarchy, your people must build a Ziggurat in each of your settlements to enable further development and trade.[NEWLINE][NEWLINE][BOLD]Hegemony Victory:[\BOLD] Ensure the survival and dominance of your species. Expel the Earthling invaders and subjugate or destroy other alien races. Your Empire must dominate the New Worlds before any other human or alien power reaches independence.[NEWLINE][NEWLINE][BOLD]Revolution Victory:[\BOLD] Declare your independence from the Progenitor overlords after attaining a 50%% Rebel Sentiment in all your settlements. Before time runs out, defend your fledgling species from the Progenitors' wrath by wiping out all their ground forces. You must complete your revolution before any other Earth Colony or Alien Empire.[NEWLINE][NEWLINE][BOLD]Transcendence Victory:[\BOLD] Research the Transcendence tech, then be the first to sell 1000 units of Progenitor Tech to Earth, using the lost secrets of the Progenitors to reshape the destiny of mankind.</English>
+		<French>En l'an %s1_year, sa Majest&#233; le roi des %s2_civ vous accorde une charte coloniale.[NEWLINE][NEWLINE]Pour la plus grande gloire de la nation, %s3_leader, le roi vous nomme vice-roi du Nouveau Monde. Explorez cette terre, colonisez-la et apportez richesse et gloire &#224; notre grande nation et &#224; vous-m&#234;me ! [NEWLINE][NEWLINE][BOLD]Pour parvenir &#224; la victoire :[\BOLD][PARAGRAPH:1]Fondez votre colonie.[PARAGRAPH:1]Atteignez un sentiment de r&#233;volte de 50%% dans toutes vos colonies pour pouvoir d&#233;clarer votre ind&#233;pendance.[PARAGRAPH:1]D&#233;fendez votre nation naissante contre la col&#232;re de votre m&#232;re patrie en &#233;crasant toutes leurs forces terrestres avant la fin du temps imparti.[PARAGRAPH:1]Vous devez &#234;tre la premi&#232;re colonie europ&#233;enne &#224; terminer sa r&#233;volution !</French>
+		<German>Im Jahre %s1_year &#252;bergibt Euch seine K&#246;nigliche Hoheit, der K&#246;nig der Nation %s2_civ, eine Kolonialcharta. [NEWLINE][NEWLINE]Zum Ruhme der Nation ernennt der K&#246;nig Euch, %s3_leader, zum stellvertretenden Oberhaupt der Neuen Welt. Erforscht das neue Land, besiedelt es und bringt Euch und unserer gro&#223;artigen Nation Ruhm und Reichtum.  [NEWLINE][NEWLINE][BOLD]Um den Sieg zu erringen:[\BOLD][PARAGRAPH:1]Gr&#252;ndet Eure Kolonie.[PARAGRAPH:1]Erkl&#228;rt Eure Unabh&#228;ngigkeit von Eurem Mutterland, sobald mindestens 50%% Rebellische Stimmung in all Euren Siedlungen herrscht.[PARAGRAPH:1]Verteidigt Euer junges Land gegen den Zorn Eures Mutterlandes vor Ablauf der Zeit, indem Ihr all seine Bodeneinheiten ausl&#246;scht. [PARAGRAPH:1]Schlie&#223;t Eure Revolution vor allen anderen europ&#228;ischen Kolonien ab.</German>
+		<Italian>Nell'anno %s1_year, sua maest&#224; reale il re di %s2_civ ti conferisce uno statuto coloniale. [NEWLINE][NEWLINE]Per la maggiore gloria della nazione il re nomina te, %s3_leader, vicer&#233; del Nuovo Mondo. Esplora queste nuove terre, colonizzale e procura ricchezze e gloria a te stesso e alla nostra grande nazione.  [NEWLINE][NEWLINE][BOLD]Per ottenere una vittoria:[\BOLD][PARAGRAPH:1]Fonda la tua colonia.[PARAGRAPH:1]Dichiara l'indipendenza dalla madrepatria dopo aver ottenuto il 50%% di sentimento di ribellione in ogni insediamento.[PARAGRAPH:1]Difendi il giovane stato dall'ira della madrepatria annientandone le forze terrestri prima che scada il tempo. [PARAGRAPH:1]Devi completare la rivoluzione prima di qualsiasi altra colonia europea.</Italian>
+		<Spanish>En el a&#241;o de %s1_year Su Majestad, el rey de %s2_civ, os concede una carta colonial. [NEWLINE][NEWLINE]Para mayor gloria de la naci&#243;n, el rey os nombra a vos, %s3_leader, virrey del Nuevo Mundo. Explorad esta nueva tierra, civilizadla y ganad la gloria para vos y para nuestra gran naci&#243;n.  [NEWLINE][NEWLINE][BOLD]Para conseguir una victoria:[\BOLD][PARAGRAPH:1]Fundad vuestra colonia.[PARAGRAPH:1]Declaraos independientes de la madre patria tras conseguir un 50%% de sentimiento de rebeli&#243;n en todos vuestros asentamientos.[PARAGRAPH:1]Defended vuestro incipiente pa&#237;s de la c&#243;lera de la madre patria acabando con todas las fuerzas terrestres de &#233;sta antes de que se acabe el tiempo. [PARAGRAPH:1]Deb&#233;is completar vuestra revoluci&#243;n antes que ninguna otra colonia europea.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRAIT_STRENGTH_MOD</Tag>
+		<English>[ICON_BULLET]%D1%% effect of [BOLD][COLOR_MAGENTA]REBEL SENTIMENT[COLOR_REVERT][\BOLD] on [ICON_STRENGTH]</English>
+		<French>[ICON_BULLET]Effet des [ICON_BELLS] sur la [ICON_STRENGTH] %D1%%</French>
+		<German>[ICON_BULLET]%D1%% Auswirkung von [ICON_BELLS] auf [ICON_STRENGTH]</German>
+		<Italian>[ICON_BULLET]%D1%% effetto delle [ICON_BELLS] sulla [ICON_STRENGTH] %D1%%</Italian>
+		<Spanish>[ICON_BULLET]%D1%% al efecto de [ICON_BELLS] en [ICON_STRENGTH] %D1%%</Spanish>
+	</TEXT>
+<!-- XML/Text/CIV4GameText_Colonization_Objects.xml-->
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_YIELD_DEMAND</Tag>
+		<English>Demands %F2</English>
+		<French>%d1%F2 par citoyen</French>
+		<German>%d1%F2 pro B&#252;rger</German>
+		<Italian>%d1%F2 per cittadino</Italian>
+		<Spanish>%d1%F2 por ciudadano</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GOODS_DOMESTIC_SOLD</Tag>
+		<English>%d1_number%F2_yield_icon in %s3_city have been sold for %d4[ICON_GOLD]</English>
+		<French>%d1_number%F2_yield_icon &#224; %s3_city a &#233;t&#233; vendu pour %d4[ICON_GOLD].</French>
+		<German>%d1_number%F2_yield_icon in %s3_city wurde f&#252;r %d4[ICON_GOLD] verkauft</German>
+		<Italian>%d1_number%F2_yield_icon a %s3_city &#232; stato venduto per %d4[ICON_GOLD]</Italian>
+		<Spanish>%d1_number%F2_yield_icon en %s3_city se ha vendido por %d4 [ICON_GOLD].</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_YIELD_DEMAND</Tag>
+		<English>Demands %F2</English>
+		<French>%d1%F2 par citoyen</French>
+		<German>%d1%F2 pro B&#252;rger</German>
+		<Italian>%d1%F2 per cittadino</Italian>
+		<Spanish>%d1%F2 por ciudadano</Spanish>
+	</TEXT>
+<!-- XML/Text/CIV4GameText_EuropeScreen.xml-->
+	<TEXT>
+		<Tag>TXT_KEY_EU_VERSION</Tag>
+		<English>[COLOR_YELLOW]EuropeScreen[COLOR_REVERT] (Release [COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT])[NEWLINE]by [COLOR_YELLOW]koma13[COLOR_REVERT], [COLOR_YELLOW]Fankman[COLOR_REVERT] and [COLOR_YELLOW]Dale[COLOR_REVERT]</English>
+		<French>[COLOR_YELLOW]EuropeScreen[COLOR_REVERT] (Release [COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT])[NEWLINE]by [COLOR_YELLOW]koma13[COLOR_REVERT], [COLOR_YELLOW]Fankman[COLOR_REVERT] and [COLOR_YELLOW]Dale[COLOR_REVERT]</French>
+		<German>[COLOR_YELLOW]EuropeScreen[COLOR_REVERT] (Release [COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT])[NEWLINE]von [COLOR_YELLOW]koma13[COLOR_REVERT] und [COLOR_YELLOW]Fankman[COLOR_REVERT]</German>
+		<Italian>[COLOR_YELLOW]EuropeScreen[COLOR_REVERT] (Release [COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT])[NEWLINE]by [COLOR_YELLOW]koma13[COLOR_REVERT], [COLOR_YELLOW]Fankman[COLOR_REVERT] and [COLOR_YELLOW]Dale[COLOR_REVERT]</Italian>
+		<Spanish>[COLOR_YELLOW]EuropeScreen[COLOR_REVERT] (Release [COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT])[NEWLINE]by [COLOR_YELLOW]koma13[COLOR_REVERT], [COLOR_YELLOW]Fankman[COLOR_REVERT] and [COLOR_YELLOW]Dale[COLOR_REVERT]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_SAIL</Tag>
+		<English>Set course for the New Worlds</English>
+		<French>Sail to the new world</French>
+		<German>Setzt die Segel!</German>
+		<Italian>Sail to the new world</Italian>
+		<Spanish>Sail to the new world</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_SAIL_EAST</Tag>
+		<English>Sector Alpha</English>
+		<French>East</French>
+		<German>Atlantik</German>
+		<Italian>East</Italian>
+		<Spanish>East</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_SAIL_WEST</Tag>
+		<English>Sector Beta</English>
+		<French>West</French>
+		<German>Pazifik</German>
+		<Italian>West</Italian>
+		<Spanish>West</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_SAIL_EAST_MESSAGE</Tag>
+		<English>Wormhole - [COLOR_HIGHLIGHT_TEXT]Sector Alpha[COLOR_REVERT]</English>
+		<French>New world - [COLOR_HIGHLIGHT_TEXT]east[COLOR_REVERT]</French>
+		<German>Kurs [COLOR_HIGHLIGHT_TEXT]Atlantik[COLOR_REVERT]</German>
+		<Italian>New world - [COLOR_HIGHLIGHT_TEXT]east[COLOR_REVERT]</Italian>
+		<Spanish>New world - [COLOR_HIGHLIGHT_TEXT]east[COLOR_REVERT]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_SAIL_WEST_MESSAGE</Tag>
+		<English>Wormhole - [COLOR_HIGHLIGHT_TEXT]Sector Beta[COLOR_REVERT]</English>
+		<French>New world - [COLOR_HIGHLIGHT_TEXT]west[COLOR_REVERT]</French>
+		<German>Kurs [COLOR_HIGHLIGHT_TEXT]Pazifik[COLOR_REVERT]</German>
+		<Italian>New world - [COLOR_HIGHLIGHT_TEXT]west[COLOR_REVERT]</Italian>
+		<Spanish>New world - [COLOR_HIGHLIGHT_TEXT]west[COLOR_REVERT]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_SELL_LABEL</Tag>
+		<English>Sell your ship?</English>
+		<French>Sell your ship?</French>
+		<German>Schiff verkaufen?</German>
+		<Italian>Sell your ship?</Italian>
+		<Spanish>Sell your ship?</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_SELL_MESSAGE</Tag>
+		<English>That floating coffin you call a %s1? Well, I'll give you %d2[ICON_GOLD].</English>
+		<French>Those floating coffin you call a %s1? Well, I'll give you %d2[ICON_GOLD].</French>
+		<German>Diesen morschen Kahn nennt ihr %s1? Nun, %d2[ICON_GOLD] seien Euch gew&#228;hrt.</German>
+		<Italian>Those floating coffin you call a %s1? Well, I'll give you %d2[ICON_GOLD].</Italian>
+		<Spanish>Those floating coffin you call a %s1? Well, I'll give you %d2[ICON_GOLD].</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_SELL_SHORT</Tag>
+		<English>Sell your %s1 for [COLOR_YELLOW]%d2[COLOR_REVERT][ICON_GOLD]?</English>
+		<French>Sell your %s1 for [COLOR_YELLOW]%d2[COLOR_REVERT][ICON_GOLD]?</French>
+		<German>%s1 f&#252;r [COLOR_YELLOW]%d2[COLOR_REVERT][ICON_GOLD] verkaufen?</German>
+		<Italian>Sell your %s1 for [COLOR_YELLOW]%d2[COLOR_REVERT][ICON_GOLD]?</Italian>
+		<Spanish>Sell your %s1 for [COLOR_YELLOW]%d2[COLOR_REVERT][ICON_GOLD]?</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_BOYCOTT_LABEL</Tag>
+		<English>Lift the boycott?</English>
+		<French>Lift that boycott?</French>
+		<German>Boykott aufheben?</German>
+		<Italian>Lift that boycott?</Italian>
+		<Spanish>Lift that boycott?</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_BOYCOTT_MESSAGE</Tag>
+		<English>Pay us %d1[ICON_GOLD] and you can trade with %s2 again.</English>
+		<French>Pay us %d1[ICON_GOLD] and you can trade with %s2 again.</French>
+		<German>Zahlt Uns %d1[ICON_GOLD] und Ihr d&#252;rft wieder %s2 verkaufen.</German>
+		<Italian>Pay us %d1[ICON_GOLD] and you can trade with %s2 again.</Italian>
+		<Spanish>Pay us %d1[ICON_GOLD] and you can trade with %s2 again.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_WAREHOUSE_INFO</Tag>
+		<English>%s1 - warehouse (max %d2):</English>
+		<French>%s1 - warehouse (max %d2):</French>
+		<German>%s1 - Warenlager (max %d2):</German>
+		<Italian>%s1 - warehouse (max %d2):</Italian>
+		<Spanish>%s1 - warehouse (max %d2):</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_SELECT_DESTINATION</Tag>
+		<English>Select your destination</English>
+		<French>Select your destination</French>
+		<German>Ziel ausw&#228;hlen</German>
+		<Italian>Select your destination</Italian>
+		<Spanish>Select your destination</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_MAP_PREVIEW</Tag>
+		<English>Disable plot preview mode</English>
+		<French>Disable plot preview mode</French>
+		<German>Stadtvorschau ausschalten</German>
+		<Italian>Disable plot preview mode</Italian>
+		<Spanish>Disable plot preview mode</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_PLOT_PREVIEW</Tag>
+		<English>Enable plot preview mode</English>
+		<French>Enable plot preview mode</French>
+		<German>Stadtvorschau einschalten</German>
+		<Italian>Enable plot preview mode</Italian>
+		<Spanish>Enable plot preview mode</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_DIALOG_ACCEPT</Tag>
+		<English>Great! Thank you.</English>
+		<French>Great! Thank you.</French>
+		<German>Gro&#223;z&#252;gig! Habt Dank.</German>
+		<Italian>Great! Thank you.</Italian>
+		<Spanish>Great! Thank you.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_DIALOG_DECLINE</Tag>
+		<English>Maybe later.</English>
+		<French>Maybe later.</French>
+		<German>Vorerst nicht.</German>
+		<Italian>Maybe later.</Italian>
+		<Spanish>Maybe later.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_NEAR_CITY</Tag>
+		<English>near %s1</English>
+		<French>near %s1</French>
+		<German>bei %s1</German>
+		<Italian>near %s1</Italian>
+		<Spanish>near %s1</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_TO_CITY</Tag>
+		<English>to [COLOR_YELLOW]%s1[COLOR_REVERT]</English>
+		<French>to [COLOR_YELLOW]%s1[COLOR_REVERT]</French>
+		<German>nach [COLOR_YELLOW]%s1[COLOR_REVERT]</German>
+		<Italian>to [COLOR_YELLOW]%s1[COLOR_REVERT]</Italian>
+		<Spanish>to [COLOR_YELLOW]%s1[COLOR_REVERT]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EU_ROUTE</Tag>
+		<English>[NEWLINE]%s1 route %s2</English>
+		<French>[NEWLINE]%s1 route %s2</French>
+		<German>[NEWLINE]%s1 Route %s2</German>
+		<Italian>[NEWLINE]%s1 route %s2</Italian>
+		<Spanish>[NEWLINE]%s1 route %s2</Spanish>
+	</TEXT>
+<!-- XML/Text/CIV4GameText_Inventor.xml-->
+	<TEXT>
+		<Tag>TXT_KEY_LEARN_DISCOVER_KNOWLEDGE</Tag>
+		<English>We have discovered knowledge of [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT] from living among the aliens.</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FIRST_TO_DISCOVER</Tag>
+		<English>You recieved %d1_amount[ICON_GOLD] for being the first to discover %s2_name.</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_RESEARCH_PARTNER_NAME</Tag>
+		<English>Research Partner: [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_KINGS_COMMISION_MOD</Tag>
+		<English>[ICON_BULLET]Decreases Earth's commission by %d1%</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IN_PARENTHASIS</Tag>
+		<English>[SPACE](%s1_Name)</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_WAIT_TILL_REVOLUTION</Tag>
+		<English>[COLOR_WARNING_TEXT]Must be in Revolution to take effect[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EUROPE_INDUSTRIAL_HELP</Tag>
+		<English>Industrial Revolution: %d1_amount</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EXPLORER_PEDIA</Tag>
+		<English>Explorers represent the many Europeans who set out to discovery new Trade routes or to Map the New World. Such famouse names as, Sir Francis Drake, Ferdinand Magellan, and Henry Hundson come to mind when we think of the great Explorers.</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONQUEROR_PEDIA</Tag>
+		<English>Conquerors represent the many Europeans who set out to find treasure, hidden cities of gold, and to enslave the natives of the New World. Such famouse names as, Hernan Cortes and Ponce de Leon come to mind when we think of the great Conquerors.</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_NEW_WORLD_PEDIA</Tag>
+		<English>In 1499 Alonso de Ojeda left Puerto de Santa Maria to explore the coast of Venezuela. With Ojeda was Amerigo Vespucci, a Florentine diplomat, scholar, and businessman who had played a major part in the organization of Columbus's second expedition. Vespucci participated in numerous voyages of Brazil, but his role seems to have been more that of an interested observer than a leader. His fame derives mainly from the fact that he realized the significance of what he saw of South America, and when re returned to Spain in 1500 he announced that the land in the Southern Hemisphere was not part of Asia, as Columbus still believed, but a New World.</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BULIDING_INVENTOR</Tag>
+		<English>This is where Inventors live and work. New Ideas are created here and they can change the course of History.</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRADEABLE_KNOWLEDGE</Tag>
+		<English>[ICON_BULLET]Tradeable Knowledge:[NEWLINE]%s1_symbol_list</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ENCOMEDIA_HELP</Tag>
+		<English>[ICON_BULLET]Aliens give gifts more frequently</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECH_MAKES_AVAILABLE</Tag>
+		<English>[COLOR_UNIT_TEXT]Available with[COLOR_REVERT] [COLOR_HIGHLIGHT_TEXT]%s1_Name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECH_MAKES_OBSOLETE</Tag>
+		<English>[COLOR_WARNING_TEXT]Obsolete with [COLOR_REVERT] [COLOR_HIGHLIGHT_TEXT]%s1_Name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INVENTION_CONVERETED_TEXT_SLAVE</Tag>
+		<English>We have converted %d1_num %s2_name to %s3_toname through the discovery of %s4_tech</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VICTORY_SCREEN_DISCOVER_TEC</Tag>
+		<English>Research Transcendence to begin.</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VICTORY_SCREEN_DISCOVER_TEC_STARTED</Tag>
+		<English>Transcendence has begun!</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VICTORY_SCREEN_DISCOVER_TEC_YIELD</Tag>
+		<English>%F1_symbol</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_VICTORY_INDUSTRIAL</Tag>
+		<English>Transcendence</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECH_INDUSTRIAL_VICTORY</Tag>
+		<English>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Transcendence Victory[COLOR_REVERT] can be attempted by all Colonies. You must be the first to sell [COLOR_HIGHLIGHT_TEXT]%d1_units[COLOR_REVERT] units of %F2 on Earth.[NEWLINE][COLOR_WARNING_TEXT]Tech can no longer be purchased on Earth[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_COTTON_MILL_STRATEGY</Tag>
+		<English>[COLOR_BUILDING_TEXT]Cottons Mills[COLOR_REVERT] are the ultimate sources of cloth, useing the power of steam they transform six [COLOR_HIGHLIGHT_TEXT]Cotton[COLOR_REVERT] into twelve [COLOR_HIGHLIGHT_TEXT]Cloth[COLOR_REVERT] (when worked by a [COLOR_UNIT_TEXT]Free Colonist[COLOR_REVERT]). By assigning a [COLOR_UNIT_TEXT]Master Weaver[COLOR_REVERT] to work in your [COLOR_BUILDING_TEXT]Textile Mill[COLOR_REVERT], that number can be increased even further! You must construct a [COLOR_BUILDING_TEXT]Steamworks[COLOR_REVERT] before you can construct this building. If you are attempting an [COLOR_HIGHLIGHT_TEXT]Industrial Victory[COLOR_REVERT] then these buildings are your key to winning.</English>
+		<French>Les [COLOR_BUILDING_TEXT]Usines textiles[COLOR_REVERT] sont les plus importants sites de production de tissu, capables de transformer six unit&#233;s de  [COLOR_HIGHLIGHT_TEXT]Coton[COLOR_REVERT] en neuf unit&#233;s de [COLOR_HIGHLIGHT_TEXT]Tissu[COLOR_REVERT] (lorsqu'un [COLOR_UNIT_TEXT]Colon libre[COLOR_REVERT] y est assign&#233;). En employant un [COLOR_UNIT_TEXT]Ma&#238;tre tisserand[COLOR_REVERT] dans votre [COLOR_BUILDING_TEXT]Usine textile[COLOR_REVERT], votre capacit&#233; de production sera encore augment&#233;e ! Vous devez d'abord faire b&#226;tir une [COLOR_BUILDING_TEXT]scierie[COLOR_REVERT] avant de pouvoir ordonner la construction de ce b&#226;timent.</French>
+		<German>[COLOR_BUILDING_TEXT]Textilfabriken[COLOR_REVERT] sind die besten Produktionsst&#228;tten f&#252;r [COLOR_HIGHLIGHT_TEXT]Stoff[COLOR_REVERT]. Sie verarbeiten sechs Einheiten [COLOR_HIGHLIGHT_TEXT]Baumwolle[COLOR_REVERT] zu neun Einheiten [COLOR_HIGHLIGHT_TEXT]Stoff[COLOR_REVERT], wenn dort ein [COLOR_UNIT_TEXT]Freier Kolonist[COLOR_REVERT] arbeitet. Indem Sie einen [COLOR_UNIT_TEXT]Meisterweber[COLOR_REVERT] anweisen, in Ihrer [COLOR_BUILDING_TEXT]Textilfabrik[COLOR_REVERT] zu arbeiten, steigern Sie die Menge zus&#228;tzlich! Sie m&#252;ssen ein [COLOR_BUILDING_TEXT]S&#228;gewerk[COLOR_REVERT] bauen, bevor Sie dieses Geb&#228;ude errichten k&#246;nnen.</German>
+		<Italian>Le [COLOR_BUILDING_TEXT]fabbriche tessili[COLOR_REVERT] sono la fonte definitiva di tessuto, in grado di trasformare sei unit&#224; di [COLOR_HIGHLIGHT_TEXT]cotone[COLOR_REVERT] in nove di [COLOR_HIGHLIGHT_TEXT]tessuto[COLOR_REVERT] (quando ci lavora un [COLOR_UNIT_TEXT]libero colono[COLOR_REVERT]). Mandando un [COLOR_UNIT_TEXT]mastro tessitore[COLOR_REVERT] a lavorare in una [COLOR_BUILDING_TEXT]fabbrica tessile[COLOR_REVERT], puoi ulteriormente aumentare la produzione! Prima di poter costruire questo edificio devi costruire una [COLOR_BUILDING_TEXT]segheria[COLOR_REVERT].</Italian>
+		<Spanish>El [COLOR_BUILDING_TEXT]Taller textil[COLOR_REVERT] es la fuente definitiva de Tejido, pues transforma seis unidades de [COLOR_HIGHLIGHT_TEXT]Algod&#243;n[COLOR_REVERT] en nueve de [COLOR_HIGHLIGHT_TEXT]Tejido[COLOR_REVERT] (cuando trabaja en &#233;l un [COLOR_UNIT_TEXT]Colono libre[COLOR_REVERT]). Al poner a un [COLOR_UNIT_TEXT]Maestro tejedor[COLOR_REVERT] a trabajar en el [COLOR_BUILDING_TEXT]Taller textil[COLOR_REVERT], esa cantidad se puede aumentar todav&#237;a m&#225;s. Deb&#233;is construir un [COLOR_BUILDING_TEXT]Aserradero[COLOR_REVERT] para poder levantar este edificio.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MATERIALS_ICON</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Materials Cost[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ALSO_REQUIRES</Tag>
+		<English>[COLOR_UNIT_TEXT]Also requires:[COLOR_REVERT][NEWLINE]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_DISALLOWS_TECH</Tag>
+		<English>[ICON_BULLET]Prevents the Knowlege of [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FREE_TECHS</Tag>
+		<English>[ICON_BULLET]Grants %d1_Num Free Tech(s)</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_NON_TRADEABLE</Tag>
+		<English>[ICON_BULLET]This Knowledge is [COLOR_HIGHLIGHT_TEXT]Non-Tradeable[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INCRESEASED_ENEMY_HEAL</Tag>
+		<English>[ICON_BULLET]Increases Heal Rate while in Enemy Territory by %d1_num</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ALLOWS_CONSTITUTION</Tag>
+		<English>[ICON_BULLET]Allows adoption of a [COLOR_HIGHLIGHT_TEXT]Constitution[COLOR_REVERT] before Revolution</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONVERTS_UNITS</Tag>
+		<English>[ICON_BULLET]Converts all [COLOR_UNIT_TEXT]%s1_unit[COLOR_REVERT] to [COLOR_UNIT_TEXT]%s2_units[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONVERTS_TO_COLONIAL</Tag>
+		<English>[ICON_BULLET]Colonists adapt to the [COLOR_HIGHLIGHT_TEXT]Colonial[COLOR_REVERT] way of life</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ALLOWS_TRADE_MAPS</Tag>
+		<English>[ICON_BULLET]Allows trading of [COLOR_HIGHLIGHT_TEXT]Maps[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ALLOWS_BONUS_TEXT</Tag>
+		<English>[ICON_BULLET]Discover the Resource [COLOR_HIGHLIGHT_TEXT]%s1_bonus[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_OBSOLETES_BONUS_TEXT</Tag>
+		<English>[ICON_BULLET]Obsoletes the Resource [COLOR_HIGHLIGHT_TEXT]%s1_bonus[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INCRESEASED_PROLIFIC_INVENTOR_TEXT</Tag>
+		<English>[ICON_BULLET]Increases [COLOR_HIGHLIGHT_TEXT]Visionary Researcher[COLOR_REVERT] experience rate</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEYCIVILIZATION_FREE_TECHS</Tag>
+		<English>[COLOR_ALT_HIGHLIGHT_TEXT]Starts with Knowledge of:[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROLIFIC_INVENTOR_BORN</Tag>
+		<English>%s1_inventor is available on Earth!</English>
+		<French>%s1_inventor has been born in Europe</French>
+		<German>%s1_inventor has been born in Europe</German>
+		<Italian>%s1_inventor has been born in Europe</Italian>
+		<Spanish>%s1_inventor has been born in Europe</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROLIFIC_INVENTOR_XP</Tag>
+		<English>Visionary Researcher: %d1_Curr/%d2_Need Experience</English>
+		<French>G&#233;n&#233;ral illustre : %d1_Curr/%d2_Need exp&#233;rience</French>
+		<German>Gro&#223;er General: %d1_Curr/%d2_Need Erfahrung</German>
+		<Italian>Grande Generale: %d1_Curr/%d2_Need esperienza</Italian>
+		<Spanish>Gran general: %d1_Curr/%d2_Need de experiencia</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YELLOW_NAME</Tag>
+		<English>[COLOR_UNIT_TEXT]%s1_Name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_FREE_IMMIGRANTS</Tag>
+		<English>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]%d1_Name[COLOR_REVERT] Free Immigrants on Earth</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDS_CONVERTED_IDEAS_COST_NOBULL</Tag>
+		<English>[SPACE]%d1_Num %s2_symbol_list</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REQUIRED_YIELDS_NAME_NOCOST</Tag>
+		<English>%s1_Resource</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INVENTION_BONUS_GOLD_FIRST</Tag>
+		<English>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]%d1_name[COLOR_REVERT][ICON_GOLD] bonus for the first to Discover</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INDUSTRILIZATION_HAS_BEGAN</Tag>
+		<English>Transcendence has been initiated by the [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</English>
+		<French>Industrialization has just began by the [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</French>
+		<German>Industrialization has just began by the [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]</German>
+		<Italian>Industrialization has just began by the [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]</Italian>
+		<Spanish>Industrialization has just began by the [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_NATIVE_TECH2_DESCRIPTION</Tag>
+		<English></English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REQUIRED_YIELDS</Tag>
+		<English>[ICON_BULLET]%d1_cost %F2_yield</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_NATIVE_TECH1_DESCRIPTION</Tag>
+		<English>Sailors returning from Peru to Spain with silver presumably brought maize and potatoes for their own food on the trip. Historians speculate that leftover tubers (and maize) was carried ashore and planted. Basque fishermen from Spain used potatoes as ships stores for their voyages across Atlantic in the 15th century, and introduced the tuber to western Ireland, where they landed to dry their cod. In 1553, in the book Cronica del Peru Pedro Cieza de Leon mention, that saw it in Quito, Popayan and Pasto. In 1580, English adventurer Francis Drake introduced potatoes into England along with his other Spanish booty when he returned from his notable circumnavigation of the globe. In 1588 botanist Carolus Clusius made a painting of what he called "Papas Peruanorum" from a specimen in Belgium; in 1601 he reported that potatoes were in common use in northern Italy for animal fodder and for human consumption.</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MEDICINE1_DESCRIPTION</Tag>
+		<English>In the 13th century, the Crusaders frequently suffered from scurvy. In the 1497 expedition of Vasco de Gama, the curative effects of citrus fruit were known. In 1536, the French explorer Jacques Cartier, exploring the St. Lawrence River, used the local natives' knowledge to save his men who were dying of scurvy. He boiled the needles of the arbor vitae tree (Eastern White Cedar) to make a tea that was later shown to contain 50 mg of vitamin C per 100 grams. Such treatments were not available aboard ship, where the disease was most common. The British civilian medical profession of 1614 believed that it was the acidic principle of citrus fruit which was lacking, although they considered any acid acceptable when ascorbic acid (Vitamin C) was unavailable. In 1614 John Woodall, Surgeon General of the East India Company, published "The Surgion's Mate" as a handbook for apprentice surgeons aboard the company's ships. In it he described scurvy as resulting from a dietary deficiency. His recommendation for its cure was fresh food or, if not available, oranges, lemons, limes and tamarinds, or as a last resort, Oil of Vitriol (sulfuric acid).</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CHOOSE_IDEA</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Please choose the next project to research:[COLOR_REVERT][NEWLINE]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CHOOSE_IDEA_FINISHED</Tag>
+		<English>You have discovered %s1_name. Please choose the next project to research:</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECHONOLOGY_ADVISOR_TITLE</Tag>
+		<English>Research Advisor</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECHONOLOGY_ADVISOR_COMPLETED</Tag>
+		<English>Research Completed</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECHONOLOGY_PEDIA</Tag>
+		<English>Research</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CLICK_TO_RESEARCH_THIS</Tag>
+		<English>[NEWLINE][COLOR_UNIT_TEXT]Click to Research[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CLICK_TO_RESEARCH_THIS_WARNING</Tag>
+		<English>[NEWLINE]Click to Research[NEWLINE][COLOR_WARNING_TEXT]All previous progress will be lost[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECHONOLOGY_TRADE</Tag>
+		<English>%s1_trade</English>
+		<French>%s1_trade</French>
+		<German>%s1_trade</German>
+		<Italian>%s1_trade</Italian>
+		<Spanish>%s1_trade</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECHONOLOGY_TRADE_RESEARCH</Tag>
+		<English>Collaborate: %s1_trade</English>
+		<French>%s1_trade</French>
+		<German>%s1_trade</German>
+		<Italian>%s1_trade</Italian>
+		<Spanish>%s1_trade</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TECHONOLOGY_ADVISOR_RESEARCH</Tag>
+		<English>Available Research</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CURRENT_PROGRESS_PYTHON</Tag>
+		<English>Turns to Complete: %d1_num</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_RESEARCH_CANNOT_CONTINUE_UNITCLASS</Tag>
+		<English>Research on [COLOR_HIGHLIGHT_TEXT]%s1_idea[COLOR_REVERT] cannot continue at %s2_city because a [COLOR_HIGHLIGHT_TEXT]%s3_unit[COLOR_REVERT] is not assisting the project.</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_RESEARCH_CANNOT_CONTINUE_NO_RESEARCH</Tag>
+		<English>Research cannot progress at %s2_city because no project has been selected.</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_RESEARCH_CANNOT_CONTINUE_NO_RESEARCH_CITY</Tag>
+		<English>No research project has been selected</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CHANGE_IDEA</Tag>
+		<English>[NEWLINE][COLOR_HIGHLIGHT_TEXT][COLOR_REVERT]Change Projects?[NEWLINE][COLOR_WARNING_TEXT]You will lose all accumulated research.[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CHOOSE_IDEA_NEWLINE</Tag>
+		<English>[NEWLINE][NEWLINE][COLOR_HIGHLIGHT_TEXT]Please choose the next project to research:[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CHOOSE_IDEA_CURRENT_RESEARCH</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Current Research:[COLOR_REVERT]</English>
+		<French></French> 
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CHOOSE_IDEA_CURRENT_RESEARCH_PROGRESS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Current Research Progress:[COLOR_REVERT] %d1_progress%</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CHOOSE_WIDGET_CURRENT_RESEARCH_PROGRESS</Tag>
+		<English>Current Research: [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT][NEWLINE]Turns to Complete: %d2_progress[NEWLINE]Click to select Research</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_CURRENT_RESEARCH_LOCKED</Tag>
+		<English>[COLOR_WARNING_TEXT]Project is locked due to Research Pact[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITY_CURRENT_RESEARCH</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Current Research: %s1_civic[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IDEA_COST_TO_RESEARCH</Tag>
+		<English>[ICON_BULLET]Cost %d1%F2_yield to Research</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_IDEA_ALLOWS_BUILDING</Tag>
+		<English>[ICON_BULLET]Allows construction of [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_RESEARCH_MENU</Tag>
+		<English>Click to select a Research Project</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_NO_RESEARCH_MENU</Tag>
+		<English>You have no current Research Project[NEWLINE]Click to select a Research Project</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_NEVER_MIND_NEWLINE</Tag>
+		<English>[NEWLINE]Never mind</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ALL_RESEARCH_IS_COMPLETE</Tag>
+		<English>All Research is complete</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_NEED_DESCRIPTION</Tag>
+		<English>??????</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SELECT_TECH</Tag>
+		<English>Click to assign a Research Project</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REQUIRED_INVENTION_ONE</Tag>
+		<English>[ICON_BULLET]Requires [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REQUIRED_INVENTION_TWO</Tag>
+		<English>[ICON_BULLET]Requires [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT] and [COLOR_HIGHLIGHT_TEXT]%s2_name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REQUIRED_INVENTION_TWO_OR</Tag>
+		<English>[ICON_BULLET]Requires [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT] and [COLOR_HIGHLIGHT_TEXT]%s2_name[COLOR_REVERT] or [COLOR_HIGHLIGHT_TEXT]%s3_name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_LEADSTO_INVENTION_TWO</Tag>
+		<English>[ICON_BULLET]Leads to [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT] and [COLOR_HIGHLIGHT_TEXT]%s2_name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_LEADSTO_INVENTION</Tag>
+		<English>[ICON_BULLET]Leads to [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIDENTIFIED_PLANT</Tag>
+		<English>Unidentified Native Resource</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TK_OR</Tag>
+		<English>or</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TK_CATALOGED</Tag>
+		<English>Completed</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REQUIRED_UNITCLASS</Tag>
+		<English>[ICON_BULLET]Requires a [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT] to be assisting the project</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_CONSUMED_CITY_YIELD_RESEARCH</Tag>
+		<English>[ICON_BULLET]%D1%F2 converted to %F3_symbol_list</English>
+		<French>[ICON_BULLET]Conversion de %D1%F2 en %F3_symbol_list</French>
+		<German>[ICON_BULLET]%D1%F2 umgewandelt zu: %F3_symbol_list</German>
+		<Italian>[ICON_BULLET]%D1%F2 trasformati in %F3_symbol_list</Italian>
+		<Spanish>[ICON_BULLET]Se ha convertido %D1%F2 en %F3_symbol_list</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CURRENT_PLAYER_RESEARCH_COUNT</Tag>
+		<English>[NEWLINE]-------------------[NEWLINE][COLOR_UNIT_TEXT]%s1_civic[COLOR_REVERT][NEWLINE]-------------------[NEWLINE]Turns: %d2_num[NEWLINE]-------------------</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CURRENT_PLAYER_RESEARCH_NO_UNITCLASS</Tag>
+		<English>[NEWLINE]-------------------[NEWLINE][COLOR_UNIT_TEXT]%s1_civic[COLOR_REVERT][NEWLINE]-------------------[NEWLINE]Required Worker Class Is Not Present[NEWLINE]-------------------</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CURRENT_PLAYER_RESEARCH_NO_PROEJECT</Tag>
+		<English>[NEWLINE]-------------------[NEWLINE][COLOR_UNIT_TEXT]%s1_civic[COLOR_REVERT][NEWLINE]-------------------[NEWLINE]No Research Project Selected[NEWLINE]-------------------</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDS_CONVERTED_IDEAS</Tag>
+		<English>Resources Required:[NEWLINE]%s1_symbol_list</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDS_CONVERTED_IDEAS_COST</Tag>
+		<English>Cost %d1_Num %s2_symbol_list</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CONSTITUTE</Tag>
+		<English>Constitution:[SPACE]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_KNOWLEDGE</Tag>
+		<English>Knowledge of</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRADE_CURRENT_RESEARCH</Tag>
+		<English>Research Pact</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRADE_CURRENT_RESEARCH_TEXT</Tag>
+		<English>Share Research to Complete this Project</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_REQUIRED_YIELDS_NAME</Tag>
+		<English>%s1_Resource[SPACE](%d2_cost %s3_symbol_list)</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INVENTION_ALLOWS_FREE_UNITCLASS</Tag>
+		<English>[ICON_BULLET]Allows %d1_num free [COLOR_HIGHLIGHT_TEXT]%s2_name[COLOR_REVERT]</English>
+		<French></French>n      
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INVENTION_ALLOWS_BUILDTYPE</Tag>
+		<English>[ICON_BULLET]Can build [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT][COLOR_HIGHLIGHT_TEXT]s[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INVENTION_ROUTETYPE_MOD</Tag>
+		<English>[ICON_BULLET]Increases movement along [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT][COLOR_HIGHLIGHT_TEXT]s[COLOR_REVERT] by %d2_num</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INVENTION_ALLOWS_BUILDTYPE_TERRAIN</Tag>
+		<English>[ICON_BULLET]Can build [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT][COLOR_HIGHLIGHT_TEXT]s[COLOR_REVERT] in the following Terrain:</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INVENTION_ALLOWS_BUILDTYPE_TERRAIN_LIST</Tag>
+		<English>%s1_terrain_list</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INVENTION_DISALLOWS_BUILDTYPE</Tag>
+		<English>[ICON_BULLET]Can no longer build [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INVENTION_ALLOWS_UNITCLASS</Tag>
+		<English>[ICON_BULLET]Allows [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INVENTION_OBSOLETES</Tag>
+		<English>[ICON_BULLET]Obsoletes [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INVENTION_ALLOWS_PROMOTION</Tag>
+		<English>[NEWLINE][ICON_BULLET]Enables [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT] Promotion</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INVENTION_ALLOWS_PROFESSION</Tag>
+		<English>[ICON_BULLET]Allows [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT] Profession</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INVENTION_REQUIRES_YIELD</Tag>
+		<English>[ICON_BULLET]Requires %d1_num units of [COLOR_HIGHLIGHT_TEXT]%s2_name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_INVENTION_BONUS_GOLD</Tag>
+		<English>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]%d1_name[COLOR_REVERT][ICON_GOLD] bonus for discovering</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_RESEARCH_GROWTH_INCREASE</Tag>
+		<English>[ICON_BULLET]%d1 Food required for settlement growth</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_RESEARCH_CENTER_FOOD_PLOT</Tag>
+		<English>[ICON_BULLET]+%d1 Food in each settlement</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_RESEARCH_ALLOWS_YIELD</Tag>
+		<English>[ICON_BULLET]Allows the production and sale of [COLOR_HIGHLIGHT_TEXT]%s1_name[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_PLAYER_COMPLETED_RESEARCH</Tag>
+		<English>We have finished researching [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</English>
+		<French>You have finished Reseaching [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</French>
+		<German>You have finished Reseaching [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</German>
+		<Italian>You have finished Reseaching [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</Italian>
+		<Spanish>You have finished Reseaching [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_PLAYER_COMPLETED_RESEARCH_PACT</Tag>
+		<English>We have finished researching [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT] with the help of [COLOR_HIGHLIGHT_TEXT]%s2_name[COLOR_REVERT]!</English>
+		<French>You have finished Reseaching [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</French>
+		<German>You have finished Reseaching [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</German>
+		<Italian>You have finished Reseaching [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</Italian>
+		<Spanish>You have finished Reseaching [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_MISC_PLAYER_TRADE_RESEARCH</Tag>
+		<English>We have just learned [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT] from the %s2_CvcName!</English>
+		<French>You have finished researching [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</French>
+		<German>You have finished Reseaching [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</German>
+		<Italian>You have finished Reseaching [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</Italian>
+		<Spanish>You have finished Reseaching [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</Spanish>
+	</TEXT>
+<!-- XML/Text/CIV4GameText_MultipleYieldsConsumed.xml-->
+	<TEXT>
+		<Tag>TXT_KEY_YIELDS_CONSUMED_WITH_CHAR</Tag>
+		<English>Consumes: %s1_symbol_list</English>
+		<French>Consomme : %s1_symbol_list</French>
+		<German>Ben&#246;tigt: %s1_symbol_list</German>
+		<Italian>Consuma: %s1_symbol_list</Italian>
+		<Spanish>Consume: %s1_symbol_list</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_YIELDS_CONVERSION</Tag>
+		<English>[ICON_BULLET]Converts %s1_symbol_list into %F2_yield</English>
+		<French>[ICON_BULLET]Convertit %s1_symbol_list en %F2_yield</French>
+		<German>[ICON_BULLET]Wandelt %s1_symbol_list in %F2_yield um</German>
+		<Italian>[ICON_BULLET]Converte %s1_symbol_list in %F2_yield</Italian>
+		<Spanish>[ICON_BULLET]Convierte %s1_symbol_list en %F2_yield</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDS_PRODUCED_WITH_CHAR</Tag>
+		<English>Produces: %s1_symbol_list</English>
+		<French>Produit : %s1_symbol_list</French>
+		<German>Produziert: %s1_symbol_list</German>
+		<Italian>Produce: %s1_symbol_list</Italian>
+		<Spanish>Produce: %s1_symbol_list</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CHOOSE_PROFESSION_ITEMS</Tag>
+		<English>%s1_comma_separated_list_of_yields_produced</English>
+		<French>%s1_comma_separated_list_of_yields_produced</French>
+		<German>%s1_comma_separated_list_of_yields_produced</German>
+		<Italian>%s1_comma_separated_list_of_yields_produced</Italian>
+		<Spanish>%s1_comma_separated_list_of_yields_produced</Spanish>
+	</TEXT>
+<!-- XML/Text/CIV4GameText_CoalMiner.xml-->
+	<TEXT>
+		<Tag>TXT_KEY_PRODUCTION_FROM_STEAMWORKS_TEXT</Tag>
+		<English>[ICON_BULLET]+1 Production of Manufactured Goods[NEWLINE][TAB]for every %d1_coal %F2 consumed</English>
+		<French>[ICON_BULLET]Peut travailler les cases d'eau</French>
+		<German>[ICON_BULLET]Kann Wasser-Gel&#228;ndefelder bewirtschaften</German>
+		<Italian>[ICON_BULLET]Permette di usare le caselle d'acqua</Italian>
+		<Spanish>[ICON_BULLET]Se puede trabajar en casillas de agua</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PRODUCTION_FROM_STEAMWORKS</Tag>
+		<English>[ICON_BULLET]%d1%F2 from Oil Refinery</English>
+		<French>[ICON_BULLET]%d1%F2 gr&#226;ce &#224; Oil Refinery</French>
+		<German>[ICON_BULLET]%d1%F2 Oil Refinery</German>
+		<Italian>[ICON_BULLET]%d1%F2 Oil Refinery</Italian>
+		<Spanish>[ICON_BULLET]%d1%F2 Oil Refinery</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BONUS_COAL_PEDIA</Tag>
+		<English>[TAB]More than 300 million years ago, plant life growing in swamps began to decompose. Layers of sand and mud covered the decomposing plants, and the decaying plants were compressed by the combined weight of water and sediment. Over time, the plant matter hardened and became coal. Coal deposits are mined all over the world, and coal was one of the major fuel sources in the world through the 1970's. In many countries, concern over the environmental effects of the burning of coal has led to a decline in its use. The smoke produced by burning coal has a high acid content, and creates an environmental condition known as "acid rain", which is harmful to plant and animal life. Despite the environmental concerns, some of the largest coal mines in the U.S. each still produce more than 450,000 metric tons annually, making coal mining a very profitable industry.</English>
+		<French>[TAB]Il y a plus de 300 millions d'ann&#233;es, les v&#233;g&#233;taux des r&#233;gions mar&#233;cageuses ont commenc&#233; &#224; se d&#233;composer. Ils ont ensuite &#233;t&#233; recouverts par des couches de sable et de boue. Au fil des si&#232;cles, comprim&#233;es par l'eau et les s&#233;diments, ces plantes en d&#233;composition ont durci, avant de devenir du charbon. Il y a des gisements de charbon partout dans le monde. Le charbon a &#233;t&#233;, jusque dans les ann&#233;es 1970, l'une des principales sources d'&#233;nergie dans le monde. Dans de nombreux pays, les inqui&#233;tudes concernant les effets sur l'environnement de la combustion du charbon ont conduit &#224; son d&#233;clin. En effet, la fum&#233;e produite lors de sa combustion est tr&#232;s acide, et peut produire ce que l'on appelle des "pluies acides" nocives pour la v&#233;g&#233;tation comme pour la vie animale. Malgr&#233; ces probl&#232;mes environnementaux, les principales mines am&#233;ricaines produisent plus de 450 000 tonnes de charbon par an, ce qui fait de l'extraction du charbon une industrie des plus rentables.</French>
+		<German>[TAB]Vor mehr als 300 Millionen Jahren begannen sich die Pflanzenkulturen in den Sumpfgebieten zu zersetzen. Sand- und Schlammschichten bedeckten die Pflanzenr&#252;ckst&#228;nde und wurden von dem Gewicht des mit Wasser vermischten Sediments zusammengedr&#252;ckt. Im Laufe der Jahre verh&#228;rteten sich die R&#252;ckst&#228;nde und wurden zu Kohle. In den 70er Jahren z&#228;hlte die Kohle weltweit zu den wichtigsten Brennstoffquellen. Bis heute werden Kohlevorkommen in aller Welt abgebaut. Aufkommende Bedenken hinsichtlich der Umweltvertr&#228;glichkeit der Kohleverbrennung f&#252;hrten indes zu einer verminderten Verwendung dieses Rohstoffs: Der Rauch, der bei der Verbrennung von Kohle entsteht, hat einen hohen S&#228;uregehalt und verursacht den so genannten "sauren Regen", der Pflanzen und Tieren schadet. Trotz aller Bedenken f&#246;rdern einige der gr&#246;&#223;ten Kohlebergwerke in den Vereinigten Staaten j&#228;hrlich mehr als 450.000 Tonnen Kohle und machen den Kohlebergbau damit zu einer sehr profitablen Industrie.</German>
+		<Italian>[TAB]Pi&#249; di 300 milioni di anni fa, i vegetali nelle paludi cominciarono a decomporsi; strati di sabbia e fango ricoprirono i vegetali in decomposizione e le piante marce vennero schiacchiate dal peso dell'acqua e dei sedimenti. Nel corso del tempo, i vegetali si sono solidificati diventando carbone. Depositi di carbone sono presenti in tutto il mondo e questo minerale &#232; stato importantissimo durante gli anni '70. In molte nazioni, la preoccupazione per gli effetti della combustione del carbone nell'ambiente ha portato a un lento declino nel suo impiego: il fumo prodotto dal carbone in fiamme, infatti, contiene grandi quantitativi di sostanze acide, che hanno creato la condizione ambientale denominata "pioggia acida", dannosa per la vita della flora e della fauna. Malgrado i rischi, alcune delle pi&#249; grandi miniere di carbone degli Stati Uniti producono ancora un giro di affari da 450.000 tonnellate annue.</Italian>
+		<Spanish>[TAB]Hace m&#225;s de trescientos millones de a&#241;os, las plantas que crec&#237;an en los pantanos comenzaron a descomponerse. Esas plantas en descomposici&#243;n se cubrieron con capas de arena y barro, y el peso combinado de agua y sedimentos las comprimi&#243;. Con el tiempo, la materia vegetal se endureci&#243;, convirti&#233;ndose en carb&#243;n. Los dep&#243;sitos de carb&#243;n se extraen en todo el mundo, siendo este mineral una de las mayores fuentes de energ&#237;a en los a&#241;os 70. En muchos pa&#237;ses, la preocupaci&#243;n por los efectos medioambientales de la combusti&#243;n de carb&#243;n ha provocado un descenso en su uso.  El humo producido al quemar el carb&#243;n tiene un alto contenido en &#225;cido, creando un efecto medioambiental llamado "lluvia &#225;cida" que es da&#241;ino para la flora y la fauna. A pesar de las inquietudes medioambientales, algunas de las mayores minas de carb&#243;n en los EE. UU. a&#250;n producen, cada una, m&#225;s de 450.000 toneladas al a&#241;o, lo que hace que la miner&#237;a del carb&#243;n sea una industria muy beneficiosa.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CORPORATION_5_PEDIA</Tag>
+		<English>[TAB]For much of human history, victory has gone to those with access to the finest metals. From the Bronze Age onwards, metal tools, weapons and alloys have been an inherent part of the rise of civilization, spurring conquests and construction by the world's greatest empires. And while metal mining has had an impressive history, it was not until the nineteenth century that industrial mining truly began to take root.[PARAGRAPH:1]Two reasons explain this sudden intensification in mining operations. The first was the almost daily revolutions in the production of tools and consumer items, requiring a continual source of metal to produce them. The second was that the fuel that powered the Industrial Revolution was coal, nestled deep within the earth. In modern times, enormous excavators like the Bagger 288 have it possible to mine a pit three-hundred feet long and one-hundred feet deep in a day, a feat that, in the past, would have required the mobilization of nations.</English>
+		<French>[TAB]Pendant la majeure partie de l'histoire, la victoire est revenue &#224; ceux qui avaient acc&#232;s aux m&#233;taux les plus pr&#233;cieux. Depuis l'&#226;ge du bronze, les outils en m&#233;tal, les armes et les alliages font partie int&#233;grante de l'essor de la civilisation et poussent les plus grands empires &#224; conqu&#233;rir de nouveaux territoires et &#224; b&#226;tir de nouveaux &#233;difices. L'extraction du m&#233;tal existe depuis bien longtemps mais ce n'est qu'au 19&#232;me si&#232;cle que l'extraction industrielle a r&#233;ellement pris son envol.[PARAGRAPH:1]Deux raisons expliquent cette soudaine intensification. Tout d'abord, les innovations quasi-quotidiennes dans la production d'outils et de biens de consommation n&#233;cessitent un approvisionnement continu en m&#233;tal. D'autre part, la r&#233;volution industrielle s'est &#233;norm&#233;ment appuy&#233;e sur le charbon, lequel &#233;tait nich&#233; au plus profond de la terre. De nos jours, d'&#233;normes pelleteuses comme le Bagger 288 permettent de creuser un trou de quatre-vingt dix m&#232;tres de long et trente m&#232;tres de profondeur en une journ&#233;e, exploit qui dans le pass&#233; aurait n&#233;cessit&#233; la mobilisation de nations enti&#232;res.</French>
+		<German>[TAB]In der Geschichte der Menschheit trugen meist diejenigen den Sieg davon, die &#252;ber die besten Metalle verf&#252;gten. Seit dem Bronzezeitalter waren Metallwerkzeuge, Waffen und Legierungen ein grundlegender Faktor f&#252;r den Aufstieg der Zivilisation und haben Eroberungen und das Bauwesen der weltweit gr&#246;&#223;ten Imperien vorangetrieben. W&#228;hrend der Metallabbau schon eine eindrucksvolle Geschichte hinter sich hat, gewann der industrielle Bergbau erst im 19. Jahrhundert an Bedeutung.[PARAGRAPH:1]F&#252;r den pl&#246;tzlichen Aufschwung des Bergbaus gibt es zwei Gr&#252;nde. Der erste Grund waren die fast allt&#228;glichen Neuerungen in der Produktion von Werkzeugen und Konsumgegenst&#228;nden, f&#252;r die der unaufh&#246;rliche Nachschub an Metall erforderlich war. Der zweite Grund lag darin, dass der Treibstoff f&#252;r die industrielle Revolution die Kohle war, die nur tief in der Erde vorkam. Heutzutage erm&#246;glichen es riesige Abbaumaschinen wie der Schaufelradbagger, in nur einem Tag ein 90 Meter langes und 30 Meter tiefes Loch zu graben - eine Meisterleistung, zu der fr&#252;her nur ganze Nationen mit vereinten Kr&#228;ften in der Lage gewesen w&#228;ren.</German>
+		<Italian>[TAB]Per gran parte della storia dell'umanit&#224; la vittoria &#232; andata a coloro che avevano accesso ai metalli migliori. Dall'et&#224; del Bronzo in poi, strumenti e armi in metallo e lega sono stati parte importante dell'ascesa di una civilt&#224;, favorendo le conquiste e la creazione dei pi&#249; grandi imperi al mondo. E mentre l'estrazione dei metalli ha una lunga e grande storia, fu solo nel diciannovesimo secolo che cominci&#242; a prendere piede l'estrazione industriale.[PARAGRAPH:1]Due ragioni spiegano l'improvvisa intensificazione delle operazioni minerarie. La prima &#232; la rivoluzione quasi quotidiana nella produzione di strumenti e oggetti di consumo, che richiedeva un costante afflusso di metallo. La seconda &#232; che il carburante della Rivoluzione Industriale era il carbone, annidato nelle profondit&#224; della terra. Al giorno d'oggi enormi escavatrici come la Bagger 288 permettono di scavare un buco lungo cento metri e profondo 30 in un solo giorno; un'impresa che, in passato, avrebbe richiesto la mobilitazione di un'intera nazione.</Italian>
+		<Spanish>[TAB]Durante buena parte de la historia del hombre, la victoria ha sido para el bando que ten&#237;a acceso a los mejores metales. Desde la Edad de Bronce en adelante, las herramientas, armas y aleaciones de metal han sido una parte inherente del ascenso de las civilizaciones y han permitido grandes conquistas y la construcci&#243;n de enormes imperios. Y, aunque la miner&#237;a del metal tiene una historia muy antigua, hasta el siglo XIX no empez&#243; a desarrollarse industrialmente.[PARAGRAPH:1]Dos razones explican esta repentina intensificaci&#243;n de las operaciones mineras. La primera fue una revoluci&#243;n casi diaria en la producci&#243;n de bienes de consumo y herramientas, que requer&#237;a un suministro continuo de metal. La segunda fue que el combustible que alimentaba la Revoluci&#243;n Industrial era el carb&#243;n, profundamente enterrado en las entra&#241;as de la Tierra. En nuestros d&#237;as, las grandes excavadoras, como la Bagger 288, poseen la capacidad de excavar fosos de cien metros de longitud y treinta metros de profundidad en un solo d&#237;a, una proeza que en el pasado habr&#237;a requerido la movilizaci&#243;n de naciones enteras.</Spanish>
+	</TEXT>
+</Civ4GameText>

@@ -129,23 +129,23 @@
 <!-- Colonization 2071-->
 		<SpecialBuildingInfo>
 			<Type>SPECIALBUILDING_IDEAS</Type>
-			<Description>TXT_KEY_SPECIALBUILDING_PRINT</Description>
+			<Description>TXT_KEY_SPECIALBUILDING_IDEAS</Description>
 			<bValid>1</bValid>
 			<FontButtonIndex>22</FontButtonIndex>
 			<ProductionTraits/>
 			<Button>Art/Interface/Buttons/Buildings/BombShelters.dds</Button>
 		</SpecialBuildingInfo>
 		<SpecialBuildingInfo>
-			<Type>SPECIALBUILDING_OBSERVATORY</Type>
-			<Description>Observatory</Description>
+			<Type>SPECIALBUILDING_DATACORE</Type>
+			<Description>TXT_KEY_SPECIALBUILDING_DATACORE</Description>
 			<bValid>1</bValid>
 			<FontButtonIndex>22</FontButtonIndex>
 			<ProductionTraits/>
 			<Button>Art/Interface/Buttons/Buildings/BombShelters.dds</Button>
 		</SpecialBuildingInfo>
 		<SpecialBuildingInfo>
-			<Type>SPECIALBUILDING_COAL_FURNACE</Type>
-			<Description>Coal Furnace</Description>
+			<Type>SPECIALBUILDING_POWER_PLANT</Type>
+			<Description>TXT_KEY_SPECIALBUILDING_HYDROCARBONS</Description>
 			<bValid>1</bValid>
 			<FontButtonIndex>16</FontButtonIndex>
 			<ProductionTraits/>
