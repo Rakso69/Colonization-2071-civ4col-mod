@@ -43,6 +43,8 @@ protected:
 public:
 
 	void initFreeState();
+	//Kaszkaj - Apply starting invention effects once for colonies, aliens and kings.
+	void initInventions();
 	void initFreeUnits();
 	void initImmigration();
 	void addFreeUnitAI(UnitAITypes eUnitAI, int iCount);
@@ -69,6 +71,8 @@ public:
 	DllExport bool isHuman() const;
 	DllExport void updateHuman();
 	bool isNative() const;
+	//Kaszkaj - Identify the barbarian civilization using its XML define.
+	bool isBarbarian() const;
 	bool isAlwaysOpenBorders() const;
 	DllExport const wchar* getName(uint uiForm = 0) const;
 	DllExport const wchar* getNameKey() const;
@@ -113,6 +117,13 @@ public:
 	void contact(PlayerTypes ePlayer);
 	DllExport void handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer, int iData1, int iData2);
 	bool canTradeWith(PlayerTypes eWhoTo) const;
+	//Kaszkaj - Share royal technology prices, payment checks and confiscation rules across trade callers.
+	bool canTradeKingTechnology(PlayerTypes eBuyer) const;
+	int getKingTechnologyPrice(CivicTypes eCivic) const;
+	int getKingTechnologyTaxIncrease() const;
+	bool getKingTechnologyDeal(PlayerTypes eBuyer, const CLinkList<TradeData>* pTechnologies, const CLinkList<TradeData>* pPayment, int& iGold, int& iTax) const;
+	void applyKingTechnologyDeal(PlayerTypes eBuyer, const CLinkList<TradeData>* pTechnologies, int iGold, int iTax);
+	void seizeKingAssets();
 	bool canReceiveTradeCity(PlayerTypes eFromPlayer) const;
 	DllExport bool canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial = false) const;
 	DllExport DenialTypes getTradeDenial(PlayerTypes eWhoTo, TradeData item) const;
@@ -528,14 +539,15 @@ public:
 	void changeFreeTechs(int iChange);
 	int getDoTechFlag() const;
 	void changeDoTechFlag(int iChange);
-	int prolificInventorThreshold() const;
+	//Kaszkaj - Declare the Inventor methods used by the DLL and Python.
+	int inventorThreshold() const;
     int getIdeasExperience() const;
-    void changeProlificInventorModifier(int iChange);
-    int getProlificInventorModifier() const;
-    void changeProlificInventorThresholdModifier(int iChange);
-    int getProlificInventorThresholdModifier() const;
+    void changeInventorModifier(int iChange);
+    int getInventorModifier() const;
+    void changeInventorThresholdModifier(int iChange);
+    int getInventorThresholdModifier() const;
 	void setIdeasExperience(int iExperience);
-    void createProlificInventor(UnitTypes eInvetorUnit, bool bIncrementExperience, int iX, int iY);
+    void createInventor(UnitTypes eInventorUnit, bool bIncrementExperience, int iX, int iY);
 	int getCostToResearch(CivicTypes eCivic);
 	int getTemporyIdeasStored() const;
 	int getIdeasStored() const;
@@ -548,7 +560,8 @@ public:
 	void changeIdeasResearched(CivicTypes eIndex, int iChange);
 	int getCurrentResearchProgress(bool bGetTurns, CivicTypes eCivic = NO_CIVIC);
 	int getTurnstoCompleteResearch(bool bReturnNetResearch=false, CivicTypes eCivic = NO_CIVIC);
-	void processCivics(CivicTypes eCivic, int iChange);
+	//Kaszkaj - Pass true only for completed research; grants and trades still apply every invention effect.
+	void processCivics(CivicTypes eCivic, int iChange, bool bResearch = false);
 	int getIdea(bool Research, PlayerTypes ePlayer = NO_PLAYER) const;
 	void setResearchPartner(PlayerTypes ePartner);
 	PlayerTypes getResearchPartner() const;
@@ -621,6 +634,9 @@ public:
 	///TKs Invention Core Mod v 1.0
 	void doImmigrant(int iIndex, int iReason = 0);
 	///TKe
+	//Kaszkaj - Declare AI immigration and construction material transfer helpers.
+	void doAIImmigrant(int iIndex);
+	void redistributeMaterials();
 
 	void buyLand(CvPlot* pPlot, bool bFree);
 
@@ -728,13 +744,16 @@ protected:
 	int m_iMissionaryRateModifier;
 	int m_iMissionarySuccessPercent;
     ///TKs Invention Core Mod v 1.0
-    int m_iProlificInventorModifier;
-	int m_iProlificInventorThresholdModifier;
+    //Kaszkaj - Store the player's Inventor progress and threshold modifiers.
+    int m_iInventorModifier;
+	int m_iInventorThresholdModifier;
 	int m_iIdeasExperience;
 	int m_iIdeasStored;
 	int m_iDoTechFlag;
 	UnitTypes m_iDefaultPopUnit;
 	int m_iFreeTechs;
+	//Kaszkaj - Temporary transfer guard; it is reset on loading and does not change the saved game format.
+	bool m_bKingAssetsSeizing;
 	int m_bTechsInitialized;
 	int m_bAllResearchComplete;
 	int m_iTemporyIdeasStored;

@@ -31,6 +31,12 @@ class CvDiplomacy:
 		# Eliminate previous comments
 		self.diploScreen.clearUserComments()
 
+		#Kaszkaj - A confiscation response can only be acknowledged before the player's defeat.
+		if self.isComment(eComment, "AI_DIPLOCOMMENT_KING_ULTIMATE_INSULT"):
+			self.addUserComment("USER_DIPLOCOMMENT_EXIT", -1, -1)
+			self.diploScreen.endTrade()
+			return
+
 		# If the AI is declaring war
 		if (self.isComment(eComment, "AI_DIPLOCOMMENT_DECLARE_WAR") ):
 
@@ -407,6 +413,13 @@ class CvDiplomacy:
 
 	def setAIComment (self, eComment, *args):
 		" Handles the determining the AI comments"
+		#Kaszkaj - Replace normal acceptance with the king's response to a tax purchase above 100 percent.
+		player = gc.getPlayer(gc.getGame().getActivePlayer())
+		if player.getTaxRate() > 100 and player.getParent() == self.diploScreen.getWhoTradingWith():
+			eComment = self.getCommentID("AI_DIPLOCOMMENT_KING_ULTIMATE_INSULT")
+			#Kaszkaj - Set the king's attitude to -100 when the final insult is displayed.
+			gc.getPlayer(self.diploScreen.getWhoTradingWith()).AI_setAttitudeExtra(gc.getGame().getActivePlayer(), -100)
+			args = ()
 		AIString = self.getDiplomacyComment(eComment)
 
 		if DebugLogging:
@@ -472,7 +485,9 @@ class CvDiplomacy:
 		       eComment == self.getCommentID("AI_DIPLOCOMMENT_KING_ACCEPT_GOLD")):
 			self.diploScreen.performHeadAction( LeaderheadAction.LEADERANIM_PLEASED )
 			CyInterface().playGeneralSound("AS2D_KISS_MY_RING")
-		elif ( eComment == self.getCommentID("AI_DIPLOCOMMENT_REJECT_PINKY") or
+		#Kaszkaj - Use the angry leader animation for the confiscation response.
+		elif ( eComment == self.getCommentID("AI_DIPLOCOMMENT_KING_ULTIMATE_INSULT") or
+		       eComment == self.getCommentID("AI_DIPLOCOMMENT_REJECT_PINKY") or
 		       eComment == self.getCommentID("AI_DIPLOCOMMENT_KING_REFUSE_GOLD")):
 			self.diploScreen.performHeadAction( LeaderheadAction.LEADERANIM_FURIOUS )
 
@@ -577,6 +592,34 @@ class CvDiplomacy:
 			print "CvDiplomacy.handleUserResponse: %s" %(eComment,)
 
 		diploScreen = CyDiplomacy()
+
+		#Kaszkaj - Wait for the exit response before ending the confiscated player's game.
+		player = gc.getPlayer(gc.getGame().getActivePlayer())
+		if player.getTaxRate() > 100 and player.getParent() == diploScreen.getWhoTradingWith():
+			if self.isComment(eComment, "USER_DIPLOCOMMENT_EXIT"):
+				diploScreen.diploEvent(DiploEventTypes.DIPLOEVENT_KING_SEIZE_ASSETS, -1, -1)
+				diploScreen.closeScreen()
+			else:
+				self.setAIComment(self.getCommentID("AI_DIPLOCOMMENT_KING_ULTIMATE_INSULT"))
+			return
+
+		#Kaszkaj - Reject all barbarian requests and gifts before an action or acceptance message is sent.
+		iPlayer = diploScreen.getWhoTradingWith()
+		iBarbarianCivilization = gc.getDefineINT("BARBARIAN_CIVILIZATION")
+		if iPlayer >= 0 and iPlayer < gc.getMAX_PLAYERS() and iBarbarianCivilization >= 0:
+			if gc.getPlayer(iPlayer).getCivilizationType() == iBarbarianCivilization:
+				szComment = gc.getDiplomacyInfo(eComment).getType()
+				# Keep navigation, closing the conversation and declaring war available.
+				if szComment not in ("USER_DIPLOCOMMENT_EXIT", "USER_DIPLOCOMMENT_NEVERMIND",
+					"USER_DIPLOCOMMENT_WAR", "USER_DIPLOCOMMENT_REVOLUTION",
+					"USER_DIPLOCOMMENT_PROPOSAL", "USER_DIPLOCOMMENT_RENEGOTIATE",
+					"USER_DIPLOCOMMENT_CURRENT_DEALS", "USER_DIPLOCOMMENT_SOMETHING_ELSE"):
+					diploScreen.setAIOffer(0)
+					if szComment in ("USER_DIPLOCOMMENT_PEACE", "USER_DIPLOCOMMENT_SUGGEST_PEACE", "USER_DIPLOCOMMENT_OFFER_PEACE"):
+						self.setAIComment(self.getCommentID("AI_DIPLOCOMMENT_NO_PEACE"))
+					else:
+						self.setAIComment(self.getCommentID("AI_DIPLOCOMMENT_NO_DEAL"))
+					return
 
 		# If we accept peace
 		if (self.isComment(eComment, "USER_DIPLOCOMMENT_PEACE")):

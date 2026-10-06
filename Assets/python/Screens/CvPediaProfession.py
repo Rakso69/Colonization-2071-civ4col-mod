@@ -186,8 +186,10 @@ class CvPediaProfession:
 				if (gc.getUnitInfo(iUnit).getDefaultProfession() == iProfession):
 					iExpertUnit = iUnit
 					break
-		#TK Coal
-		if (iExpertUnit == -1 and Profession.getSpecialBuilding() == gc.getDefineINT("SPECIAL_FURNACE_BUILDING")):
+		#TK Refinery Worker
+		# Kaszkaj fix: .\.\CvPediaProfession.py, interfaceScreen.
+		# Look up the Power Plant building group under its matching XML define name.
+		if (iExpertUnit == -1 and Profession.getSpecialBuilding() == gc.getDefineINT("SPECIALBUILDING_POWER_PLANT")):
 			for iUnit in range(gc.getNumUnitInfos()):
 				if (gc.getUnitInfo(iUnit).getWorkRateModifier() > 0):
 					iExpertUnit = iUnit

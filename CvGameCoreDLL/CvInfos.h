@@ -999,7 +999,8 @@ public:
 	DllExport int getIncreasedEnemyHealRate() const;
 	DllExport int getGoldBonusForFirstToResearch() const;
 	DllExport int getFreeHurriedImmigrants() const;
-	DllExport int getProlificInventorRateChange() const;
+	//Kaszkaj - Declare the getter for the civic Inventor rate.
+	DllExport int getInventorRateChange() const;
 	DllExport int getGoldBonus() const;
 	DllExport int getFreeTechs() const;
 	DllExport int getKingTreasureTransportMod() const;
@@ -1081,7 +1082,8 @@ protected:
 	int m_iCenterPlotFoodBonus;
 	int m_iIncreasedEnemyHealRate;
     int m_iGoldBonusForFirstToResearch;
-    int m_iProlificInventorRateChange;
+    //Kaszkaj - Store the civic Inventor rate under the name used by XML.
+    int m_iInventorRateChange;
     int m_iNewDefaultUnitClass;
     int m_iFreeTechs;
     int m_iKingTreasureTransportMod;
@@ -1741,6 +1743,8 @@ public:
 	DllExport int getAIConstructPercent() const;
 	DllExport int getAIUnitUpgradePercent() const;
 	DllExport int getAIHurryPercent() const;
+	//Kaszkaj - Declare the getter for the AI immigration chance.
+	DllExport int getAIImmigration() const;
 	DllExport int getAIExtraTradePercent() const;
 	DllExport int getAIPerEraModifier() const;
 	DllExport int getAIAdvancedStartPercent() const;
@@ -1781,6 +1785,8 @@ protected:
 	int m_iAIConstructPercent;
 	int m_iAIUnitUpgradePercent;
 	int m_iAIHurryPercent;
+	//Kaszkaj - Store the AI immigration chance with the difficulty settings.
+	int m_iAIImmigration;
 	int m_iAIExtraTradePercent;
 	int m_iAIPerEraModifier;
 	int m_iAIAdvancedStartPercent;
@@ -2076,6 +2082,8 @@ public:
 	DllExport bool isGoody() const;
 	DllExport bool isPermanent() const;
 	DllExport bool useLSystem() const;
+	//Kaszkaj - Expose border modes: 0 team territory, 1 team or neutral, 2 any territory.
+	DllExport int getOutsideBorders() const;
 	DllExport bool isOutsideBorders() const;
 
 	DllExport const char* getArtDefineTag() const;
@@ -2130,7 +2138,8 @@ protected:
 	bool m_bGoody;
 	bool m_bPermanent;
 	bool m_bUseLSystem;
-	bool m_bOutsideBorders;
+	//Kaszkaj - Store all three bOutsideBorders modes as an integer.
+	int m_iOutsideBorders;
 	CvString m_szArtDefineTag;
 
 	int m_iWorldSoundscapeScriptId;

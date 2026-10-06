@@ -83,7 +83,8 @@ public:
 	bool isCivic(int /*CivicTypes*/ eCivic);
 	///TKs Invention Core Mod v 1.0
 	int getIdeasExperience() const;
-	int prolificInventorThreshold() const;
+	//Kaszkaj - Declare the Inventor threshold method used by Python.
+	int inventorThreshold() const;
 	int getResearchPartner() const;
 	int getIdeasResearched(int /*CivicTypes*/ eCivic);
 	int getVictoryYieldCount(int /*YieldTypes*/ eYield);

@@ -38,6 +38,8 @@ public:
 	DllExport void makePeace(TeamTypes eTeam, bool bBumpUnits = true);
 	bool canContact(TeamTypes eTeam) const;
 	void meet(TeamTypes eTeam, bool bNewDiplo);
+	//Kaszkaj - Clear barbarian discovery when generating a replacement map.
+	void resetBarbarianContacts();
 	void signOpenBorders(TeamTypes eTeam);
 	void signDefensivePact(TeamTypes eTeam);
 	bool canSignDefensivePact(TeamTypes eTeam);
@@ -82,6 +84,8 @@ public:
 	void convinceFather(FatherTypes eFather, bool bAccept);
 
 	bool isHuman() const;
+	//Kaszkaj - Identify the team containing the living barbarian player.
+	bool isBarbarian() const;
 	bool hasNativePlayer() const;
 	bool hasColonialPlayer() const;
 	bool hasEuropePlayer() const;
@@ -220,6 +224,8 @@ protected:
 
 	bool* m_abAtWar;
 	bool* m_abHasMet;
+	//Kaszkaj - Saved contact confirmation prevents early barbarian discovery.
+	bool* m_abHasMetVerified;
 	bool* m_abPermanentWarPeace;
 	bool* m_abOpenBorders;
 	bool* m_abDefensivePact;

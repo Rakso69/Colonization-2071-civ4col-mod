@@ -329,6 +329,8 @@ void CvGame::regenerateMap()
 
 	for (iI = 0; iI < MAX_TEAMS; iI++)
 	{
+		//Kaszkaj - A replacement map requires a new sighting of the barbarian faction.
+		GET_TEAM((TeamTypes)iI).resetBarbarianContacts();
 		GC.getMapINLINE().setRevealedPlots(((TeamTypes)iI), false);
 	}
 
@@ -548,7 +550,8 @@ void CvGame::initDiplomacy()
 		for (int iJ = 0; iJ < MAX_PLAYERS; ++iJ)
 		{
 			CvPlayer& kTeamPlayer = GET_PLAYER((PlayerTypes) iJ);
-			if (kTeamPlayer.getTeam() == iI)
+			//Kaszkaj - Unassigned player slots must not establish diplomatic contact.
+			if (kTeamPlayer.getCivilizationType() != NO_CIVILIZATION && kTeamPlayer.getTeam() == iI)
 			{
 				PlayerTypes eParent = kTeamPlayer.getParent();
 				if(eParent != NO_PLAYER)
@@ -3087,6 +3090,12 @@ void CvGame::implementDeal(PlayerTypes eWho, PlayerTypes eOtherWho, CLinkList<Tr
 	FAssertMsg(eWho != NO_PLAYER, "Who is not assigned a valid value");
 	FAssertMsg(eOtherWho != NO_PLAYER, "OtherWho is not assigned a valid value");
 	FAssertMsg(eWho != eOtherWho, "eWho is not expected to be equal with eOtherWho");
+
+	//Kaszkaj - Never apply a barbarian deal, even through direct gifts or forced deal calls.
+	if (GET_PLAYER(eWho).isBarbarian() || GET_PLAYER(eOtherWho).isBarbarian())
+	{
+		return;
+	}
 
 	pDeal = addDeal();
 	pDeal->init(pDeal->getID(), eWho, eOtherWho);
@@ -6312,6 +6321,12 @@ void CvGame::addPlayer(PlayerTypes eNewPlayer, LeaderHeadTypes eLeader, Civiliza
 	GC.getInitCore().setCiv(eNewPlayer, eCiv);
 	GC.getInitCore().setSlotStatus(eNewPlayer, SS_COMPUTER);
 	GC.getInitCore().setColor(eNewPlayer, eColor);
+	//Kaszkaj - A new barbarian team must not inherit human contacts from its empty player slot.
+	if (eCiv == (CivilizationTypes)GC.getDefineINT("BARBARIAN_CIVILIZATION")
+		&& !GET_TEAM(GET_PLAYER(eNewPlayer).getTeam()).isEverAlive())
+	{
+		GET_TEAM(GET_PLAYER(eNewPlayer).getTeam()).resetBarbarianContacts();
+	}
 	GET_PLAYER(eNewPlayer).init(eNewPlayer);
 }
 

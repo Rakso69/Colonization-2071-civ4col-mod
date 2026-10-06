@@ -1,6 +1,7 @@
 // unit.cpp
 
 #include "CvGameCoreDLL.h"
+#include <cstring>
 #include "CvUnit.h"
 #include "CvArea.h"
 #include "CvPlot.h"
@@ -767,7 +768,9 @@ void CvUnit::updateOwnerCache(int iChange)
 	kPlayer.changeUnitClassCount(((UnitClassTypes)(m_pUnitInfo->getUnitClassType())), iChange);
 	kPlayer.changeAssets(getAsset() * iChange);
 	kPlayer.changePower(getPower() * iChange);
-	CvArea* pArea = area();
+	//Kaszkaj - Count unit power in the actual plot area, including ships in port.
+	CvPlot* pUnitPlot = plot();
+	CvArea* pArea = pUnitPlot == NULL ? NULL : pUnitPlot->area();
 	if (pArea != NULL)
 	{
 		pArea->changePower(getOwnerINLINE(), getPower() * iChange);
@@ -3718,7 +3721,13 @@ void CvUnit::unloadAll()
 
 bool CvUnit::canLearn() const
 {
-	UnitTypes eUnitType = getLearnUnitType(plot());
+	return canLearn(plot(), false);
+}
+
+//Kaszkaj - Check a future village lesson without requiring the unit to have arrived or unloaded yet.
+bool CvUnit::canLearn(const CvPlot* pPlot, bool bTestVisible) const
+{
+	UnitTypes eUnitType = getLearnUnitType(pPlot, bTestVisible);
 	if(eUnitType == NO_UNIT)
 	{
 		return false;
@@ -3738,6 +3747,10 @@ bool CvUnit::canLearn() const
 
     }
     ///TKe
+	if (bTestVisible)
+	{
+		return true;
+	}
 	if (isCargo() && !canUnload())
 	{
 		return false;
@@ -3872,6 +3885,12 @@ void CvUnit::doLearn()
 
 UnitTypes CvUnit::getLearnUnitType(const CvPlot* pPlot) const
 {
+	return getLearnUnitType(pPlot, false);
+}
+
+//Kaszkaj - Forecast a village lesson without skipping the chief visit when learning actually starts.
+UnitTypes CvUnit::getLearnUnitType(const CvPlot* pPlot, bool bTestVisible) const
+{
 	if (getUnitInfo().getLearnTime() < 0)
 	{
 		return NO_UNIT;
@@ -3893,7 +3912,9 @@ UnitTypes CvUnit::getLearnUnitType(const CvPlot* pPlot) const
 		return NO_UNIT;
 	}
 
-	if (!pCity->isScoutVisited(getTeam()))
+	//Kaszkaj - Planning may include a legal chief visit; actual training still requires that visit.
+	if (!pCity->isScoutVisited(getTeam())
+		&& (!bTestVisible || !canSpeakWithChief(pCity->plot())))
 	{
 		return NO_UNIT;
 	}
@@ -3905,7 +3926,9 @@ UnitTypes CvUnit::getLearnUnitType(const CvPlot* pPlot) const
 	}
 
 	UnitTypes eTeachUnit = (UnitTypes) GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eTeachUnitClass);
-	if (eTeachUnit == getUnitType())
+	//Kaszkaj - A zero XML teacher weight forbids learning this unit in a native settlement.
+	if (eTeachUnit < 0 || eTeachUnit >= GC.getNumUnitInfos()
+		|| GC.getUnitInfo(eTeachUnit).getTeacherWeight() <= 0 || eTeachUnit == getUnitType())
 	{
 		return NO_UNIT;
 	}
@@ -3915,13 +3938,24 @@ UnitTypes CvUnit::getLearnUnitType(const CvPlot* pPlot) const
 
 int CvUnit::getLearnTime() const
 {
-	CvCity* pCity = plot()->getPlotCity();
+	return getLearnTime(plot(), false);
+}
+
+//Kaszkaj - Predict village training with the same speed, traits and teaching multiplier as the actual lesson.
+int CvUnit::getLearnTime(const CvPlot* pPlot, bool bAfterTeachIncrease) const
+{
+	CvCity* pCity = pPlot == NULL ? NULL : pPlot->getPlotCity();
 	if (pCity == NULL)
 	{
 		return MAX_INT;
 	}
 
-	int iLearnTime = m_pUnitInfo->getLearnTime() * pCity->getTeachUnitMultiplier() / 100;
+	int iTeachMultiplier = pCity->getTeachUnitMultiplier();
+	if (bAfterTeachIncrease)
+	{
+		iTeachMultiplier = iTeachMultiplier * (100 + GC.getDefineINT("NATIVE_TEACH_THRESHOLD_INCREASE")) / 100;
+	}
+	int iLearnTime = m_pUnitInfo->getLearnTime() * iTeachMultiplier / 100;
 
 	iLearnTime *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getGrowthPercent();
 	iLearnTime /= 100;
@@ -4140,6 +4174,7 @@ int CvUnit::getMissionarySuccessPercent() const
 	return GET_PLAYER(getOwnerINLINE()).getMissionarySuccessPercent() * (100 + (getUnitInfo().getMissionaryRateModifier() * GC.getDefineINT("MISSIONARY_RATE_EFFECT_ON_SUCCESS") / 100)) / 100;
 }
 
+//Kaszkaj - Colonists and natives may speak with chiefs in other native settlements.
 bool CvUnit::canSpeakWithChief(CvPlot* pPlot) const
 {
 	ProfessionTypes eProfession = getProfession();
@@ -4156,7 +4191,7 @@ bool CvUnit::canSpeakWithChief(CvPlot* pPlot) const
 			return false;
 		}
 
-		if (!pCity->isNative())
+		if (!pCity->isNative() || pCity->getOwnerINLINE() == getOwnerINLINE())
 		{
 			return false;
 		}
@@ -4167,10 +4202,6 @@ bool CvUnit::canSpeakWithChief(CvPlot* pPlot) const
 		}
 	}
 
-	if (isNative())
-	{
-		return false;
-	}
 
 	if (!canMove())
 	{
@@ -4199,7 +4230,9 @@ void CvUnit::speakWithChief()
 		if (eTeachUnitClass != NO_UNITCLASS)
 		{
 			UnitTypes eTeachUnit = (UnitTypes) GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eTeachUnitClass);
-			if (eTeachUnit != NO_UNIT)
+			//Kaszkaj - Do not advertise a lesson forbidden by the XML teacher weight.
+			if (eTeachUnit >= 0 && eTeachUnit < GC.getNumUnitInfos()
+				&& GC.getUnitInfo(eTeachUnit).getTeacherWeight() > 0)
 			{
 				szExpertText = gDLL->getText("AI_DIPLO_CHIEF_LEARN_UNIT_DESCRIPTION", GC.getUnitInfo(eTeachUnit).getTextKeyWide());
 			}
@@ -5075,7 +5108,10 @@ bool CvUnit::build(BuildTypes eBuild)
 
 	GET_PLAYER(getOwnerINLINE()).changeGold(-(GET_PLAYER(getOwnerINLINE()).getBuildCost(plot(), eBuild)));
 
-	bFinished = plot()->changeBuildProgress(eBuild, workRate(false), getTeam());
+	//Kaszkaj - Record the completing player before the excavation can consume its worker.
+	CvPlot* pBuildPlot = plot();
+	PlayerTypes eBuilder = getOwnerINLINE();
+	bFinished = pBuildPlot->changeBuildProgress(eBuild, workRate(false), getTeam(), eBuilder);
 
 	finishMoves(); // needs to be at bottom because movesLeft() can affect workRate()...
 
@@ -5089,6 +5125,13 @@ bool CvUnit::build(BuildTypes eBuild)
 
 	// Python Event
 	gDLL->getEventReporterIFace()->unitBuildImprovement(this, eBuild, bFinished);
+
+	//Kaszkaj - Check for excavation events after construction and normal mound removal.
+	if (bFinished && GC.getBuildInfo(eBuild).getImprovement() != NO_IMPROVEMENT
+		&& strcmp(GC.getImprovementInfo((ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement()).getType(), "IMPROVEMENT_EXCAVATION") == 0)
+	{
+		pBuildPlot->triggerExcavationEvent(eBuilder);
+	}
 
 	return bFinished;
 }
@@ -5777,7 +5820,10 @@ void CvUnit::processUnitCombatType(UnitCombatTypes eUnitCombat, int iChange)
 		//update unit combat changes
 		for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
 		{
-			if (GET_PLAYER(getOwnerINLINE()).hasTrait((TraitTypes)iI))
+			//Kaszkaj fix: .\.\CvUnit.cpp, Line:  10238, Expression:  iValue >= 0.
+			// Count all active copies of each trait when adding or removing free promotions.
+			int iTraitCount = GET_PLAYER(getOwnerINLINE()).getTraitCount((TraitTypes)iI);
+			if (iTraitCount > 0)
 			{
 				for (int iJ = 0; iJ < GC.getNumPromotionInfos(); iJ++)
 				{
@@ -5785,7 +5831,7 @@ void CvUnit::processUnitCombatType(UnitCombatTypes eUnitCombat, int iChange)
 					{
 						if ((eUnitCombat != NO_UNITCOMBAT) && GC.getTraitInfo((TraitTypes) iI).isFreePromotionUnitCombat(eUnitCombat))
 						{
-							changeFreePromotionCount(((PromotionTypes)iJ), iChange);
+							changeFreePromotionCount(((PromotionTypes)iJ), iChange * iTraitCount);
 						}
 					}
 				}
@@ -7965,13 +8011,9 @@ CvCity* CvUnit::getCity() const
 
 int CvUnit::getArea() const
 {
-	CvPlot* pPlot = plot();
-	if (pPlot == NULL)
-	{
-		return FFreeList::INVALID_INDEX;
-	}
-
-	return pPlot->getArea();
+	//Kaszkaj - Return the same area ID that area() uses for movement and AI.
+	CvArea* pArea = area();
+	return pArea == NULL ? FFreeList::INVALID_INDEX : pArea->getID();
 }
 
 
@@ -7983,6 +8025,15 @@ CvArea* CvUnit::area() const
 		return NULL;
 	}
 
+	//Kaszkaj - Use the adjacent sea area for normal ships in port; amphibious ships keep their current area.
+	if (getDomainType() == DOMAIN_SEA && !m_pUnitInfo->isCanMoveAllTerrain() && !pPlot->isWater())
+	{
+		CvArea* pWaterArea = pPlot->waterArea();
+		if (pWaterArea != NULL)
+		{
+			return pWaterArea;
+		}
+	}
 	return pPlot->area();
 }
 
@@ -9060,7 +9111,9 @@ void CvUnit::processProfession(ProfessionTypes eProfession, int iChange, bool bU
 			}
 
 			kOwner.changePower(iPower);
-			CvArea* pArea = area();
+			//Kaszkaj - Apply profession power changes to the unit's actual plot area.
+			CvPlot* pUnitPlot = plot();
+			CvArea* pArea = pUnitPlot == NULL ? NULL : pUnitPlot->area();
 			if (pArea != NULL)
 			{
 				pArea->changePower(getOwnerINLINE(), iPower);
@@ -10235,7 +10288,17 @@ void CvUnit::setFreePromotionCount(PromotionTypes eIndex, int iValue)
 {
 	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	FAssertMsg(eIndex < GC.getNumPromotionInfos(), "eIndex is expected to be within maximum bounds (invalid Index)");
-	FAssertMsg(iValue >= 0, "promotion value going negative");
+	//Kaszkaj fix: .\.\CvUnit.cpp, Line:  10238, Expression:  iValue >= 0.
+	// Log unmatched promotion removals and keep the counter at zero.
+	if (iValue < 0)
+	{
+		if (gDLL != NULL)
+		{
+			CvString szMessage = CvString::format("CvUnit::setFreePromotionCount: Player=%d UnitID=%d UnitType=%d Profession=%d Promotion=%s CurrentCount=%d RequestedCount=%d; using 0.", getOwnerINLINE(), getID(), getUnitType(), getProfession(), GC.getPromotionInfo(eIndex).getType(), getFreePromotionCount(eIndex), iValue);
+			gDLL->logMsg("AssertFixes.log", szMessage.c_str());
+		}
+		iValue = 0;
+	}
 
 	if (getFreePromotionCount(eIndex) != iValue)
 	{
@@ -11020,7 +11083,9 @@ void CvUnit::setYieldStored(int iYieldAmount)
 		{
 			GET_PLAYER(getOwnerINLINE()).changePower(iChange * GC.getYieldInfo(eYield).getPowerValue());
 			GET_PLAYER(getOwnerINLINE()).changeAssets(iChange * GC.getYieldInfo(eYield).getAssetValue());
-			CvArea* pArea = area();
+			//Kaszkaj - Apply cargo power changes to the unit's actual plot area.
+			CvPlot* pUnitPlot = plot();
+			CvArea* pArea = pUnitPlot == NULL ? NULL : pUnitPlot->area();
 			if (pArea  != NULL)
 			{
 				pArea->changePower(getOwnerINLINE(), iChange * GC.getYieldInfo(eYield).getPowerValue());

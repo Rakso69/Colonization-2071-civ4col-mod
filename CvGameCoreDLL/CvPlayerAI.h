@@ -139,6 +139,9 @@ public:
 	int AI_totalAreaUnitAIs(CvArea* pArea, UnitAITypes eUnitAI);
 	int AI_totalWaterAreaUnitAIs(CvArea* pArea, UnitAITypes eUnitAI);
 	bool AI_hasSeaTransport(const CvUnit* pCargo) const;
+	//Kaszkaj - Colonial AI scouts keep exploring while any land or goody remains.
+	bool AI_isColonialScout(UnitTypes eUnit) const;
+	int AI_scoutTargetCount(const CvArea* pArea = NULL) const;
 
 	int AI_neededExplorers(CvArea* pArea);
 	int AI_neededWorkers(CvArea* pArea);
@@ -262,7 +265,13 @@ public:
 	bool AI_isYieldFinalProduct(YieldTypes eYield) const;
 	bool AI_shouldBuyFromEurope(YieldTypes eYield) const;
 
-	int AI_yieldValue(YieldTypes eYield, bool bProduce = true, int iAmount = 1);
+	//Kaszkaj - Declare the AI helpers for food value, civilian protection and economic support.
+	int AI_yieldValue(YieldTypes eYield, bool bProduce = true, int iAmount = 1, bool bFood = false);
+	bool AI_needsProtection(UnitAITypes eUnitAI) const;
+	void AI_doEconomicHelp();
+	//Kaszkaj - Apply the shared royal technology trade rules to computer subjects.
+	void AI_doKingTechnologyTrade();
+	void AI_addFreeCityDefenders(CvCity* pCity);
 	void AI_updateYieldValues();
 	int AI_transferYieldValue(const IDInfo target, YieldTypes eYield, int iAmount);
 
@@ -297,6 +306,17 @@ public:
 	int AI_professionValue(ProfessionTypes eProfession, UnitAITypes eUnitAI);
 	int AI_professionGoldValue(ProfessionTypes eProfession);
 	ProfessionTypes AI_idealProfessionForUnit(UnitTypes eUnitType);
+	//Kaszkaj - Evaluate specialists needed after school or village training.
+	bool AI_isEducationSpecialist(UnitTypes eUnit) const;
+	int AI_educationUnitValue(UnitTypes eUnit);
+	//Kaszkaj - Recognise all expert jobs of units with several specialisations.
+	bool AI_isProfessionExpert(UnitTypes eUnit, ProfessionTypes eProfession) const;
+	//Kaszkaj - Keep dedicated builders on construction tasks and share worker yield values across AI decisions.
+	bool AI_isDedicatedWorker(UnitTypes eUnit) const;
+	bool AI_getUnitYieldBonuses(UnitTypes eUnit, YieldTypes eYield, int& iModifier, int& iChange, int& iBonusChange) const;
+	int AI_getUnitYieldModifier(UnitTypes eUnit, YieldTypes eYield) const;
+	int AI_getUnitYieldChange(UnitTypes eUnit, YieldTypes eYield) const;
+	int AI_getUnitBonusYieldChange(UnitTypes eUnit, YieldTypes eYield) const;
 	ProfessionTypes AI_idealProfessionForUnitAIType(UnitAITypes eUnitAI, CvCity* pCity = NULL);
 
 	int AI_professionBasicValue(ProfessionTypes eProfession, UnitTypes eUnit, CvCity* pCity);

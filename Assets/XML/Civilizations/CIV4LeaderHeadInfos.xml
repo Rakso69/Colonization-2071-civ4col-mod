@@ -14674,108 +14674,108 @@
 			<Civilopedia>TXT_KEY_LEADER_INVASION_OUTER_GODS_PEDIA</Civilopedia>
 			<ArtDefineTag>ART_DEF_LEADER_INVASION_OUTER_GODS</ArtDefineTag>
 			<AlarmType>NONE</AlarmType>
-			<iBaseAttitude>-3</iBaseAttitude>
-			<iNativeAttitude>-3</iNativeAttitude>
-			<iRefuseToTalkWarThreshold>1</iRefuseToTalkWarThreshold>
+			<iBaseAttitude>-100</iBaseAttitude>
+			<iNativeAttitude>-100</iNativeAttitude>
+			<iRefuseToTalkWarThreshold>0</iRefuseToTalkWarThreshold>
 			<iMaxGoldTradePercent>0</iMaxGoldTradePercent>
 			<iMaxWarRand>1</iMaxWarRand>
 			<iMaxWarNearbyPowerRatio>1000</iMaxWarNearbyPowerRatio>
 			<iMaxWarDistantPowerRatio>1000</iMaxWarDistantPowerRatio>
-			<iMaxWarMinAdjacentLandPercent>1</iMaxWarMinAdjacentLandPercent>
-			<iLimitedWarRand>40</iLimitedWarRand>
-			<iLimitedWarPowerRatio>100</iLimitedWarPowerRatio>
+			<iMaxWarMinAdjacentLandPercent>0</iMaxWarMinAdjacentLandPercent>
+			<iLimitedWarRand>1</iLimitedWarRand>
+			<iLimitedWarPowerRatio>1000</iLimitedWarPowerRatio>
 			<iDogpileWarRand>1</iDogpileWarRand>
-			<iMakePeaceRand>1000</iMakePeaceRand>
-			<iDeclareWarTradeRand>40</iDeclareWarTradeRand>
+			<iMakePeaceRand>65535</iMakePeaceRand>
+			<iDeclareWarTradeRand>1</iDeclareWarTradeRand>
 			<iDemandRebukedSneakProb>100</iDemandRebukedSneakProb>
 			<iDemandRebukedWarProb>100</iDemandRebukedWarProb>
 			<iRazeCityProb>0</iRazeCityProb>
-			<iBaseAttackOddsChange>2</iBaseAttackOddsChange>
-			<iAttackOddsChangeRand>8</iAttackOddsChangeRand>
-			<iCloseBordersAttitudeChange>-10</iCloseBordersAttitudeChange>
-			<iAlarmAttitudeChange>0</iAlarmAttitudeChange>
-			<iLostWarAttitudeChange>-1</iLostWarAttitudeChange>
-			<iRebelAttitudeDivisor>0</iRebelAttitudeDivisor>
-			<iAtWarAttitudeDivisor>-5</iAtWarAttitudeDivisor>
-			<iAtWarAttitudeChangeLimit>5</iAtWarAttitudeChangeLimit>
-			<iAtPeaceAttitudeDivisor>60</iAtPeaceAttitudeDivisor>
-			<iAtPeaceAttitudeChangeLimit>1</iAtPeaceAttitudeChangeLimit>
-			<iOpenBordersAttitudeDivisor>1</iOpenBordersAttitudeDivisor>
-			<iOpenBordersAttitudeChangeLimit>1</iOpenBordersAttitudeChangeLimit>
-			<iDefensivePactAttitudeDivisor>1</iDefensivePactAttitudeDivisor>
-			<iDefensivePactAttitudeChangeLimit>1</iDefensivePactAttitudeChangeLimit>
-			<iShareWarAttitudeChange>1</iShareWarAttitudeChange>
-			<iShareWarAttitudeDivisor>1</iShareWarAttitudeDivisor>
-			<iShareWarAttitudeChangeLimit>1</iShareWarAttitudeChangeLimit>
-			<DemandTributeAttitudeThreshold>ATTITUDE_FURIOUS</DemandTributeAttitudeThreshold>
-			<NoGiveHelpAttitudeThreshold>ATTITUDE_CAUTIOUS</NoGiveHelpAttitudeThreshold>
-			<MapRefuseAttitudeThreshold>ATTITUDE_ANNOYED</MapRefuseAttitudeThreshold>
-			<DeclareWarRefuseAttitudeThreshold>ATTITUDE_FRIENDLY</DeclareWarRefuseAttitudeThreshold>
-			<DeclareWarThemRefuseAttitudeThreshold>ATTITUDE_CAUTIOUS</DeclareWarThemRefuseAttitudeThreshold>
-			<StopTradingRefuseAttitudeThreshold>ATTITUDE_CAUTIOUS</StopTradingRefuseAttitudeThreshold>
-			<StopTradingThemRefuseAttitudeThreshold>ATTITUDE_ANNOYED</StopTradingThemRefuseAttitudeThreshold>
+			<iBaseAttackOddsChange>100</iBaseAttackOddsChange>
+			<iAttackOddsChangeRand>0</iAttackOddsChangeRand>
+			<iCloseBordersAttitudeChange>-100</iCloseBordersAttitudeChange>
+			<iAlarmAttitudeChange>-100</iAlarmAttitudeChange>
+			<iLostWarAttitudeChange>-100</iLostWarAttitudeChange>
+			<iRebelAttitudeDivisor>-1</iRebelAttitudeDivisor>
+			<iAtWarAttitudeDivisor>-1</iAtWarAttitudeDivisor>
+			<iAtWarAttitudeChangeLimit>100</iAtWarAttitudeChangeLimit>
+			<iAtPeaceAttitudeDivisor>-1</iAtPeaceAttitudeDivisor>
+			<iAtPeaceAttitudeChangeLimit>100</iAtPeaceAttitudeChangeLimit>
+			<iOpenBordersAttitudeDivisor>0</iOpenBordersAttitudeDivisor>
+			<iOpenBordersAttitudeChangeLimit>0</iOpenBordersAttitudeChangeLimit>
+			<iDefensivePactAttitudeDivisor>0</iDefensivePactAttitudeDivisor>
+			<iDefensivePactAttitudeChangeLimit>0</iDefensivePactAttitudeChangeLimit>
+			<iShareWarAttitudeChange>0</iShareWarAttitudeChange>
+			<iShareWarAttitudeDivisor>0</iShareWarAttitudeDivisor>
+			<iShareWarAttitudeChangeLimit>0</iShareWarAttitudeChangeLimit>
+			<DemandTributeAttitudeThreshold>ATTITUDE_FRIENDLY</DemandTributeAttitudeThreshold>
+			<NoGiveHelpAttitudeThreshold>ATTITUDE_FRIENDLY</NoGiveHelpAttitudeThreshold>
+			<MapRefuseAttitudeThreshold>ATTITUDE_FRIENDLY</MapRefuseAttitudeThreshold>
+			<DeclareWarRefuseAttitudeThreshold>NONE</DeclareWarRefuseAttitudeThreshold>
+			<DeclareWarThemRefuseAttitudeThreshold>ATTITUDE_FURIOUS</DeclareWarThemRefuseAttitudeThreshold>
+			<StopTradingRefuseAttitudeThreshold>NONE</StopTradingRefuseAttitudeThreshold>
+			<StopTradingThemRefuseAttitudeThreshold>ATTITUDE_FURIOUS</StopTradingThemRefuseAttitudeThreshold>
 			<OpenBordersRefuseAttitudeThreshold>ATTITUDE_FRIENDLY</OpenBordersRefuseAttitudeThreshold>
-			<DefensivePactRefuseAttitudeThreshold>ATTITUDE_PLEASED</DefensivePactRefuseAttitudeThreshold>
-			<PermanentAllianceRefuseAttitudeThreshold>ATTITUDE_PLEASED</PermanentAllianceRefuseAttitudeThreshold>
+			<DefensivePactRefuseAttitudeThreshold>ATTITUDE_FRIENDLY</DefensivePactRefuseAttitudeThreshold>
+			<PermanentAllianceRefuseAttitudeThreshold>ATTITUDE_FRIENDLY</PermanentAllianceRefuseAttitudeThreshold>
 			<Traits/>
 			<ContactRands>
 				<ContactRand>
 					<ContactType>CONTACT_JOIN_WAR</ContactType>
-					<iContactRand>20</iContactRand>
+					<iContactRand>1</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_STOP_TRADING</ContactType>
-					<iContactRand>50</iContactRand>
+					<iContactRand>1</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_GIVE_HELP</ContactType>
-					<iContactRand>100</iContactRand>
+					<iContactRand>65535</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_ASK_FOR_HELP</ContactType>
-					<iContactRand>250</iContactRand>
+					<iContactRand>65535</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_DEMAND_TRIBUTE</ContactType>
-					<iContactRand>1000</iContactRand>
+					<iContactRand>1</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_OPEN_BORDERS</ContactType>
-					<iContactRand>20</iContactRand>
+					<iContactRand>65535</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_DEFENSIVE_PACT</ContactType>
-					<iContactRand>80</iContactRand>
+					<iContactRand>65535</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_PERMANENT_ALLIANCE</ContactType>
-					<iContactRand>80</iContactRand>
+					<iContactRand>65535</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_PEACE_TREATY</ContactType>
-					<iContactRand>20</iContactRand>
+					<iContactRand>65535</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_MAP</ContactType>
-					<iContactRand>20</iContactRand>
+					<iContactRand>65535</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_IDEAS</ContactType>
-					<iContactRand>20</iContactRand>
+					<iContactRand>65535</iContactRand>
 				</ContactRand>
 				<ContactRand>
 					<ContactType>CONTACT_TRADE_RESEARCH</ContactType>
-					<iContactRand>20</iContactRand>
+					<iContactRand>65535</iContactRand>
 				</ContactRand>
 			</ContactRands>
 			<ContactDelays>
 				<ContactDelay>
 					<ContactType>CONTACT_JOIN_WAR</ContactType>
-					<iContactDelay>20</iContactDelay>
+					<iContactDelay>1</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_STOP_TRADING</ContactType>
-					<iContactDelay>20</iContactDelay>
+					<iContactDelay>1</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_GIVE_HELP</ContactType>
@@ -14787,7 +14787,7 @@
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_DEMAND_TRIBUTE</ContactType>
-					<iContactDelay>50</iContactDelay>
+					<iContactDelay>1</iContactDelay>
 				</ContactDelay>
 				<ContactDelay>
 					<ContactType>CONTACT_OPEN_BORDERS</ContactType>
@@ -14825,11 +14825,11 @@
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_DECLARED_WAR_ON_FRIEND</MemoryType>
-					<iMemoryRand>100</iMemoryRand>
+					<iMemoryRand>0</iMemoryRand>
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_HIRED_WAR_ALLY</MemoryType>
-					<iMemoryRand>100</iMemoryRand>
+					<iMemoryRand>0</iMemoryRand>
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_RAZED_CITY</MemoryType>
@@ -14841,7 +14841,7 @@
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_REFUSED_HELP</MemoryType>
-					<iMemoryRand>100</iMemoryRand>
+					<iMemoryRand>0</iMemoryRand>
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_ACCEPT_DEMAND</MemoryType>
@@ -14849,7 +14849,7 @@
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_REJECTED_DEMAND</MemoryType>
-					<iMemoryRand>150</iMemoryRand>
+					<iMemoryRand>0</iMemoryRand>
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_ACCEPTED_JOIN_WAR</MemoryType>
@@ -14857,7 +14857,7 @@
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_DENIED_JOIN_WAR</MemoryType>
-					<iMemoryRand>100</iMemoryRand>
+					<iMemoryRand>0</iMemoryRand>
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_ACCEPTED_STOP_TRADING</MemoryType>
@@ -14865,7 +14865,7 @@
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_DENIED_STOP_TRADING</MemoryType>
-					<iMemoryRand>50</iMemoryRand>
+					<iMemoryRand>0</iMemoryRand>
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_STOPPED_TRADING</MemoryType>
@@ -14877,7 +14877,7 @@
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_HIRED_TRADE_EMBARGO</MemoryType>
-					<iMemoryRand>30</iMemoryRand>
+					<iMemoryRand>0</iMemoryRand>
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_MADE_DEMAND</MemoryType>
@@ -14889,7 +14889,7 @@
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_CANCELLED_OPEN_BORDERS</MemoryType>
-					<iMemoryRand>10</iMemoryRand>
+					<iMemoryRand>0</iMemoryRand>
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_EVENT_GOOD_TO_US</MemoryType>
@@ -14897,7 +14897,7 @@
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_EVENT_BAD_TO_US</MemoryType>
-					<iMemoryRand>50</iMemoryRand>
+					<iMemoryRand>0</iMemoryRand>
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_LIBERATED_CITIES</MemoryType>
@@ -14913,73 +14913,73 @@
 				</MemoryDecay>
 				<MemoryDecay>
 					<MemoryType>MEMORY_MISSIONARY_FAIL</MemoryType>
-					<iMemoryRand>100</iMemoryRand>
+					<iMemoryRand>0</iMemoryRand>
 				</MemoryDecay>
 			</MemoryDecays>
 			<MemoryAttitudePercents>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_DECLARED_WAR</MemoryType>
-					<iMemoryAttitudePercent>-300</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_DECLARED_WAR_ON_FRIEND</MemoryType>
-					<iMemoryAttitudePercent>-100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_HIRED_WAR_ALLY</MemoryType>
-					<iMemoryAttitudePercent>-200</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_RAZED_CITY</MemoryType>
-					<iMemoryAttitudePercent>-250</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_GIVE_HELP</MemoryType>
-					<iMemoryAttitudePercent>100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>0</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_REFUSED_HELP</MemoryType>
-					<iMemoryAttitudePercent>-100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_ACCEPT_DEMAND</MemoryType>
-					<iMemoryAttitudePercent>100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>0</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_REJECTED_DEMAND</MemoryType>
-					<iMemoryAttitudePercent>-100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_ACCEPTED_JOIN_WAR</MemoryType>
-					<iMemoryAttitudePercent>100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>0</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_DENIED_JOIN_WAR</MemoryType>
-					<iMemoryAttitudePercent>-100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_ACCEPTED_STOP_TRADING</MemoryType>
-					<iMemoryAttitudePercent>50</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>0</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_DENIED_STOP_TRADING</MemoryType>
-					<iMemoryAttitudePercent>-100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_STOPPED_TRADING</MemoryType>
-					<iMemoryAttitudePercent>-100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_STOPPED_TRADING_RECENT</MemoryType>
-					<iMemoryAttitudePercent>-100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_HIRED_TRADE_EMBARGO</MemoryType>
-					<iMemoryAttitudePercent>-100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_MADE_DEMAND</MemoryType>
-					<iMemoryAttitudePercent>-100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_MADE_DEMAND_RECENT</MemoryType>
@@ -14987,31 +14987,31 @@
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_CANCELLED_OPEN_BORDERS</MemoryType>
-					<iMemoryAttitudePercent>-100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_EVENT_GOOD_TO_US</MemoryType>
-					<iMemoryAttitudePercent>100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>0</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_EVENT_BAD_TO_US</MemoryType>
-					<iMemoryAttitudePercent>-100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_LIBERATED_CITIES</MemoryType>
-					<iMemoryAttitudePercent>150</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>0</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_REFUSED_TAX</MemoryType>
-					<iMemoryAttitudePercent>-100</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_REVENGE_TAKEN</MemoryType>
-					<iMemoryAttitudePercent>200</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>0</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 				<MemoryAttitudePercent>
 					<MemoryType>MEMORY_MISSIONARY_FAIL</MemoryType>
-					<iMemoryAttitudePercent>-50</iMemoryAttitudePercent>
+					<iMemoryAttitudePercent>-10000</iMemoryAttitudePercent>
 				</MemoryAttitudePercent>
 			</MemoryAttitudePercents>
 			<NoWarAttitudeProbs>

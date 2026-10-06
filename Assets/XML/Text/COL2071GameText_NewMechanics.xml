@@ -427,7 +427,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDING_COTTON_MILL_STRATEGY</Tag>
-		<English>[COLOR_BUILDING_TEXT]Cottons Mills[COLOR_REVERT] are the ultimate sources of cloth, useing the power of steam they transform six [COLOR_HIGHLIGHT_TEXT]Cotton[COLOR_REVERT] into twelve [COLOR_HIGHLIGHT_TEXT]Cloth[COLOR_REVERT] (when worked by a [COLOR_UNIT_TEXT]Free Colonist[COLOR_REVERT]). By assigning a [COLOR_UNIT_TEXT]Master Weaver[COLOR_REVERT] to work in your [COLOR_BUILDING_TEXT]Textile Mill[COLOR_REVERT], that number can be increased even further! You must construct a [COLOR_BUILDING_TEXT]Steamworks[COLOR_REVERT] before you can construct this building. If you are attempting an [COLOR_HIGHLIGHT_TEXT]Industrial Victory[COLOR_REVERT] then these buildings are your key to winning.</English>
+		<English>[COLOR_BUILDING_TEXT]Cottons Mills[COLOR_REVERT] are the ultimate sources of cloth, useing the power of steam they transform six [COLOR_HIGHLIGHT_TEXT]Cotton[COLOR_REVERT] into twelve [COLOR_HIGHLIGHT_TEXT]Cloth[COLOR_REVERT] (when worked by a [COLOR_UNIT_TEXT]Free Colonist[COLOR_REVERT]). By assigning a [COLOR_UNIT_TEXT]Master Weaver[COLOR_REVERT] to work in your [COLOR_BUILDING_TEXT]Textile Mill[COLOR_REVERT], that number can be increased even further! You must construct a [COLOR_BUILDING_TEXT]Oil Refinery[COLOR_REVERT] before you can construct this building. If you are attempting an [COLOR_HIGHLIGHT_TEXT]Industrial Victory[COLOR_REVERT] then these buildings are your key to winning.</English>
 		<French>Les [COLOR_BUILDING_TEXT]Usines textiles[COLOR_REVERT] sont les plus importants sites de production de tissu, capables de transformer six unit&#233;s de  [COLOR_HIGHLIGHT_TEXT]Coton[COLOR_REVERT] en neuf unit&#233;s de [COLOR_HIGHLIGHT_TEXT]Tissu[COLOR_REVERT] (lorsqu'un [COLOR_UNIT_TEXT]Colon libre[COLOR_REVERT] y est assign&#233;). En employant un [COLOR_UNIT_TEXT]Ma&#238;tre tisserand[COLOR_REVERT] dans votre [COLOR_BUILDING_TEXT]Usine textile[COLOR_REVERT], votre capacit&#233; de production sera encore augment&#233;e ! Vous devez d'abord faire b&#226;tir une [COLOR_BUILDING_TEXT]scierie[COLOR_REVERT] avant de pouvoir ordonner la construction de ce b&#226;timent.</French>
 		<German>[COLOR_BUILDING_TEXT]Textilfabriken[COLOR_REVERT] sind die besten Produktionsst&#228;tten f&#252;r [COLOR_HIGHLIGHT_TEXT]Stoff[COLOR_REVERT]. Sie verarbeiten sechs Einheiten [COLOR_HIGHLIGHT_TEXT]Baumwolle[COLOR_REVERT] zu neun Einheiten [COLOR_HIGHLIGHT_TEXT]Stoff[COLOR_REVERT], wenn dort ein [COLOR_UNIT_TEXT]Freier Kolonist[COLOR_REVERT] arbeitet. Indem Sie einen [COLOR_UNIT_TEXT]Meisterweber[COLOR_REVERT] anweisen, in Ihrer [COLOR_BUILDING_TEXT]Textilfabrik[COLOR_REVERT] zu arbeiten, steigern Sie die Menge zus&#228;tzlich! Sie m&#252;ssen ein [COLOR_BUILDING_TEXT]S&#228;gewerk[COLOR_REVERT] bauen, bevor Sie dieses Geb&#228;ude errichten k&#246;nnen.</German>
 		<Italian>Le [COLOR_BUILDING_TEXT]fabbriche tessili[COLOR_REVERT] sono la fonte definitiva di tessuto, in grado di trasformare sei unit&#224; di [COLOR_HIGHLIGHT_TEXT]cotone[COLOR_REVERT] in nove di [COLOR_HIGHLIGHT_TEXT]tessuto[COLOR_REVERT] (quando ci lavora un [COLOR_UNIT_TEXT]libero colono[COLOR_REVERT]). Mandando un [COLOR_UNIT_TEXT]mastro tessitore[COLOR_REVERT] a lavorare in una [COLOR_BUILDING_TEXT]fabbrica tessile[COLOR_REVERT], puoi ulteriormente aumentare la produzione! Prima di poter costruire questo edificio devi costruire una [COLOR_BUILDING_TEXT]segheria[COLOR_REVERT].</Italian>
@@ -530,7 +530,7 @@
 		<Spanish></Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_INCRESEASED_PROLIFIC_INVENTOR_TEXT</Tag>
+		<Tag>TXT_KEY_INCREASED_INVENTOR_TEXT</Tag>
 		<English>[ICON_BULLET]Increases [COLOR_HIGHLIGHT_TEXT]Visionary Researcher[COLOR_REVERT] experience rate</English>
 		<French></French>
 		<German></German>
@@ -546,7 +546,7 @@
 		<Spanish></Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_PROLIFIC_INVENTOR_BORN</Tag>
+		<Tag>TXT_KEY_INVENTOR_BORN</Tag>
 		<English>%s1_inventor is available on Earth!</English>
 		<French>%s1_inventor has been born in Europe</French>
 		<German>%s1_inventor has been born in Europe</German>
@@ -554,7 +554,7 @@
 		<Spanish>%s1_inventor has been born in Europe</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_PROLIFIC_INVENTOR_XP</Tag>
+		<Tag>TXT_KEY_INVENTOR_XP</Tag>
 		<English>Visionary Researcher: %d1_Curr/%d2_Need Experience</English>
 		<French>G&#233;n&#233;ral illustre : %d1_Curr/%d2_Need exp&#233;rience</French>
 		<German>Gro&#223;er General: %d1_Curr/%d2_Need Erfahrung</German>
@@ -1212,15 +1212,15 @@
 	</TEXT>
 <!-- XML/Text/CIV4GameText_CoalMiner.xml-->
 	<TEXT>
-		<Tag>TXT_KEY_PRODUCTION_FROM_STEAMWORKS_TEXT</Tag>
-		<English>[ICON_BULLET]+1 Production of Manufactured Goods[NEWLINE][TAB]for every %d1_coal %F2 consumed</English>
+		<Tag>TXT_KEY_PRODUCTION_FROM_OIL_REFINERY_TEXT</Tag>
+		<English>[ICON_BULLET]+1 Production of Manufactured Goods[NEWLINE][TAB]for every %d1_hydrocarbons %F2 consumed</English>
 		<French>[ICON_BULLET]Peut travailler les cases d'eau</French>
 		<German>[ICON_BULLET]Kann Wasser-Gel&#228;ndefelder bewirtschaften</German>
 		<Italian>[ICON_BULLET]Permette di usare le caselle d'acqua</Italian>
 		<Spanish>[ICON_BULLET]Se puede trabajar en casillas de agua</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_PRODUCTION_FROM_STEAMWORKS</Tag>
+		<Tag>TXT_KEY_PRODUCTION_FROM_OIL_REFINERY</Tag>
 		<English>[ICON_BULLET]%d1%F2 from Oil Refinery</English>
 		<French>[ICON_BULLET]%d1%F2 gr&#226;ce &#224; Oil Refinery</French>
 		<German>[ICON_BULLET]%d1%F2 Oil Refinery</German>

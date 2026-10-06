@@ -60,6 +60,8 @@ public:
 	bool buildCargoUnitList(CLinkList<IDInfo>& unitList) const;
 	DllExport bool canAllMove();
 	bool canAnyMove();
+	//Kaszkaj - Expose the group's land and water movement ability to pathfinding.
+	bool canMoveAllTerrain() const;
 	bool hasMoved();
 	bool canEnterTerritory(PlayerTypes ePlayer, bool bIgnoreRightOfPassage = false) const;
 	bool canEnterArea(PlayerTypes ePlayer, const CvArea* pArea, bool bIgnoreRightOfPassage = false) const;

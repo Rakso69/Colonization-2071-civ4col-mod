@@ -1680,7 +1680,9 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 				{
 					if (eBuildImprovement != NO_IMPROVEMENT)
 					{
-						if (pMissionPlot->getTeam() != pHeadSelectedUnit->getTeam())
+						//Kaszkaj - Do not show a border warning for bOutsideBorders=2 improvements.
+						if (GC.getImprovementInfo(eBuildImprovement).getOutsideBorders() != 2
+							&& pMissionPlot->getTeam() != pHeadSelectedUnit->getTeam())
 						{
 							if (GC.getImprovementInfo(eBuildImprovement).isOutsideBorders())
 							{
@@ -2376,6 +2378,10 @@ void CvDLLWidgetData::parseTradeItem(CvWidgetDataStruct &widgetDataStruct, CvWSt
 			break;
         case TRADE_IDEAS:
 			GAMETEXT.parseCivicInfo(szBuffer, (CivicTypes) widgetDataStruct.m_iData2, false, false, true);
+			break;
+		//Kaszkaj - Explain the fixed tax cost and confiscation limit in the normal trade tooltip.
+		case TRADE_TAX:
+			szBuffer.append(gDLL->getText("TXT_KEY_TRADE_TAX_HELP", widgetDataStruct.m_iData2));
 			break;
         ///TKe
 		case TRADE_CITIES:

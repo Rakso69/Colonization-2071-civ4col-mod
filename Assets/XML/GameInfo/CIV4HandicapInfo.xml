@@ -31,6 +31,7 @@
 			<iAIConstructPercent>160</iAIConstructPercent>
 			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
 			<iAIHurryPercent>80</iAIHurryPercent>
+			<iAIImmigration>10</iAIImmigration>
 			<iAIExtraTradePercent>0</iAIExtraTradePercent>
 			<iAIPerEraModifier>0</iAIPerEraModifier>
 			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
@@ -87,6 +88,7 @@
 			<iAIConstructPercent>110</iAIConstructPercent>
 			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
 			<iAIHurryPercent>80</iAIHurryPercent>
+			<iAIImmigration>10</iAIImmigration>
 			<iAIExtraTradePercent>5</iAIExtraTradePercent>
 			<iAIPerEraModifier>0</iAIPerEraModifier>
 			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
@@ -144,6 +146,7 @@
 			<iAIConstructPercent>100</iAIConstructPercent>
 			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
 			<iAIHurryPercent>70</iAIHurryPercent>
+			<iAIImmigration>10</iAIImmigration>
 			<iAIExtraTradePercent>10</iAIExtraTradePercent>
 			<iAIPerEraModifier>0</iAIPerEraModifier>
 			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
@@ -205,6 +208,7 @@
 			<iAIConstructPercent>90</iAIConstructPercent>
 			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
 			<iAIHurryPercent>65</iAIHurryPercent>
+			<iAIImmigration>10</iAIImmigration>
 			<iAIExtraTradePercent>15</iAIExtraTradePercent>
 			<iAIPerEraModifier>-1</iAIPerEraModifier>
 			<iAIAdvancedStartPercent>110</iAIAdvancedStartPercent>
@@ -264,6 +268,7 @@
 			<iAIConstructPercent>75</iAIConstructPercent>
 			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
 			<iAIHurryPercent>60</iAIHurryPercent>
+			<iAIImmigration>10</iAIImmigration>
 			<iAIExtraTradePercent>20</iAIExtraTradePercent>
 			<iAIPerEraModifier>-2</iAIPerEraModifier>
 			<iAIAdvancedStartPercent>120</iAIAdvancedStartPercent>
@@ -323,6 +328,7 @@
 			<iAIConstructPercent>60</iAIConstructPercent>
 			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
 			<iAIHurryPercent>55</iAIHurryPercent>
+			<iAIImmigration>10</iAIImmigration>
 			<iAIExtraTradePercent>25</iAIExtraTradePercent>
 			<iAIPerEraModifier>-3</iAIPerEraModifier>
 			<iAIAdvancedStartPercent>135</iAIAdvancedStartPercent>
@@ -384,6 +390,7 @@
 			<iAIConstructPercent>50</iAIConstructPercent>
 			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
 			<iAIHurryPercent>50</iAIHurryPercent>
+			<iAIImmigration>10</iAIImmigration>
 			<iAIExtraTradePercent>30</iAIExtraTradePercent>
 			<iAIPerEraModifier>-4</iAIPerEraModifier>
 			<iAIAdvancedStartPercent>150</iAIAdvancedStartPercent>

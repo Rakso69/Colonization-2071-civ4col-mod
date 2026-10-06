@@ -27,6 +27,8 @@ CvTeam::CvTeam()
 {
 	m_abAtWar = new bool[MAX_TEAMS];
 	m_abHasMet = new bool[MAX_TEAMS];
+	//Kaszkaj - Remember contacts accepted by the meeting rules.
+	m_abHasMetVerified = new bool[MAX_TEAMS];
 	m_abPermanentWarPeace = new bool[MAX_TEAMS];
 	m_abOpenBorders = new bool[MAX_TEAMS];
 	m_abDefensivePact = new bool[MAX_TEAMS];
@@ -47,6 +49,7 @@ CvTeam::~CvTeam()
 	uninit();
 	SAFE_DELETE_ARRAY(m_abAtWar);
 	SAFE_DELETE_ARRAY(m_abHasMet);
+	SAFE_DELETE_ARRAY(m_abHasMetVerified);
 	SAFE_DELETE_ARRAY(m_abPermanentWarPeace);
 	SAFE_DELETE_ARRAY(m_abOpenBorders);
 	SAFE_DELETE_ARRAY(m_abDefensivePact);
@@ -107,6 +110,7 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	for (iI = 0; iI < MAX_TEAMS; iI++)
 	{
 		m_abHasMet[iI] = false;
+		m_abHasMetVerified[iI] = false;
 		m_abAtWar[iI] = false;
 		m_abPermanentWarPeace[iI] = false;
 		m_abOpenBorders[iI] = false;
@@ -634,7 +638,8 @@ bool CvTeam::canDeclareWar(TeamTypes eTeam) const
 		}
 	}
 
-	if (hasColonialPlayer() && GET_TEAM(eTeam).hasColonialPlayer())
+	//Kaszkaj - Apply the initial peace period to barbarian declarations as well.
+	if (isBarbarian() || (hasColonialPlayer() && GET_TEAM(eTeam).hasColonialPlayer()))
 	{
 		if (GC.getGameINLINE().getElapsedGameTurns() < GC.getDefineINT("COLONIAL_FORCED_PEACE_TURNS"))
 		{
@@ -1056,8 +1061,89 @@ void CvTeam::meet(TeamTypes eTeam, bool bNewDiplo)
 {
 	if (!isHasMet(eTeam))
 	{
+		//Kaszkaj - Meet barbarians only after the human team sees their units or territory.
+		CvTeam& kOtherTeam = GET_TEAM(eTeam);
+		if (getID() != eTeam && ((isBarbarian() && kOtherTeam.isHuman()) ||
+			(isHuman() && kOtherTeam.isBarbarian())))
+		{
+			TeamTypes eBarbarianTeam = isBarbarian() ? getID() : eTeam;
+			TeamTypes eHumanTeam = isBarbarian() ? eTeam : getID();
+			bool bDiscovered = false;
+
+			for (int iPlayer = 0; iPlayer < MAX_PLAYERS && !bDiscovered; ++iPlayer)
+			{
+				CvPlayer& kPlayer = GET_PLAYER((PlayerTypes) iPlayer);
+				if (!kPlayer.isAlive() || kPlayer.getTeam() != eBarbarianTeam)
+				{
+					continue;
+				}
+
+				int iLoop;
+				for (CvUnit* pUnit = kPlayer.firstUnit(&iLoop); pUnit != NULL; pUnit = kPlayer.nextUnit(&iLoop))
+				{
+					CvPlot* pPlot = pUnit->plot();
+					if (pPlot != NULL && pPlot->isVisible(eHumanTeam, false) &&
+						!pUnit->isInvisible(eHumanTeam, false) && pUnit->getVisualOwner(eHumanTeam) == kPlayer.getID())
+					{
+						bDiscovered = true;
+						break;
+					}
+				}
+			}
+
+			if (!bDiscovered)
+			{
+				for (int iPlot = 0; iPlot < GC.getMapINLINE().numPlotsINLINE(); ++iPlot)
+				{
+					CvPlot* pPlot = GC.getMapINLINE().plotByIndexINLINE(iPlot);
+					if (pPlot->getTeam() == eBarbarianTeam && pPlot->isVisible(eHumanTeam, false))
+					{
+						bDiscovered = true;
+						break;
+					}
+				}
+			}
+
+			if (!bDiscovered)
+			{
+				return;
+			}
+
+			//Kaszkaj - Confirm discovery even if an earlier contact flag was already set.
+			m_abHasMet[eTeam] = false;
+			kOtherTeam.m_abHasMet[getID()] = false;
+		}
+
 		makeHasMet(eTeam, bNewDiplo);
 		GET_TEAM(eTeam).makeHasMet(getID(), bNewDiplo);
+	}
+}
+
+
+//Kaszkaj - Regenerating the map removes human contacts with the old map's barbarians.
+void CvTeam::resetBarbarianContacts()
+{
+	const bool bBarbarian = isBarbarian();
+	const bool bHuman = isHuman();
+	if (!bBarbarian && !bHuman)
+	{
+		return;
+	}
+
+	for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
+	{
+		if (iTeam == getID())
+		{
+			continue;
+		}
+		CvTeam& kOtherTeam = GET_TEAM((TeamTypes) iTeam);
+		if ((bBarbarian && kOtherTeam.isHuman()) || (bHuman && kOtherTeam.isBarbarian()))
+		{
+			m_abHasMet[iTeam] = false;
+			m_abHasMetVerified[iTeam] = false;
+			kOtherTeam.m_abHasMet[getID()] = false;
+			kOtherTeam.m_abHasMetVerified[getID()] = false;
+		}
 	}
 }
 
@@ -1787,6 +1873,26 @@ bool CvTeam::isHuman() const
 	return false;
 }
 
+//Kaszkaj - Identify assigned barbarian teams before their players become alive.
+bool CvTeam::isBarbarian() const
+{
+	if (getID() == NO_TEAM)
+	{
+		return false;
+	}
+
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+	{
+		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes) iPlayer);
+		if (kPlayer.getTeam() == getID() && kPlayer.isBarbarian())
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool CvTeam::hasNativePlayer() const
 {
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
@@ -2134,7 +2240,19 @@ bool CvTeam::isHasMet(TeamTypes eIndex)	const
 	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	FAssertMsg(eIndex < MAX_TEAMS, "eIndex is expected to be within maximum bounds (invalid Index)");
 	//FAssert((eIndex != getID()) || m_abHasMet[eIndex]);
-	return m_abHasMet[eIndex];
+	if (!m_abHasMet[eIndex] || m_abHasMetVerified[eIndex] || eIndex == getID())
+	{
+		return m_abHasMet[eIndex];
+	}
+
+	//Kaszkaj - A stored barbarian contact needs a confirmed sighting before humans can use it.
+	const CvTeam& kOtherTeam = GET_TEAM(eIndex);
+	if ((isBarbarian() && kOtherTeam.isHuman()) || (isHuman() && kOtherTeam.isBarbarian()))
+	{
+		return false;
+	}
+
+	return true;
 }
 
 void CvTeam::makeHasMet(TeamTypes eIndex, bool bNewDiplo)
@@ -2148,6 +2266,8 @@ void CvTeam::makeHasMet(TeamTypes eIndex, bool bNewDiplo)
 	if (!isHasMet(eIndex))
 	{
 		m_abHasMet[eIndex] = true;
+		//Kaszkaj - Keep confirmed contacts after units leave sight.
+		m_abHasMetVerified[eIndex] = true;
 
 		AI_setAtPeaceCounter(eIndex, 0);
 		AI_setAtWarCounter(eIndex, 0);
@@ -2882,11 +3002,18 @@ void CvTeam::read(FDataStreamBase* pStream)
 		pStream->Read((int*)&eBonus);
 		m_aeRevealedBonuses.push_back(eBonus);
 	}
+
+	//Kaszkaj - Older saves have no sight history, so humans must discover barbarians again.
+	if (uiFlag >= 1)
+	{
+		pStream->Read(MAX_TEAMS, m_abHasMetVerified);
+	}
 }
 
 void CvTeam::write(FDataStreamBase* pStream)
 {
-	uint uiFlag = 0;
+	//Kaszkaj - Version the team data to save confirmed discovery without breaking old-save loading.
+	uint uiFlag = 1;
 	pStream->Write(uiFlag);		// flag for expansion
 	pStream->Write(m_iNumMembers);
 	pStream->Write(m_iAliveCount);
@@ -2916,6 +3043,8 @@ void CvTeam::write(FDataStreamBase* pStream)
 	{
 		pStream->Write(*it);
 	}
+
+	pStream->Write(MAX_TEAMS, m_abHasMetVerified);
 }
 // CACHE: cache frequently used values
 ///////////////////////////////////////

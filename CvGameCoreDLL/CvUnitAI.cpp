@@ -1,6 +1,7 @@
 // unitAI.cpp
 
 #include "CvGameCoreDLL.h"
+#include <cstring>
 #include "CvUnitAI.h"
 #include "CvMap.h"
 #include "CvArea.h"
@@ -181,120 +182,140 @@ bool CvUnitAI::AI_update()
 		else if (canMove() || isCargo())
 		{
 			FAssert(getGroup() != NULL);
-			switch (AI_getUnitAIType())
+			//Kaszkaj - Deliver scout cargo before returning a transport to its ordinary duties.
+			if (!AI_ferryScout(false))
 			{
-			case UNITAI_UNKNOWN:
-				getGroup()->pushMission(MISSION_SKIP);
-				break;
-
-			case UNITAI_COLONIST:
-				AI_colonistMove();
-				break;
-
-			case UNITAI_SETTLER:
-				AI_settlerMove();
-				break;
-
-			case UNITAI_WORKER:
-				AI_workerMove();
-				break;
-
-			case UNITAI_MISSIONARY:
-				AI_missionaryMove();
-				break;
-
-			case UNITAI_SCOUT:
-				AI_scoutMove();
-				break;
-
-			case UNITAI_WAGON:
-				AI_transportMoveFull();
-				break;
-
-			case UNITAI_TREASURE:
-				AI_treasureMove();
-				break;
-
-			case UNITAI_YIELD:
-				AI_yieldUhMove();
-				break;
-
-			case UNITAI_GENERAL:
-				AI_generalMove();
-				break;
-
-			case UNITAI_DEFENSIVE:
-				if (kOwner.isNative())
+				//Kaszkaj - Keep colonial Scouts exploring or seeking Dragoon equipment until their new role is ready.
+				if (kOwner.AI_isColonialScout(getUnitType()) &&
+					(isCargo() || kOwner.AI_scoutTargetCount() > 0 ||
+					getProfession() != (ProfessionTypes)GC.getInfoTypeForString("PROFESSION_DRAGOON", true) ||
+					(AI_getUnitAIType() != UNITAI_OFFENSIVE && AI_getUnitAIType() != UNITAI_DEFENSIVE)))
 				{
-					AI_defensiveBraveMove();
+					if (AI_getUnitAIType() != UNITAI_SCOUT)
+					{
+						AI_setUnitAIType(UNITAI_SCOUT);
+					}
 				}
-				else if (kOwner.AI_isKing())
+				//Kaszkaj - Dedicated AI builders keep their Worker role instead of joining cities or naval duties.
+				if (!isHuman() && kOwner.AI_isDedicatedWorker(getUnitType()) && AI_getUnitAIType() != UNITAI_WORKER)
 				{
-					AI_imperialSoldierMove();
+					AI_setUnitAIType(UNITAI_WORKER);
 				}
-				else
+				switch (AI_getUnitAIType())
 				{
-					AI_defensiveMove();
-				}
-				break;
+				case UNITAI_UNKNOWN:
+					getGroup()->pushMission(MISSION_SKIP);
+					break;
 
-			case UNITAI_OFFENSIVE:
-				if (kOwner.isNative())
-				{
-					AI_offensiveBraveMove();
-				}
-				else if (kOwner.AI_isKing())
-				{
-					AI_imperialCannonMove();
-				}
-				else
-				{
-					AI_offensiveMove();
-				}
-				break;
+				case UNITAI_COLONIST:
+					AI_colonistMove();
+					break;
 
-			case UNITAI_COUNTER:
-				if (kOwner.isNative())
-				{
-					AI_counterBraveMove();
+				case UNITAI_SETTLER:
+					AI_settlerMove();
+					break;
+
+				case UNITAI_WORKER:
+					AI_workerMove();
+					break;
+
+				case UNITAI_MISSIONARY:
+					AI_missionaryMove();
+					break;
+
+				case UNITAI_SCOUT:
+					AI_scoutMove();
+					break;
+
+				case UNITAI_WAGON:
+					AI_transportMoveFull();
+					break;
+
+				case UNITAI_TREASURE:
+					AI_treasureMove();
+					break;
+
+				case UNITAI_YIELD:
+					AI_yieldUhMove();
+					break;
+
+				case UNITAI_GENERAL:
+					AI_generalMove();
+					break;
+
+				case UNITAI_DEFENSIVE:
+					if (kOwner.isNative())
+					{
+						AI_defensiveBraveMove();
+					}
+					else if (kOwner.AI_isKing())
+					{
+						AI_imperialSoldierMove();
+					}
+					else
+					{
+						AI_defensiveMove();
+					}
+					break;
+
+				case UNITAI_OFFENSIVE:
+					if (kOwner.isNative())
+					{
+						AI_offensiveBraveMove();
+					}
+					else if (kOwner.AI_isKing())
+					{
+						AI_imperialCannonMove();
+					}
+					else
+					{
+						AI_offensiveMove();
+					}
+					break;
+
+				case UNITAI_COUNTER:
+					if (kOwner.isNative())
+					{
+						AI_counterBraveMove();
+					}
+					else if (kOwner.AI_isKing())
+					{
+						AI_imperialMountedMove();
+					}
+					else
+					{
+						AI_counterMove();
+					}
+					break;
+
+				case UNITAI_TRANSPORT_SEA:
+					AI_transportSeaMove();
+					break;
+
+
+				case UNITAI_ASSAULT_SEA:
+					AI_assaultSeaMove();
+					break;
+
+				case UNITAI_COMBAT_SEA:
+					if (kOwner.AI_isKing())
+					{
+						AI_imperialShipMove();
+					}
+					else
+					{
+						AI_combatSeaMove();
+					}
+					break;
+
+				case UNITAI_PIRATE_SEA:
+					AI_pirateMove();
+					break;
+
+				default:
+					FAssert(false);
+					break;
 				}
-				else if (kOwner.AI_isKing())
-				{
-					AI_imperialMountedMove();
-				}
-				else
-				{
-					AI_counterMove();
-				}
-				break;
-
-			case UNITAI_TRANSPORT_SEA:
-				AI_transportSeaMove();
-				break;
-
-
-			case UNITAI_ASSAULT_SEA:
-				AI_assaultSeaMove();
-				break;
-
-			case UNITAI_COMBAT_SEA:
-				if (kOwner.AI_isKing())
-				{
-					AI_imperialShipMove();
-				}
-				else
-				{
-					AI_combatSeaMove();
-				}
-				break;
-
-			case UNITAI_PIRATE_SEA:
-				AI_pirateMove();
-				break;
-
-			default:
-				FAssert(false);
-				break;
 			}
 		}
 	}
@@ -877,13 +898,14 @@ void CvUnitAI::AI_setUnitAIType(UnitAITypes eNewValue)
 {
 	if (AI_getUnitAIType() != eNewValue)
 	{
+		//Kaszkaj - Update AI role counters in the unit's actual plot area.
 		bool bOnMap = (getX_INLINE() != INVALID_PLOT_COORD) && (getY_INLINE() != INVALID_PLOT_COORD);
 
 		if (AI_getUnitAIType() != NO_UNITAI)
 		{
 			if (bOnMap)
 			{
-				area()->changeNumAIUnits(getOwnerINLINE(), AI_getUnitAIType(), -1);
+				plot()->area()->changeNumAIUnits(getOwnerINLINE(), AI_getUnitAIType(), -1);
 			}
 			GET_PLAYER(getOwnerINLINE()).AI_changeNumAIUnits(AI_getUnitAIType(), -1);
 		}
@@ -892,7 +914,7 @@ void CvUnitAI::AI_setUnitAIType(UnitAITypes eNewValue)
 
 		if (bOnMap)
 		{
-			area()->changeNumAIUnits(getOwnerINLINE(), AI_getUnitAIType(), 1);
+			plot()->area()->changeNumAIUnits(getOwnerINLINE(), AI_getUnitAIType(), 1);
 
 			joinGroup(NULL);
 
@@ -993,23 +1015,21 @@ void CvUnitAI::AI_colonistMove()
 	}
 
 	int iDanger = GET_PLAYER(getOwnerINLINE()).AI_getPlotDanger(plot(), 3);
+	//Kaszkaj - Seek useful native lessons before changing colonist roles, throughout the game.
+	bool bNativeCriminal = kOwner.isNative() && !isHuman() && std::strcmp(getUnitInfo().getType(), "UNIT_CRIMINAL") == 0;
+	bool bCanSeekLesson = bNativeCriminal || (getUnitInfo().getLearnTime() >= 0
+		&& !kOwner.AI_isDedicatedWorker(getUnitType())
+		&& getProfession() == GC.getCivilizationInfo(getCivilizationType()).getDefaultProfession());
+	if (iDanger == 0 && bCanSeekLesson && AI_learn())
+	{
+		return;
+	}
 
 	if (AI_changeUnitAIType(99))
 	{
 		return;
 	}
 
-
-	if ((m_pUnitInfo->getLearnTime() >= 0) && (getProfession() == GC.getCivilizationInfo(getCivilizationType()).getDefaultProfession()))
-	{
-		if (GC.getGameINLINE().AI_gameCompletePercent() < 25)
-		{
-		if (AI_learn())
-		{
-			return;
-		}
-	}
-	}
 
 	if (AI_joinOptimalCity())
 	{
@@ -1263,6 +1283,18 @@ void CvUnitAI::AI_workerMove()
 
 	bCanRoute = canBuildRoute();
 
+	//Kaszkaj - Builder ships search all space plots before taking ordinary city-worker tasks.
+	if (!isHuman() && getDomainType() == DOMAIN_SEA && kOwner.AI_isDedicatedWorker(getUnitType()))
+	{
+		//Kaszkaj - Builder ships may ferry Scouts only when no legal Build is waiting.
+		if (AI_improveSeaPlot() || AI_ferryScout(true) || AI_retreatToCity() || AI_safety())
+		{
+			return;
+		}
+		getGroup()->pushMission(MISSION_SKIP);
+		return;
+	}
+
 	pCity = getHomeCity();
 
 	if (pCity == NULL)
@@ -1309,6 +1341,16 @@ void CvUnitAI::AI_workerMove()
 		}
 	}
 
+	//Kaszkaj - Dedicated AI builders wait for construction work instead of becoming city workers.
+	if (!isHuman() && kOwner.AI_isDedicatedWorker(getUnitType()))
+	{
+		if (AI_improveLocalPlot(3, NULL) || AI_retreatToCity() || AI_safety())
+		{
+			return;
+		}
+		getGroup()->pushMission(MISSION_SKIP);
+		return;
+	}
 	AI_setUnitAIType(UNITAI_COLONIST);
 	return;
 }
@@ -1411,6 +1453,12 @@ void CvUnitAI::AI_missionaryMove()
 
 void CvUnitAI::AI_scoutMove()
 {
+	//Kaszkaj - Colonial Scouts use a lasting exploration task; other scouts keep their existing behaviour.
+	if (GET_PLAYER(getOwnerINLINE()).AI_isColonialScout(getUnitType()))
+	{
+		AI_scoutExploreMove();
+		return;
+	}
 	CvCity* pCity = plot()->getPlotCity();
 
 	if (AI_breakAutomation())
@@ -1580,6 +1628,357 @@ void CvUnitAI::AI_scoutMove()
 
 	getGroup()->pushMission(MISSION_SKIP);
 	return;
+}
+
+//Kaszkaj - Finish the current planet before requesting another, then equip a Dragoon after the world is finished.
+void CvUnitAI::AI_scoutExploreMove()
+{
+	CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+	bool bExplore = kOwner.AI_scoutTargetCount() > 0;
+	ProfessionTypes eProfession = (ProfessionTypes)GC.getInfoTypeForString(bExplore ? "PROFESSION_SCOUT" : "PROFESSION_DRAGOON", true);
+
+	//Kaszkaj - Equip Scouts on their first planet; keep the profession throughout exploration.
+	bool bNeedsScoutEquipment = bExplore && getProfession() != eProfession;
+	if (isCargo())
+	{
+		if (canUnload() && !area()->isWater() &&
+			(bExplore && !bNeedsScoutEquipment ? kOwner.AI_scoutTargetCount(area()) > 0 : area()->getCitiesPerPlayer(getOwnerINLINE()) > 0))
+		{
+			unload();
+			getGroup()->clearMissionQueue();
+			getGroup()->AI_setMissionAI(NO_MISSIONAI, NULL, NULL);
+			return;
+		}
+		CvPlot* pMissionPlot = NULL;
+		if (AI_scoutSeaDestination(&pMissionPlot) != NULL && pMissionPlot != NULL)
+		{
+			if (canMove() && plotDistance(getX_INLINE(), getY_INLINE(), pMissionPlot->getX_INLINE(), pMissionPlot->getY_INLINE()) == 1 && canMoveInto(pMissionPlot))
+			{
+				getGroup()->pushMission(MISSION_MOVE_TO, pMissionPlot->getX_INLINE(), pMissionPlot->getY_INLINE(), MOVE_NO_ENEMY_TERRITORY, false, false, MISSIONAI_EXPLORE, pMissionPlot);
+			}
+			else
+			{
+				getGroup()->pushMission(MISSION_SKIP, -1, -1, 0, false, false, MISSIONAI_EXPLORE, pMissionPlot);
+			}
+			return;
+		}
+		getGroup()->pushMission(MISSION_SKIP);
+		return;
+	}
+
+
+	CvCity* pCity = plot()->getPlotCity();
+	if (pCity != NULL && pCity->getOwnerINLINE() == getOwnerINLINE() && eProfession != NO_PROFESSION && canHaveProfession(eProfession, false))
+	{
+		if (getProfession() != eProfession)
+		{
+			setProfession(eProfession);
+		}
+
+		AI_setUnitAIType(UNITAI_SCOUT);
+	}
+
+	if (!bExplore)
+	{
+		if (eProfession != NO_PROFESSION && getProfession() == eProfession)
+		{
+			//Kaszkaj - Use an allowed offensive or defensive role rather than Dragoon's default Counter role.
+			bool bOffensive = getUnitInfo().getUnitAIType(UNITAI_OFFENSIVE) && !getUnitInfo().getNotUnitAIType(UNITAI_OFFENSIVE);
+			bool bDefensive = getUnitInfo().getUnitAIType(UNITAI_DEFENSIVE) && !getUnitInfo().getNotUnitAIType(UNITAI_DEFENSIVE);
+			if (bOffensive || bDefensive)
+			{
+				bool bCityNeedsDefender = pCity != NULL && pCity->getOwnerINLINE() == getOwnerINLINE() && !pCity->AI_isDefended(-1);
+				AI_setUnitAIType(bDefensive && (!bOffensive || bCityNeedsDefender) ? UNITAI_DEFENSIVE : UNITAI_OFFENSIVE);
+				AI_setUnitAIState(UNITAI_STATE_DEFAULT);
+				getGroup()->clearMissionQueue();
+				getGroup()->AI_setMissionAI(NO_MISSIONAI, NULL, NULL);
+				return;
+			}
+		}
+		if (kOwner.AI_getUnitDanger(this, 2, false, false))
+		{
+			if (AI_retreatToCity() || AI_safety())
+			{
+				return;
+			}
+		}
+		if (AI_heal())
+		{
+			return;
+		}
+
+		//Kaszkaj - Return to a city with normal equipment checks; no horses or weapons are created for free.
+		if (AI_scoutReturnToCity(eProfession, false) || AI_requestPickup())
+		{
+			return;
+		}
+		getGroup()->pushMission(MISSION_SKIP);
+		return;
+	}
+
+	if (kOwner.AI_getUnitDanger(this, 2, false, false))
+	{
+		if (AI_retreatToCity() || AI_safety())
+		{
+			return;
+		}
+	}
+	if (AI_heal())
+	{
+		return;
+	}
+
+	if (getProfession() != eProfession && AI_scoutReturnToCity(eProfession))
+	{
+		return;
+	}
+	if (kOwner.AI_scoutTargetCount(area()) > 0)
+	{
+		if (pCity != NULL && !pCity->isScoutVisited(getTeam()) && canSpeakWithChief(plot()))
+		{
+			speakWithChief();
+			return;
+		}
+		if (AI_goody() || AI_exploreRange(4) || AI_explore())
+		{
+			return;
+		}
+	}
+	else
+	{
+		//Kaszkaj - A Scout without its initial equipment waits at home for horses before leaving its first planet.
+		if (getProfession() != eProfession && AI_scoutReturnToCity(eProfession, false))
+		{
+			return;
+		}
+		if (AI_requestPickup())
+		{
+			return;
+		}
+	}
+
+	//Kaszkaj - Unreachable or temporarily unsafe targets do not make the scout abandon exploration.
+	getGroup()->pushMission(MISSION_SKIP);
+}
+
+//Kaszkaj - Prefer a reachable city that can supply the requested profession, with an optional safe waiting city.
+bool CvUnitAI::AI_scoutReturnToCity(ProfessionTypes eProfession, bool bRequireEquipment)
+{
+	if (eProfession == NO_PROFESSION)
+	{
+		return false;
+	}
+	CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+	CvPlot* pBestPlot = NULL;
+	int iBestValue = 0;
+	int iLoop;
+	for (CvCity* pCity = kOwner.firstCity(&iLoop); pCity != NULL; pCity = kOwner.nextCity(&iLoop))
+	{
+		CvPlot* pCityPlot = pCity->plot();
+		bool bEquipment = canHaveProfession(eProfession, false, pCityPlot);
+		if ((!bRequireEquipment || bEquipment) && pCityPlot->getArea() == getArea() && !pCityPlot->isVisibleEnemyUnit(this))
+		{
+			int iPathTurns = 0;
+			if (atPlot(pCityPlot) || generatePath(pCityPlot, MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
+			{
+				int iValue = (bEquipment ? 1000000 : 1000) / (1 + iPathTurns);
+				if (iValue > iBestValue)
+				{
+					iBestValue = iValue;
+					pBestPlot = pCityPlot;
+				}
+			}
+		}
+	}
+	if (pBestPlot == NULL)
+	{
+		return false;
+	}
+	if (atPlot(pBestPlot))
+	{
+		getGroup()->pushMission(MISSION_SKIP);
+	}
+	else
+	{
+		getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_NO_ENEMY_TERRITORY);
+	}
+	return true;
+}
+
+//Kaszkaj - Choose a legal landing on a revealed unfinished planet, or return a retired scout to an inhabited planet.
+CvPlot* CvUnitAI::AI_scoutSeaDestination(CvPlot** ppMissionPlot)
+{
+	CvUnit* pTransport = getTransportUnit();
+	if (pTransport == NULL)
+	{
+		return NULL;
+	}
+	CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+	//Kaszkaj - Bring Scouts without initial equipment home; equipped Scouts continue to other planets.
+	bool bExplore = kOwner.AI_scoutTargetCount() > 0 &&
+		getProfession() == (ProfessionTypes)GC.getInfoTypeForString("PROFESSION_SCOUT", true);
+	ProfessionTypes eEquipment = (ProfessionTypes)GC.getInfoTypeForString(bExplore ? "PROFESSION_SCOUT" :
+		(kOwner.AI_scoutTargetCount() > 0 ? "PROFESSION_SCOUT" : "PROFESSION_DRAGOON"), true);
+	CvPlot* pBestPlot = NULL;
+	CvPlot* pBestLanding = NULL;
+	int iBestValue = 0;
+	for (int i = 0; i < GC.getMapINLINE().numPlotsINLINE(); ++i)
+	{
+		CvPlot* pLand = GC.getMapINLINE().plotByIndexINLINE(i);
+		if (pLand->isWater() || !pLand->isCoastalLand() || !pLand->isRevealed(getTeam(), false) ||
+			pLand->isVisibleEnemyUnit(this) || !canMoveInto(pLand, false, false, true))
+		{
+			continue;
+		}
+		CvArea* pArea = pLand->area();
+		int iTargets = bExplore ? kOwner.AI_scoutTargetCount(pArea) : pArea->getCitiesPerPlayer(getOwnerINLINE());
+		if (iTargets == 0)
+		{
+			continue;
+		}
+		int iValue = 500 + 10 * std::min(200, iTargets);
+		if (bExplore)
+		{
+			iValue += AI_explorePlotValue(pLand, false);
+			int iIncoming = kOwner.AI_areaMissionAIs(pArea, MISSIONAI_EXPLORE, pTransport->getGroup());
+			CvPlot* pOldMission = getGroup()->AI_getMissionAIPlot();
+			if (getGroup()->AI_getMissionAIType() == MISSIONAI_EXPLORE && pOldMission != NULL && pOldMission->area() == pArea)
+			{
+				iIncoming = std::max(0, iIncoming - getGroup()->getNumUnits());
+			}
+			iValue /= 1 + pArea->getNumAIUnits(getOwnerINLINE(), UNITAI_SCOUT) + iIncoming;
+		}
+		else if (pLand->isCity() && pLand->getOwnerINLINE() == getOwnerINLINE())
+		{
+			iValue += 1000;
+			if (eEquipment != NO_PROFESSION && canHaveProfession(eEquipment, false, pLand))
+			{
+				iValue += 10000;
+			}
+		}
+		CvPlot* pDestination = NULL;
+		int iPathCost = 0;
+		int iPathTurns = 0;
+		if (pTransport->atPlot(pLand))
+		{
+			pDestination = pLand;
+		}
+		else if (pTransport->generatePath(pLand, MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
+		{
+			iPathCost = pTransport->getPathCost();
+			pDestination = pTransport->canMoveInto(pLand) ? pLand : pTransport->getGroup()->getPathSecondLastPlot();
+		}
+		else
+		{
+			//Kaszkaj - Land the Scout from nearby space when its ship cannot enter that territory.
+			int iBestPathCost = MAX_INT;
+			for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; ++iDirection)
+			{
+				CvPlot* pSpace = plotDirection(pLand->getX_INLINE(), pLand->getY_INLINE(), (DirectionTypes)iDirection);
+				if (pSpace == NULL || !pSpace->isWater() || pSpace->isVisibleEnemyUnit(pTransport))
+				{
+					continue;
+				}
+				if (pTransport->atPlot(pSpace) || (pTransport->canMoveInto(pSpace) &&
+					pTransport->generatePath(pSpace, MOVE_NO_ENEMY_TERRITORY, true)))
+				{
+					int iCost = pTransport->atPlot(pSpace) ? 0 : pTransport->getPathCost();
+					if (iCost < iBestPathCost)
+					{
+						iBestPathCost = iCost;
+						iPathCost = iCost;
+						pDestination = pSpace;
+					}
+				}
+			}
+		}
+		if (pDestination != NULL)
+		{
+			iValue = iValue * 100 / (100 + iPathCost);
+			if (iValue > iBestValue)
+			{
+				iBestValue = iValue;
+				pBestPlot = pDestination;
+				pBestLanding = pLand;
+			}
+		}
+	}
+	if (ppMissionPlot != NULL)
+	{
+		*ppMissionPlot = pBestLanding;
+	}
+	return pBestPlot;
+}
+
+//Kaszkaj - Any suitable AI ship can ferry Scout cargo; empty ships answer pickup requests only when allowed.
+bool CvUnitAI::AI_ferryScout(bool bAllowPickup)
+{
+	CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+	if (isHuman() || kOwner.isNative() || kOwner.isEurope() || getDomainType() != DOMAIN_SEA ||
+		cargoSpace() == 0 || isCargo() || getUnitTravelState() != NO_UNIT_TRAVEL_STATE)
+	{
+		return false;
+	}
+
+	CvUnit* pScout = NULL;
+	CLLNode<IDInfo>* pNode = plot()->headUnitNode();
+	while (pNode != NULL)
+	{
+		CvUnit* pUnit = ::getUnit(pNode->m_data);
+		pNode = plot()->nextUnitNode(pNode);
+		if (pUnit->getTransportUnit() == this)
+		{
+			//Kaszkaj - Finish other cargo deliveries before dedicating a ship to a Scout voyage.
+			if (pUnit->getOwnerINLINE() != getOwnerINLINE() || !kOwner.AI_isColonialScout(pUnit->getUnitType()))
+			{
+				return false;
+			}
+			if (pScout == NULL)
+			{
+				pScout = pUnit;
+			}
+		}
+	}
+	if (pScout != NULL)
+	{
+		CvPlot* pLanding = NULL;
+		CvPlot* pDestination = pScout->AI_determineDestination(&pLanding, NULL, NULL);
+		if (pDestination != NULL && pLanding != NULL)
+		{
+			if (atPlot(pDestination))
+			{
+				getGroup()->pushMission(MISSION_SKIP);
+			}
+			else
+			{
+				getGroup()->pushMission(MISSION_MOVE_TO, pDestination->getX_INLINE(), pDestination->getY_INLINE(), MOVE_NO_ENEMY_TERRITORY, false, false, MISSIONAI_EXPLORE, pLanding);
+			}
+			AI_wakeCargo(NO_UNITAI, AI_getMovePriority() + 1);
+			return true;
+		}
+		//Kaszkaj - Search space with an equipped Scout aboard when the next planet's coast has not been discovered.
+		bool bEquipped = pScout->getProfession() == (ProfessionTypes)GC.getInfoTypeForString("PROFESSION_SCOUT", true);
+		if (!bEquipped && kOwner.getNumCities() == 0)
+		{
+			return false;
+		}
+		if (bEquipped && kOwner.AI_scoutTargetCount() > 0 && (AI_exploreCoast(2) || AI_exploreDeep() || AI_exploreOcean(1)))
+		{
+			AI_wakeCargo(NO_UNITAI, AI_getMovePriority() + 1);
+			return true;
+		}
+		getGroup()->pushMission(MISSION_SKIP);
+		AI_wakeCargo(NO_UNITAI, AI_getMovePriority() + 1);
+		return true;
+	}
+
+	if (bAllowPickup && !getGroup()->hasCargo() && !kOwner.AI_getUnitDanger(this, 2, false, false) &&
+		AI_respondToPickup(MAX_INT, UNITAI_SCOUT))
+	{
+		AI_setUnitAIState(UNITAI_STATE_PICKUP);
+		return true;
+	}
+	return false;
 }
 
 void CvUnitAI::AI_treasureMove()
@@ -1757,7 +2156,8 @@ void CvUnitAI::AI_defensiveMove()
 					return;
 				}
 
-				if (canClearSpecialty())
+				//Kaszkaj - Retired Scouts retain their unit type when serving as combat troops.
+				if (!kOwner.AI_isColonialScout(getUnitType()) && canClearSpecialty())
 				{
 					clearSpecialty();
 					return;
@@ -1903,7 +2303,8 @@ void CvUnitAI::AI_offensiveMove()
 				{
 					return;
 				}
-				if (canClearSpecialty())
+				//Kaszkaj - Retired Scouts retain their unit type when serving as combat troops.
+				if (!kOwner.AI_isColonialScout(getUnitType()) && canClearSpecialty())
 				{
 					clearSpecialty();
 					return;
@@ -2014,7 +2415,8 @@ void CvUnitAI::AI_counterMove()
 				{
 					return;
 				}
-				if (canClearSpecialty())
+				//Kaszkaj - Retired Scouts retain their unit type when serving as combat troops.
+				if (!kOwner.AI_isColonialScout(getUnitType()) && canClearSpecialty())
 				{
 					clearSpecialty();
 					return;
@@ -2094,12 +2496,36 @@ void CvUnitAI::AI_counterMove()
 
 void CvUnitAI::AI_defensiveBraveMove()
 {
+	//Kaszkaj fix: .\.\CvUnitAI.cpp, Line:  2098, Expression:  canMove().
+	// Handle transported native defenders before combat AI and wait when they cannot move.
+	if (isCargo())
+	{
+		if (!AI_unloadWhereNeeded())
+		{
+			getGroup()->pushMission(MISSION_SKIP);
+		}
+		return;
+	}
+
+	if (!canMove())
+	{
+		getGroup()->pushMission(MISSION_SKIP);
+		return;
+	}
+
 	FAssert(canMove());
 	bool bAtWar = GET_TEAM(getTeam()).getAnyWarPlanCount();
 
 	if (GC.getGameINLINE().getSorenRandNum(10, "AI upgrade unit profession") == 0)
 	{
 		AI_upgradeProfession();
+	}
+
+	//Kaszkaj - Recheck movement after equipping the defender before assigning a combat mission.
+	if (!canMove())
+	{
+		getGroup()->pushMission(MISSION_SKIP);
+		return;
 	}
 
 	AreaAITypes eAreaAI = area()->getAreaAIType(getTeam());
@@ -2168,7 +2594,8 @@ void CvUnitAI::AI_defensiveBraveMove()
 					if (bMakeTribute == true)
 					{
 						//FAssertMsg(bMakeTribute == false, "This dumb ass should be false");
-						iGiftTimer = std::max(0, iGiftTimer - GC.getDefineINT("CONTACT_YIELD_GIFT_ENCOMEIDA_TIMER"));
+						//Kaszkaj - Reduce the native gift timer using the Xenolinguistics setting.
+						iGiftTimer = std::max(0, iGiftTimer - GC.getDefineINT("CONTACT_YIELD_GIFT_XENOLINGUISTICS_TIMER"));
 						//FAssert(iGiftTimer <= 0);
 					}
 				}
@@ -2452,12 +2879,30 @@ void CvUnitAI::AI_offensiveBraveMove()
 
 void CvUnitAI::AI_counterBraveMove()
 {
+	//Kaszkaj fix: ..\CvUnitAI.cpp, Line:  2457, Expression:  canMove().
+	// Handle transported native counter units before combat AI, even when they have no moves left.
+	if (isCargo())
+	{
+		if (!AI_unloadWhereNeeded())
+		{
+			getGroup()->pushMission(MISSION_SKIP);
+		}
+		return;
+	}
+
 	FAssert(canMove());
 	bool bAtWar = GET_TEAM(getTeam()).getAnyWarPlanCount();
 
 	if (GC.getGameINLINE().getSorenRandNum(10, "AI upgrade unit profession") == 0)
 	{
 		AI_upgradeProfession();
+	}
+
+	//Kaszkaj - Recheck movement after profession changes before choosing a combat mission.
+	if (!canMove())
+	{
+		getGroup()->pushMission(MISSION_SKIP);
+		return;
 	}
 
 	AreaAITypes eAreaAI = area()->getAreaAIType(getTeam());
@@ -3298,6 +3743,12 @@ void CvUnitAI::AI_transportSeaMove()
 		return;
 	}
 
+	//Kaszkaj - Use spare transport time for Scouts after handling goods, ports and Earth travel.
+	if (AI_ferryScout(true))
+	{
+		return;
+	}
+
 	CvArea* pArea = area();
 	if (!pArea->isWater())
 	{
@@ -3367,6 +3818,12 @@ void CvUnitAI::AI_combatSeaMove()
 		{
 			return;
 		}
+	}
+
+	//Kaszkaj - Idle combat ships with suitable cargo space may help transport Scouts.
+	if (AI_ferryScout(true))
+	{
+		return;
 	}
 
 	if (plot()->getDistanceToOcean() == 0)
@@ -4046,8 +4503,8 @@ bool CvUnitAI::AI_europe()
 
 	AI_europeBuyYields();
 
-	// Kaszkaj fix: .\.\CvUnitAI.cpp, Line:  4049, Expression:  plot()->isEurope().
-	// Move AI ships in Europe and their cargo from a non-Europe plot to a Europe entry plot; cross only when the plot and travel state are valid.
+	//Kaszkaj fix: .\.\CvUnitAI.cpp, Line:  4049, Expression:  plot()->isEurope().
+	// Move returning AI ships and their cargo to a valid Europe entry plot.
 	if (plot() != NULL && !plot()->isEurope() && kOwner.getParent() != NO_PLAYER)
 	{
 		CvPlot* pEuropePlot = GET_PLAYER(kOwner.getParent()).AI_getImperialShipSpawnPlot();
@@ -4074,8 +4531,8 @@ bool CvUnitAI::AI_europe()
 		}
 	}
 
-	// Kaszkaj fix: .\.\CvUnitAI.cpp, Line:  4050, Expression:  canCrossOcean(plot(), UNIT_TRAVEL_STATE_FROM_EUROPE).
-	// Return false before crossing or consuming moves if the plot or return trip is invalid.
+	//Kaszkaj fix: .\.\CvUnitAI.cpp, Line:  4050, Expression:  canCrossOcean(plot(), UNIT_TRAVEL_STATE_FROM_EUROPE).
+	// Skip ocean travel when the plot or return state is invalid.
 	if (plot() == NULL || !plot()->isEurope() || !canCrossOcean(plot(), UNIT_TRAVEL_STATE_FROM_EUROPE))
 	{
 		return false;
@@ -4526,6 +4983,19 @@ CvPlot* CvUnitAI::AI_determineDestination(CvPlot** ppMissionPlot, MissionTypes* 
 	CvUnit* pTransport = getTransportUnit();
 	CvPlayerAI& kPlayer = GET_PLAYER(getOwnerINLINE());
 	FAssert(pTransport != NULL);
+	//Kaszkaj - Include fully revealed planets with goodies, and use the same landing choice as the carrier.
+	if (kPlayer.AI_isColonialScout(getUnitType()))
+	{
+		if (peMissionAI != NULL)
+		{
+			*peMissionAI = MISSIONAI_EXPLORE;
+		}
+		if (peMission != NULL)
+		{
+			*peMission = MISSION_MOVE_TO;
+		}
+		return AI_scoutSeaDestination(ppMissionPlot);
+	}
 
 	if (AI_getUnitAIType() == UNITAI_SCOUT)
 	{
@@ -5353,6 +5823,17 @@ bool CvUnitAI::AI_unloadWhereNeeded(int iMaxPath)
 
 bool CvUnitAI::AI_betterJob()
 {
+	//Kaszkaj - Keep dedicated AI builders out of city-job swaps; human-controlled workers are unaffected.
+	if (!isHuman() && GET_PLAYER(getOwnerINLINE()).AI_isDedicatedWorker(getUnitType()))
+	{
+		return false;
+	}
+
+	//Kaszkaj - Keep colonial Scouts in exploration or combat instead of swapping them into city jobs.
+	if (GET_PLAYER(getOwnerINLINE()).AI_isColonialScout(getUnitType()))
+	{
+		return false;
+	}
 
 	CvCity* pCity = plot()->getPlotCity();
 	if (pCity == NULL)
@@ -5364,8 +5845,8 @@ bool CvUnitAI::AI_betterJob()
 		return false;
 	}
 
-	// Kaszkaj fix: .\.\CvUnitAI.cpp, Line:  5400, Expression:  false, Message: AI_betterJob NO_PROFESSION.
-	// Skip job swaps for NO_PROFESSION before changing the city's workforce override counter.
+	//Kaszkaj fix: .\.\CvUnitAI.cpp, Line:  5400, Expression:  false, Message: AI_betterJob NO_PROFESSION.
+	// Skip job swaps for units with NO_PROFESSION before changing the workforce counter.
 	ProfessionTypes eOriginalProfession = getProfession();
 	if (eOriginalProfession == NO_PROFESSION)
 	{
@@ -6075,88 +6556,188 @@ bool CvUnitAI::AI_spreadReligion()
 
 bool CvUnitAI::AI_learn(int iRange)
 {
-	FAssert(getUnitInfo().getLearnTime() >= 0);
+	CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+	//Kaszkaj - Native Criminals compare useful school and village lessons by actual training and travel time.
+	if (kOwner.isNative() && !isHuman() && std::strcmp(getUnitInfo().getType(), "UNIT_CRIMINAL") == 0)
+	{
+		if (isCargo() || kOwner.AI_getUnitDanger(this, 2, false, false))
+		{
+			return false;
+		}
+		CvCity* pBestCity = NULL;
+		ProfessionTypes eBestProfession = NO_PROFESSION;
+		int iBestValue = 0;
+		int iSchoolExpertValue = 0;
+		for (int i = 0; i < GC.getNumUnitInfos(); ++i)
+		{
+			iSchoolExpertValue = std::max(iSchoolExpertValue, kOwner.AI_educationUnitValue((UnitTypes)i));
+		}
+		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+		{
+			CvPlayerAI& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+			if (!kPlayer.isAlive() || (iPlayer != getOwnerINLINE() && !kPlayer.isNative()))
+			{
+				continue;
+			}
+			int iLoop;
+			for (CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+			{
+				CvPlot* pCityPlot = pCity->plot();
+				if (pCity->getArea() != getArea() || !pCityPlot->isRevealed(getTeam(), false)
+					|| pCityPlot->isVisibleEnemyUnit(this) || isEnemy(pCity->getTeam()))
+				{
+					continue;
+				}
+				int iLessonValue = 0;
+				int iTrainingTurns = MAX_INT;
+				ProfessionTypes eStudentProfession = NO_PROFESSION;
+				if (iPlayer == getOwnerINLINE())
+				{
+					if (getUnitInfo().getStudentWeight() <= 0 || iSchoolExpertValue <= 0)
+					{
+						continue;
+					}
+					for (int i = 0; i < GC.getNumProfessionInfos(); ++i)
+					{
+						ProfessionTypes eProfession = (ProfessionTypes)i;
+						if (canHaveProfession(eProfession, false, pCityPlot))
+						{
+							int iTurns = pCity->getEducationTurnsLeft(this, eProfession);
+							if (iTurns < iTrainingTurns)
+							{
+								iTrainingTurns = iTurns;
+								eStudentProfession = eProfession;
+								iLessonValue = iSchoolExpertValue;
+							}
+						}
+					}
+				}
+				else if (canLearn(pCityPlot, true))
+				{
+					iLessonValue = kOwner.AI_educationUnitValue(getLearnUnitType(pCityPlot, true));
+					iTrainingTurns = std::max(0, getLearnTime(pCityPlot, true));
+				}
+				if (iLessonValue <= 0 || iTrainingTurns == MAX_INT
+					|| kOwner.AI_plotTargetMissionAIs(pCityPlot, MISSIONAI_LEARN, getGroup()) > 0)
+				{
+					continue;
+				}
+				int iPathTurns = 0;
+				if (atPlot(pCityPlot) || generatePath(pCityPlot, MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
+				{
+					int iValue = 1000 * iLessonValue / (1 + iTrainingTurns + iPathTurns);
+					if (iValue > iBestValue)
+					{
+						iBestValue = iValue;
+						pBestCity = pCity;
+						eBestProfession = eStudentProfession;
+					}
+				}
+			}
+		}
+		if (pBestCity == NULL)
+		{
+			return false;
+		}
+		if (atPlot(pBestCity->plot()))
+		{
+			if (eBestProfession != NO_PROFESSION)
+			{
+				AI_setMovePriority(0);
+				pBestCity->addPopulationUnit(this, eBestProfession);
+			}
+			//Kaszkaj - Speak with the chief before starting a village lesson, just like colonial visitors.
+			else if (canSpeakWithChief(pBestCity->plot()))
+			{
+				speakWithChief();
+			}
+			else if (canLearn())
+			{
+				learn();
+			}
+			else
+			{
+				getGroup()->pushMission(MISSION_SKIP);
+			}
+		}
+		else
+		{
+			getGroup()->pushMission(MISSION_MOVE_TO, pBestCity->getX_INLINE(), pBestCity->getY_INLINE(), MOVE_NO_ENEMY_TERRITORY,
+				false, false, eBestProfession == NO_PROFESSION ? MISSIONAI_LEARN : MISSIONAI_FOUND, pBestCity->plot());
+		}
+		return true;
+	}
 
-	CvCity* pCity = plot()->getPlotCity();
-	if (pCity != NULL)
+
+	FAssert(getUnitInfo().getLearnTime() >= 0);
+	int iBestValue = 0;
+	CvPlot* pBestPlot = NULL;
+
+	//Kaszkaj - Plan the chief visit and lesson together for any native owner, including human players.
+	for (int iX = -iRange; iX <= iRange; ++iX)
+	{
+		for (int iY = -iRange; iY <= iRange; ++iY)
+		{
+			CvPlot* pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iX, iY);
+			CvCity* pCity = pLoopPlot == NULL ? NULL : pLoopPlot->getPlotCity();
+			if (pCity == NULL || !pCity->isNative() || pCity->getOwnerINLINE() == getOwnerINLINE()
+				|| pCity->getArea() != getArea() || !pLoopPlot->isRevealed(getTeam(), false)
+				|| isEnemy(pCity->getTeam()) || pLoopPlot->isVisibleEnemyUnit(this)
+				|| !canLearn(pLoopPlot, true))
+			{
+				continue;
+			}
+			UnitTypes eLearnUnit = getLearnUnitType(pLoopPlot, true);
+			int iLessonValue = kOwner.AI_educationUnitValue(eLearnUnit);
+			if (iLessonValue <= 0)
+			{
+				continue;
+			}
+			int iSuitability = AI_getOldProfession() == NO_PROFESSION ? 100
+				: kOwner.AI_professionSuitability(eLearnUnit, AI_getOldProfession());
+			if (iSuitability <= 100 && kOwner.getUnitClassCountPlusMaking(pCity->getTeachUnitClass()) > 0)
+			{
+				continue;
+			}
+			if (kOwner.AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_LEARN, getGroup()) > 0)
+			{
+				continue;
+			}
+			int iPathTurns = 0;
+			if (atPlot(pLoopPlot) || generatePath(pLoopPlot, MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
+			{
+				//Kaszkaj - Prefer a useful lesson that finishes sooner, using real learning and travel times.
+				int iValue = (iLessonValue + iSuitability)
+					/ (5 + iPathTurns + std::max(0, getLearnTime(pLoopPlot, true)));
+				if (iValue > iBestValue)
+				{
+					iBestValue = iValue;
+					pBestPlot = pLoopPlot;
+				}
+			}
+		}
+	}
+	if (pBestPlot == NULL)
+	{
+		return false;
+	}
+	if (atPlot(pBestPlot))
 	{
 		if (canLearn())
 		{
 			learn();
 			return true;
 		}
-	}
-
-	CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
-
-	int iBestValue = 0;
-	CvPlot* pBestPlot = NULL;
-
-	for (int iX = -iRange; iX <= iRange; iX++)
-	{
-		for (int iY = -iRange; iY <= iRange; iY++)
+		if (canSpeakWithChief(pBestPlot))
 		{
-			CvPlot* pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iX, iY);
-			if (pLoopPlot != NULL)
-			{
-				CvCity* pPlotCity = pLoopPlot->getPlotCity();
-				if (pPlotCity != NULL)
-				{
-					if (pPlotCity->getArea() == getArea())
-					{
-						if (GET_PLAYER(pPlotCity->getOwnerINLINE()).isNative() && pPlotCity->isScoutVisited(getTeam()))
-						{
-							if (!isEnemy(pPlotCity->getTeam()))
-							{
-								if (!pLoopPlot->isVisibleEnemyUnit(this))
-								{
-									UnitTypes eLearnUnitType = getLearnUnitType(pLoopPlot);
-									if (eLearnUnitType != NO_UNIT)
-									{
-										int iProfessionSuitability = 100;
-										if (AI_getOldProfession() != NO_PROFESSION)
-										{
-											iProfessionSuitability = kOwner.AI_professionSuitability(eLearnUnitType, AI_getOldProfession());
-										}
-										if (iProfessionSuitability > 100 || kOwner.getUnitClassCountPlusMaking(pPlotCity->getTeachUnitClass()) == 0)
-										{
-											if (iProfessionSuitability > 100 || kOwner.AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_LEARN, getGroup()) == 0)
-											{
-												int iPathTurns;
-												if (generatePath(pLoopPlot, MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
-												{
-													int iValue = iProfessionSuitability;
-													if (iProfessionSuitability > 100)
-													{
-														iValue *= 2;
-													}
-
-													iValue /= 5 + iPathTurns;
-
-													if (iValue > iBestValue)
-													{
-														iBestValue = iValue;
-														pBestPlot = pLoopPlot;
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
+			speakWithChief();
+			return true;
 		}
+		return false;
 	}
-
-	if (pBestPlot != NULL)
-	{
-		getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_NO_ENEMY_TERRITORY, false, false, MISSIONAI_LEARN, pBestPlot);
-		return true;
-	}
-	return false;
+	getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), MOVE_NO_ENEMY_TERRITORY,
+		false, false, MISSIONAI_LEARN, pBestPlot);
+	return true;
 }
 
 bool CvUnitAI::AI_requestPickup(int iMaxPath)
@@ -6181,7 +6762,9 @@ bool CvUnitAI::AI_requestPickup(int iMaxPath)
 	}
 
 	CvPlot* pStartingPlot = GET_PLAYER(getOwnerINLINE()).getStartingPlot();
-	if (pStartingPlot == NULL || !pStartingPlot->isWater())
+	//Kaszkaj - Scouts may request a coastal pickup even when their civilisation started on land.
+	bool bScout = kOwner.AI_isColonialScout(getUnitType());
+	if (!bScout && (pStartingPlot == NULL || !pStartingPlot->isWater()))
 	{
 		return false;
 	}
@@ -6200,7 +6783,24 @@ bool CvUnitAI::AI_requestPickup(int iMaxPath)
 		if (pLoopPlot->getArea() == getArea())
 		{
 			CvArea* pWaterArea = pLoopPlot->waterArea();
-			if (pWaterArea != NULL && pWaterArea->getNumAIUnits(getOwnerINLINE(), UNITAI_TRANSPORT_SEA) > 0)
+			//Kaszkaj - Count ships in coastal ports when checking whether a pickup request can be served.
+			bool bTransport = pWaterArea != NULL && kOwner.AI_totalWaterAreaUnitAIs(pWaterArea, UNITAI_TRANSPORT_SEA) > 0;
+			if (bScout && pWaterArea != NULL)
+			{
+				//Kaszkaj - Count any compatible ship, including combat ships and amphibious transports in ports.
+				bTransport = false;
+				int iLoop;
+				for (CvUnit* pShip = kOwner.firstUnit(&iLoop); pShip != NULL; pShip = kOwner.nextUnit(&iLoop))
+				{
+					if (pShip->getDomainType() == DOMAIN_SEA && canLoadUnit(pShip, pShip->plot(), false) &&
+						(pShip->getUnitInfo().isCanMoveAllTerrain() || pShip->plot()->waterArea() == pWaterArea))
+					{
+						bTransport = true;
+						break;
+					}
+				}
+			}
+			if (bTransport)
 			{
 				int iOceanDist = pLoopPlot->getDistanceToOcean();
 				if (iOceanDist < 20)
@@ -6217,7 +6817,8 @@ bool CvUnitAI::AI_requestPickup(int iMaxPath)
 							iValue /= 2;
 						}
 
-						iValue *= iOceanDist;
+						//Kaszkaj - Keep distance meaningful for coastal pickup points whose ocean distance is zero.
+						iValue *= bScout ? 1 + std::max(0, iOceanDist) : iOceanDist;
 						if (iValue < iBestValue)
 						{
 							iBestValue = iValue;
@@ -6274,6 +6875,18 @@ bool CvUnitAI::AI_respondToPickup(int iMaxPath, UnitAITypes eUnitAI)
 						if ((stepDistance(pMissionPlot->getX_INLINE(), pMissionPlot->getY_INLINE(), getX_INLINE(), getY_INLINE()) / std::max(1, maxMoves())) <= iMaxPathTurns)
 						{
 
+							//Kaszkaj - Start new Scout pickups through the spare-time ferry task; finish pickups already accepted.
+							if (kOwner.AI_isColonialScout(pHeadUnit->getUnitType()) &&
+								eUnitAI != UNITAI_SCOUT && AI_getUnitAIState() != UNITAI_STATE_PICKUP)
+							{
+								continue;
+							}
+							//Kaszkaj - Avoid sending multiple ships for the same colonial Scout pickup.
+							if (kOwner.AI_isColonialScout(pHeadUnit->getUnitType()) &&
+								kOwner.AI_plotTargetMissionAIs(pMissionPlot, MISSIONAI_PICKUP, getGroup(), 1) > 0)
+							{
+								continue;
+							}
 							bool bValid = true;
 
 							{
@@ -6310,7 +6923,7 @@ bool CvUnitAI::AI_respondToPickup(int iMaxPath, UnitAITypes eUnitAI)
 										CvPlot* pDirectionPlot = plotDirection(pMissionPlot->getX_INLINE(), pMissionPlot->getY_INLINE(), (DirectionTypes)iDirection);
 										if (pDirectionPlot != NULL)
 										{
-											if (pDirectionPlot->getArea() == pWaterArea->getID())
+											if (pWaterArea != NULL && pDirectionPlot->getArea() == pWaterArea->getID())
 											{
 												if (generatePath(pDirectionPlot, MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
 												{
@@ -6431,11 +7044,28 @@ bool CvUnitAI::AI_pickupAdjacantUnits()
 		pLoopUnit->AI_setMovePriority(AI_getMovePriority() + 1);
 		if (pLoopUnit->atPlot(plot()))
 		{
-			pLoopUnit->loadUnit(this);
+			//Kaszkaj - Amphibious ships can collect a Scout on coastal land without requiring a city.
+			if (GET_PLAYER(getOwnerINLINE()).AI_isColonialScout(pLoopUnit->getUnitType()) &&
+				pLoopUnit->canLoadUnit(this, plot(), false))
+			{
+				pLoopUnit->setTransportUnit(this);
+			}
+			else
+			{
+				pLoopUnit->loadUnit(this);
+			}
 		}
 		else
 		{
-			pLoopUnit->getGroup()->pushMission(MISSION_MOVE_TO, getX_INLINE(), getY_INLINE());
+			if (GET_PLAYER(getOwnerINLINE()).AI_isColonialScout(pLoopUnit->getUnitType()))
+			{
+				//Kaszkaj - Keep the pickup request while a Scout approaches an amphibious ship on land.
+				pLoopUnit->getGroup()->pushMission(MISSION_MOVE_TO, getX_INLINE(), getY_INLINE(), 0, false, false, MISSIONAI_AWAIT_PICKUP, plot());
+			}
+			else
+			{
+				pLoopUnit->getGroup()->pushMission(MISSION_MOVE_TO, getX_INLINE(), getY_INLINE());
+			}
 		}
 	}
 	return false;
@@ -8170,6 +8800,7 @@ bool CvUnitAI::AI_goody()
 	int iBestValue = 0;
 	CvPlot* pBestPlot = NULL;
 	CvPlot* pBestExplorePlot = NULL;
+	bool bLandScout = GET_PLAYER(getOwnerINLINE()).AI_isColonialScout(getUnitType());
 
 	for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 	{
@@ -8181,7 +8812,8 @@ bool CvUnitAI::AI_goody()
 		{
 			int iValue = 0;
 
-			if (pLoopPlot->isRevealedGoody(getTeam()))
+			//Kaszkaj - Check existing goodies on revealed land, including land revealed without improvement information.
+			if ((bLandScout ? pLoopPlot->isRevealed(getTeam(), false) && pLoopPlot->isGoody() : pLoopPlot->isRevealedGoody(getTeam())))
 			{
 				iValue += 10000;
 			}
@@ -8310,6 +8942,11 @@ bool CvUnitAI::AI_goodyRange(int iRange)
 bool CvUnitAI::AI_isValidExplore(CvPlot* pPlot)
 {
 	CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+	//Kaszkaj - Dedicated colonial Scouts may finish a planet beyond the early-game city distance limit.
+	if (kOwner.AI_isColonialScout(getUnitType()))
+	{
+		return true;
+	}
 	if (kOwner.getNumCities() == 0 || kOwner.AI_getNumAIUnits(AI_getUnitAIType()) > 1)
 	{
 		return true;
@@ -8340,7 +8977,8 @@ bool CvUnitAI::AI_isValidExplore(CvPlot* pPlot)
 int CvUnitAI::AI_explorePlotValue(CvPlot* pPlot, bool bImportantOnly)
 {
 	int iValue = 0;
-	if (pPlot->isRevealedGoody(getTeam()))
+	bool bLandScout = GET_PLAYER(getOwnerINLINE()).AI_isColonialScout(getUnitType());
+	if ((bLandScout ? pPlot->isRevealed(getTeam(), false) && pPlot->isGoody() : pPlot->isRevealedGoody(getTeam())))
 	{
 		iValue += 50000;
 	}
@@ -8372,7 +9010,8 @@ int CvUnitAI::AI_explorePlotValue(CvPlot* pPlot, bool bImportantOnly)
 
 			if (pAdjacentPlot != NULL)
 			{
-				if (!(pAdjacentPlot->isRevealed(getTeam(), false)))
+				//Kaszkaj - Land Scouts finish land discovery rather than circling unrevealed space.
+				if (!(pAdjacentPlot->isRevealed(getTeam(), false)) && (!bLandScout || !pAdjacentPlot->isWater()))
 				{
 					iValue += 1000;
 					if (pPlot->isWater() != pAdjacentPlot->isWater())
@@ -10617,7 +11256,17 @@ bool CvUnitAI::AI_joinCity(int iMaxPath)
 	CvPlot* pBestJoinPlot = NULL;
 	ProfessionTypes eBestProfession = NO_PROFESSION;
 
-	ProfessionTypes eOptimalProfession = kOwner.AI_idealProfessionForUnit(getUnitType());
+	//Kaszkaj - A worker with several expert yields is still a specialist when choosing a city.
+	bool bSpecialist = false;
+	for (int iProfession = 0; iProfession < GC.getNumProfessionInfos(); ++iProfession)
+	{
+		ProfessionTypes eProfession = (ProfessionTypes)iProfession;
+		if (kOwner.AI_isProfessionExpert(getUnitType(), eProfession) && kOwner.isProfessionValid(eProfession, getUnitType()))
+		{
+			bSpecialist = true;
+			break;
+		}
+	}
 
 	int iLoop;
 	bool bTransportPath = false;
@@ -10662,7 +11311,7 @@ bool CvUnitAI::AI_joinCity(int iMaxPath)
 					int iSizeGap = pCity->AI_getTargetSize() - (pCity->getPopulation() + iIncoming, 0);
 					if (iSizeGap > 0)
 					{
-						int iModifier = iSizeGap * (eOptimalProfession == NO_PROFESSION) ? 20 : 5;
+						int iModifier = iSizeGap * (!bSpecialist) ? 20 : 5;
 						iModifier += (pCity->getPopulation() + iIncoming == 1) ? 100 : 25;
 
 						iValue *= 100 + iModifier;
@@ -10674,7 +11323,7 @@ bool CvUnitAI::AI_joinCity(int iMaxPath)
 
 					if (atPlot(pLoopPlot))
 					{
-						iValue *= 100 + std::max(0, (15 - pCity->getPopulation()) * 2) + ((eOptimalProfession == NO_PROFESSION) ? 25 : 10);
+						iValue *= 100 + std::max(0, (15 - pCity->getPopulation()) * 2) + ((!bSpecialist) ? 25 : 10);
 						iValue /= 100;
 					}
 
@@ -10748,9 +11397,17 @@ bool CvUnitAI::AI_joinOptimalCity()
 		bForceTransport = true;
 	}
 
-	ProfessionTypes eOptimalProfession = kOwner.AI_idealProfessionForUnit(getUnitType());
-
-	if (eOptimalProfession == NO_PROFESSION)
+	//Kaszkaj - Compare cities using all expert jobs rather than one cached ideal profession.
+	std::vector<ProfessionTypes> aeExpertProfessions;
+	for (int iProfession = 0; iProfession < GC.getNumProfessionInfos(); ++iProfession)
+	{
+		ProfessionTypes eProfession = (ProfessionTypes)iProfession;
+		if (kOwner.AI_isProfessionExpert(getUnitType(), eProfession) && kOwner.isProfessionValid(eProfession, getUnitType()))
+		{
+			aeExpertProfessions.push_back(eProfession);
+		}
+	}
+	if (aeExpertProfessions.empty())
 	{
 		return false;
 	}
@@ -10792,53 +11449,55 @@ bool CvUnitAI::AI_joinOptimalCity()
 
 			if (bValid)
 			{
-					int iValue = kOwner.AI_professionBasicValue(eOptimalProfession, getUnitType(), pCity);
-
-					if (iValue > 0)
+				int iValue = 0;
+				for (uint iProfession = 0; iProfession < aeExpertProfessions.size(); ++iProfession)
+				{
+					ProfessionTypes eProfession = aeExpertProfessions[iProfession];
+					int iProfessionValue = kOwner.AI_professionBasicValue(eProfession, getUnitType(), pCity);
+					if (iProfessionValue <= 0)
 					{
-						if (AI_getIdealProfession() != NO_PROFESSION)
+						continue;
+					}
+					const CvProfessionInfo& kProfession = GC.getProfessionInfo(eProfession);
+					for (int iYield = 0; iYield < kProfession.getNumYieldsProduced(); ++iYield)
+					{
+						YieldTypes eYield = (YieldTypes)kProfession.getYieldsProduced(iYield);
+						if (eYield == YIELD_HAMMERS || eYield == YIELD_BELLS)
 						{
 							bool bUnique = true;
-						// MultipleYieldsProduced Start by Aymerick 22/01/2010
-						for (int i = 0; i < GC.getProfessionInfo(AI_getIdealProfession()).getNumYieldsProduced(); i++)
-						{
-							YieldTypes eYieldProduced = (YieldTypes)GC.getProfessionInfo(AI_getIdealProfession()).getYieldsProduced(i);
-							if (eYieldProduced == YIELD_HAMMERS || eYieldProduced == YIELD_BELLS)
+							for (int iUnit = 0; iUnit < pCity->getPopulation(); ++iUnit)
 							{
-								for (int j = 0; j < pCity->getPopulation(); ++j)
+								CvUnit* pLoopUnit = pCity->getPopulationUnitByIndex(iUnit);
+								if (kOwner.AI_isProfessionExpert(pLoopUnit->getUnitType(), eProfession))
 								{
-									CvUnit* pLoopUnit = pCity->getPopulationUnitByIndex(j);
-									if (pLoopUnit->AI_getIdealProfession() == AI_getIdealProfession())
-									{
-										bUnique = false;
-										break;
-									}
-								}
-							if (bUnique)
-							{
-								if (pCity->AI_getYieldAdvantage(YIELD_EDUCATION) >= 100)
-								{
-									iValue *= 2;
+									bUnique = false;
+									break;
 								}
 							}
+							if (bUnique && pCity->AI_getYieldAdvantage(YIELD_EDUCATION) >= 100)
+							{
+								iProfessionValue *= 2;
+							}
 						}
-						}
-						// MultipleYieldsProduced End
 					}
+					iValue = std::max(iValue, iProfessionValue);
+				}
 
-						iValue += 50;
-						iValue -= iPathTurns;
+				if (iValue > 0)
+				{
+					iValue += 50;
+					iValue -= iPathTurns;
 
-						if (iValue > iBestValue)
-						{
-							iBestValue = iValue;
-							pBestPlot = pLoopPlot;
-							pBestJoinPlot = pLoopPlot;
-						}
+					if (iValue > iBestValue)
+					{
+						iBestValue = iValue;
+						pBestPlot = pLoopPlot;
+						pBestJoinPlot = pLoopPlot;
 					}
 				}
 			}
 		}
+	}
 
 	if (pBestJoinPlot == NULL)
 	{
@@ -11347,6 +12006,119 @@ bool CvUnitAI::AI_connectPlot(CvPlot* pPlot, int iRange)
 
 
 // Returns true if a mission was pushed...
+//Kaszkaj - Mining and Science Vessels search all space, including unexplored plots; Colony Ships use owned territory.
+bool CvUnitAI::AI_improveSeaPlot()
+{
+	PROFILE_FUNC();
+
+	CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+	bool bOwnTerritoryOnly = getUnitType() == (UnitTypes)GC.getInfoTypeForString("UNIT_COLONYSHIP", true);
+	std::vector<BuildTypes> aeBuilds;
+	for (int iBuild = 0; iBuild < GC.getNumBuildInfos(); ++iBuild)
+	{
+		if (m_pUnitInfo->getBuilds(iBuild))
+		{
+			aeBuilds.push_back((BuildTypes)iBuild);
+		}
+	}
+	if (aeBuilds.empty())
+	{
+		return false;
+	}
+
+	CvPlot* pBestPlot = NULL;
+	BuildTypes eBestBuild = NO_BUILD;
+	int iBestValue = 0;
+	for (int iPlot = 0; iPlot < GC.getMapINLINE().numPlotsINLINE(); ++iPlot)
+	{
+		CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iPlot);
+		if (!pLoopPlot->isWater() || !AI_plotValid(pLoopPlot)
+			|| (bOwnTerritoryOnly && pLoopPlot->getOwnerINLINE() != getOwnerINLINE())
+			|| pLoopPlot->isVisibleEnemyDefender(this))
+		{
+			continue;
+		}
+		if (kOwner.AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_BUILD, getGroup()) > 0)
+		{
+			continue;
+		}
+
+		int iBestPlotValue = 0;
+		BuildTypes eBestPlotBuild = NO_BUILD;
+		for (uint iBuild = 0; iBuild < aeBuilds.size(); ++iBuild)
+		{
+			BuildTypes eBuild = aeBuilds[iBuild];
+			const CvBuildInfo& kBuild = GC.getBuildInfo(eBuild);
+			FeatureTypes eFeature = pLoopPlot->getFeatureType();
+			ImprovementTypes eImprovement = (ImprovementTypes)kBuild.getImprovement();
+			//Kaszkaj - Check XML feature and improvement requirements before pathfinding; keep normal costs and permissions.
+			if (eImprovement == NO_IMPROVEMENT && (eFeature == NO_FEATURE || !kBuild.isFeatureRemove(eFeature)))
+			{
+				continue;
+			}
+			if (!canBuild(pLoopPlot, eBuild))
+			{
+				continue;
+			}
+
+			int iValue = 100;
+			for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+			{
+				YieldTypes eYield = (YieldTypes)iYield;
+				if (eFeature != NO_FEATURE)
+				{
+					iValue += kOwner.AI_yieldValue(eYield) * std::max(0, kBuild.getFeatureYield(eFeature, eYield));
+				}
+				if (eImprovement != NO_IMPROVEMENT)
+				{
+					int iYieldChange = pLoopPlot->calculateImprovementYieldChange(eImprovement, eYield, getOwnerINLINE());
+					if (pLoopPlot->getImprovementType() != NO_IMPROVEMENT)
+					{
+						iYieldChange -= pLoopPlot->calculateImprovementYieldChange(pLoopPlot->getImprovementType(), eYield, getOwnerINLINE());
+					}
+					iValue += 4 * kOwner.AI_yieldValue(eYield) * iYieldChange;
+				}
+			}
+			int iRemainingWork = std::max(0, pLoopPlot->getBuildTime(eBuild) - pLoopPlot->getBuildProgress(eBuild));
+			int iWorkRate = std::max(1, workRate(true));
+			int iWorkTurns = (iRemainingWork + iWorkRate - 1) / iWorkRate;
+			iValue = 1000 * iValue / (1 + iWorkTurns);
+			if (iValue > iBestPlotValue)
+			{
+				iBestPlotValue = iValue;
+				eBestPlotBuild = eBuild;
+			}
+		}
+		//Kaszkaj - Skip paths which cannot beat the current target even with zero travel time.
+		if (iBestPlotValue <= iBestValue)
+		{
+			continue;
+		}
+		int iPathTurns = 0;
+		if (atPlot(pLoopPlot) || generatePath(pLoopPlot, 0, true, &iPathTurns))
+		{
+			int iValue = iBestPlotValue / (1 + iPathTurns);
+			if (iValue > iBestValue)
+			{
+				iBestValue = iValue;
+				pBestPlot = pLoopPlot;
+				eBestBuild = eBestPlotBuild;
+			}
+		}
+	}
+	if (pBestPlot == NULL)
+	{
+		return false;
+	}
+
+	if (!atPlot(pBestPlot))
+	{
+		getGroup()->pushMission(MISSION_MOVE_TO, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), 0, false, false, MISSIONAI_BUILD, pBestPlot);
+	}
+	getGroup()->pushMission(MISSION_BUILD, eBestBuild, -1, 0, (getGroup()->getLengthMissionQueue() > 0), false, MISSIONAI_BUILD, pBestPlot);
+	return true;
+}
+
 bool CvUnitAI::AI_improveCity(CvCity* pCity)
 {
 	PROFILE_FUNC();
@@ -11421,6 +12193,12 @@ bool CvUnitAI::AI_improveCity(CvCity* pCity)
 		}
 
 		eBestBuild = AI_betterPlotBuild(pBestPlot, eBestBuild);
+
+		//Kaszkaj - Ships and other workers without road Builds move normally to the construction site.
+		if (!canBuildRoute())
+		{
+			eMission = MISSION_MOVE_TO;
+		}
 
 		getGroup()->pushMission(eMission, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), 0, false, false, MISSIONAI_BUILD, pBestPlot);
 		getGroup()->pushMission(MISSION_BUILD, eBestBuild, -1, 0, (getGroup()->getLengthMissionQueue() > 0), false, MISSIONAI_BUILD, pBestPlot);
@@ -11570,6 +12348,12 @@ bool CvUnitAI::AI_improveLocalPlot(int iRange, CvCity* pIgnoreCity)
 
 		eBestBuild = AI_betterPlotBuild(pBestPlot, eBestBuild);
 
+		//Kaszkaj - Ships and other workers without road Builds move normally to the construction site.
+		if (!canBuildRoute())
+		{
+			eMission = MISSION_MOVE_TO;
+		}
+
 		getGroup()->pushMission(eMission, pBestPlot->getX_INLINE(), pBestPlot->getY_INLINE(), 0, false, false, MISSIONAI_BUILD, pBestPlot);
 		getGroup()->pushMission(MISSION_BUILD, eBestBuild, -1, 0, (getGroup()->getLengthMissionQueue() > 0), false, MISSIONAI_BUILD, pBestPlot);
 		return true;
@@ -11649,7 +12433,7 @@ bool CvUnitAI::AI_nextCityToImprove(CvCity* pCity)
 			setHomeCity(pOtherCity);
 		}
 
-		if (pThisCity != NULL && pOtherCity != NULL)
+		if (canBuildRoute() && pThisCity != NULL && pOtherCity != NULL)
 		{
 			if (!(gDLL->getFAStarIFace()->GeneratePath(&GC.getRouteFinder(), pThisCity->getX_INLINE(), pThisCity->getY_INLINE(), pOtherCity->getX_INLINE(), pOtherCity->getY_INLINE(), false, getOwnerINLINE(), true)))
 			{
@@ -13578,6 +14362,11 @@ bool CvUnitAI::AI_loadAdjacent(CvPlot* pPlot, bool bTestCity)
 
 bool CvUnitAI::AI_allowedToJoin(const CvCity* pCity) const
 {
+	//Kaszkaj - Preserve colonial Scouts as map units for their exploration and later combat duties.
+	if (GET_PLAYER(getOwnerINLINE()).AI_isColonialScout(getUnitType()))
+	{
+		return false;
+	}
 	if (!canJoinCity(pCity->plot()))
 	{
 		return false;

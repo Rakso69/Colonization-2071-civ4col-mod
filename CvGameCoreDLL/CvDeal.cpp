@@ -148,6 +148,56 @@ void CvDeal::kill(bool bKillTeam, TeamTypes eKillingTeam)
 //TK end Update
 void CvDeal::addTrades(CLinkList<TradeData>* pFirstList, CLinkList<TradeData>* pSecondList, bool bCheckAllowed)
 {
+	//Kaszkaj - Validate the whole royal purchase before granting any technology or taking payment.
+	CvPlayer& kFirst = GET_PLAYER(getFirstPlayer());
+	CvPlayer& kSecond = GET_PLAYER(getSecondPlayer());
+	bool bRoyalTrade = kFirst.isEurope() || kSecond.isEurope();
+	int iRoyalGold = 0;
+	int iRoyalTax = 0;
+	int iRoyalTaxTradeValue = 0;
+	if (bRoyalTrade)
+	{
+		CvPlayer& kKing = kFirst.isEurope() ? kFirst : kSecond;
+		CvPlayer& kBuyer = kFirst.isEurope() ? kSecond : kFirst;
+		const CLinkList<TradeData>* pTechnologies = kFirst.isEurope() ? pFirstList : pSecondList;
+		const CLinkList<TradeData>* pPayment = kFirst.isEurope() ? pSecondList : pFirstList;
+		if (!kKing.getKingTechnologyDeal(kBuyer.getID(), pTechnologies, pPayment, iRoyalGold, iRoyalTax))
+		{
+			return;
+		}
+		//Kaszkaj - Gold purchases and gifts must pass the king's normal offer evaluation.
+		if (iRoyalTax == 0 && !kKing.AI_considerOffer(kBuyer.getID(), pPayment, pTechnologies))
+		{
+			return;
+		}
+		if (iRoyalTax > 100 - kBuyer.getTaxRate())
+		{
+			kKing.applyKingTechnologyDeal(kBuyer.getID(), pTechnologies, iRoyalGold, iRoyalTax);
+			return;
+		}
+		if (iRoyalTax > 0)
+		{
+			//Kaszkaj - Tax payment reaches the configured normal trade attitude bonus, up to 4.
+			int iTechnologyValue = std::max(0, kBuyer.AI_dealVal(kKing.getID(), pTechnologies, true));
+			iRoyalTaxTradeValue = iTechnologyValue;
+			int iAttitudeBonus = range(GC.getDefineINT("KING_TECHNOLOGY_TAX_ATTITUDE_BONUS"), 0, 4);
+			if (iAttitudeBonus > 0)
+			{
+				//Kaszkaj - Read trade and grant history through CvPlayerAI; these methods are not in CvPlayer.
+				int iKingTradeValue = GET_PLAYER(kKing.getID()).AI_getPeacetimeTradeValue(kBuyer.getID());
+				int iKnownTurns = GET_TEAM(kKing.getTeam()).AI_getHasMetCounter(kBuyer.getTeam());
+				// AI_getTradeAttitude divides goodwill by (known turns + 1) * 5.
+				int iValuePerTurn = iAttitudeBonus * 5;
+				int iRequiredValue = (std::min(MAX_INT / iValuePerTurn - 1, std::max(0, iKnownTurns)) + 1) * iValuePerTurn;
+				iRequiredValue = std::max(0, iRequiredValue - GET_PLAYER(kKing.getID()).AI_getPeacetimeGrantValue(kBuyer.getID()));
+				iRequiredValue += std::min(MAX_INT - iRequiredValue, GET_PLAYER(kBuyer.getID()).AI_getPeacetimeTradeValue(kKing.getID()));
+				iRequiredValue += std::min(MAX_INT - iRequiredValue, iTechnologyValue);
+				iRequiredValue = std::max(0, iRequiredValue - iKingTradeValue);
+				iRoyalTaxTradeValue = std::min(MAX_INT - iKingTradeValue, std::max(iTechnologyValue, iRequiredValue));
+			}
+		}
+	}
+
 	CLLNode<TradeData>* pNode;
 	bool bAlliance;
 	bool bSave;
@@ -189,6 +239,10 @@ void CvDeal::addTrades(CLinkList<TradeData>* pFirstList, CLinkList<TradeData>* p
 			if ((pSecondList != NULL) && (pSecondList->getLength() > 0))
 			{
 				iValue = GET_PLAYER(getFirstPlayer()).AI_dealVal(getSecondPlayer(), pSecondList, true);
+				if (bRoyalTrade && iRoyalTax > 0 && kFirst.isEurope())
+				{
+					iValue = iRoyalTaxTradeValue;
+				}
 
 				if ((pFirstList != NULL) && (pFirstList->getLength() > 0))
 				{
@@ -202,6 +256,10 @@ void CvDeal::addTrades(CLinkList<TradeData>* pFirstList, CLinkList<TradeData>* p
 			if ((pFirstList != NULL) && (pFirstList->getLength() > 0))
 			{
 				iValue = GET_PLAYER(getSecondPlayer()).AI_dealVal(getFirstPlayer(), pFirstList, true);
+				if (bRoyalTrade && iRoyalTax > 0 && kSecond.isEurope())
+				{
+					iValue = iRoyalTaxTradeValue;
+				}
 
 				if ((pSecondList != NULL) && (pSecondList->getLength() > 0))
 				{
@@ -213,6 +271,23 @@ void CvDeal::addTrades(CLinkList<TradeData>* pFirstList, CLinkList<TradeData>* p
 				}
 			}
 		}
+	}
+
+	//Kaszkaj - Record royal purchases and gifts through the normal trade history before settling them.
+	if (bRoyalTrade)
+	{
+		CvPlayer& kKing = kFirst.isEurope() ? kFirst : kSecond;
+		CvPlayer& kBuyer = kFirst.isEurope() ? kSecond : kFirst;
+		const CLinkList<TradeData>* pTechnologies = kFirst.isEurope() ? pFirstList : pSecondList;
+		if (iRoyalTax == 0)
+		{
+			//Kaszkaj - Use normal gold settlement for trade bonuses, gold history and Python events.
+			const CLinkList<TradeData>* pPayment = kFirst.isEurope() ? pSecondList : pFirstList;
+			startTrade(pPayment->head()->m_data, kBuyer.getID(), kKing.getID());
+			iRoyalGold = 0;
+		}
+		kKing.applyKingTechnologyDeal(kBuyer.getID(), pTechnologies, iRoyalGold, iRoyalTax);
+		return;
 	}
 
 	if (pFirstList != NULL)

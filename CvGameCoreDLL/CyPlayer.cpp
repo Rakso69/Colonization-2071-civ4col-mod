@@ -288,9 +288,10 @@ int CyPlayer::getVictoryYieldCount(int /*YieldTypes*/ eYield)
    return m_pPlayer ? m_pPlayer->getVictoryYieldCount((YieldTypes)eYield) : -1;
 }
 
-int CyPlayer::prolificInventorThreshold() const
+//Kaszkaj - Forward Python's Inventor threshold request to CvPlayer.
+int CyPlayer::inventorThreshold() const
 {
-	return m_pPlayer ? m_pPlayer->prolificInventorThreshold() : -1;
+	return m_pPlayer ? m_pPlayer->inventorThreshold() : -1;
 }
 
 int CyPlayer::getIdeasExperience() const

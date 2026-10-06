@@ -67,6 +67,8 @@ public:
 
 	bool AI_loadAdjacent(CvPlot* pPlot, bool bTestCity);
 	bool AI_allowedToJoin(const CvCity* pCity) const;
+	//Kaszkaj - Let native cities send Criminal residents to a legal school or village lesson.
+	bool AI_learn(int iRange = 8);
 
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
@@ -89,8 +91,15 @@ protected:
 	void AI_colonistMove();
 	void AI_settlerMove();
 	void AI_workerMove();
+	//Kaszkaj - Search the whole space map for legal ship Builds, including unexplored plots.
+	bool AI_improveSeaPlot();
 	void AI_missionaryMove();
 	void AI_scoutMove();
+	//Kaszkaj - Explore each land area, request transport and equip retired scouts for combat.
+	void AI_scoutExploreMove();
+	bool AI_scoutReturnToCity(ProfessionTypes eProfession, bool bRequireEquipment = true);
+	CvPlot* AI_scoutSeaDestination(CvPlot** ppMissionPlot);
+	bool AI_ferryScout(bool bAllowPickup);
 	void AI_treasureMove();
 	void AI_yieldUhMove();
 	void AI_generalMove();
@@ -157,7 +166,6 @@ protected:
 	bool AI_moveTowardsVictimCity();
 	bool AI_spreadReligion();
 
-	bool AI_learn(int iRange = 8);
 
 	bool AI_requestPickup(int iMaxPath = MAX_INT);
 	bool AI_respondToPickup(int iMaxPath = MAX_INT, UnitAITypes eUnitAI = NO_UNITAI);

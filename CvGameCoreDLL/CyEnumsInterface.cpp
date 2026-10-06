@@ -1042,6 +1042,8 @@ void CyEnumsPythonInterface()
 		.value("TRADE_PEACE", TRADE_PEACE)
 		.value("TRADE_WAR", TRADE_WAR)
 		.value("TRADE_EMBARGO", TRADE_EMBARGO)
+		//Kaszkaj - Expose the appended royal trade type to Python.
+		.value("TRADE_TAX", TRADE_TAX)
 		.value("NUM_TRADEABLE_HEADINGS", NUM_TRADEABLE_HEADINGS)
 		.value("NUM_TRADEABLE_ITEMS", NUM_TRADEABLE_ITEMS)
 		;
@@ -1070,6 +1072,8 @@ void CyEnumsPythonInterface()
 		.value("DIPLOEVENT_TRANSPORT_TREASURE", DIPLOEVENT_TRANSPORT_TREASURE)
 		.value("DIPLOEVENT_FOUND_CITY", DIPLOEVENT_FOUND_CITY)
 		.value("DIPLOEVENT_FOUND_CITY_CHECK_NATIVES", DIPLOEVENT_FOUND_CITY_CHECK_NATIVES)
+		//Kaszkaj - Expose the appended royal trade type to Python.
+		.value("DIPLOEVENT_KING_SEIZE_ASSETS", DIPLOEVENT_KING_SEIZE_ASSETS)
 		.value("NUM_DIPLOEVENT_TYPES", NUM_DIPLOEVENT_TYPES)
 		;
 	python::enum_<DiploCommentTypes>("DiploCommentTypes")

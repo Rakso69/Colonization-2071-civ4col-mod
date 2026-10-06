@@ -1783,6 +1783,30 @@ bool CvSelectionGroup::canAnyMove()
 	return false;
 }
 
+//Kaszkaj - Keep normal terrain limits unless every unit can move on land and water.
+bool CvSelectionGroup::canMoveAllTerrain() const
+{
+	CLLNode<IDInfo>* pUnitNode = headUnitNode();
+	if (pUnitNode == NULL)
+	{
+		return false;
+	}
+
+	while (pUnitNode != NULL)
+	{
+		const CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
+		pUnitNode = nextUnitNode(pUnitNode);
+
+		if (pLoopUnit == NULL || !pLoopUnit->getUnitInfo().isCanMoveAllTerrain())
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+
 bool CvSelectionGroup::hasMoved()
 {
 	CLLNode<IDInfo>* pUnitNode;
@@ -2751,6 +2775,12 @@ void CvSelectionGroup::setTransportUnit(CvUnit* pTransportUnit)
 
 bool CvSelectionGroup::isAmphibPlot(const CvPlot* pPlot) const
 {
+	//Kaszkaj - Move all-terrain ships onto land directly instead of requiring a cargo landing.
+	if (canMoveAllTerrain())
+	{
+		return false;
+	}
+
 	bool bFriendly = true;
 	CvUnit* pUnit = getHeadUnit();
 	if (NULL != pUnit)

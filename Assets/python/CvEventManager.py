@@ -332,6 +332,41 @@ class CvEventManager:
 	def onLoadGame(self, argsList):
 		return 0
 
+	#Kaszkaj - Reuse the barbarian civilization, or create it in a free player and team slot.
+	def createBarbarianPlayer(self):
+		iCivilization = gc.getDefineINT("BARBARIAN_CIVILIZATION")
+		iLeader = gc.getInfoTypeForString('LEADER_INVASION_OUTER_GODS')
+		if iCivilization < 0 or iLeader < 0:
+			CvUtil.pyPrint("Cannot create Outer Gods: civilization or leader is missing")
+			return None
+
+		for iPlayer in range(gc.getMAX_PLAYERS()):
+			pPlayer = gc.getPlayer(iPlayer)
+			if pPlayer.getCivilizationType() == iCivilization:
+				return pPlayer
+
+		for iPlayer in range(gc.getMAX_PLAYERS()):
+			pPlayer = gc.getPlayer(iPlayer)
+			if pPlayer.isEverAlive() or pPlayer.isHuman() or pPlayer.getCivilizationType() != CivilizationTypes.NO_CIVILIZATION:
+				continue
+			iTeam = pPlayer.getTeam()
+			if iTeam < 0 or iTeam >= gc.getMAX_TEAMS() or gc.getTeam(iTeam).isEverAlive():
+				continue
+			# A scenario can assign unused slots to an existing or reserved team.
+			bFreeTeam = True
+			for iOtherPlayer in range(gc.getMAX_PLAYERS()):
+				if iOtherPlayer != iPlayer:
+					pOtherPlayer = gc.getPlayer(iOtherPlayer)
+					if pOtherPlayer.getTeam() == iTeam and (pOtherPlayer.isEverAlive() or pOtherPlayer.isHuman() or pOtherPlayer.getCivilizationType() != CivilizationTypes.NO_CIVILIZATION):
+						bFreeTeam = False
+						break
+			if bFreeTeam:
+				CyGame().addPlayer(iPlayer, iLeader, iCivilization)
+				return gc.getPlayer(iPlayer)
+
+		CvUtil.pyPrint("Cannot create Outer Gods: no free player and team slot")
+		return None
+
 	def onGameStart(self, argsList):
 
 # Place random stuff on map START
@@ -346,16 +381,19 @@ class CvEventManager:
 		if (gc.getGame().getGameTurnYear() == gc.getDefineINT("START_YEAR") and not gc.getGame().isOption(GameOptionTypes.GAMEOPTION_ADVANCED_START)):
 			for iPlayer in range(gc.getMAX_PLAYERS()):
 				player = gc.getPlayer(iPlayer)
-				if (player.isAlive() and player.isHuman()):
+				if not player.isAlive():
+					continue
+				if player.isHuman():
 					popupInfo = CyPopupInfo()
 					popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON_SCREEN)
 					popupInfo.setText(u"showDawnOfMan")
 					popupInfo.addPopup(iPlayer)
-					if player.isNative():
-			    			iRnd = CyGame().getSorenRandNum(CyMap().numPlots(), "Saucer")
-						pPlot = CyMap().plotByIndex(iRnd)
-	        				iNewProfession = CvUtil.findInfoTypeNum('NONE')
-						player.initUnit(CvUtil.findInfoTypeNum('UNIT_SAUCER'), iNewProfession, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION, 0)
+				#Kaszkaj - Give each living native player one starting Saucer, including AI players.
+				if player.isNative():
+					iRnd = CyGame().getSorenRandNum(CyMap().numPlots(), "Saucer")
+					pPlot = CyMap().plotByIndex(iRnd)
+					iNewProfession = CvUtil.findInfoTypeNum('NONE')
+					player.initUnit(CvUtil.findInfoTypeNum('UNIT_SAUCER'), iNewProfession, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION, 0)
 		else:
 			CyInterface().setSoundSelectionReady(true)
 
@@ -380,11 +418,8 @@ class CvEventManager:
 
 	        iNewUnit = CvUtil.findInfoTypeNum('UNIT_KILLBOT')
 	        iNewProfession = ProfessionTypes.NO_PROFESSION
-	        iOuterGodsLeader = gc.getInfoTypeForString('LEADER_INVASION_OUTER_GODS')
-	        for iPlayer in range(gc.getMAX_PLAYERS()):
-	            pPlayer = gc.getPlayer(iPlayer)
-	            if pPlayer.getLeaderType() == iOuterGodsLeader:
-	                bPlayer = pPlayer
+	        #Kaszkaj - Use the barbarian civilization as the owner of the existing map spawns.
+	        bPlayer = self.createBarbarianPlayer()
 	        for i in range(CyMap().numPlots()):
 	            pPlot = CyMap().plotByIndex(i)
 	            iBonus = pPlot.getBonusType()
@@ -394,13 +429,16 @@ class CvEventManager:
 			    iMetroRnd = game.getSorenRandNum(21, "PeakForts")
 			    if iMetroRnd > 18:
 	                    	pPlot.setImprovementType(gc.getInfoTypeForString('IMPROVEMENT_CITADEL'))
-	                    	bPlayer.initUnit(iNewUnit, iNewProfession, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION, 0)
+	                    	if bPlayer is not None:
+	                    		bPlayer.initUnit(iNewUnit, iNewProfession, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION, 0)
 			    	if iMetroRnd > 19:
 					pPlot.setFeatureType(gc.getInfoTypeForString('FEATURE_FORCEFIELD'),1)
-	                    		bPlayer.initUnit(CvUtil.findInfoTypeNum('UNIT_PROGENITORAI'), iNewProfession, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION, 0)
+	                    		if bPlayer is not None:
+	                    			bPlayer.initUnit(CvUtil.findInfoTypeNum('UNIT_PROGENITORAI'), iNewProfession, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION, 0)
 			    elif iMetroRnd > 16:
 	                    	pPlot.setImprovementType(gc.getInfoTypeForString('IMPROVEMENT_KEEP'))
-	                    	bPlayer.initUnit(iNewUnit, iNewProfession, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION, 0)
+	                    	if bPlayer is not None:
+	                    		bPlayer.initUnit(iNewUnit, iNewProfession, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION, 0)
 	            if pPlot.getEurope() == (gc.getInfoTypeForString('EUROPE_EAST')) or pPlot.getEurope() == (gc.getInfoTypeForString('EUROPE_WEST')):
 			    iOdd = (pPlot.getX())%2 + (pPlot.getY())%2			
 			    if iOdd == 1:
@@ -522,15 +560,18 @@ class CvEventManager:
 	                    	pPlot.setFeatureType(gc.getInfoTypeForString('FEATURE_ATMOS_CORROSIVE'),1)
 #end Moon setup	            
 	            if iBonus == iSpider:
-			    bPlayer.initUnit(CvUtil.findInfoTypeNum('UNIT_SPIDER'), iNewProfession, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION, 0)
+			    if bPlayer is not None:
+			    	bPlayer.initUnit(CvUtil.findInfoTypeNum('UNIT_SPIDER'), iNewProfession, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION, 0)
 	            if iBonus == iMetro:
 			    iMetroRnd = game.getSorenRandNum(20, "Mounds")
 			    if iMetroRnd > 8:
 			    	pPlot.setFeatureType(gc.getInfoTypeForString('FEATURE_MOUND'),1)
 			    elif iMetroRnd > 3:
-	                    	bPlayer.initUnit(iNewUnit, iNewProfession, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION, 0)
+	                    	if bPlayer is not None:
+	                    		bPlayer.initUnit(iNewUnit, iNewProfession, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION, 0)
 			    elif iMetroRnd > 2:
-	                    	bPlayer.initUnit(CvUtil.findInfoTypeNum('UNIT_PROGENITORAI'), iNewProfession, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION, 0)
+	                    	if bPlayer is not None:
+	                    		bPlayer.initUnit(CvUtil.findInfoTypeNum('UNIT_PROGENITORAI'), iNewProfession, pPlot.getX(), pPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION, 0)
 			    iMetroRnd = game.getSorenRandNum(20, "Improvements")
 			    if iMetroRnd > 18:
 	                    	pPlot.setImprovementType(gc.getInfoTypeForString('IMPROVEMENT_INSTALLATION'))
@@ -606,6 +647,13 @@ class CvEventManager:
 		unitX = gc.getUnitInfo(pWinner.getUnitType())
 		playerY = gc.getPlayer(pLoser.getOwner())
 		unitY = gc.getUnitInfo(pLoser.getUnitType())
+		#Kaszkaj - Defeating a Progenitor AI gives ruins treasure and 500 Credits to humans or 1000 to AI.
+		if pLoser.getUnitType() == gc.getInfoTypeForString('UNIT_PROGENITORAI'):
+			playerX.receiveGoody(pLoser.plot(), gc.getInfoTypeForString('GOODY_TREASURE'), pWinner)
+			if playerX.isHuman():
+				playerX.changeGold(500)
+			else:
+				playerX.changeGold(1000)
 		if (not self.__LOG_COMBAT):
 			return
 		if playerX and playerX and unitX and playerY:

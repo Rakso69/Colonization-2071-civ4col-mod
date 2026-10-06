@@ -1724,6 +1724,8 @@ enum DllExport TradeableItems
 	TRADE_PEACE,
 	TRADE_WAR,
 	TRADE_EMBARGO,
+	//Kaszkaj - Append royal tax payment to preserve all existing trade item IDs.
+	TRADE_TAX,
 
 #ifdef _USRDLL
 	NUM_TRADEABLE_HEADINGS,
@@ -1759,6 +1761,8 @@ enum DllExport DiploEventTypes
 	DIPLOEVENT_TRANSPORT_TREASURE,
 	DIPLOEVENT_FOUND_CITY,
 	DIPLOEVENT_FOUND_CITY_CHECK_NATIVES,
+	//Kaszkaj - Acknowledge confiscation before ending the human player's game.
+	DIPLOEVENT_KING_SEIZE_ASSETS,
 
 
 #ifdef _USRDLL

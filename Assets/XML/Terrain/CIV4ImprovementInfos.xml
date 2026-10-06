@@ -953,7 +953,7 @@
 			<bGoody>0</bGoody>
 			<bPermanent>0</bPermanent>
 			<bUseLSystem>0</bUseLSystem>
-			<iAdvancedStartCost>100</iAdvancedStartCost>
+			<iAdvancedStartCost>-1</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<iTilesPerGoody>0</iTilesPerGoody>
 			<iGoodyRange>0</iGoodyRange>
@@ -1076,7 +1076,7 @@
 			<bGoody>0</bGoody>
 			<bPermanent>1</bPermanent>
 			<bUseLSystem>0</bUseLSystem>
-			<iAdvancedStartCost>100</iAdvancedStartCost>
+			<iAdvancedStartCost>-1</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<iTilesPerGoody>0</iTilesPerGoody>
 			<iGoodyRange>0</iGoodyRange>
@@ -1203,7 +1203,7 @@
 			<bGoody>0</bGoody>
 			<bPermanent>1</bPermanent>
 			<bUseLSystem>0</bUseLSystem>
-			<iAdvancedStartCost>100</iAdvancedStartCost>
+			<iAdvancedStartCost>-1</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>0</iAdvancedStartCostIncrease>
 			<iTilesPerGoody>0</iTilesPerGoody>
 			<iGoodyRange>0</iGoodyRange>
@@ -1916,7 +1916,7 @@
 			<iUpgradeTime>0</iUpgradeTime>
 			<iDefenseModifier>0</iDefenseModifier>
 			<iPillageGold>5</iPillageGold>
-			<bOutsideBorders>0</bOutsideBorders>
+			<bOutsideBorders>2</bOutsideBorders>
 			<TerrainMakesValids/>
 			<FeatureMakesValids>
 				<FeatureMakesValid>

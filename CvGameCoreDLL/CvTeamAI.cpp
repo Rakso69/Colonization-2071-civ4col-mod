@@ -2446,6 +2446,30 @@ void CvTeamAI::AI_doWar()
 
 	FAssert(!isHuman());
 
+	//Kaszkaj - Declare total war on every legal opponent, including while other wars continue.
+	// Keep the normal peace period, contact and treaty checks; do not lock diplomacy.
+	if (isBarbarian())
+	{
+		for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
+		{
+			TeamTypes eTeam = (TeamTypes) iTeam;
+			if (eTeam == getID() || !GET_TEAM(eTeam).isAlive())
+			{
+				continue;
+			}
+
+			if (isAtWar(eTeam))
+			{
+				AI_setWarPlan(eTeam, WARPLAN_TOTAL, false);
+			}
+			else if (canDeclareWar(eTeam))
+			{
+				declareWar(eTeam, false, WARPLAN_TOTAL);
+			}
+		}
+		return;
+	}
+
 	// allow python to handle it
 	CyArgsList argsList;
 	argsList.add(getID());

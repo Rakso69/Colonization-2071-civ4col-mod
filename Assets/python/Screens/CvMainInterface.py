@@ -2704,7 +2704,10 @@ class CvMainInterface:
 						j = gc.getMAX_CIV_PLAYERS() - 1
 						while (j > -1):
 							ePlayer = gc.getGame().getRankPlayer(j)
-							if (gc.getPlayer(ePlayer).isAlive()):
+							#Kaszkaj - Show barbarians only after discovery, including in debug mode.
+							if (gc.getPlayer(ePlayer).isAlive() and
+								(gc.getPlayer(ePlayer).getCivilizationType() != gc.getDefineINT("BARBARIAN_CIVILIZATION") or
+								gc.getTeam(gc.getGame().getActiveTeam()).isHasMet(eTeam))):
 								if (gc.getPlayer(ePlayer).getTeam() == eTeam):
 									szBuffer = u"<font=2>"
 

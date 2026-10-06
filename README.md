@@ -1,3 +1,94 @@
+### 06.10.2026 Colonization 2071 v2.2.2 Patch Notes:<br>
+---
+☑️Fixed further assertion failures and crashes involving professions, production yields and unit movement.<br>
+☑️Fixed Civilopedia errors when viewing Constitution and technology help without an active player.<br>
+☑️Fixed the Technology Advisor crashing when the Inventor progress threshold was zero or unavailable.<br>
+☑️Fixed trait promotion updates for Colony residents and repeated trait bonuses, preventing negative promotion counts after profession changes.<br>
+☑️Fixed missing dialogue lines for leaders unique to 2071.<br>
+☑️Excavations can now be established anywhere in the world. The associated reward events will occur for the player who built them, regardless of the distance from their territory and regardless of whether the territory is neutral or owned by another Civilization.<br>
+☑️Starting technologies now apply their effects and bonuses to Alien civilisations and both Royal Expeditionary Force factions.<br>
+☑️Restored the first-research Credit bonuses for Venture Capital and Corporate Investment. Starting knowledge and acquired technologies no longer claim or block these rewards; the bonus goes to the first civilisation to complete the research.<br>
+☑️Improved the texture quality of the following leaders: The Chief of Staff (NAFTA Colonies), NAFTA President (NAFTA).<br>
+☑️Improved the texture quality of many leader backgrounds.<br>
+<br>
+💻Computer Opponents:<br>
+☑️Improved AI protection of civilian units, Treasure and transports. Units assigned to these roles now avoid dangerous routes even when they have combat strength.<br>
+☑️Improved AI assessment of threats to Colonies, taking nearby rivals, war plans and diplomatic relations into account.<br>
+☑️Improved AI handling of ships in planetary ports. Regular space units use the connected space area, while amphibious Alien ships retain their current land or space area.<br>
+☑️AI danger checks now detect hostile amphibious units across the boundaries between planetary terrain and space.<br>
+☑️AI pickup requests now include transport ships docked at Colonies.<br>
+☑️Improved specialist assignments. Suitable experts can replace less effective workers in occupied jobs, and locked workers no longer prevent the AI from finding other available replacements.<br>
+☑️AI job selection now considers every production bonus a unit provides, including multiple specialities. This covers Industrious Cyborgs, Brilliant Polymaths, Venerable Elders and other units with several productive roles.<br>
+☑️AI treats the basic Alien unit as a generalist when assigning Colony jobs.<br>
+☑️Improved building selection to favour production facilities that can be staffed by available experts and supplied with the required input materials, including experts with multiple specialities.<br>
+☑️Hardy Laborers and Cultivators now prioritise construction work over jobs inside Colonies.<br>
+☑️Mining Vessels and Science Vessels now search space for suitable construction and research tasks, including on unexplored plots. Colony Ships seek their construction tasks within their own territory.<br>
+☑️AI Workers now place greater value on Food when choosing Improvements.<br>
+☑️Improved AI evaluation of Improvements on plots producing Plasteel, Progenitor Artifacts, Hydrocarbons or bonus resources, reducing the risk of replacing valuable production with less useful Improvements.<br>
+☑️Colonial AI now has a 10 % chance per turn to receive an additional immigrant on Earth at Normal game speed. This does not consume Propaganda or increase the normal immigration threshold, and the chance adjusts to game speed.<br>
+☑️Each newly founded AI Colony can now receive one free defender chosen from its civilisation's eligible units. This applies to both colonial and Alien AI.<br>
+☑️Added Food relief for the last starving resident of an AI Colony: +20 Food. Colonial AI pays up to 100 Credits at Normal game speed, while Alien AI receives this aid for free. The price adjusts to game speed.<br>
+☑️AI civilisations now automatically transfer surplus materials between their Colonies every 10 turns to supply current production. Transfers respect the supplying Colony's own production needs and a 50-unit reserve of each material. Food is excluded.<br>
+☑️Fixed material-transfer calculations when deliveries resume or complete production, preventing later deliveries from using outdated material requirements.<br>
+☑️Computer opponents now receive faction-appropriate event rewards, including Human and Alien starting events.<br>
+☑️AI civilisations now receive all valid rewards from events with multiple choices. Human-controlled civilisations still choose a single reward option.<br>
+☑️AI Treasure rewards from Excavations no longer replace the site with City Ruins. Excavations that remain active can trigger further discoveries in later turns.<br>
+☑️Colonial AI now uses Intrepid Explorers to explore planetary land and collect rewards from explorable sites.<br>
+☑️Once a planet has been fully explored and its reward sites exhausted, an available transport can take an Intrepid Explorer to another planet. The unit receives the Explorer profession before its first transfer and keeps it for later expeditions.<br>
+☑️After all land has been explored and its reward sites exhausted, colonial AI seeks to equip its Intrepid Explorers as Mecha Pilots and use them in offensive or defensive roles.<br>
+☑️Alien AI now considers Convicts for schooling or lessons in other Alien settlements, taking actual training speed, travel time and available jobs into account.<br>
+☑️After completing school training, Alien AI can choose any eligible teachable specialist for free, without requiring that specialist to be present beforehand.<br>
+☑️Colonial AI now considers useful training in Alien settlements throughout the game, including settlements controlled by a human player. Units visit the chief before starting their lessons.<br>
+☑️Fixed AI ships being unable to return from Earth because they were attached to an invalid map location. Purchased and free ships now use valid entry plots, and affected AI ships are relocated together with their cargo.<br>
+☑️Fixed errors in AI profession assignment, worker exchanges and resident removal when no valid profession or unit was available.<br>
+☑️Improved combat profession selection for Alien AI counter units.<br>
+☑️Added a fallback production order for AI Colonies that cannot select a suitable unit or building.<br>
+☑️Fixed AI diplomatic attitude and gold-trade calculations that could trigger errors when a civilisation was evaluated against itself.<br>
+☑️Fixed trait-promotion updates for AI Colony residents, preventing errors during subsequent profession changes.<br>
+☑️Alien AI now receives a starting Saucer in normal new games outside Advanced Start, matching player-controlled Alien civilisations.<br>
+☑️Improved Alien AI handling of transported counter units and defenders. Passengers unload at suitable Colonies or wait for transport without attempting ground actions while aboard, including when they have no movement remaining.<br>
+☑️Alien AI military units now recheck movement after profession changes and wait when they can no longer move.<br>
+☑️AI counterattacks are now considered only when the unit can move, preventing errors after movement is exhausted or the unit becomes immobilised.<br>
+<br>
+🧑‍🚀🟦Human:<br>
+☑️The Intrepid Explorer now Can Explore Rival Territory.<br>
+❌Added unique dialogue lines for Sayyadina and Director Black.<br>
+☑️Updated the visual model of the Intrepid Explorer.<br>
+<br>
+🛕🟧India Colonies (Human):<br>
+❌Units now speak Indian languages.<br>
+<br>
+🪽🟥Polish Colonies (Human):<br>
+❌Units now speak Polish.<br>
+<br>
+👽🟩Alien:<br>
+☑️Fixed movement and pathfinding for amphibious Alien ships. They can now enter planetary coast tiles with their cargo, without requiring a passenger landing.<br>
+☑️Removed Lunar Outpost, Lunar Settlement and Lunar Colony from Advanced Start and re-enabled Alien unit purchases, with prices adjusted according to game speed.<br>
+☑️Alien units controlled by humans or AI can now speak with chiefs in other Alien settlements and learn eligible professions there. Units cannot speak with their own chief, learn in their own settlement or trade with their own settlement.<br>
+☑️Player-controlled Alien settlements now display their desired trade goods and teaching speciality to their owner as well as visitors.<br>
+☑️Alien (Replaces Free Colonist) can now be produced at a cost of 100 Hammers and 100 Food.<br>
+☑️Venerable Elder (Replaces Firebrand Demagogue) Research production: 0 → 3.<br>
+☑️🪬Improved the quality of Cyean symbols.<br>
+☑️🐯Improved the quality of Felid flag banners and symbols.<br>
+☑️🐍Improved the quality of Reptilian flag banners and symbols.<br>
+<br>
+🤖🔳Royal Expeditionary Force (Earth):<br>
+☑️The State knows all technologies from turn 1 and receives their effects and bonuses. Colonial leaders with Cautious or better relations can purchase technologies from the State through the normal trade window, paying in Credits or accepting a higher tax rate. This also provides a technology trading partner in solo games.<br>
+☑️Technology purchases require peace with the player's own State and all prerequisite technologies to be known before the deal. Buying a prerequisite in the same offer does not unlock its successor. Valid tax offers are accepted regardless of their Credit value.<br>
+<br>
+👾🔳Royal Expeditionary Force (Progenitor):<br>
+☑️The Progenitor Exarch knows all technologies from turn 1 and receives their effects and bonuses. Alien leaders with Cautious or better relations can purchase technologies from him through the normal trade window, paying in Credits or accepting a higher tax rate. This also provides a technology trading partner in solo games.<br>
+☑️Technology purchases require peace with the player's own Progenitor Exarch and all prerequisite technologies to be known before the deal. Buying a prerequisite in the same offer does not unlock its successor. Valid tax offers are accepted regardless of their Credit value.<br>
+☑️Updated the visual model of the artillery unit.<br>
+<br>
+🪼🌌Outer Gods Pantheon (Invasion):<br>
+☑️Extended the music theme.<br>
+☑️The Outer Gods Pantheon is now recognised as a barbarian civilisation, with a highly aggressive and hostile leader.<br>
+☑️Improved faction setup in new games. If absent, the Outer Gods Pantheon is created when a free player slot and a free team slot are available, keeping ownership of barbarian map spawns consistent.<br>
+☑️The faction now remains active even when it has no units or Colonies.<br>
+☑️After the initial peace period, its leader declares war on every known civilisation whenever game rules allow it, including while other wars are already under way.<br>
+☑️The leader no longer initiates negotiations. Players can still open a conversation, but he refuses all diplomatic proposals and requests, including peace, trade and gifts.<br>
+☑️Defeating a Progenitor AI unit now rewards the player with a Progenitor Treasure unit of random value and 500 Credits ( 1000 for AI players).<br>
 ### 02.10.2026 Colonization 2071 v2.2.1 Patch Notes:<br>
 ---
 ☑️Fixed many Assert Failed errors.<br>
@@ -7,13 +98,12 @@
 <br>
 🧑‍🚀🟦Human:<br>
 ☑️Fixed a bug where the Intrepid Explorer unit was not considered a colonist.<br>
-<br>
 👽🟩Alien:<br>
 ☑️Fixed an issue where the Intrepid Archaeologist was unavailable to Aliens, preventing them from researching Containment Fields.<br>
 ☑️Fixed a bug where the Alien Crossbreed could not work at a Research Lab station, preventing Aliens from ever researching Alien Autopsy.<br>
 ☑️Improved the texture quality of the Shamanic Lodge.<br>
-☑️Added new flag banner for Glusk the Moist (Amphibians).<br>
-☑️Added new flag banner for Dagon (Ichthyoids).<br>
+☑️🐸Added new flag banner for Glusk the Moist (Amphibians).<br>
+☑️🦑Added new flag banner for Dagon (Ichthyoids).<br>
 ### 07.09.2026 Colonization 2071 v2.2 Patch Notes:<br>
 ---
 ❌All previous saved games are no longer compatible.<br>
@@ -142,13 +232,13 @@ V: +1000 % Tile Defense. Acts as a Colony for combat purposes.<br>
 🉐🏴Syndicate Colonies (Human):<br>
 ☑️Fixed a bug where the Unique Privateer unit could permanently turn into a regular Privateer during gameplay. (Renamed to Privateer MKII).<br>
 ☑️Updated the avatar image for The Lady in Black.<br>
-☑️Improved quality of Syndicate flag banners and symbols.<br>
+☑️Improved the quality of Syndicate flag banners and symbols.<br>
 <br>
 👽🟩Alien:<br>
 ☑️Changed the Alien second-turn event reward from a Fabrication Plant to a Construction Facility + Cultivator unit. (Skipping the Construction Facility and going directly to its upgraded version could prevent the affected city from ever building basic structures that require a Construction Facility rather than a Fabrication Plant.)<br>
 ☑️Restored the previously non-functional special ability of the Elite Warrior (Replaces Veteran Soldier). It now has +50 % vs. Feral Units and +50 % vs. Cosmic Horrors.<br>
 ☑️Cultivators (Replace Hardy Laborer) now use the Laborer profession by default. (This makes them 50 Tools cheaper, as they no longer need to be equipped after production, which was already expensive enough.)<br>
-☑️Improved the texture quality of the Venerable Elder and added a VFX.<br>
+☑️Updated the visual model of the Venerable Elder and added a VFX.<br>
 ☑️Changed the avatar image of the Alien Crossbreed.<br>
 ☑️Changed the avatar image of the Industrious Cyborg.<br>
 ☑️Alien units are no longer stretched on the city screen.<br>

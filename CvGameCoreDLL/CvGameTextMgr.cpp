@@ -3934,8 +3934,8 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 
 	szHelpText.clear();
 
-	// Kaszkaj fix: .\.\CvGameTextMgr.cpp, Line:  3937, Expression:  GC.getGameINLINE().getActivePlayer() != NO_PLAYER || !bPlayerContext.
-	// Use general civic help when no active player exists, allowing Civilopedia to open without player context.
+	//Kaszkaj fix: .\.\CvGameTextMgr.cpp, Line:  3937, Expression:  GC.getGameINLINE().getActivePlayer() != NO_PLAYER || !bPlayerContext.
+	// Show general civic help when there is no active player.
 	if (GC.getGameINLINE().getActivePlayer() == NO_PLAYER)
 	{
 		bPlayerContext = false;
@@ -4031,8 +4031,8 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	if (kCivicInfo.getAllowsTrait() != NO_TRAIT)
 	{
 	    CvWStringBuffer szHelpString;
-	    // Kaszkaj fix: .\.\CvPlayerAI.h, Line:  24, Expression:  ePlayer >= 0.
-	    // Show generic trait effects without an active player; use the player's civilization when available.
+	    //Kaszkaj fix: .\.\CvPlayerAI.h, Line:  24, Expression:  ePlayer >= 0.
+	    // Show generic trait effects when no player is active.
 	    CivilizationTypes eCivilization = NO_CIVILIZATION;
 	    PlayerTypes eActivePlayer = GC.getGameINLINE().getActivePlayer();
 	    if (eActivePlayer != NO_PLAYER)
@@ -4538,10 +4538,11 @@ for (iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
 	   szHelpText.append(gDLL->getText("TXT_KEY_ALLOWS_CONSTITUTION"));
 	}
 
-	if (kCivicInfo.getProlificInventorRateChange() != 0)
+	//Kaszkaj - Use matching Inventor names for civic data and help text.
+	if (kCivicInfo.getInventorRateChange() != 0)
 	{
 	   szHelpText.append(NEWLINE);
-	   szHelpText.append(gDLL->getText("TXT_KEY_INCRESEASED_PROLIFIC_INVENTOR_TEXT"));
+	   szHelpText.append(gDLL->getText("TXT_KEY_INCREASED_INVENTOR_TEXT"));
 	}
 
     if (kCivicInfo.getKingTreasureTransportMod() > 0)
@@ -5645,11 +5646,13 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, BuildingTypes eBu
 		szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_YIELD_OVERFLOW_SELL_PERCENT", kBuilding.getOverflowSellPercent()));
 	}
 
-    ///TK COAL
-    if (kBuilding.getBuildingClassType()  == (BuildingClassTypes)GC.getDefineINT("STEAMWORKS_CLASS_TYPE"))
+    ///TK Hydrocarbons
+    //Kaszkaj - Use Oil Refinery and Hydrocarbons names in the production tooltip.
+    if (kBuilding.getBuildingClassType()  == (BuildingClassTypes)GC.getDefineINT("BUILDINGCLASS_OIL_REFINERY"))
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_FROM_STEAMWORKS_TEXT", GC.getDefineINT("TK_STEAMWORKS_MODIFIER"), GC.getYieldInfo(YIELD_HYDROCARBONS).getChar()));
+		//Kaszkaj - Read refinery consumption from the renamed XML setting with its original TK_ prefix.
+		szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_FROM_OIL_REFINERY_TEXT", GC.getDefineINT("TK_OIL_REFINERY_HYDROCARBONS_PER_PRODUCTION"), GC.getYieldInfo(YIELD_HYDROCARBONS).getChar()));
 	}
     ///TKe
 
@@ -6687,6 +6690,10 @@ void CvGameTextMgr::getTradeString(CvWStringBuffer& szBuffer, const TradeData& t
         }
 		break;
     ///TKe
+	//Kaszkaj - Describe per-technology tax payment in deal summaries.
+	case TRADE_TAX:
+		szBuffer.append(gDLL->getText("TXT_KEY_TRADE_TAX_PAYMENT", tradeData.m_iData1));
+		break;
 	case TRADE_CITIES:
 		szBuffer.assign(CvWString::format(L"%s", GET_PLAYER(ePlayer1).getCity(tradeData.m_iData1)->getName().GetCString()));
 		break;
@@ -7118,27 +7125,29 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
     }
 
 	int Bonus = 0;
-	if (city.isHasRealBuilding((BuildingTypes)GC.getDefineINT("STEAMWORKS_BUILDING")) && eYieldType != YIELD_HAMMERS && eYieldType != YIELD_HYDROCARBONS)
+	//Kaszkaj - Use Oil Refinery and Hydrocarbons names in the production tooltip.
+	if (city.isHasRealBuilding((BuildingTypes)GC.getDefineINT("BUILDING_OIL_REFINERY")) && eYieldType != YIELD_HAMMERS && eYieldType != YIELD_HYDROCARBONS)
 	{
-	    int iConsumedCoal = city.getRawYieldConsumed(YIELD_HYDROCARBONS);
-        int iCoalMod = city.getYieldStored(YIELD_HYDROCARBONS) + city.getBaseRawYieldProduced(YIELD_HYDROCARBONS) * city.getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedCoal;
+	    int iConsumedHydrocarbons = city.getRawYieldConsumed(YIELD_HYDROCARBONS);
+        int iHydrocarbonsSurplus = city.getYieldStored(YIELD_HYDROCARBONS) + city.getBaseRawYieldProduced(YIELD_HYDROCARBONS) * city.getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedHydrocarbons;
 
-        if (iConsumedCoal > 0)
+        if (iConsumedHydrocarbons > 0)
         {
-            int SteamWorksMod = std::max(1, GC.getDefineINT("TK_STEAMWORKS_MODIFIER"));
-            if (iCoalMod != -iConsumedCoal)
+            //Kaszkaj - Read refinery consumption from the renamed XML setting with its original TK_ prefix.
+            int iOilRefineryProductionDivisor = std::max(1, GC.getDefineINT("TK_OIL_REFINERY_HYDROCARBONS_PER_PRODUCTION"));
+            if (iHydrocarbonsSurplus != -iConsumedHydrocarbons)
             {
-                if (iCoalMod > iConsumedCoal && iCoalMod != 0)
+                if (iHydrocarbonsSurplus > iConsumedHydrocarbons && iHydrocarbonsSurplus != 0)
                 {
-                    Bonus = iConsumedCoal / SteamWorksMod;
+                    Bonus = iConsumedHydrocarbons / iOilRefineryProductionDivisor;
                 }
-                else if (iCoalMod < iConsumedCoal)
+                else if (iHydrocarbonsSurplus < iConsumedHydrocarbons)
                 {
-                    Bonus = (iConsumedCoal + iCoalMod) / SteamWorksMod;
+                    Bonus = (iConsumedHydrocarbons + iHydrocarbonsSurplus) / iOilRefineryProductionDivisor;
                 }
-                else if (iCoalMod == 0)
+                else if (iHydrocarbonsSurplus == 0)
                 {
-                    Bonus = iConsumedCoal / SteamWorksMod;
+                    Bonus = iConsumedHydrocarbons / iOilRefineryProductionDivisor;
                 }
             }
 
@@ -7150,8 +7159,7 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 	aaiProfessionYields.resize(GC.getNumProfessionInfos());
 
 	// Indoor professions
-	// Kaszkaj fix: .\.\CvGameTextMgr.cpp, Line:  7141, Function: CvGameTextMgr::setYieldHelp.
-	// Skip YIELD_IDEAS profession output in the tooltip when no research is selected or the required research unit class is missing.
+	//Kaszkaj - Hide Ideas output when no research is selected or its required unit class is missing.
 
 	int iNoReasearch = 0;
     int iCitizenYield = 0;
@@ -7315,34 +7323,35 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 		szBuffer.append(NEWLINE);
 		szBuffer.append(CvWString::format(gDLL->getText("TXT_KEY_MISC_FROM_CITY_YIELD", iCityPlotYield, info.getChar())));
 	}
-    ///TK Coal
+    ///TK Hydrocarbons
 	if (Bonus > 0)
 	{
-	    int iConsumedCoal = city.getRawYieldConsumed(YIELD_HYDROCARBONS);
-        int iCoalMod = city.getYieldStored(YIELD_HYDROCARBONS) + city.getBaseRawYieldProduced(YIELD_HYDROCARBONS) * city.getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedCoal;
-        if (iConsumedCoal > 0)
+	    int iConsumedHydrocarbons = city.getRawYieldConsumed(YIELD_HYDROCARBONS);
+        int iHydrocarbonsSurplus = city.getYieldStored(YIELD_HYDROCARBONS) + city.getBaseRawYieldProduced(YIELD_HYDROCARBONS) * city.getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedHydrocarbons;
+        if (iConsumedHydrocarbons > 0)
         {
-            int SteamWorksMod = std::max(1, GC.getDefineINT("TK_STEAMWORKS_MODIFIER"));
-            if (iCoalMod != -iConsumedCoal)
+            //Kaszkaj - Read refinery consumption from the renamed XML setting with its original TK_ prefix.
+            int iOilRefineryProductionDivisor = std::max(1, GC.getDefineINT("TK_OIL_REFINERY_HYDROCARBONS_PER_PRODUCTION"));
+            if (iHydrocarbonsSurplus != -iConsumedHydrocarbons)
             {
-                if (iCoalMod > iConsumedCoal && iCoalMod != 0)
+                if (iHydrocarbonsSurplus > iConsumedHydrocarbons && iHydrocarbonsSurplus != 0)
                 {
-                    Bonus = iConsumedCoal / SteamWorksMod;
+                    Bonus = iConsumedHydrocarbons / iOilRefineryProductionDivisor;
                 }
-                else if (iCoalMod < iConsumedCoal)
+                else if (iHydrocarbonsSurplus < iConsumedHydrocarbons)
                 {
-                    Bonus = (iConsumedCoal + iCoalMod) / SteamWorksMod;
+                    Bonus = (iConsumedHydrocarbons + iHydrocarbonsSurplus) / iOilRefineryProductionDivisor;
                 }
-                else if (iCoalMod == 0)
+                else if (iHydrocarbonsSurplus == 0)
                 {
-                    Bonus = iConsumedCoal / SteamWorksMod;
+                    Bonus = iConsumedHydrocarbons / iOilRefineryProductionDivisor;
                 }
             }
 
         }
 
         szBuffer.append(NEWLINE);
-		szBuffer.append(CvWString::format(gDLL->getText("TXT_KEY_PRODUCTION_FROM_STEAMWORKS", Bonus, info.getChar())));
+		szBuffer.append(CvWString::format(gDLL->getText("TXT_KEY_PRODUCTION_FROM_OIL_REFINERY", Bonus, info.getChar())));
 	}
 	///TKe
 	FAssert(iBaseProduction == city.getBaseRawYieldProduced(eYieldType));
@@ -7756,7 +7765,8 @@ void CvGameTextMgr::buildCityBillboardProductionString( CvWStringBuffer& szBuffe
 	szBuffer.clear();
 
 	PlayerTypes ePlayer = GC.getGameINLINE().getActivePlayer();
-	if (pCity->isNative() && ePlayer != pCity->getOwnerINLINE() && ePlayer != NO_PLAYER)
+	//Kaszkaj - Show a native city's teaching profession to its owner as well as visitors.
+	if (pCity->isNative() && ePlayer != NO_PLAYER)
 	{
 		UnitClassTypes eUnitClass = pCity->getTeachUnitClass();
 		if (eUnitClass != NO_UNITCLASS)

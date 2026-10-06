@@ -353,7 +353,7 @@
 	<ElementType name="iFeatureGrowth" content="textOnly" dt:type="int"/>
 	<ElementType name="iDefenseModifier" content="textOnly" dt:type="int"/>
 	<ElementType name="iPillageGold" content="textOnly" dt:type="int"/>
-	<ElementType name="bOutsideBorders" content="textOnly" dt:type="boolean"/>
+	<ElementType name="bOutsideBorders" content="textOnly" dt:type="int"/>
 	<ElementType name="iAdvancedStartCost" content="textOnly" dt:type="int"/>
 	<ElementType name="iAdvancedStartRemoveCost" content="textOnly" dt:type="int"/>
 	<ElementType name="iAdvancedStartCostIncrease" content="textOnly" dt:type="int"/>

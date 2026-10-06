@@ -766,8 +766,17 @@
 			<PrereqBuilding>NONE</PrereqBuilding>
 			<PrereqOrBuildings/>
 			<ProductionTraits/>
-			<iAIWeight>0</iAIWeight>
-			<YieldCosts/>
+			<iAIWeight>-100</iAIWeight>
+			<YieldCosts>
+				<YieldCost>
+					<YieldType>YIELD_HAMMERS</YieldType>
+					<iCost>100</iCost>
+				</YieldCost>
+				<YieldCost>
+					<YieldType>YIELD_FOOD</YieldType>
+					<iCost>100</iCost>
+				</YieldCost>
+			</YieldCosts>
 			<iHurryCostModifier>0</iHurryCostModifier>
 			<iAdvancedStartCost>200</iAdvancedStartCost>
 			<iAdvancedStartCostIncrease>100</iAdvancedStartCostIncrease>
@@ -3764,7 +3773,7 @@
 			<PrereqBuilding>BUILDINGCLASS_TOBACCONIST_HOUSE</PrereqBuilding>
 			<PrereqOrBuildings/>
 			<ProductionTraits/>
-			<iAIWeight>0</iAIWeight>
+			<iAIWeight>100</iAIWeight>
 			<YieldCosts>
 				<YieldCost>
 					<YieldType>YIELD_HAMMERS</YieldType>
@@ -8528,7 +8537,7 @@
 			<PrereqBuilding>BUILDINGCLASS_DISTILLERS_HOUSE</PrereqBuilding>
 			<PrereqOrBuildings/>
 			<ProductionTraits/>
-			<iAIWeight>-1</iAIWeight>
+			<iAIWeight>100</iAIWeight>
 			<YieldCosts>
 				<YieldCost>
 					<YieldType>YIELD_HAMMERS</YieldType>
@@ -8652,6 +8661,10 @@
 				<YieldChange>
 					<YieldType>YIELD_EDUCATION</YieldType>
 					<iChange>0</iChange>
+				</YieldChange>
+				<YieldChange>
+					<YieldType>YIELD_IDEAS</YieldType>
+					<iChange>3</iChange>
 				</YieldChange>
 			</YieldChanges>
 			<BonusYieldChanges/>
@@ -9034,7 +9047,7 @@
 			<PrereqBuilding>BUILDINGCLASS_FUR_TRADERS_HOUSE</PrereqBuilding>
 			<PrereqOrBuildings/>
 			<ProductionTraits/>
-			<iAIWeight>-1</iAIWeight>
+			<iAIWeight>100</iAIWeight>
 			<YieldCosts>
 				<YieldCost>
 					<YieldType>YIELD_HAMMERS</YieldType>
@@ -9891,10 +9904,10 @@
 			</UnitAIs>
 			<NotUnitAIs/>
 			<Builds/>
-			<PrereqBuilding></PrereqBuilding>
+			<PrereqBuilding>BUILDINGCLASS_ARMORY</PrereqBuilding>
 			<PrereqOrBuildings/>
 			<ProductionTraits/>
-			<iAIWeight>-1</iAIWeight>
+			<iAIWeight>0</iAIWeight>
 			<YieldCosts>
 				<YieldCost>
 					<YieldType>YIELD_HAMMERS</YieldType>
@@ -10748,7 +10761,7 @@
 			<PrereqBuilding>BUILDINGCLASS_RANCH</PrereqBuilding>
 			<PrereqOrBuildings/>
 			<ProductionTraits/>
-			<iAIWeight>-1</iAIWeight>
+			<iAIWeight>0</iAIWeight>
 			<YieldCosts>
 				<YieldCost>
 					<YieldType>YIELD_HAMMERS</YieldType>
@@ -16234,7 +16247,7 @@
 			<bOnlyDefensive>0</bOnlyDefensive>
 			<bNoCapture>0</bNoCapture>
 			<bQuickCombat>0</bQuickCombat>
-			<bRivalTerritory>0</bRivalTerritory>
+			<bRivalTerritory>1</bRivalTerritory>
 			<bMilitaryProduction>0</bMilitaryProduction>
 			<bFound>1</bFound>
 			<bInvisible>0</bInvisible>
@@ -16256,6 +16269,14 @@
 				</UnitAI>
 				<UnitAI>
 					<UnitAIType>UNITAI_SCOUT</UnitAIType>
+					<bUnitAI>1</bUnitAI>
+				</UnitAI>
+				<UnitAI>
+					<UnitAIType>UNITAI_OFFENSIVE</UnitAIType>
+					<bUnitAI>1</bUnitAI>
+				</UnitAI>
+				<UnitAI>
+					<UnitAIType>UNITAI_DEFENSIVE</UnitAIType>
 					<bUnitAI>1</bUnitAI>
 				</UnitAI>
 			</UnitAIs>

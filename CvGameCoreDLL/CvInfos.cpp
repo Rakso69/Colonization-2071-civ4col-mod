@@ -1456,8 +1456,14 @@ int CvProfessionInfo::getNumYieldsProduced() const
 ///TKs Invention Core Mod v 1.0
 int CvProfessionInfo::getYieldsConsumed(int i, PlayerTypes eCurrentPlayer) const
 {
+    //Kaszkaj fix: ..\CvGlobals.cpp, Line:  1489, Expression:  eYieldNum > -1.
+    // Return NO_YIELD for missing inputs; read research inputs only for the supplied human player.
+    if (i < 0)
+    {
+        return NO_YIELD;
+    }
 
-    if (getYieldsProduced(0) == YIELD_IDEAS && eCurrentPlayer != NO_PLAYER)
+    if (getNumYieldsProduced() > 0 && getYieldsProduced(0) == YIELD_IDEAS && eCurrentPlayer != NO_PLAYER)
     {
         if (GET_PLAYER(eCurrentPlayer).isHuman())
         {
@@ -1484,26 +1490,27 @@ int CvProfessionInfo::getYieldsConsumed(int i, PlayerTypes eCurrentPlayer) const
 
                 }
 
-                return YIELD_IDEAS;
+                return NO_YIELD;
 
             }
             else
             {
-                return -1;
+                return NO_YIELD;
             }
         }
 
     }
 
-	return m_aiYieldsConsumed[i];
+	return i < (int)m_aiYieldsConsumed.size() ? m_aiYieldsConsumed[i] : NO_YIELD;
 }
 
 int CvProfessionInfo::getNumYieldsConsumed(PlayerTypes eCurrentPlayer) const
 {
-
-    if (getYieldsProduced(0) == YIELD_IDEAS && eCurrentPlayer != NO_PLAYER)
+    //Kaszkaj fix: ..\CvGlobals.cpp, Line:  1490, Expression:  eYieldNum < NUM_YIELD_TYPES.
+    // Count the same inputs as getYieldsConsumed: this human player's research, or the XML list for AI.
+    if (getNumYieldsProduced() > 0 && getYieldsProduced(0) == YIELD_IDEAS && eCurrentPlayer != NO_PLAYER && GET_PLAYER(eCurrentPlayer).isHuman())
     {
-        CivicTypes eCurrentResearch = (CivicTypes)GET_PLAYER(GC.getGameINLINE().getActivePlayer()).getCurrentResearch();
+        CivicTypes eCurrentResearch = (CivicTypes)GET_PLAYER(eCurrentPlayer).getCurrentResearch();
 
         if (eCurrentResearch != NO_CIVIC)
         {
@@ -3048,14 +3055,14 @@ int CvUnitInfo::getDomainModifier(int i) const
 }
 int CvUnitInfo::getYieldModifier(int i) const
 {
-	// Kaszkaj fix: .\.\CvInfos.cpp, Line:  3051, Expression:  i < NUM_YIELD_TYPES.
-	// Invalid yield indices return a neutral modifier and are logged instead of reading outside the array.
+	//Kaszkaj fix: .\.\CvInfos.cpp, Line:  3051, Expression:  i < NUM_YIELD_TYPES.
+	// Return zero and log invalid yield indices before reading the modifier array.
 	if (i < 0 || i >= NUM_YIELD_TYPES)
 	{
 		if (gDLL != NULL)
 		{
 			CvString szMessage = CvString::format("CvUnitInfo::getYieldModifier: Unit=%s YieldIndex=%d NumYieldTypes=%d; using 0.", getType() != NULL ? getType() : "UNKNOWN", i, NUM_YIELD_TYPES);
-			gDLL->logMsg("KaszkajFix.log", szMessage.c_str());
+			gDLL->logMsg("AssertFixes.log", szMessage.c_str());
 		}
 		return 0;
 	}
@@ -3895,7 +3902,8 @@ m_iIncreasedEnemyHealRate(0),
 m_iCenterPlotFoodBonus(0),
 m_iFreeHurriedImmigrants(0),
 m_iGoldBonusForFirstToResearch(0),
-m_iProlificInventorRateChange(0),
+//Kaszkaj - Initialize the civic Inventor rate to zero.
+m_iInventorRateChange(0),
 m_iGoldBonus(0),
 m_iFreeTechs(0),
 m_iKingTreasureTransportMod(0),
@@ -4117,9 +4125,10 @@ int CvCivicInfo::getGoldBonusForFirstToResearch() const
 	return m_iGoldBonusForFirstToResearch;
 }
 
-int CvCivicInfo::getProlificInventorRateChange() const
+//Kaszkaj - Return the civic Inventor rate under the name used by XML.
+int CvCivicInfo::getInventorRateChange() const
 {
-	return m_iProlificInventorRateChange;
+	return m_iInventorRateChange;
 }
 
 int CvCivicInfo::getRouteMovementMod(int i) const
@@ -4342,7 +4351,8 @@ void CvCivicInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iCheaperPopulationGrowth);
 	stream->Read(&m_iIncreasedEnemyHealRate);
 	stream->Read(&m_iCenterPlotFoodBonus);
-	stream->Read(&m_iProlificInventorRateChange);
+	//Kaszkaj - Read the renamed Inventor rate from its existing cache field.
+	stream->Read(&m_iInventorRateChange);
 	stream->Read(&m_iFreeHurriedImmigrants);
 	stream->Read(&m_iGoldBonusForFirstToResearch);
 	stream->Read(&m_iGoldBonus);
@@ -4479,7 +4489,8 @@ void CvCivicInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iIncreasedEnemyHealRate);
 	stream->Write(m_iGoldBonusForFirstToResearch);
 	stream->Write(m_iFreeHurriedImmigrants);
-	stream->Write(m_iProlificInventorRateChange);
+	//Kaszkaj - Write the renamed Inventor rate to its existing cache field.
+	stream->Write(m_iInventorRateChange);
 	stream->Write(m_iGoldBonus);
 	stream->Write(m_iFreeTechs);
 	stream->Write(m_iKingTreasureTransportMod);
@@ -4575,7 +4586,7 @@ bool CvCivicInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iIncreasedEnemyHealRate, "iIncreasedEnemyHealRate");
 	pXML->GetChildXmlValByName(&m_iGoldBonusForFirstToResearch, "iGoldBonusForFirstToResearch");
 	pXML->GetChildXmlValByName(&m_iFreeHurriedImmigrants, "iFreeHurriedImmigrants");
-	pXML->GetChildXmlValByName(&m_iProlificInventorRateChange, "iProlificInventorRateChange");
+	pXML->GetChildXmlValByName(&m_iInventorRateChange, "iInventorRateChange");
 	pXML->GetChildXmlValByName(&m_iGoldBonus, "iGoldBonus");
 	pXML->GetChildXmlValByName(&m_iFreeTechs, "iFreeTechs");
 	pXML->GetChildXmlValByName(&m_iKingTreasureTransportMod, "iKingTreasureTransportMod");
@@ -6730,6 +6741,8 @@ m_iAITrainPercent(0),
 m_iAIConstructPercent(0),
 m_iAIUnitUpgradePercent(0),
 m_iAIHurryPercent(0),
+//Kaszkaj - Default AI immigration to a 10% base chance when no setting is available.
+m_iAIImmigration(10),
 m_iAIExtraTradePercent(0),
 m_iAIPerEraModifier(0),
 m_iAIAdvancedStartPercent(0),
@@ -6838,6 +6851,11 @@ int CvHandicapInfo::getAIHurryPercent() const
 {
 	return m_iAIHurryPercent;
 }
+//Kaszkaj - Return the AI immigration chance for this difficulty level.
+int CvHandicapInfo::getAIImmigration() const
+{
+	return m_iAIImmigration;
+}
 int CvHandicapInfo::getAIExtraTradePercent() const
 {
 	return m_iAIExtraTradePercent;
@@ -6928,11 +6946,18 @@ void CvHandicapInfo::read(FDataStreamBase* stream)
 	SAFE_DELETE_ARRAY(m_aiGoodies);
 	m_aiGoodies = new int[getNumGoodies()];
 	stream->Read(getNumGoodies(), m_aiGoodies);
+	//Kaszkaj - Read AI immigration from new caches; use 10% for older caches.
+	m_iAIImmigration = 10;
+	if (uiFlag >= 1)
+	{
+		stream->Read(&m_iAIImmigration);
+	}
 }
 void CvHandicapInfo::write(FDataStreamBase* stream)
 {
 	CvInfoBase::write(stream);
-	uint uiFlag=0;
+	//Kaszkaj - Mark caches that include the AI immigration setting.
+	uint uiFlag=1;
 	stream->Write(uiFlag);		// Flag for Expansion
 	stream->Write(m_iAdvancedStartPointsMod);
 	stream->Write(m_iStartingGold);
@@ -6968,6 +6993,8 @@ void CvHandicapInfo::write(FDataStreamBase* stream)
 	stream->WriteString(m_szHandicapName);
 	// Arrays
 	stream->Write(getNumGoodies(), m_aiGoodies);
+	//Kaszkaj - Append the AI immigration chance after the existing cache fields.
+	stream->Write(m_iAIImmigration);
 }
 bool CvHandicapInfo::read(CvXMLLoadUtility* pXML)
 {
@@ -6997,6 +7024,8 @@ bool CvHandicapInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iAIConstructPercent, "iAIConstructPercent");
 	pXML->GetChildXmlValByName(&m_iAIUnitUpgradePercent, "iAIUnitUpgradePercent");
 	pXML->GetChildXmlValByName(&m_iAIHurryPercent, "iAIHurryPercent");
+	//Kaszkaj - Read iAIImmigration from XML, keeping 10% when the tag is missing.
+	pXML->GetChildXmlValByName(&m_iAIImmigration, "iAIImmigration", 10);
 	pXML->GetChildXmlValByName(&m_iAIExtraTradePercent, "iAIExtraTradePercent");
 	pXML->GetChildXmlValByName(&m_iAIPerEraModifier, "iAIPerEraModifier");
 	pXML->GetChildXmlValByName(&m_iAIAdvancedStartPercent, "iAIAdvancedStartPercent");
@@ -7618,7 +7647,8 @@ m_bWater(false),
 m_bGoody(false),
 m_bPermanent(false),
 m_bUseLSystem(false),
-m_bOutsideBorders(false),
+//Kaszkaj - Default bOutsideBorders to 0, requiring the player's team territory.
+m_iOutsideBorders(0),
 m_iWorldSoundscapeScriptId(0),
 m_aiPrereqNatureYield(NULL),
 m_aiYieldIncrease(NULL),
@@ -7682,9 +7712,14 @@ int CvImprovementInfo::getPillageGold() const
 {
 	return m_iPillageGold;
 }
+//Kaszkaj - Return bOutsideBorders as 0, 1 or 2; keep the old boolean getter.
+int CvImprovementInfo::getOutsideBorders() const
+{
+	return m_iOutsideBorders;
+}
 bool CvImprovementInfo::isOutsideBorders() const
 {
-	return m_bOutsideBorders;
+	return getOutsideBorders() > 0;
 }
 int CvImprovementInfo::getImprovementPillage() const
 {
@@ -7878,7 +7913,22 @@ void CvImprovementInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_bGoody);
 	stream->Read(&m_bPermanent);
 	stream->Read(&m_bUseLSystem);
-	stream->Read(&m_bOutsideBorders);
+	//Kaszkaj - Read integer border modes from new caches and boolean values from old caches.
+	if (uiFlag & 1)
+	{
+		stream->Read(&m_iOutsideBorders);
+	}
+	else
+	{
+		bool bOutsideBorders = false;
+		stream->Read(&bOutsideBorders);
+		m_iOutsideBorders = bOutsideBorders ? 1 : 0;
+	}
+	FAssertMsg(m_iOutsideBorders >= 0 && m_iOutsideBorders <= 2, "Invalid cached bOutsideBorders mode");
+	if (m_iOutsideBorders < 0 || m_iOutsideBorders > 2)
+	{
+		m_iOutsideBorders = 0;
+	}
 	stream->ReadString(m_szArtDefineTag);
 	stream->Read(&m_iWorldSoundscapeScriptId);
 	// Arrays
@@ -7921,7 +7971,8 @@ void CvImprovementInfo::read(FDataStreamBase* stream)
 void CvImprovementInfo::write(FDataStreamBase* stream)
 {
 	CvInfoBase::write(stream);
-	uint uiFlag=0;
+	//Kaszkaj - Mark caches that store bOutsideBorders as an integer.
+	uint uiFlag=1;
 	stream->Write(uiFlag);		// flag for expansion
 	stream->Write(m_iAdvancedStartCost);
 	stream->Write(m_iAdvancedStartCostIncrease);
@@ -7943,7 +7994,7 @@ void CvImprovementInfo::write(FDataStreamBase* stream)
 	stream->Write(m_bGoody);
 	stream->Write(m_bPermanent);
 	stream->Write(m_bUseLSystem);
-	stream->Write(m_bOutsideBorders);
+	stream->Write(m_iOutsideBorders);
 	stream->WriteString(m_szArtDefineTag);
 	stream->Write(m_iWorldSoundscapeScriptId);
 	// Arrays
@@ -7995,7 +8046,13 @@ bool CvImprovementInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iUpgradeTime, "iUpgradeTime");
 	pXML->GetChildXmlValByName(&m_iDefenseModifier, "iDefenseModifier");
 	pXML->GetChildXmlValByName(&m_iPillageGold, "iPillageGold");
-	pXML->GetChildXmlValByName(&m_bOutsideBorders, "bOutsideBorders");
+	//Kaszkaj - Read bOutsideBorders from XML and reject values outside 0, 1 and 2.
+	pXML->GetChildXmlValByName(&m_iOutsideBorders, "bOutsideBorders", 0);
+	if (m_iOutsideBorders < 0 || m_iOutsideBorders > 2)
+	{
+		FAssertMsg(false, "bOutsideBorders must be 0, 1 or 2");
+		return false;
+	}
 	pXML->SetVariableListTagPair(&m_abTerrainMakesValid, "TerrainMakesValids", GC.getNumTerrainInfos(), false);
 	pXML->SetVariableListTagPair(&m_abFeatureMakesValid, "FeatureMakesValids", GC.getNumFeatureInfos(), false);
 	if (gDLL->getXMLIFace()->SetToChildByTagName(pXML->GetXML(),"BonusTypeStructs"))

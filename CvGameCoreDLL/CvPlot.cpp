@@ -166,6 +166,8 @@ void CvPlot::reset(int iX, int iY, bool bConstructorCall)
 	m_bImpassable = false;
 
 	m_eOwner = NO_PLAYER;
+	//Kaszkaj - Clear the excavation builder when resetting a plot.
+	m_eExcavationBuilder = NO_PLAYER;
 	m_ePlotType = PLOT_OCEAN;
 	m_eTerrainType = NO_TERRAIN;
 	m_eFeatureType = NO_FEATURE;
@@ -1730,22 +1732,13 @@ bool CvPlot::canBuild(BuildTypes eBuild, PlayerTypes ePlayer, bool bTestVisible)
 			}
 		}
 
-		if (!bTestVisible)
+		//Kaszkaj - bOutsideBorders: 0 team territory, 1 team or neutral territory, 2 any territory.
+		if (!bTestVisible && GET_PLAYER(ePlayer).getTeam() != getTeam())
 		{
-			if (GET_PLAYER(ePlayer).getTeam() != getTeam())
+			int iOutsideBorders = GC.getImprovementInfo(eImprovement).getOutsideBorders();
+			if (iOutsideBorders == 0 || (iOutsideBorders == 1 && getTeam() != NO_TEAM))
 			{
-				//outside borders can't be built in other's culture
-				if (GC.getImprovementInfo(eImprovement).isOutsideBorders())
-				{
-					if (getTeam() != NO_TEAM)
-					{
-						return false;
-					}
-				}
-				else //only buildable in own culture
-				{
-					return false;
-				}
+				return false;
 			}
 		}
 
@@ -1792,7 +1785,10 @@ bool CvPlot::canBuild(BuildTypes eBuild, PlayerTypes ePlayer, bool bTestVisible)
 	{
 		if (GC.getBuildInfo(eBuild).isFeatureRemove(getFeatureType()))
 		{
-			if (isOwned() && (GET_PLAYER(ePlayer).getTeam() != getTeam()) && !atWar(GET_PLAYER(ePlayer).getTeam(), getTeam()))
+			//Kaszkaj - Allow mode 2 construction to remove a feature on foreign territory during peace.
+			if ((eImprovement == NO_IMPROVEMENT
+				|| GC.getImprovementInfo(eImprovement).getOutsideBorders() != 2)
+				&& isOwned() && (GET_PLAYER(ePlayer).getTeam() != getTeam()) && !atWar(GET_PLAYER(ePlayer).getTeam(), getTeam()))
 			{
 				return false;
 			}
@@ -4299,6 +4295,12 @@ void CvPlot::setImprovementType(ImprovementTypes eNewValue)
 			}
 		}
 
+		//Kaszkaj - Clear the recorded builder when an excavation is replaced or removed.
+		if (eNewValue == NO_IMPROVEMENT
+			|| strcmp(GC.getImprovementInfo(eNewValue).getType(), "IMPROVEMENT_EXCAVATION") != 0)
+		{
+			m_eExcavationBuilder = NO_PLAYER;
+		}
 		m_eImprovementType = eNewValue;
 
 		if (getImprovementType() == NO_IMPROVEMENT)
@@ -5555,6 +5557,25 @@ void CvPlot::changeVisibilityCount(TeamTypes eTeam, int iChange, InvisibleTypes 
 			{
 				setRevealed(eTeam, true, false, NO_TEAM);
 
+				//Kaszkaj - Discover barbarians when their territory or visible units enter the human team's sight.
+				if (GET_TEAM(eTeam).isHuman())
+				{
+					if (isOwned() && GET_TEAM(getTeam()).isBarbarian())
+					{
+						GET_TEAM(eTeam).meet(getTeam(), true);
+					}
+
+					for (CLLNode<IDInfo>* pUnitNode = headUnitNode(); pUnitNode != NULL; pUnitNode = nextUnitNode(pUnitNode))
+					{
+						CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
+						if (pLoopUnit != NULL && GET_PLAYER(pLoopUnit->getOwnerINLINE()).isBarbarian() &&
+							!pLoopUnit->isInvisible(eTeam, false) && pLoopUnit->getVisualOwner(eTeam) == pLoopUnit->getOwnerINLINE())
+						{
+							GET_TEAM(eTeam).meet(pLoopUnit->getTeam(), true);
+						}
+					}
+				}
+
 				for (iI = 0; iI < NUM_DIRECTION_TYPES; ++iI)
 				{
 					pAdjacentPlot = plotDirection(getX_INLINE(), getY_INLINE(), ((DirectionTypes)iI));
@@ -6159,7 +6180,7 @@ int CvPlot::getBuildProgress(BuildTypes eBuild) const
 
 
 // Returns true if build finished...
-bool CvPlot::changeBuildProgress(BuildTypes eBuild, int iChange, TeamTypes eTeam)
+bool CvPlot::changeBuildProgress(BuildTypes eBuild, int iChange, TeamTypes eTeam, PlayerTypes eBuilder)
 {
 	CvWString szBuffer;
 	bool bFinished = false;
@@ -6181,6 +6202,16 @@ bool CvPlot::changeBuildProgress(BuildTypes eBuild, int iChange, TeamTypes eTeam
 		if (getBuildProgress(eBuild) >= getBuildTime(eBuild))
 		{
 			m_paiBuildProgress[eBuild] = 0;
+
+			//Kaszkaj - Record who finishes the excavation before installing the improvement.
+			ImprovementTypes eBuiltImprovement = (ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement();
+			if (eBuiltImprovement != NO_IMPROVEMENT
+				&& strcmp(GC.getImprovementInfo(eBuiltImprovement).getType(), "IMPROVEMENT_EXCAVATION") == 0
+				&& eBuilder >= 0 && eBuilder < MAX_PLAYERS && GET_PLAYER(eBuilder).isAlive()
+				&& GET_PLAYER(eBuilder).getTeam() == eTeam)
+			{
+				m_eExcavationBuilder = eBuilder;
+			}
 
 			if (GC.getBuildInfo(eBuild).getImprovement() != NO_IMPROVEMENT)
 			{
@@ -6229,6 +6260,70 @@ bool CvPlot::changeBuildProgress(BuildTypes eBuild, int iChange, TeamTypes eTeam
 	return bFinished;
 }
 
+
+//Kaszkaj - Return the excavation builder, regardless of who owns the plot.
+PlayerTypes CvPlot::getExcavationBuilder() const
+{
+	return m_eExcavationBuilder;
+}
+
+//Kaszkaj - Check excavation events for the builder using the normal activation and chance rules.
+void CvPlot::triggerExcavationEvent(PlayerTypes eBuilder)
+{
+	if (eBuilder < 0 || eBuilder >= MAX_PLAYERS || m_eExcavationBuilder != eBuilder
+		|| getImprovementType() == NO_IMPROVEMENT
+		|| strcmp(GC.getImprovementInfo(getImprovementType()).getType(), "IMPROVEMENT_EXCAVATION") != 0
+		|| GC.getGameINLINE().isOption(GAMEOPTION_NO_EVENTS))
+	{
+		return;
+	}
+
+	CvPlayer& kBuilder = GET_PLAYER(eBuilder);
+	std::vector< std::pair<EventTriggerTypes, int> > aTriggers;
+	int iTotalWeight = 0;
+	for (int i = 0; i < GC.getNumEventTriggerInfos(); ++i)
+	{
+		EventTriggerTypes eTrigger = (EventTriggerTypes)i;
+		if (strncmp(GC.getEventTriggerInfo(eTrigger).getType(), "EVENTTRIGGER_EXCAV_", 18) != 0
+			|| !canTrigger(eTrigger, eBuilder))
+		{
+			continue;
+		}
+		int iWeight = kBuilder.getEventTriggerWeight(eTrigger);
+		if (iWeight < 0)
+		{
+			if (NULL != kBuilder.initTriggeredData(eTrigger, true, -1, getX_INLINE(), getY_INLINE()))
+			{
+				return;
+			}
+		}
+		else if (iWeight > 0)
+		{
+			iTotalWeight += iWeight;
+				aTriggers.push_back(std::make_pair(eTrigger, iTotalWeight));
+		}
+	}
+
+	if (iTotalWeight == 0
+		|| GC.getGameINLINE().getElapsedGameTurns() < GC.getDefineINT("FIRST_EVENT_DELAY_TURNS"))
+	{
+		return;
+	}
+	if (GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("EVENT_PROBABILITY_ROLL_SIDES"), "Excavation event check")
+		>= GC.getEraInfo(kBuilder.getCurrentEra()).getEventChancePerTurn())
+	{
+		return;
+	}
+	int iRoll = GC.getGameINLINE().getSorenRandNum(iTotalWeight, "Excavation event trigger");
+	for (uint i = 0; i < aTriggers.size(); ++i)
+	{
+		if (iRoll < aTriggers[i].second)
+		{
+			kBuilder.initTriggeredData(aTriggers[i].first, true, -1, getX_INLINE(), getY_INLINE());
+			return;
+		}
+	}
+}
 
 void CvPlot::updateFeatureSymbolVisibility()
 {
@@ -6774,6 +6869,22 @@ void CvPlot::addUnit(CvUnit* pUnit, bool bUpdate)
 		m_units.insertAtEnd(pUnit->getIDInfo());
 	}
 
+	//Kaszkaj - Reveal the barbarian leader when a unit enters a plot the human team can already see.
+	if (GET_PLAYER(pUnit->getOwnerINLINE()).isBarbarian())
+	{
+		for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)
+		{
+			TeamTypes eTeam = (TeamTypes) iTeam;
+			CvTeam& kTeam = GET_TEAM(eTeam);
+			if (kTeam.isAlive() && kTeam.isHuman() && !kTeam.isHasMet(pUnit->getTeam()) &&
+				isVisible(eTeam, false) && !pUnit->isInvisible(eTeam, false) &&
+				pUnit->getVisualOwner(eTeam) == pUnit->getOwnerINLINE())
+			{
+				kTeam.meet(pUnit->getTeam(), true);
+			}
+		}
+	}
+
 	if (bUpdate)
 	{
 		updateCenterUnit();
@@ -7277,6 +7388,19 @@ void CvPlot::read(FDataStreamBase* pStream)
 	}
 
 	m_units.Read(pStream);
+
+	//Kaszkaj - Load the excavation builder when the save contains it; keep older saves readable.
+	if (uiFlag & 1)
+	{
+		int iExcavationBuilder;
+		pStream->Read(&iExcavationBuilder);
+		if (iExcavationBuilder >= 0 && iExcavationBuilder < MAX_PLAYERS
+			&& getImprovementType() != NO_IMPROVEMENT
+			&& strcmp(GC.getImprovementInfo(getImprovementType()).getType(), "IMPROVEMENT_EXCAVATION") == 0)
+		{
+			m_eExcavationBuilder = (PlayerTypes)iExcavationBuilder;
+		}
+	}
 }
 
 //
@@ -7287,7 +7411,8 @@ void CvPlot::write(FDataStreamBase* pStream)
 {
 	uint iI;
 
-	uint uiFlag=0;
+	//Kaszkaj - Mark saves that contain the excavation builder field.
+	uint uiFlag=1;
 	pStream->Write(uiFlag);		// flag for expansion
 
 	pStream->Write(m_iX);
@@ -7479,6 +7604,8 @@ void CvPlot::write(FDataStreamBase* pStream)
 	}
 
 	m_units.Write(pStream);
+	//Kaszkaj - Save the excavation builder so rewards still go to the same player after loading.
+	pStream->Write((int)m_eExcavationBuilder);
 }
 
 void CvPlot::setLayoutDirty(bool bDirty)
@@ -7758,7 +7885,19 @@ bool CvPlot::canTrigger(EventTriggerTypes eTrigger, PlayerTypes ePlayer) const
 
 	CvEventTriggerInfo& kTrigger = GC.getEventTriggerInfo(eTrigger);
 
-	if (kTrigger.isOwnPlot() && getOwnerINLINE() != ePlayer)
+	//Kaszkaj - Use the excavation builder as the event owner, regardless of plot ownership.
+	bool bRecordedExcavation = m_eExcavationBuilder >= 0 && m_eExcavationBuilder < MAX_PLAYERS
+		&& getImprovementType() != NO_IMPROVEMENT
+		&& strcmp(GC.getImprovementInfo(getImprovementType()).getType(), "IMPROVEMENT_EXCAVATION") == 0
+		&& strncmp(kTrigger.getType(), "EVENTTRIGGER_EXCAV_", 18) == 0;
+	if (bRecordedExcavation)
+	{
+		if (m_eExcavationBuilder != ePlayer)
+		{
+			return false;
+		}
+	}
+	else if (kTrigger.isOwnPlot() && getOwnerINLINE() != ePlayer)
 	{
 		return false;
 	}

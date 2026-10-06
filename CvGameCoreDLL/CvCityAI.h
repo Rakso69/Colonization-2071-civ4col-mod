@@ -88,6 +88,8 @@ public:
 
 	int AI_playerCloseness(PlayerTypes eIndex, int iMaxDistance) const;
 	int AI_cityThreat(bool bDangerPercent = false) const;
+	//Kaszkaj - Declare the helper that values buildings for the city's available experts.
+	int AI_expertBuildingValue(BuildingTypes eBuilding) const;
 
 	int AI_getWorkersHave() const;
 	int AI_getWorkersNeeded() const;

@@ -5600,5 +5600,19 @@
 				</Response>
 			</Responses>
 		</DiplomacyInfo>
+		<DiplomacyInfo>
+			<Type>AI_DIPLOCOMMENT_KING_ULTIMATE_INSULT</Type>
+			<Responses>
+				<Response>
+					<Civilizations/>
+					<Leaders/>
+					<Attitudes/>
+					<DiplomacyPowers/>
+					<DiplomacyText>
+						<Text>AI_DIPLO_KING_ULTIMATE_INSULT</Text>
+					</DiplomacyText>
+				</Response>
+			</Responses>
+		</DiplomacyInfo>
 	</DiplomacyInfos>
 </Civ4DiplomacyInfos>

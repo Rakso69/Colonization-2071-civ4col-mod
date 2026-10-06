@@ -786,7 +786,10 @@ int pathDestValid(int iToX, int iToY, const void* pointer, FAStar* finder)
 	{
 		if (!(gDLL->getFAStarIFace()->GetInfo(finder) & MOVE_IGNORE_DANGER))
 		{
-			if (!(pSelectionGroup->canFight()) && !(pSelectionGroup->alwaysInvisible()))
+			//Kaszkaj - Avoid dangerous paths for unarmed units, civilians and transports.
+			if ((!pSelectionGroup->canFight()
+				|| GET_PLAYER(pSelectionGroup->getHeadOwner()).AI_needsProtection(pSelectionGroup->getHeadUnitAI()))
+				&& !pSelectionGroup->alwaysInvisible())
 			{
 				if (GET_PLAYER(pSelectionGroup->getHeadOwner()).AI_getPlotDanger(pToPlot) > 0)
 				{
@@ -795,7 +798,8 @@ int pathDestValid(int iToX, int iToY, const void* pointer, FAStar* finder)
 			}
 		}
 
-		if (pSelectionGroup->getDomainType() == DOMAIN_LAND)
+		//Kaszkaj - Allow all-terrain units to find paths across separate land and water areas.
+		if (pSelectionGroup->getDomainType() == DOMAIN_LAND && !pSelectionGroup->canMoveAllTerrain())
 		{
 			int iGroupAreaID = pSelectionGroup->getArea();
 			if (pToPlot->getArea() != iGroupAreaID)
@@ -1037,8 +1041,8 @@ int pathValid(FAStarNode* parent, FAStarNode* node, int data, const void* pointe
 
 	pSelectionGroup = ((CvSelectionGroup *)pointer);
 
-	// XXX might want to take this out...
-	if (pSelectionGroup->getDomainType() == DOMAIN_SEA)
+	//Kaszkaj - Apply the land-corner restriction only to ships that cannot move on land.
+	if (pSelectionGroup->getDomainType() == DOMAIN_SEA && !pSelectionGroup->canMoveAllTerrain())
 	{
 		if (pFromPlot->isWater() && pToPlot->isWater())
 		{
@@ -1089,7 +1093,10 @@ int pathValid(FAStarNode* parent, FAStarNode* node, int data, const void* pointe
 		{
 			if (!(gDLL->getFAStarIFace()->GetInfo(finder) & MOVE_IGNORE_DANGER))
 			{
-				if (!(pSelectionGroup->canFight()) && !(pSelectionGroup->alwaysInvisible()))
+				//Kaszkaj - Avoid dangerous paths for unarmed units, civilians and transports.
+				if ((!pSelectionGroup->canFight()
+					|| GET_PLAYER(pSelectionGroup->getHeadOwner()).AI_needsProtection(pSelectionGroup->getHeadUnitAI()))
+					&& !pSelectionGroup->alwaysInvisible())
 				{
 					if (GET_PLAYER(pSelectionGroup->getHeadOwner()).AI_getPlotDanger(pFromPlot) > 0)
 					{

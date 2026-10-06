@@ -2903,12 +2903,14 @@ int CvCity::getProfessionOutput(ProfessionTypes eProfession, const CvUnit* pUnit
 
 	if (pUnit != NULL)
 	{
-	    ///TK COAL
-	    if (eProfession == (ProfessionTypes)GC.getDefineINT("PROFESSION_COAL_BURNER"))
+	    ///TK Hydrocarbons
+	    //Kaszkaj - Apply the Pioneer production bonus to the Refinery Worker profession defined in XML.
+	    if (eProfession == (ProfessionTypes)GC.getDefineINT("PROFESSION_REFINERY_WORKER"))
 	    {
 	        if (pUnit->getUnitClassType() == GC.getDefineINT("UNITCLASS_PIONEER"))
 	        {
-	            iModifier += GC.getDefineINT("TK_PIONEER_COAL_FURNACE_BONUS");
+	            //Kaszkaj - Read the Pioneer production bonus from the renamed XML setting with its original TK_ prefix.
+	            iModifier += GC.getDefineINT("TK_PIONEER_REFINERY_WORKER_PRODUCTION_BONUS");
 	        }
 	    }
 	    else
@@ -3956,31 +3958,33 @@ int CvCity::getBaseRawYieldProduced(YieldTypes eYieldType) const
 		return 0;
 	}
 	CvPlayer& owner = GET_PLAYER(getOwnerINLINE());
-    ///TK Coal
+    ///TK Hydrocarbons
 	int iExtra = 0;
-	if (eYieldType != YIELD_HYDROCARBONS && isHasRealBuilding((BuildingTypes)GC.getDefineINT("STEAMWORKS_BUILDING")))
+	//Kaszkaj - Use the Oil Refinery settings when calculating raw production.
+	if (eYieldType != YIELD_HYDROCARBONS && isHasRealBuilding((BuildingTypes)GC.getDefineINT("BUILDING_OIL_REFINERY")))
 	{
-        int iConsumedCoal = getRawYieldConsumed(YIELD_HYDROCARBONS);
+        int iConsumedHydrocarbons = getRawYieldConsumed(YIELD_HYDROCARBONS);
 
-        if (iConsumedCoal > 0)
+        if (iConsumedHydrocarbons > 0)
         {
-            int iCoalMod = getYieldStored(YIELD_HYDROCARBONS) + getBaseRawYieldProduced(YIELD_HYDROCARBONS) * getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedCoal;
-            if (iCoalMod != -iConsumedCoal)
+            int iHydrocarbonsSurplus = getYieldStored(YIELD_HYDROCARBONS) + getBaseRawYieldProduced(YIELD_HYDROCARBONS) * getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedHydrocarbons;
+            if (iHydrocarbonsSurplus != -iConsumedHydrocarbons)
             {
-                int SteamWorksMod = std::max(1, GC.getDefineINT("TK_STEAMWORKS_MODIFIER"));
-                if (iCoalMod != -iConsumedCoal)
+                //Kaszkaj - Read refinery consumption from the renamed XML setting with its original TK_ prefix.
+                int iOilRefineryProductionDivisor = std::max(1, GC.getDefineINT("TK_OIL_REFINERY_HYDROCARBONS_PER_PRODUCTION"));
+                if (iHydrocarbonsSurplus != -iConsumedHydrocarbons)
                 {
-                    if (iCoalMod > iConsumedCoal && iCoalMod != 0)
+                    if (iHydrocarbonsSurplus > iConsumedHydrocarbons && iHydrocarbonsSurplus != 0)
                     {
-                        iExtra = iConsumedCoal / SteamWorksMod;
+                        iExtra = iConsumedHydrocarbons / iOilRefineryProductionDivisor;
                     }
-                    else if (iCoalMod < iConsumedCoal)
+                    else if (iHydrocarbonsSurplus < iConsumedHydrocarbons)
                     {
-                        iExtra = (iConsumedCoal + iCoalMod) / SteamWorksMod;
+                        iExtra = (iConsumedHydrocarbons + iHydrocarbonsSurplus) / iOilRefineryProductionDivisor;
                     }
-                    else if (iCoalMod == 0)
+                    else if (iHydrocarbonsSurplus == 0)
                     {
-                        iExtra = iConsumedCoal / SteamWorksMod;
+                        iExtra = iConsumedHydrocarbons / iOilRefineryProductionDivisor;
                     }
                 }
             }
@@ -4011,7 +4015,7 @@ int CvCity::getBaseRawYieldProduced(YieldTypes eYieldType) const
 		}
 	}
 
-	 ///TK Coal
+	 ///TK Hydrocarbons
 	if (iCityYieldProduction > 0 && GC.getYieldInfo(eYieldType).getUnitClass() != NO_UNITCLASS && eYieldType != YIELD_HYDROCARBONS)
 	{
 
@@ -4077,28 +4081,30 @@ int CvCity::getRawYieldConsumed(YieldTypes eYieldType) const
 	{
 		iYieldConsumed = getPopulation() * GC.getFOOD_CONSUMPTION_PER_POPULATION();
 	}
-    ///TK Coal
+    ///TK Hydrocarbons
 	int iExtra = 0;
-	if (eYieldType != YIELD_HYDROCARBONS && isHasRealBuilding((BuildingTypes)GC.getDefineINT("STEAMWORKS_BUILDING")))
+	//Kaszkaj - Use the Oil Refinery settings when calculating input consumption.
+	if (eYieldType != YIELD_HYDROCARBONS && isHasRealBuilding((BuildingTypes)GC.getDefineINT("BUILDING_OIL_REFINERY")))
 	{
-        int iConsumedCoal = getRawYieldConsumed(YIELD_HYDROCARBONS);
-        if (iConsumedCoal > 0)
+        int iConsumedHydrocarbons = getRawYieldConsumed(YIELD_HYDROCARBONS);
+        if (iConsumedHydrocarbons > 0)
         {
-            int iCoalMod = getYieldStored(YIELD_HYDROCARBONS) + getBaseRawYieldProduced(YIELD_HYDROCARBONS) * getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedCoal;
-            int SteamWorksMod = std::max(1, GC.getDefineINT("TK_STEAMWORKS_MODIFIER"));
-            if (iCoalMod != -iConsumedCoal)
+            int iHydrocarbonsSurplus = getYieldStored(YIELD_HYDROCARBONS) + getBaseRawYieldProduced(YIELD_HYDROCARBONS) * getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedHydrocarbons;
+            //Kaszkaj - Read refinery consumption from the renamed XML setting with its original TK_ prefix.
+            int iOilRefineryProductionDivisor = std::max(1, GC.getDefineINT("TK_OIL_REFINERY_HYDROCARBONS_PER_PRODUCTION"));
+            if (iHydrocarbonsSurplus != -iConsumedHydrocarbons)
             {
-                if (iCoalMod > iConsumedCoal && iCoalMod != 0)
+                if (iHydrocarbonsSurplus > iConsumedHydrocarbons && iHydrocarbonsSurplus != 0)
                 {
-                    iExtra = iConsumedCoal / SteamWorksMod;
+                    iExtra = iConsumedHydrocarbons / iOilRefineryProductionDivisor;
                 }
-                else if (iCoalMod < iConsumedCoal)
+                else if (iHydrocarbonsSurplus < iConsumedHydrocarbons)
                 {
-                    iExtra = (iConsumedCoal + iCoalMod) / SteamWorksMod;
+                    iExtra = (iConsumedHydrocarbons + iHydrocarbonsSurplus) / iOilRefineryProductionDivisor;
                 }
-                else if (iCoalMod == 0)
+                else if (iHydrocarbonsSurplus == 0)
                 {
-                    iExtra = iConsumedCoal / SteamWorksMod;
+                    iExtra = iConsumedHydrocarbons / iOilRefineryProductionDivisor;
                 }
             }
         }
@@ -4140,7 +4146,7 @@ int CvCity::getRawYieldConsumed(YieldTypes eYieldType) const
 		}
 	}
 
-    ///TK COAL
+    ///TK Hydrocarbons
 	if (iYieldConsumed > 0 && GC.getYieldInfo(eYieldType).getUnitClass() != NO_UNITCLASS && eYieldType != YIELD_HYDROCARBONS)
 	{
 	    iYieldConsumed += iExtra;
@@ -4457,29 +4463,31 @@ void CvCity::changeYieldRushed(YieldTypes eYield, int iChange)
 void CvCity::calculateNetYields(int aiYields[NUM_YIELD_TYPES], int* aiProducedYields, int* aiConsumedYields, bool bPrintWarning) const
 {
 	PROFILE_FUNC();
-    ///TK Coal
+    ///TK Hydrocarbons
 
 	int iExtra = 0;
-	if (isHasRealBuilding((BuildingTypes)GC.getDefineINT("STEAMWORKS_BUILDING")))
+	//Kaszkaj - Use the Oil Refinery settings when calculating the city's net yields.
+	if (isHasRealBuilding((BuildingTypes)GC.getDefineINT("BUILDING_OIL_REFINERY")))
 	{
-        int iConsumedCoal = getRawYieldConsumed(YIELD_HYDROCARBONS);
-        if (iConsumedCoal > 0)
+        int iConsumedHydrocarbons = getRawYieldConsumed(YIELD_HYDROCARBONS);
+        if (iConsumedHydrocarbons > 0)
         {
-            int iCoalMod = getYieldStored(YIELD_HYDROCARBONS) + getBaseRawYieldProduced(YIELD_HYDROCARBONS) * getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedCoal;
-            int SteamWorksMod = std::max(1, GC.getDefineINT("TK_STEAMWORKS_MODIFIER"));
-            if (iCoalMod != -iConsumedCoal)
+            int iHydrocarbonsSurplus = getYieldStored(YIELD_HYDROCARBONS) + getBaseRawYieldProduced(YIELD_HYDROCARBONS) * getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedHydrocarbons;
+            //Kaszkaj - Read refinery consumption from the renamed XML setting with its original TK_ prefix.
+            int iOilRefineryProductionDivisor = std::max(1, GC.getDefineINT("TK_OIL_REFINERY_HYDROCARBONS_PER_PRODUCTION"));
+            if (iHydrocarbonsSurplus != -iConsumedHydrocarbons)
             {
-                if (iCoalMod > iConsumedCoal && iCoalMod != 0)
+                if (iHydrocarbonsSurplus > iConsumedHydrocarbons && iHydrocarbonsSurplus != 0)
                 {
-                    iExtra = iConsumedCoal / SteamWorksMod;
+                    iExtra = iConsumedHydrocarbons / iOilRefineryProductionDivisor;
                 }
-                else if (iCoalMod < iConsumedCoal)
+                else if (iHydrocarbonsSurplus < iConsumedHydrocarbons)
                 {
-                    iExtra = (iConsumedCoal + iCoalMod) / SteamWorksMod;
+                    iExtra = (iConsumedHydrocarbons + iHydrocarbonsSurplus) / iOilRefineryProductionDivisor;
                 }
-                else if (iCoalMod == 0)
+                else if (iHydrocarbonsSurplus == 0)
                 {
-                    iExtra = iConsumedCoal / SteamWorksMod;
+                    iExtra = iConsumedHydrocarbons / iOilRefineryProductionDivisor;
                 }
             }
         }
@@ -6233,6 +6241,20 @@ void CvCity::doGrowth()
 
 			gDLL->getInterfaceIFace()->addMessage(getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), gDLL->getText("TXT_KEY_CITY_STARVING", getNameKey()), "AS2D_DEAL_CANCELLED", MESSAGE_TYPE_INFO, GC.getYieldInfo(YIELD_FOOD).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), getX_INLINE(), getY_INLINE(), true, true);
 		}
+		//Kaszkaj - Give food to the last starving AI resident; colonial AI pays half price and native AI receives it free.
+		else if (!isHuman() && !GET_PLAYER(getOwnerINLINE()).isEurope()
+			&& GC.getDefineINT("CITY_STARVATION_DONATION_FOOD_RECEIVED") > 0)
+		{
+			CvPlayer& kOwner = GET_PLAYER(getOwnerINLINE());
+			if (!isNative())
+			{
+				int iPrice = std::max(0, GC.getDefineINT("CITY_STARVATION_DONATION_GOLD_PAYED"));
+				//Kaszkaj - Scale the food donation price by game speed, then halve it for AI colonists.
+				iPrice = iPrice * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getStoragePercent() / 100 / 2;
+				kOwner.changeGold(-std::min(std::max(0, kOwner.getGold()), iPrice));
+			}
+			changeFood(GC.getDefineINT("CITY_STARVATION_DONATION_FOOD_RECEIVED"));
+		}
 		else if (!isNative())
 		{
 			changeOccupationTimer(2);
@@ -6326,19 +6348,22 @@ void CvCity::doYields()
                     GET_PLAYER(getOwner()).changeIdeaProgress(eCivic, aiYields[eYield]);
                     //GET_PLAYER(getOwner()).setTemporyIdeasStored(aiYields[eYield]);
 
-                    if (aiYields[eYield] > 1 && GC.getDefineINT("TK_PROLIFIC_INVENTOR_THRESHOLD") > 0)
+                    //Kaszkaj - Use TK_INVENTOR_PROGRESS and the player's bonus for Inventor experience.
+                    //Kaszkaj - Read the Inventor threshold under the same TK_ name used in XML.
+                    if (aiYields[eYield] > 1 && GC.getDefineINT("TK_INVENTOR_THRESHOLD") > 0)
                     {
-						int iExperience = GC.getDefineINT("TK_PROLIFIC_INVENTOR_PROGRESS") + GET_PLAYER(getOwner()).getProlificInventorModifier();
+						//Kaszkaj - Read Inventor progress under the same TK_ name used in XML.
+						int iExperience = GC.getDefineINT("TK_INVENTOR_PROGRESS") + GET_PLAYER(getOwner()).getInventorModifier();
 						GET_PLAYER(getOwner()).setIdeasExperience(iExperience);
                         //int iLeftover = GET_PLAYER(getOwner()).getTemporyIdeasStored();
-                       // if (iLeftover >= GC.getDefineINT("TK_PROLIFIC_INVENTOR_THRESHOLD"))
+                       // if (iLeftover >= GC.getDefineINT("TK_INVENTOR_THRESHOLD"))
                        // {
 
                             //GET_PLAYER(getOwner()).setIdeasExperience(iExperience);
                            // GET_PLAYER(getOwner()).setTemporyIdeasStored(-1);
-//                            iLeftover = GET_PLAYER(getOwner()).getTemporyIdeasStored() - GC.getDefineINT("TK_PROLIFIC_INVENTOR_THRESHOLD");
+//                            iLeftover = GET_PLAYER(getOwner()).getTemporyIdeasStored() - GC.getDefineINT("TK_INVENTOR_THRESHOLD");
 //
-//                            if (iLeftover > GC.getDefineINT("TK_PROLIFIC_INVENTOR_THRESHOLD"))
+//                            if (iLeftover > GC.getDefineINT("TK_INVENTOR_THRESHOLD"))
 //                            {
 //
 //                                GET_PLAYER(getOwner()).setTemporyIdeasStored(iLeftover);
@@ -7259,7 +7284,8 @@ void CvCity::getCityBillboardSizeIconColors(NiColorA& kDotColor, NiColorA& kText
 
 const TCHAR* CvCity::getCityBillboardProductionIcon() const
 {
-	if (isNative() && getOwnerINLINE() != GC.getGameINLINE().getActivePlayer() && AI_getDesiredYield() != NO_YIELD)
+	//Kaszkaj - Show the desired trade good in native cities for their owner as well as visitors.
+	if (isNative() && AI_getDesiredYield() != NO_YIELD)
 	{
 		return GC.getYieldInfo(AI_getDesiredYield()).getButton();
 	}
@@ -7537,7 +7563,10 @@ bool CvCity::canApplyEvent(EventTypes eEvent, const EventTriggeredData& kTrigger
 
 		if (kEvent.getBuildingChange() > 0)
 		{
-			if (isHasRealBuilding(eBuilding))
+			//Kaszkaj - Allow AI to receive the remaining start rewards when the shared building already exists.
+			bool bAIAlienStart = !GET_PLAYER(getOwnerINLINE()).isHuman()
+				&& strcmp(GC.getEventTriggerInfo(kTriggeredData.m_eTrigger).getType(), "EVENTTRIGGER_ALIENSTART") == 0;
+			if (isHasRealBuilding(eBuilding) && !bAIAlienStart)
 			{
 				return false;
 			}
@@ -8903,6 +8932,26 @@ bool CvCity::canTradeAway(PlayerTypes eToPlayer) const
 	return true;
 }
 
+//Kaszkaj - Estimate remaining school turns from real XML output, city modifiers and stored progress.
+int CvCity::getEducationTurnsLeft(const CvUnit* pUnit, ProfessionTypes eProfession) const
+{
+	if (pUnit == NULL || eProfession < 0 || eProfession >= GC.getNumProfessionInfos())
+	{
+		return MAX_INT;
+	}
+	const CvProfessionInfo& kProfession = GC.getProfessionInfo(eProfession);
+	if (!kProfession.isCitizen() || kProfession.getNumYieldsProduced() == 0
+		|| kProfession.getYieldsProduced(0) != YIELD_EDUCATION
+		|| kProfession.getSpecialBuilding() != GC.getInfoTypeForString("SPECIALBUILDING_EDUCATION", true)
+		|| getProfessionOutput(eProfession, pUnit) <= 0)
+	{
+		return MAX_INT;
+	}
+	int iRate = std::max(1, getProfessionOutput(eProfession, pUnit) * getBaseYieldRateModifier(YIELD_EDUCATION) / 100);
+	int iRemaining = std::max(0, educationThreshold() - pUnit->getYieldStored());
+	return iRemaining / iRate + (iRemaining % iRate != 0 ? 1 : 0);
+}
+
 bool CvCity::educateStudent(int iUnitId, UnitTypes eUnit)
 {
 	CvUnit* pUnit = getPopulationUnitById(iUnitId);
@@ -8912,6 +8961,16 @@ bool CvCity::educateStudent(int iUnitId, UnitTypes eUnit)
 	}
 
 	CvPlayer& kPlayer = GET_PLAYER(getOwnerINLINE());
+	//Kaszkaj - Native AI receives free specialists only after completing education in a school building.
+	if (isNative() && !isHuman())
+	{
+		ProfessionTypes eProfession = pUnit->getProfession();
+		//Kaszkaj - Keep completed progress if the last resident cannot leave the city yet.
+		if (getPopulation() <= 1 || eProfession == NO_PROFESSION || getEducationTurnsLeft(pUnit, eProfession) != 0)
+		{
+			return false;
+		}
+	}
 	int iPrice = getSpecialistTuition(eUnit);
 	if (iPrice < 0)
 	{
@@ -8951,6 +9010,20 @@ bool CvCity::educateStudent(int iUnitId, UnitTypes eUnit)
 
 int CvCity::getSpecialistTuition(UnitTypes eUnit) const
 {
+	if (eUnit < 0 || eUnit >= GC.getNumUnitInfos())
+	{
+		return -1;
+	}
+	//Kaszkaj - A zero XML teacher weight forbids school training, even with saved teacher progress.
+	if (GC.getUnitInfo(eUnit).getTeacherWeight() <= 0)
+	{
+		return -1;
+	}
+	//Kaszkaj - Native AI learns eligible specialists for free without owning a teacher first.
+	if (isNative() && !isHuman())
+	{
+		return GET_PLAYER(getOwnerINLINE()).AI_isEducationSpecialist(eUnit) ? 0 : -1;
+	}
 	if (m_aiSpecialistWeights[eUnit] <= 0)
 	{
 		return -1;

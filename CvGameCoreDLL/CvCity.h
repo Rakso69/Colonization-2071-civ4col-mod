@@ -431,6 +431,8 @@ public:
 	int getEducationThresholdMultiplier() const;
 	void setEducationThresholdMultiplier(int iModifier);
 	int educationThreshold() const;
+	//Kaszkaj - Use actual production when estimating how long a student still needs to train.
+	int getEducationTurnsLeft(const CvUnit* pUnit, ProfessionTypes eProfession) const;
 
 	CvUnit* ejectBestDefender(CvUnit* pCurrentBest, CvUnit* pAttacker);
 	CvUnit* getBestDefender(ProfessionTypes* peProfession, CvUnit* pCurrentBest, const CvUnit* pAttacker) const;

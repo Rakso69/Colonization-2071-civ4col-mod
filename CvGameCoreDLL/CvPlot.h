@@ -333,7 +333,10 @@ public:
 	void setRevealedRouteType(TeamTypes eTeam, RouteTypes eNewValue);
 
 	int getBuildProgress(BuildTypes eBuild) const;
-	bool changeBuildProgress(BuildTypes eBuild, int iChange, TeamTypes eTeam = NO_TEAM);
+	//Kaszkaj - Pass the completing player so excavation rewards go to its builder.
+	bool changeBuildProgress(BuildTypes eBuild, int iChange, TeamTypes eTeam = NO_TEAM, PlayerTypes eBuilder = NO_PLAYER);
+	PlayerTypes getExcavationBuilder() const;
+	void triggerExcavationEvent(PlayerTypes eBuilder);
 
 	void updateFeatureSymbolVisibility();
 	void updateFeatureSymbol(bool bForce = false, bool bBuildTileArt = true);
@@ -481,6 +484,9 @@ protected:
 	short** m_apaiInvisibleVisibilityCount;
 
 	CLinkList<IDInfo> m_units;
+
+	//Kaszkaj - Remember the excavation builder without changing plot ownership.
+	PlayerTypes m_eExcavationBuilder;
 
 	void doFeature();
 

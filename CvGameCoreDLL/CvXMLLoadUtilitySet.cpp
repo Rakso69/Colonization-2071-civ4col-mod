@@ -377,26 +377,27 @@ bool CvXMLLoadUtility::SetPostGlobalsGlobalDefines()
 		idx = FindInInfoClass(szVal);
 		GC.getDefinesVarSystem()->SetValue("CONTACT_YIELD_GIFT_TECH", idx);
 
-		///TK COAL
-        SetGlobalDefine("PROFESSION_COAL_BURNER", szVal);
+		///TK Hydrocarbons
+        //Kaszkaj - Resolve profession and building defines using their matching XML type names.
+        SetGlobalDefine("PROFESSION_REFINERY_WORKER", szVal);
 		idx = FindInInfoClass(szVal);
-		GC.getDefinesVarSystem()->SetValue("PROFESSION_COAL_BURNER", idx);
+		GC.getDefinesVarSystem()->SetValue("PROFESSION_REFINERY_WORKER", idx);
 
 		SetGlobalDefine("UNITCLASS_PIONEER", szVal);
 		idx = FindInInfoClass(szVal);
 		GC.getDefinesVarSystem()->SetValue("UNITCLASS_PIONEER", idx);
 
-		SetGlobalDefine("STEAMWORKS_BUILDING", szVal);
+		SetGlobalDefine("BUILDING_OIL_REFINERY", szVal);
 		idx = FindInInfoClass(szVal);
-		GC.getDefinesVarSystem()->SetValue("STEAMWORKS_BUILDING", idx);
+		GC.getDefinesVarSystem()->SetValue("BUILDING_OIL_REFINERY", idx);
 
-		SetGlobalDefine("STEAMWORKS_CLASS_TYPE", szVal);
+		SetGlobalDefine("BUILDINGCLASS_OIL_REFINERY", szVal);
 		idx = FindInInfoClass(szVal);
-		GC.getDefinesVarSystem()->SetValue("STEAMWORKS_CLASS_TYPE", idx);
+		GC.getDefinesVarSystem()->SetValue("BUILDINGCLASS_OIL_REFINERY", idx);
 
-		SetGlobalDefine("SPECIAL_FURNACE_BUILDING", szVal);
+		SetGlobalDefine("SPECIALBUILDING_POWER_PLANT", szVal);
 		idx = FindInInfoClass(szVal);
-		GC.getDefinesVarSystem()->SetValue("SPECIAL_FURNACE_BUILDING", idx);
+		GC.getDefinesVarSystem()->SetValue("SPECIALBUILDING_POWER_PLANT", idx);
 		///TKe
 
 

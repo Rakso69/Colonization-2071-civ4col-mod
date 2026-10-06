@@ -201,6 +201,8 @@ void CyInfoPythonInterface2()
 		.def("isWater", &CvImprovementInfo::isWater, "bool ()")
 		.def("isGoody", &CvImprovementInfo::isGoody, "bool ()")
 		.def("isPermanent", &CvImprovementInfo::isPermanent, "bool ()")
+		//Kaszkaj - Expose all three bOutsideBorders modes to Python while keeping the boolean query.
+		.def("getOutsideBorders", &CvImprovementInfo::getOutsideBorders, "int ()")
 		.def("isOutsideBorders", &CvImprovementInfo::isOutsideBorders, "bool ()")
 		.def("getArtDefineTag", &CvImprovementInfo::getArtDefineTag, "string ()")
 		// Arrays
