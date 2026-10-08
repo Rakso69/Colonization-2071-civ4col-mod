@@ -748,11 +748,11 @@
 					<bUnitAI>1</bUnitAI>
 				</UnitAI>
 				<UnitAI>
-					<UnitAIType>UNITAI_DEFENSIVE</UnitAIType>
+					<UnitAIType>UNITAI_OFFENSIVE</UnitAIType>
 					<bUnitAI>1</bUnitAI>
 				</UnitAI>
 				<UnitAI>
-					<UnitAIType>UNITAI_OFFENSIVE</UnitAIType>
+					<UnitAIType>UNITAI_DEFENSIVE</UnitAIType>
 					<bUnitAI>1</bUnitAI>
 				</UnitAI>
 				<UnitAI>
@@ -885,10 +885,6 @@
 				</YieldChange>
 				<YieldChange>
 					<YieldType>YIELD_EDUCATION</YieldType>
-					<iChange>-1</iChange>
-				</YieldChange>
-				<YieldChange>
-					<YieldType>YIELD_IDEAS</YieldType>
 					<iChange>-1</iChange>
 				</YieldChange>
 			</YieldChanges>
@@ -9891,6 +9887,10 @@
 			<UnitAIs>
 				<UnitAI>
 					<UnitAIType>UNITAI_COLONIST</UnitAIType>
+					<bUnitAI>1</bUnitAI>
+				</UnitAI>
+				<UnitAI>
+					<UnitAIType>UNITAI_SCOUT</UnitAIType>
 					<bUnitAI>1</bUnitAI>
 				</UnitAI>
 				<UnitAI>

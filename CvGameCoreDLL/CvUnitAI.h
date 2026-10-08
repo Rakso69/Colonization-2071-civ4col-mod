@@ -57,6 +57,7 @@ public:
 	void AI_setMovePriority(int iNewValue);
 	bool AI_hasAIChanged(int iNumTurns);
 	int AI_getLastAIChangeTurn();
+	int AI_getPickupRequestAge() const;
 
 	void AI_doInitialMovePriority();
 	void AI_doFound();
@@ -67,7 +68,6 @@ public:
 
 	bool AI_loadAdjacent(CvPlot* pPlot, bool bTestCity);
 	bool AI_allowedToJoin(const CvCity* pCity) const;
-	//Kaszkaj - Let native cities send Criminal residents to a legal school or village lesson.
 	bool AI_learn(int iRange = 8);
 
 	void read(FDataStreamBase* pStream);
@@ -78,6 +78,7 @@ protected:
 	int m_iBirthmark;
 	int m_iMovePriority;
 	int m_iLastAIChangeTurn;
+	int m_iPickupRequestTurn;
 
 	UnitAITypes m_eUnitAIType;
 
@@ -88,18 +89,23 @@ protected:
 
 	mutable ProfessionTypes m_eIdealProfessionCache;
 
+	bool AI_nativeCityWork();
+	void AI_nativeScoutMove();
+	bool AI_nativeTransportMove();
+	bool AI_returnGoodsToCity();
 	void AI_colonistMove();
 	void AI_settlerMove();
 	void AI_workerMove();
-	//Kaszkaj - Search the whole space map for legal ship Builds, including unexplored plots.
 	bool AI_improveSeaPlot();
+	bool AI_excavate();
+	bool AI_hasPassengers() const;
+	bool AI_deliverPassengers();
 	void AI_missionaryMove();
 	void AI_scoutMove();
-	//Kaszkaj - Explore each land area, request transport and equip retired scouts for combat.
 	void AI_scoutExploreMove();
 	bool AI_scoutReturnToCity(ProfessionTypes eProfession, bool bRequireEquipment = true);
 	CvPlot* AI_scoutSeaDestination(CvPlot** ppMissionPlot);
-	bool AI_ferryScout(bool bAllowPickup);
+	bool AI_ferryScout(bool bAllowPickup, bool bPriorityOnly = false);
 	void AI_treasureMove();
 	void AI_yieldUhMove();
 	void AI_generalMove();
@@ -168,7 +174,7 @@ protected:
 
 
 	bool AI_requestPickup(int iMaxPath = MAX_INT);
-	bool AI_respondToPickup(int iMaxPath = MAX_INT, UnitAITypes eUnitAI = NO_UNITAI);
+	bool AI_respondToPickup(int iMaxPath = MAX_INT, UnitAITypes eUnitAI = NO_UNITAI, bool bPriorityOnly = false);
 
 	bool AI_pickupAdjacantUnits();
 
@@ -227,6 +233,7 @@ protected:
 
 	bool AI_bombardCity();
 	bool AI_cityAttack(int iRange, int iOddsThreshold, bool bFollow = false);
+	bool AI_attackBarbarian();
 	bool AI_anyAttack(int iRange, int iOddsThreshold, int iMinStack = 0, bool bFollow = false);
 	bool AI_smartAttack(int iRange, int iLowOddsThreshold, int iHighOddsThreshold, CvPlot* pHintPlot);
 	bool AI_leaveAttack(int iRange, int iThreshold, int iStrengthThreshold);

@@ -187,7 +187,7 @@ class CvPediaProfession:
 					iExpertUnit = iUnit
 					break
 		#TK Refinery Worker
-		# Kaszkaj fix: .\.\CvPediaProfession.py, interfaceScreen.
+		# Kaszkaj - Resolve the Power Plant building group through its SPECIALBUILDING_POWER_PLANT define.
 		# Look up the Power Plant building group under its matching XML define name.
 		if (iExpertUnit == -1 and Profession.getSpecialBuilding() == gc.getDefineINT("SPECIALBUILDING_POWER_PLANT")):
 			for iUnit in range(gc.getNumUnitInfos()):

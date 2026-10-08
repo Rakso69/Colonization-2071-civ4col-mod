@@ -139,9 +139,31 @@ public:
 	int AI_totalAreaUnitAIs(CvArea* pArea, UnitAITypes eUnitAI);
 	int AI_totalWaterAreaUnitAIs(CvArea* pArea, UnitAITypes eUnitAI);
 	bool AI_hasSeaTransport(const CvUnit* pCargo) const;
-	//Kaszkaj - Colonial AI scouts keep exploring while any land or goody remains.
+	//Kaszkaj - Keep Colonist AI's Intrepid Explorers exploring until all land and reward sites have been visited.
 	bool AI_isColonialScout(UnitTypes eUnit) const;
 	int AI_scoutTargetCount(const CvArea* pArea = NULL) const;
+	bool AI_isNativeCitySpecialist(UnitTypes eUnit) const;
+	bool AI_isNativeHumanSpecialist(UnitTypes eUnit) const;
+	bool AI_isNativeStudent(UnitTypes eUnit) const;
+	bool AI_isNativeExplorer(UnitTypes eUnit) const;
+	int AI_nativeProfessionPriority(UnitTypes eUnit, ProfessionTypes eProfession, const CvPlot* pPlot, const CvCity* pCity = NULL) const;
+	const CvCity* AI_nativeResearchCity() const;
+	bool AI_isNativeMilitaryUnit(UnitTypes eUnit) const;
+	int AI_nativeDefendersNeeded(const CvCity* pCity) const;
+	int AI_nativeUnitProductionValue(const CvCity* pCity, UnitTypes eUnit);
+	int AI_nativeDefenderCount(const CvCity* pCity, const CvUnit* pSkip = NULL, bool bArmedOnly = false) const;
+	bool AI_nativeUnitMayWork(const CvCity* pCity, const CvUnit* pUnit) const;
+	int AI_nativeMilitaryProfessionValue(ProfessionTypes eProfession, UnitAITypes eUnitAI) const;
+	int AI_cityYieldTarget(const CvCity* pCity, YieldTypes eYield, int iDepth = 0) const;
+	int AI_transportCapacity(bool bIncludeProduction = true) const;
+	int AI_europePassengerCount() const;
+	int AI_transportCapacityNeeded();
+	int AI_buildPlanValue(UnitTypes eUnit, const CvPlot* pPlot, BuildTypes eBuild);
+	int AI_builderTaskCount(UnitTypes eUnit);
+	int AI_neededSeaBuilders(UnitTypes eUnit);
+	bool AI_shouldReserveNavalWeapons(const CvCity* pCity, ProfessionTypes eProfession, ProfessionTypes eCurrent = NO_PROFESSION) const;
+	CvUnit* AI_getScoutEquipmentCandidate() const;
+	bool AI_equipScoutFree(CvUnit* pUnit);
 
 	int AI_neededExplorers(CvArea* pArea);
 	int AI_neededWorkers(CvArea* pArea);
@@ -265,12 +287,23 @@ public:
 	bool AI_isYieldFinalProduct(YieldTypes eYield) const;
 	bool AI_shouldBuyFromEurope(YieldTypes eYield) const;
 
-	//Kaszkaj - Declare the AI helpers for food value, civilian protection and economic support.
 	int AI_yieldValue(YieldTypes eYield, bool bProduce = true, int iAmount = 1, bool bFood = false);
 	bool AI_needsProtection(UnitAITypes eUnitAI) const;
 	void AI_doEconomicHelp();
-	//Kaszkaj - Apply the shared royal technology trade rules to computer subjects.
+	//Kaszkaj - Apply the shared technology trade rules for the State and Progenitor Exarch to AI subjects.
 	void AI_doKingTechnologyTrade();
+	//Kaszkaj - Ignore research branch headings and compare technology purchases from the State or Progenitor Exarch with their economic cost.
+	bool AI_hasResearchTarget() const;
+	void AI_invalidateResearchCache();
+	void AI_updateResearch();
+	int AI_technologyValue(CivicTypes eCivic);
+	int AI_taxRateProductionValue(int iTaxIncrease, int iPlanningTurns);
+	//Kaszkaj - Allow AI to build one Janus Device, counting unfinished work and later upgrade stages.
+	bool AI_canBuildJanusDevice(const CvPlot* pPlot) const;
+	int AI_janusDevicePlotValue(const CvPlot* pPlot) const;
+	void AI_initJanusDeviceState();
+	void AI_setJanusDeviceBuildPlot(const CvPlot* pPlot);
+	void AI_setJanusDeviceBuilt();
 	void AI_addFreeCityDefenders(CvCity* pCity);
 	void AI_updateYieldValues();
 	int AI_transferYieldValue(const IDInfo target, YieldTypes eYield, int iAmount);
@@ -288,7 +321,8 @@ public:
 
 	bool AI_isKing();
 
-	CvPlot* AI_getImperialShipSpawnPlot();
+	CvPlot* AI_getImperialShipSpawnPlot(const CvUnit* pShip = NULL);
+	bool AI_shouldReturnImperialShip(const CvUnit* pShip) const;
 
 	void AI_addUnitToMoveQueue(CvUnit* pUnit);
 	void AI_removeUnitFromMoveQueue(CvUnit* pUnit);
@@ -298,6 +332,7 @@ public:
 	int AI_highestProfessionOutput(ProfessionTypes eProfession, const CvCity* pIgnoreCity = NULL);
 
 	CvCity* AI_bestCityForBuilding(BuildingTypes eBuilding);
+	CvCity* AI_bestCityForUnit(UnitTypes eUnit, int* piValue = NULL);
 
 	UnitTypes AI_bestUnit(UnitAITypes eUnitAI = NO_UNITAI, CvArea* pArea = NULL);
 
@@ -306,12 +341,9 @@ public:
 	int AI_professionValue(ProfessionTypes eProfession, UnitAITypes eUnitAI);
 	int AI_professionGoldValue(ProfessionTypes eProfession);
 	ProfessionTypes AI_idealProfessionForUnit(UnitTypes eUnitType);
-	//Kaszkaj - Evaluate specialists needed after school or village training.
 	bool AI_isEducationSpecialist(UnitTypes eUnit) const;
 	int AI_educationUnitValue(UnitTypes eUnit);
-	//Kaszkaj - Recognise all expert jobs of units with several specialisations.
 	bool AI_isProfessionExpert(UnitTypes eUnit, ProfessionTypes eProfession) const;
-	//Kaszkaj - Keep dedicated builders on construction tasks and share worker yield values across AI decisions.
 	bool AI_isDedicatedWorker(UnitTypes eUnit) const;
 	bool AI_getUnitYieldBonuses(UnitTypes eUnit, YieldTypes eYield, int& iModifier, int& iChange, int& iBonusChange) const;
 	int AI_getUnitYieldModifier(UnitTypes eUnit, YieldTypes eYield) const;
@@ -340,7 +372,7 @@ public:
 	UnitTypes AI_nextBuyUnit(UnitAITypes* peUnitAI = NULL, int* piValue = NULL);
 	UnitTypes AI_nextBuyProfessionUnit(ProfessionTypes* peProfession = NULL, UnitAITypes* peUnitAI = NULL, int* piValue = NULL);
 
-	void AI_updateNextBuyUnit();
+	void AI_updateNextBuyUnit(int iEuropePassengers = -1, int iTransportCapacity = -1, int iSpendable = -1);
 	void AI_updateNextBuyProfession();
 	int AI_highestNextBuyValue();
 
@@ -402,6 +434,13 @@ protected:
 
 	int m_iAttackOddsChange;
 	int m_iExtraGoldTarget;
+	//Kaszkaj - Store the turn when the next free Intrepid Explorer outfit becomes available.
+	int m_iNextFreeScoutEquipmentTurn;
+	//Kaszkaj - Remember completed Janus Device construction even if the device is later destroyed or captured.
+	bool m_bJanusDeviceBuilt;
+	int m_iJanusDeviceBuildPlot;
+	//Kaszkaj - Check old saves for existing Janus Devices after the map has finished loading.
+	bool m_bJanusDeviceStateChecked;
 
 	UnitTypes m_eNextBuyUnit;
 	UnitAITypes m_eNextBuyUnitAI;
@@ -454,6 +493,25 @@ protected:
 
 	std::vector<int> m_unitPriorityHeap;
 
+	int AI_calculateCityYieldTarget(const CvCity* pCity, YieldTypes eYield, int iDepth, int* aiTargets) const;
+	void AI_clearProfessionCache();
+	void AI_validateProfessionCache() const;
+	bool AI_hasResearchTargetUncached() const;
+	mutable CivilizationTypes m_eProfessionCacheCivilization;
+	mutable int m_iProfessionCacheNumProfessions;
+	mutable int m_iProfessionCachePioneerClass;
+	mutable std::vector<signed char> m_abProfessionExpertCache;
+	mutable std::vector<signed char> m_abNativeHumanSpecialistCache;
+	mutable std::vector<ProfessionTypes> m_aeResearchProfessions;
+	mutable int m_iResearchTargetCache;
+	mutable int m_iResearchTargetCacheTurn;
+	mutable int m_iResearchTargetCacheNumCivics;
+	mutable int m_iResearchTargetCacheCivicOption;
+
+	int m_iBuilderTaskCacheTurn;
+	std::map<UnitTypes, int> m_aiBuilderTaskCounts;
+	std::map<UnitTypes, int> m_aiBuilderTaskCosts;
+
 	int m_iTurnLastProductionDirty;
 	int m_iTurnLastManagedPop;
 	int m_iMoveQueuePasses;
@@ -481,6 +539,7 @@ protected:
 	bool AI_doDiploDeclareWar(PlayerTypes ePlayer);
 
 	void AI_doProfessions();
+	void AI_doNativeMilitary();
 
 	void AI_doMilitaryStrategy();
 	void AI_doSuppressRevolution();

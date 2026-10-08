@@ -4538,7 +4538,6 @@ for (iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
 	   szHelpText.append(gDLL->getText("TXT_KEY_ALLOWS_CONSTITUTION"));
 	}
 
-	//Kaszkaj - Use matching Inventor names for civic data and help text.
 	if (kCivicInfo.getInventorRateChange() != 0)
 	{
 	   szHelpText.append(NEWLINE);
@@ -5647,11 +5646,9 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, BuildingTypes eBu
 	}
 
     ///TK Hydrocarbons
-    //Kaszkaj - Use Oil Refinery and Hydrocarbons names in the production tooltip.
     if (kBuilding.getBuildingClassType()  == (BuildingClassTypes)GC.getDefineINT("BUILDINGCLASS_OIL_REFINERY"))
 	{
 		szBuffer.append(NEWLINE);
-		//Kaszkaj - Read refinery consumption from the renamed XML setting with its original TK_ prefix.
 		szBuffer.append(gDLL->getText("TXT_KEY_PRODUCTION_FROM_OIL_REFINERY_TEXT", GC.getDefineINT("TK_OIL_REFINERY_HYDROCARBONS_PER_PRODUCTION"), GC.getYieldInfo(YIELD_HYDROCARBONS).getChar()));
 	}
     ///TKe
@@ -7093,39 +7090,28 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 	}
 
 	int iBaseProduction = 0;
-    ///TKs Invention Core Mod v 1.0
-    bool iGetFromBuilding = true;
-    if (eYieldType == YIELD_IDEAS)
-    {
-       if (owner.getCurrentResearch() == NO_CIVIC)
-       {
-            iGetFromBuilding = false;
-       }
-    }
+	int iResearchStatus = (eYieldType == YIELD_IDEAS) ? city.canResearch() : 1;
+	//Kaszkaj fix: .\.\CvGameTextMgr.cpp, Line:  7357, Expression:  iBaseProduction == city.getBaseRawYieldProduced(eYieldType).
+	// Count potential Research production in the raw total; apply research limits to the final output below.
 	int iBuildingYield = 0;
-	if (iGetFromBuilding)
-    {
-        for (int i = 0; i < GC.getNumBuildingInfos(); ++i)
-        {
-            if (city.isHasBuilding((BuildingTypes)i))
-            {
-                iBuildingYield += GC.getBuildingInfo((BuildingTypes) i).getYieldChange(eYieldType);
-                iBuildingYield += city.getBuildingYieldChange((BuildingClassTypes)GC.getBuildingInfo((BuildingTypes) i).getBuildingClassType(), eYieldType);
-                iBuildingYield += owner.getBuildingYieldChange((BuildingClassTypes)GC.getBuildingInfo((BuildingTypes) i).getBuildingClassType(), eYieldType);
-            }
-        }
+	for (int i = 0; i < GC.getNumBuildingInfos(); ++i)
+	{
+		if (city.isHasBuilding((BuildingTypes)i))
+		{
+			iBuildingYield += GC.getBuildingInfo((BuildingTypes) i).getYieldChange(eYieldType);
+			iBuildingYield += city.getBuildingYieldChange((BuildingClassTypes)GC.getBuildingInfo((BuildingTypes) i).getBuildingClassType(), eYieldType);
+			iBuildingYield += owner.getBuildingYieldChange((BuildingClassTypes)GC.getBuildingInfo((BuildingTypes) i).getBuildingClassType(), eYieldType);
+		}
+	}
 
-        if (iBuildingYield != 0)
-        {
-            szBuffer.append(NEWLINE);
-            szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_BUILDING_YIELD", iBuildingYield, info.getChar()));
-
-            iBaseProduction += iBuildingYield;
-        }
-    }
+	if (iBuildingYield != 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_BUILDING_YIELD", iBuildingYield, info.getChar()));
+		iBaseProduction += iBuildingYield;
+	}
 
 	int Bonus = 0;
-	//Kaszkaj - Use Oil Refinery and Hydrocarbons names in the production tooltip.
 	if (city.isHasRealBuilding((BuildingTypes)GC.getDefineINT("BUILDING_OIL_REFINERY")) && eYieldType != YIELD_HAMMERS && eYieldType != YIELD_HYDROCARBONS)
 	{
 	    int iConsumedHydrocarbons = city.getRawYieldConsumed(YIELD_HYDROCARBONS);
@@ -7133,7 +7119,6 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 
         if (iConsumedHydrocarbons > 0)
         {
-            //Kaszkaj - Read refinery consumption from the renamed XML setting with its original TK_ prefix.
             int iOilRefineryProductionDivisor = std::max(1, GC.getDefineINT("TK_OIL_REFINERY_HYDROCARBONS_PER_PRODUCTION"));
             if (iHydrocarbonsSurplus != -iConsumedHydrocarbons)
             {
@@ -7159,9 +7144,7 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 	aaiProfessionYields.resize(GC.getNumProfessionInfos());
 
 	// Indoor professions
-	//Kaszkaj - Hide Ideas output when no research is selected or its required unit class is missing.
-
-	int iNoReasearch = 0;
+	//Kaszkaj - Include potential Research from workers so the raw total matches the Colony's production calculation.
     int iCitizenYield = 0;
 	for (int i = 0; i < city.getPopulation(); ++i)
 	{
@@ -7179,7 +7162,7 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 				{
 					if (kProfessionInfo.getYieldsProduced(j) == eYieldType)
 					{
-					if (eYieldProduced == YIELD_IDEAS && city.canResearch() <= 0)
+					if (eYieldProduced == YIELD_IDEAS && eYieldType != YIELD_IDEAS && city.canResearch() <= 0)
 					{
 						continue;
 					}
@@ -7285,7 +7268,7 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
                     }
                     szYieldsList += CvWString::format(L"%c", GC.getYieldInfo(*it).getChar());
                 }
-                int iCanResearch = city.canResearch();
+                int iCanResearch = iResearchStatus;
                 if (iCanResearch > 0)
                 {
                     szBuffer.append(gDLL->getText("TXT_KEY_CURRENT_PLAYER_RESEARCH_COUNT", kCivicInfo.getDescription(), iProgress));
@@ -7330,7 +7313,6 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
         int iHydrocarbonsSurplus = city.getYieldStored(YIELD_HYDROCARBONS) + city.getBaseRawYieldProduced(YIELD_HYDROCARBONS) * city.getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedHydrocarbons;
         if (iConsumedHydrocarbons > 0)
         {
-            //Kaszkaj - Read refinery consumption from the renamed XML setting with its original TK_ prefix.
             int iOilRefineryProductionDivisor = std::max(1, GC.getDefineINT("TK_OIL_REFINERY_HYDROCARBONS_PER_PRODUCTION"));
             if (iHydrocarbonsSurplus != -iConsumedHydrocarbons)
             {
@@ -7360,9 +7342,23 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 	int aiRawProducedYields[NUM_YIELD_TYPES];
 	int aiRawConsumedYields[NUM_YIELD_TYPES];
 	city.calculateNetYields(aiYields, aiRawProducedYields, aiRawConsumedYields);
-	int iUnproduced = city.getBaseRawYieldProduced(eYieldType) - aiRawProducedYields[eYieldType];
+	//Kaszkaj - Block the Research total when the Colony cannot research; do not count the same loss again as missing materials.
+	bool bResearchBlocked = (eYieldType == YIELD_IDEAS && iResearchStatus <= 0);
+	if (bResearchBlocked)
+	{
+		if (iResearchStatus == 0 && iBaseProduction > 0)
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_RESEARCH_CANNOT_CONTINUE_NO_RESEARCH_CITY"));
+		}
+		iBaseProduction = 0;
+	}
+	//Kaszkaj fix: .\.\CvGameTextMgr.cpp, Line:  7536, Expression:  iModifiedProduction == aiYields[eYieldType].
+	// Apply the city's production loss even without a missing-material label; convert Immigration only during revolution.
+	int iUnproduced = bResearchBlocked ? 0 : city.getBaseRawYieldProduced(eYieldType) - aiRawProducedYields[eYieldType];
 	if (iUnproduced > 0)
 	{
+		iBaseProduction -= iUnproduced;
 		// MultipleYieldsConsumed Start by Aymerick 05/01/2010
 		std::vector<YieldTypes> eMissing;
 
@@ -7396,15 +7392,6 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 				}
 			}
 		}
-		///TKs Invention Core Mod v 1.0
-		if ( eYieldType == YIELD_IDEAS && GET_PLAYER(city.getOwnerINLINE()).getCurrentResearch() == NO_CIVIC)
-        {
-            iBaseProduction = 0;
-            szBuffer.append(NEWLINE);
-            szBuffer.append(gDLL->getText("TXT_KEY_RESEARCH_CANNOT_CONTINUE_NO_RESEARCH_CITY"));
-        }
-        ///TKe
-
 		if (!eMissing.empty())
 		{
 			CvWString szYieldsList;
@@ -7423,7 +7410,6 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 				}
 				szYieldsList += CvWString::format(L"%c", GC.getYieldInfo(*it).getChar());
 			}
-			iBaseProduction -= iUnproduced;
 			szBuffer.append(NEWLINE);
 			szBuffer.append(gDLL->getText("TXT_KEY_MISC_UNPRODUCED_CITY_YIELD_SPECIFIC", -iUnproduced, info.getChar(), szYieldsList.GetCString()));
 		}
@@ -7450,14 +7436,14 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 
 	// from immigration
 	int iImmigration = 0;
-	if (eYieldType != YIELD_CROSSES)
+	if (eYieldType != YIELD_CROSSES && owner.isInRevolution())
 	{
 		if (owner.getImmigrationConversion() == eYieldType)
 		{
 			iImmigration += aiYields[YIELD_CROSSES];
 		}
 	}
-	if (iImmigration > 0)
+	if (iImmigration != 0)
 	{
 		iModifiedProduction += iImmigration;
 		szBuffer.append(NEWLINE);
@@ -7530,7 +7516,6 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 				}
 				szYieldsList += CvWString::format(L"%c", GC.getYieldInfo(*it).getChar());
 			}
-			iBaseProduction -= iUnproduced;
 			szBuffer.append(NEWLINE);
 			szBuffer.append(gDLL->getText("TXT_KEY_MISC_CONSUMED_CITY_YIELD_SPECIFIC", -iTempConsumed, info.getChar(), szYieldsList.GetCString()));
 		}
@@ -7601,16 +7586,10 @@ int CvGameTextMgr::setCityYieldModifierString(CvWStringBuffer& szBuffer, YieldTy
 
 	int iBaseModifier = 100;
 
+	//Kaszkaj fix: .\.\CvGameTextMgr.cpp, Line:  7674, Expression:  iBaseModifier == kCity.getBaseYieldRateModifier(eYieldType).
+	// Use the stored city and player modifiers, including technologies; count the tax bonus once.
 	// Buildings
-	int iBuildingMod = 0;
-	for (int i = 0; i < GC.getNumBuildingInfos(); i++)
-	{
-		CvBuildingInfo& infoBuilding = GC.getBuildingInfo((BuildingTypes)i);
-		if (kCity.isHasBuilding((BuildingTypes)i))
-		{
-			iBuildingMod += infoBuilding.getYieldModifier(eYieldType);
-		}
-	}
+	int iBuildingMod = kCity.getYieldRateModifier(eYieldType);
 	if (NULL != kCity.area())
 	{
 		iBuildingMod += kCity.area()->getYieldRateModifier(kCity.getOwnerINLINE(), eYieldType);
@@ -7635,12 +7614,21 @@ int CvGameTextMgr::setCityYieldModifierString(CvWStringBuffer& szBuffer, YieldTy
 	}
 
 	// Civics
-	int iCivicMod = 0;
-	for (int i = 0; i < GC.getNumCivicOptionInfos(); i++)
+	std::vector<int> aiTraitModifiers(GC.getNumTraitInfos(), 0);
+	int iCivicMod = kOwner.getYieldRateModifier(eYieldType) + kOwner.getTaxYieldRateModifier(eYieldType);
+	bool bTaxBonusAssigned = false;
+	for (int i = 0; i < GC.getNumTraitInfos(); ++i)
 	{
-		if (NO_CIVIC != kOwner.getCivic((CivicOptionTypes)i))
+		if (kOwner.hasTrait((TraitTypes)i))
 		{
-			iCivicMod += GC.getCivicInfo(kOwner.getCivic((CivicOptionTypes)i)).getYieldModifier(eYieldType);
+			const CvTraitInfo& kTrait = GC.getTraitInfo((TraitTypes)i);
+			aiTraitModifiers[i] = kTrait.getYieldModifier(eYieldType);
+			if (kTrait.isTaxYieldModifier(eYieldType) && !bTaxBonusAssigned)
+			{
+				aiTraitModifiers[i] += kOwner.getTaxYieldRateModifier(eYieldType);
+				bTaxBonusAssigned = true;
+			}
+			iCivicMod -= aiTraitModifiers[i];
 		}
 	}
 	if (0 != iCivicMod)
@@ -7657,11 +7645,7 @@ int CvGameTextMgr::setCityYieldModifierString(CvWStringBuffer& szBuffer, YieldTy
 		{
 			CvTraitInfo& kTraitInfo = GC.getTraitInfo((TraitTypes) i);
 
-			int iTraitMod = kTraitInfo.getYieldModifier(eYieldType);
-			if (kTraitInfo.isTaxYieldModifier(eYieldType))
-			{
-				iTraitMod += kOwner.getTaxRate();
-			}
+			int iTraitMod = aiTraitModifiers[i];
 
 			if (0 != iTraitMod)
 			{
@@ -7681,6 +7665,7 @@ int CvGameTextMgr::setCityYieldModifierString(CvWStringBuffer& szBuffer, YieldTy
 	}
 
 
+	iBaseModifier = std::max(0, iBaseModifier);
 	FAssertMsg(iBaseModifier == kCity.getBaseYieldRateModifier(eYieldType), "Yield Modifier in setProductionHelp does not agree with actual value");
 
 	return iBaseModifier;
@@ -7765,7 +7750,7 @@ void CvGameTextMgr::buildCityBillboardProductionString( CvWStringBuffer& szBuffe
 	szBuffer.clear();
 
 	PlayerTypes ePlayer = GC.getGameINLINE().getActivePlayer();
-	//Kaszkaj - Show a native city's teaching profession to its owner as well as visitors.
+	//Kaszkaj - Show the specialist taught by an Alien Colony to its owner as well as visitors.
 	if (pCity->isNative() && ePlayer != NO_PLAYER)
 	{
 		UnitClassTypes eUnitClass = pCity->getTeachUnitClass();

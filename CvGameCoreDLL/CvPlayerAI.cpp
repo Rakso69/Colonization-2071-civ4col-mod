@@ -2,6 +2,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvPlayerAI.h"
+#include "CvCityAI.h"
 #include "CvRandom.h"
 #include "CvGlobals.h"
 #include "CvGameCoreUtils.h"
@@ -174,8 +175,18 @@ void CvPlayerAI::AI_reset()
 
 	AI_uninit();
 
+	AI_clearProfessionCache();
+	AI_invalidateResearchCache();
+	m_iBuilderTaskCacheTurn = -1;
+	m_aiBuilderTaskCounts.clear();
+	m_aiBuilderTaskCosts.clear();
 	m_iAttackOddsChange = 0;
 	m_iExtraGoldTarget = 0;
+	//Kaszkaj - The first free Intrepid Explorer outfit is available immediately; later outfits use the XML interval.
+	m_iNextFreeScoutEquipmentTurn = 0;
+	m_bJanusDeviceBuilt = false;
+	m_iJanusDeviceBuildPlot = -1;
+	m_bJanusDeviceStateChecked = false;
 
 	m_eNextBuyUnit = NO_UNIT;
 	m_eNextBuyUnitAI = NO_UNITAI;
@@ -305,8 +316,28 @@ void CvPlayerAI::AI_doTurnPre()
 	for (CvUnit* pUnit = firstUnit(&iLoop); pUnit != NULL; pUnit = nextUnit(&iLoop))
 	{
 		pUnit->AI_setMovePriority(0);
+		//Kaszkaj - Restore ship roles previously reassigned by Alien army planning.
+		if (!isEurope() && !isBarbarian() && pUnit->getDomainType() == DOMAIN_SEA && !pUnit->isDelayedDeath())
+		{
+			UnitAITypes eRole = pUnit->AI_getUnitAIType();
+			const CvUnitInfo& kUnit = pUnit->getUnitInfo();
+			if (eRole != UNITAI_WORKER && AI_isDedicatedWorker(pUnit->getUnitType()))
+			{
+				pUnit->AI_setUnitAIType(UNITAI_WORKER);
+			}
+			else if (eRole == UNITAI_DEFENSIVE || eRole == UNITAI_OFFENSIVE || eRole == UNITAI_COUNTER)
+			{
+				UnitAITypes eDefaultRole = (UnitAITypes)kUnit.getDefaultUnitAIType();
+				if (eDefaultRole != NO_UNITAI && AI_unitAIDomainType(eDefaultRole) == DOMAIN_SEA
+					&& !kUnit.getNotUnitAIType(eDefaultRole))
+				{
+					pUnit->AI_setUnitAIType(eDefaultRole);
+				}
+			}
+		}
 	}
 
+	AI_initJanusDeviceState();
 	AI_doEmotions();
 
 	AI_doUnitAIWeights();
@@ -315,12 +346,15 @@ void CvPlayerAI::AI_doTurnPre()
 
 	AI_doStrategy();
 
+	//Kaszkaj - Select a real research project for both Alien and Colonist AI before valuing Research.
+	AI_updateResearch();
 	AI_updateYieldValues();
 
 	//Kaszkaj - Run AI immigration and material support once per turn after the economy update.
 	AI_doEconomicHelp();
-	//Kaszkaj - Buy useful royal technology when payment is affordable or research is stalled.
+	//Kaszkaj - Buy useful technology from the State or Progenitor Exarch when payment is affordable or research is stalled.
 	AI_doKingTechnologyTrade();
+	AI_updateResearch();
 }
 
 
@@ -344,6 +378,7 @@ void CvPlayerAI::AI_doTurnUnitsPre()
 	PROFILE_FUNC();
 	AI_updateBestYieldPlots();
 	AI_updateFoundValues();
+	AI_doNativeMilitary();
 	AI_doEmotions();
 
 	if (!isHuman())
@@ -398,7 +433,7 @@ void CvPlayerAI::AI_doPeace()
 {
 	PROFILE_FUNC();
 
-	//Kaszkaj - Barbarians do not offer peace on their own; players can still open dialogue.
+	//Kaszkaj - The Outer Gods Pantheon never offers peace; players can still open dialogue.
 	if (isBarbarian())
 	{
 		return;
@@ -1366,37 +1401,6 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		bNeedMoreExploring = true;
 	}
 
-	if (isNative() && getNumCities() > 0)
-	{
-		int iRange = CITY_PLOTS_RADIUS * 2 - 1;
-
-		int iCityDistance = AI_cityDistance(pPlot);
-		if (iCityDistance == -1)
-		{
-			return 0;
-		}
-		if (iCityDistance < iRange || iCityDistance > (iRange * 3))
-		{
-			return 0;
-		}
-
-		for (int iDX = -iRange; iDX <= iRange; ++iDX)
-		{
-			for (int iDY = -iRange; iDY <= iRange; ++iDY)
-			{
-				CvPlot* pLoopPlot = plotXY(iX, iY, iDX, iDY);
-
-				if (pLoopPlot != NULL)
-				{
-					if (pLoopPlot->isOwned())
-					{
-						return 0;
-					}
-				}
-			}
-		}
-	}
-
 	bool bIsCoastal = pPlot->isCoastalLand(GC.getMIN_WATER_SIZE_FOR_OCEAN());
 	CvArea* pArea = pPlot->area();
 	int iNumAreaCities = pArea->getCitiesPerPlayer(getID());
@@ -1581,6 +1585,19 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	int iValue = 1000;
 
 	int iBestPlotValue = 0;
+	//Kaszkaj - Existing improvements count towards new settlements when an available plot profession can use them.
+	bool abPlotYieldAvailable[NUM_YIELD_TYPES][2] = {{false}};
+	for (int i = 0; i < GC.getNumProfessionInfos(); ++i)
+	{
+		ProfessionTypes eProfession = (ProfessionTypes)i;
+		const CvProfessionInfo& kProfession = GC.getProfessionInfo(eProfession);
+		if (!kProfession.isCitizen() || !kProfession.isWorkPlot() || !isProfessionValid(eProfession, NO_UNIT)) continue;
+		for (int j = 0; j < kProfession.getNumYieldsProduced(); ++j)
+		{
+			YieldTypes eYield = (YieldTypes)kProfession.getYieldsProduced(j);
+			if (eYield >= 0 && eYield < NUM_YIELD_TYPES) abPlotYieldAvailable[eYield][kProfession.isWater() ? 1 : 0] = true;
+		}
+	}
 	for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
 	{
 		CvPlot* pLoopPlot = plotCity(iX, iY, iI);
@@ -1614,8 +1631,11 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 					YieldTypes eYield = (YieldTypes)iYieldType;
 					int iYield = pLoopPlot->calculateBestNatureYield(eYield, getTeam());
-
-
+					if (iI != CITY_HOME_PLOT && abPlotYieldAvailable[eYield][pLoopPlot->isWater() ? 1 : 0] && pLoopPlot->getImprovementType() != NO_IMPROVEMENT)
+					{
+						iYield += pLoopPlot->calculateImprovementYieldChange(pLoopPlot->getImprovementType(), eYield, getID());
+						iYield = std::max(0, iYield);
+					}
 
 					if (iI == CITY_HOME_PLOT)
 					{
@@ -2466,7 +2486,7 @@ int CvPlayerAI::AI_getUnitDanger(CvUnit* pUnit, int iRange, bool bTestMoves, boo
 	int iDX, iDY;
 
     CvPlot* pPlot = pUnit->plot();
-	//Kaszkaj - Check danger in the unit's movement area; amphibious ships keep their actual area.
+	//Kaszkaj - Check threats in the unit's movement area; amphibious ships can use land and space.
 	CvArea* pTargetArea = pUnit->area();
 	if (pPlot == NULL || pTargetArea == NULL)
 	{
@@ -2643,7 +2663,21 @@ int CvPlayerAI::AI_goldTarget()
 		iGold += (AI_goldToUpgradeAllUnits() / (bAnyWar ? 1 : 2));
 	}
 
-	return iGold + AI_getExtraGoldTarget();
+
+	int iBuildReserve = 0;
+	//Kaszkaj - Budget for the next useful worker task, including a builder that can be produced.
+	for (int iClass = 0; iClass < GC.getNumUnitClassInfos(); ++iClass)
+	{
+		UnitTypes eUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iClass);
+		if (eUnit == NO_UNIT || !AI_isDedicatedWorker(eUnit)) continue;
+		if (getUnitClassCountPlusMaking((UnitClassTypes)iClass) == 0 && !canTrain(eUnit, false, true)) continue;
+		if (AI_builderTaskCount(eUnit) > 0)
+		{
+			int iCost = m_aiBuilderTaskCosts[eUnit];
+			if (iCost > 0 && (iBuildReserve == 0 || iCost < iBuildReserve)) iBuildReserve = iCost;
+		}
+	}
+	return std::max(iGold, iBuildReserve) + AI_getExtraGoldTarget();
 }
 
 DiploCommentTypes CvPlayerAI::AI_getGreeting(PlayerTypes ePlayer)
@@ -2686,7 +2720,7 @@ bool CvPlayerAI::AI_isWillingToTalk(PlayerTypes ePlayer)
 		return false;
 	}
 
-	//Kaszkaj - Barbarian hostility does not prevent the player from talking to the leader.
+	//Kaszkaj - Hostility from the Outer Gods Pantheon does not prevent the player from speaking to its leader.
 	if (isBarbarian())
 	{
 		return true;
@@ -2870,7 +2904,7 @@ int CvPlayerAI::AI_getAttitudeVal(PlayerTypes ePlayer, bool bForced)
 		return 100;
 	}
 
-	//Kaszkaj - Keep the king at -100 after the final insult has been displayed.
+	//Kaszkaj - Keep the State or Progenitor Exarch's attitude at -100 after displaying the final insult.
 	if (isEurope() && GET_PLAYER(ePlayer).isHuman() && GET_PLAYER(ePlayer).getParent() == getID()
 		&& GET_PLAYER(ePlayer).getTaxRate() > 100 && AI_getAttitudeExtra(ePlayer) == -100)
 	{
@@ -2885,7 +2919,7 @@ int CvPlayerAI::AI_getAttitudeVal(PlayerTypes ePlayer, bool bForced)
 		}
 	}
 
-	//Kaszkaj - Keep barbarian relations at the lowest supported attitude value.
+	//Kaszkaj - Keep relations with the Outer Gods Pantheon at the lowest supported attitude value.
 	if (isBarbarian() && getTeam() != GET_PLAYER(ePlayer).getTeam())
 	{
 		return -100;
@@ -3245,7 +3279,7 @@ int CvPlayerAI::AI_dealVal(PlayerTypes ePlayer, const CLinkList<TradeData>* pLis
 		case TRADE_CITIES:
 			iValue += AI_cityTradeVal(GET_PLAYER(ePlayer).getCity(pNode->m_data.m_iData1));
 			break;
-		//Kaszkaj - Royal tax offers are valued and settled as a complete technology purchase.
+		//Kaszkaj - Value and settle tax offers to the State or Progenitor Exarch as a complete technology purchase.
 		case TRADE_TAX:
 			break;
 		case TRADE_GOLD:
@@ -3301,13 +3335,13 @@ bool CvPlayerAI::AI_goldDeal(const CLinkList<TradeData>* pList)
 
 bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData>* pTheirList, const CLinkList<TradeData>* pOurList, int iChange)
 {
-	//Kaszkaj - Reject every barbarian offer, including gifts that normally need no payment.
+	//Kaszkaj - Reject every offer involving the Outer Gods Pantheon, including gifts that normally need no payment.
 	if (isBarbarian() || GET_PLAYER(ePlayer).isBarbarian())
 	{
 		return false;
 	}
 
-	//Kaszkaj - Validate royal purchases, then use normal offer evaluation for gold payments and gifts.
+	//Kaszkaj - Validate technology purchases from the State or Progenitor Exarch before evaluating Credits trades and gifts normally.
 	if (isEurope() || GET_PLAYER(ePlayer).isEurope())
 	{
 		CvPlayer& kKing = isEurope() ? GET_PLAYER(getID()) : GET_PLAYER(ePlayer);
@@ -3321,7 +3355,7 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 		}
 		if (iTax > 0)
 		{
-			//Kaszkaj - The king accepts every valid tax payment without testing its gold value.
+			//Kaszkaj - The State or Progenitor Exarch accepts every valid tax payment without testing its value in Credits.
 			return true;
 		}
 	}
@@ -3458,7 +3492,7 @@ int CvPlayerAI::AI_militaryHelp(PlayerTypes ePlayer, int& iNumUnits, UnitTypes& 
 
 bool CvPlayerAI::AI_counterPropose(PlayerTypes ePlayer, const CLinkList<TradeData>* pTheirList, const CLinkList<TradeData>* pOurList, CLinkList<TradeData>* pTheirInventory, CLinkList<TradeData>* pOurInventory, CLinkList<TradeData>* pTheirCounter, CLinkList<TradeData>* pOurCounter, const IDInfo& kTransport)
 {
-	//Kaszkaj - Barbarian negotiations never produce a counteroffer.
+	//Kaszkaj - Negotiations with the Outer Gods Pantheon never produce a counteroffer.
 	if (isBarbarian() || GET_PLAYER(ePlayer).isBarbarian())
 	{
 		pTheirCounter->clear();
@@ -3466,7 +3500,7 @@ bool CvPlayerAI::AI_counterPropose(PlayerTypes ePlayer, const CLinkList<TradeDat
 		return false;
 	}
 
-	//Kaszkaj - Royal technology counteroffers use the same gold balancing as other negotiations.
+	//Kaszkaj - Technology counteroffers involving the State or Progenitor Exarch balance Credits like other negotiations.
 	CLLNode<TradeData>* pNode;
 	CLLNode<TradeData>* pBestNode;
 	CLLNode<TradeData>* pGoldNode;
@@ -4129,8 +4163,9 @@ int CvPlayerAI::AI_yieldTradeVal(YieldTypes eYield, const IDInfo& kTransport, Pl
 				}
 			}
 
-			int iHighPricePercent = std::max(25, 100 - ((100 * iTotalStored) / iMaxStored));
-			int iLowPricePercent = std::max(25, 100 - ((100 * std::min(iMaxStored, iTotalStored + iAmount)) / iMaxStored));
+			//Kaszkaj - A cargo quote remains valid even when an Alien player has no Colonies.
+			int iHighPricePercent = std::max(25, 100 - ((100 * iTotalStored) / std::max(1, iMaxStored)));
+			int iLowPricePercent = std::max(25, 100 - ((100 * std::min(iMaxStored, iTotalStored + iAmount)) / std::max(1, iMaxStored)));
 
 			iValue += (iAmount * iBuyPrice * (iHighPricePercent + iLowPricePercent)) / 200;
 		}
@@ -4239,47 +4274,36 @@ DenialTypes CvPlayerAI::AI_yieldTrade(YieldTypes eYield, const IDInfo& kTranspor
 
     ///TKe
 	CvUnit* pTransport = ::getUnit(kTransport);
+	//Kaszkaj - Cargo trade needs a valid transport on the map.
+	if (pTransport == NULL || pTransport->plot() == NULL) return DENIAL_UNKNOWN;
 	CvCity* pCity = pTransport->plot()->getPlotCity();
 	if (pCity != NULL)
 	{
 		CvPlayer& kPlayer = GET_PLAYER(pCity->getOwnerINLINE());
 		if (kPlayer.isNative())
 		{
+			//Kaszkaj - Trade Alien cargo according to stock and demand, including goods the Colony can produce itself.
 			if (getID() == pCity->getOwnerINLINE())
 			{
-				if (GC.getYieldInfo(eYield).getNativeSellPrice() == -1)
+				if (GC.getYieldInfo(eYield).getNativeSellPrice() <= 0)
 				{
 					return DENIAL_NEVER;
 				}
+				if (getTradeYieldAmount(eYield, pTransport) <= 0)
+				{
+					return DENIAL_NO_GAIN;
+				}
 			}
 			else
 			{
-				if (pCity->AI_getDesiredYield() == eYield)
-				{
-					return NO_DENIAL;
-				}
-				if (GC.getYieldInfo(eYield).getNativeBuyPrice() == -1)
+				if (GC.getYieldInfo(eYield).getNativeBuyPrice() <= 0)
 				{
 					return DENIAL_NOT_INTERESTED;
 				}
-			}
-
-			bool bCanProduce = pCity->canProduceYield(eYield);
-			if (eYield == YIELD_HORSES)
-			{
-				bCanProduce = false;
-			}
-
-			if (getID() == pCity->getOwnerINLINE())
-			{
-				if (!bCanProduce)
-				{
-					return DENIAL_UNKNOWN;
-				}
-			}
-			else
-			{
-				if (bCanProduce)
+				int iInput = std::max(pCity->AI_getNeededYield(eYield), pCity->getRawYieldConsumed(eYield));
+				int iBuffer = 4 * std::max(0, iInput - pCity->getRawYieldProduced(eYield));
+				int iTargetStock = std::max(pCity->getMaxYieldCapacity(), std::max(pCity->AI_getRequiredYieldLevel(eYield), iBuffer));
+				if (pCity->getYieldStored(eYield) >= iTargetStock)
 				{
 					return DENIAL_NO_GAIN;
 				}
@@ -4521,7 +4545,10 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 	FAssertMsg(eUnitAI != NO_UNITAI, "UnitAI is not assigned a valid value");
 	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
-	if (kUnitInfo.getDomainType() != AI_unitAIDomainType(eUnitAI))
+	bool bSeaWorker = eUnitAI == UNITAI_WORKER && kUnitInfo.getDomainType() == DOMAIN_SEA
+		&& AI_isDedicatedWorker(eUnit);
+	if ((kUnitInfo.getDomainType() != AI_unitAIDomainType(eUnitAI) && !bSeaWorker)
+		|| (bSeaWorker && AI_neededSeaBuilders(eUnit) <= 0))
 	{
 		return 0;
 	}
@@ -4594,6 +4621,18 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* pArea
 		return 0;
 	}
 
+	if (bSeaWorker)
+	{
+		return 400 + 200 * std::min(6, AI_builderTaskCount(eUnit));
+	}
+	if (AI_isDedicatedWorker(eUnit) && kUnitInfo.getDomainType() == DOMAIN_SEA) return 0;
+	if (AI_isNativeMilitaryUnit(eUnit) && AI_unitAIIsCombat(eUnitAI)) return 200;
+	if (eUnitAI == UNITAI_TRANSPORT_SEA)
+	{
+		int iValue = 100 + 180 * kUnitInfo.getCargoSpace() + 60 * kUnitInfo.getMoves();
+		if (kUnitInfo.getUnitClassType() == GC.getInfoTypeForString("UNITCLASS_GALLEON", true)) iValue += 300;
+		return iValue;
+	}
 	iCombatValue = GC.getGameINLINE().AI_combatValue(eUnit);
 
 	iValue = 100;
@@ -4620,7 +4659,12 @@ int CvPlayerAI::AI_unitGoldValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* p
 	FAssertMsg(eUnitAI != NO_UNITAI, "UnitAI is not assigned a valid value");
 	CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
-	if (kUnitInfo.getDomainType() != AI_unitAIDomainType(eUnitAI))
+	bool bDedicatedSeaWorker = kUnitInfo.getDomainType() == DOMAIN_SEA && AI_isDedicatedWorker(eUnit);
+	bool bSeaWorker = eUnitAI == UNITAI_WORKER && bDedicatedSeaWorker;
+	//Kaszkaj - Space builders are useful purchases only as workers with outstanding build tasks.
+	if (bDedicatedSeaWorker && !bSeaWorker) return 0;
+	if ((kUnitInfo.getDomainType() != AI_unitAIDomainType(eUnitAI) && !bSeaWorker)
+		|| (bSeaWorker && AI_neededSeaBuilders(eUnit) <= 0))
 	{
 		return 0;
 	}
@@ -4727,6 +4771,11 @@ int CvPlayerAI::AI_unitGoldValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* p
 	{
 		return 0;
 	}
+	if (bSeaWorker)
+	{
+		return std::max(0, std::max(0, kUnitInfo.getEuropeCost())
+			+ 100 * std::min(8, AI_builderTaskCount(eUnit)) + kUnitInfo.getAIWeight());
+	}
 	//This function specifically tries to estimate the gold value of a unit.
 
 	int iOffenseCombatValue = kUnitInfo.getCombat() * 100;
@@ -4802,7 +4851,8 @@ int CvPlayerAI::AI_unitGoldValue(UnitTypes eUnit, UnitAITypes eUnitAI, CvArea* p
 		break;
 
 	case UNITAI_TRANSPORT_SEA:
-
+		//Kaszkaj - Transport ships with larger cargo capacity clear a backlog with fewer ships and Earth trips.
+		iCargoValue += 25 * kUnitInfo.getCargoSpace() * std::max(0, kUnitInfo.getCargoSpace() - 1);
 		iValue += ((4 + kUnitInfo.getMoves()) * (iCargoValue + iDefenseCombatValue / 2)) / 7;
 
 		break;
@@ -5009,9 +5059,11 @@ bool CvPlayerAI::AI_hasSeaTransport(const CvUnit* pCargo) const
 	int iLoop;
 	for (CvUnit* pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 	{
-		if (pLoopUnit != pCargo && pLoopUnit->getDomainType() == DOMAIN_SEA)
+		if (pLoopUnit != pCargo && pLoopUnit->getDomainType() == DOMAIN_SEA && !pLoopUnit->isDelayedDeath())
 		{
-			if (pLoopUnit->cargoSpace() >= pCargo->getUnitInfo().getRequiredTransportSize())
+			if (pCargo != NULL && pCargo->getUnitInfo().isTreasure()
+				&& pLoopUnit->getUnitInfo().getUnitClassType() != GC.getInfoTypeForString("UNITCLASS_GALLEON", true)) continue;
+			if (pLoopUnit->cargoSpace() >= (pCargo == NULL ? 1 : pCargo->getUnitInfo().getRequiredTransportSize()))
 			{
 				return true;
 			}
@@ -5021,14 +5073,884 @@ bool CvPlayerAI::AI_hasSeaTransport(const CvUnit* pCargo) const
 	return false;
 }
 
-//Kaszkaj - Apply the scout task only to non-human colonial civilisations.
+//Kaszkaj - Assign the exploration task only to Intrepid Explorers controlled by Colonist AI.
 bool CvPlayerAI::AI_isColonialScout(UnitTypes eUnit) const
 {
 	return !isHuman() && !isNative() && !isEurope() && eUnit != NO_UNIT &&
 		eUnit == (UnitTypes)GC.getInfoTypeForString("UNIT_SCOUT", true);
 }
 
-//Kaszkaj - Use area counters to include small planets and remaining goodies without scanning every plot.
+//Kaszkaj - Keep Venerable Elders, Brilliant Polymaths and Industrious Cyborgs working in Colonies instead of equipping them as soldiers.
+bool CvPlayerAI::AI_isNativeCitySpecialist(UnitTypes eUnit) const
+{
+	if (!isNative() || isHuman() || eUnit == NO_UNIT)
+	{
+		return false;
+	}
+	const char* szType = GC.getUnitInfo(eUnit).getType();
+	return std::strcmp(szType, "UNIT_ELDER") == 0 || std::strcmp(szType, "UNIT_POLYMATH") == 0
+		|| std::strcmp(szType, "UNIT_CYBORG") == 0;
+}
+
+void CvPlayerAI::AI_clearProfessionCache()
+{
+	m_eProfessionCacheCivilization = NO_CIVILIZATION;
+	m_iProfessionCacheNumProfessions = -1;
+	m_iProfessionCachePioneerClass = -1;
+	m_abProfessionExpertCache.clear();
+	m_abNativeHumanSpecialistCache.clear();
+	m_aeResearchProfessions.clear();
+}
+
+void CvPlayerAI::AI_validateProfessionCache() const
+{
+	int iNumUnits = GC.getNumUnitInfos();
+	int iNumProfessions = GC.getNumProfessionInfos();
+	int iPioneerClass = GC.getDefineINT("UNITCLASS_PIONEER");
+	if (m_eProfessionCacheCivilization != getCivilizationType()
+		|| m_iProfessionCacheNumProfessions != iNumProfessions
+		|| m_iProfessionCachePioneerClass != iPioneerClass
+		|| (int)m_abNativeHumanSpecialistCache.size() != iNumUnits)
+	{
+		m_abProfessionExpertCache.assign(iNumUnits * iNumProfessions, (signed char)-1);
+		m_abNativeHumanSpecialistCache.assign(iNumUnits, (signed char)-1);
+		m_aeResearchProfessions.clear();
+		for (int i = 0; i < iNumProfessions; ++i)
+		{
+			const CvProfessionInfo& kProfession = GC.getProfessionInfo((ProfessionTypes)i);
+			if (kProfession.isCitizen() && !kProfession.isWorkPlot() && kProfession.getYieldsProduced(0) == YIELD_IDEAS)
+			{
+				m_aeResearchProfessions.push_back((ProfessionTypes)i);
+			}
+		}
+		m_eProfessionCacheCivilization = getCivilizationType();
+		m_iProfessionCacheNumProfessions = iNumProfessions;
+		m_iProfessionCachePioneerClass = iPioneerClass;
+	}
+}
+
+//Kaszkaj - Identify human production experts from their positive XML yield bonuses.
+bool CvPlayerAI::AI_isNativeHumanSpecialist(UnitTypes eUnit) const
+{
+	if (!isNative() || isHuman() || eUnit < 0 || eUnit >= GC.getNumUnitInfos()) return false;
+	AI_validateProfessionCache();
+	signed char& iCached = m_abNativeHumanSpecialistCache[eUnit];
+	if (iCached >= 0) return iCached != 0;
+	iCached = 0;
+	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+	ProfessionTypes eDefault = (ProfessionTypes)kUnit.getDefaultProfession();
+	if (kUnit.getDomainType() != DOMAIN_LAND || !kUnit.isFound() || AI_isDedicatedWorker(eUnit)
+		|| kUnit.getUnitClassType() == GC.getInfoTypeForString("UNITCLASS_CONVERTED_NATIVE", true)
+		|| eDefault == NO_PROFESSION || !GC.getProfessionInfo(eDefault).isUnarmed()) return false;
+	for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+	{
+		if (kUnit.getYieldModifier(i) > 0 || kUnit.getYieldChange(i) > 0 || kUnit.getBonusYieldChange(i) > 0)
+		{
+			iCached = 1;
+			return true;
+		}
+	}
+	return false;
+}
+
+//Kaszkaj - Convicts controlled by Alien AI train at school or in other Alien Colonies instead of serving as soldiers.
+bool CvPlayerAI::AI_isNativeStudent(UnitTypes eUnit) const
+{
+	return isNative() && !isHuman() && eUnit >= 0 && eUnit < GC.getNumUnitInfos()
+		&& std::strcmp(GC.getUnitInfo(eUnit).getType(), "UNIT_CRIMINAL") == 0;
+}
+
+//Kaszkaj - Elite Warriors controlled by Alien AI explore the map and retain their combat equipment.
+bool CvPlayerAI::AI_isNativeExplorer(UnitTypes eUnit) const
+{
+	return isNative() && !isHuman() && eUnit != NO_UNIT
+		&& std::strcmp(GC.getUnitInfo(eUnit).getType(), "UNIT_ELITE") == 0;
+}
+
+//Kaszkaj - Rank Alien specialist jobs by yield and workplace; outdoor priorities need a matching improvement or resource.
+int CvPlayerAI::AI_nativeProfessionPriority(UnitTypes eUnit, ProfessionTypes eProfession, const CvPlot* pPlot, const CvCity* pCity) const
+{
+	if (isHuman() || !isNative() || eUnit == NO_UNIT || (!AI_isNativeCitySpecialist(eUnit)
+		&& std::strcmp(GC.getUnitInfo(eUnit).getType(), "UNIT_NATIVE") != 0) || eProfession == NO_PROFESSION)
+	{
+		return 0;
+	}
+	const CvProfessionInfo& kProfession = GC.getProfessionInfo(eProfession);
+	if (!kProfession.isCitizen())
+	{
+		return 0;
+	}
+	const char* szType = GC.getUnitInfo(eUnit).getType();
+	bool bNativeWorker = std::strcmp(szType, "UNIT_NATIVE") == 0;
+	if (pCity == NULL && pPlot != NULL) pCity = pPlot->getWorkingCity();
+	const char* szBuilding = kProfession.getSpecialBuilding() == NO_SPECIALBUILDING ? ""
+		: GC.getSpecialBuildingInfo((SpecialBuildingTypes)kProfession.getSpecialBuilding()).getType();
+	int iBestPriority = 0;
+	for (int i = 0; i < kProfession.getNumYieldsProduced(); ++i)
+	{
+		YieldTypes eYield = (YieldTypes)kProfession.getYieldsProduced(i);
+		if (eYield < 0 || eYield >= NUM_YIELD_TYPES)
+		{
+			continue;
+		}
+		if (kProfession.isWorkPlot())
+		{
+			if (pPlot == NULL)
+			{
+				continue;
+			}
+			ImprovementTypes eImprovement = pPlot->getImprovementType();
+			BonusTypes eBonus = pPlot->getBonusType();
+			bool bYieldSite = (eImprovement != NO_IMPROVEMENT && pPlot->calculateImprovementYieldChange(eImprovement, eYield, getID()) > 0)
+				|| (eBonus != NO_BONUS && GC.getBonusInfo(eBonus).getYieldChange(eYield) > 0);
+			if (!bYieldSite && !(bNativeWorker && eYield == YIELD_FOOD))
+			{
+				continue;
+			}
+			if (bNativeWorker)
+			{
+				if (eYield == YIELD_IDEAS) iBestPriority = std::max(iBestPriority, 14);
+				else if (eYield == YIELD_BELLS || eYield == YIELD_CROSSES) iBestPriority = std::max(iBestPriority, 12);
+				else if (eYield == YIELD_FOOD) continue;
+				else if (eYield == YIELD_TOOLS || eYield == YIELD_HAMMERS) iBestPriority = std::max(iBestPriority, 9);
+				else if (eYield == YIELD_MUSKETS || eYield == YIELD_HORSES) iBestPriority = std::max(iBestPriority, 7);
+				else if (eYield == YIELD_COATS) iBestPriority = std::max(iBestPriority, 6);
+				else if (eYield == YIELD_RUM || eYield == YIELD_CIGARS) iBestPriority = std::max(iBestPriority, 4);
+				else if (eYield == YIELD_CLOTH) iBestPriority = std::max(iBestPriority, 2);
+			}
+			else if (std::strcmp(szType, "UNIT_ELDER") == 0)
+			{
+				if (eYield == YIELD_IDEAS) iBestPriority = std::max(iBestPriority, 6);
+				else if (eYield == YIELD_BELLS || eYield == YIELD_CROSSES) iBestPriority = std::max(iBestPriority, 2);
+			}
+			else if (std::strcmp(szType, "UNIT_POLYMATH") == 0)
+			{
+				if (eYield == YIELD_COATS) iBestPriority = std::max(iBestPriority, 6);
+				else if (eYield == YIELD_RUM || eYield == YIELD_CIGARS) iBestPriority = std::max(iBestPriority, 4);
+				else if (eYield == YIELD_CLOTH) iBestPriority = std::max(iBestPriority, 2);
+			}
+			else
+			{
+				if (eYield == YIELD_MUSKETS || eYield == YIELD_HORSES) iBestPriority = std::max(iBestPriority, 6);
+				else if (eYield == YIELD_TOOLS || eYield == YIELD_HAMMERS) iBestPriority = std::max(iBestPriority, 5);
+			}
+		}
+		else if (bNativeWorker)
+		{
+			if (eYield == YIELD_IDEAS && std::strcmp(szBuilding, "SPECIALBUILDING_IDEAS") == 0
+				&& pCity != NULL && pCity == AI_nativeResearchCity()) iBestPriority = std::max(iBestPriority, 13);
+			else if ((eYield == YIELD_HAMMERS && std::strcmp(szBuilding, "SPECIALBUILDING_HAMMERS") == 0)
+				|| (eYield == YIELD_TOOLS && std::strcmp(szBuilding, "SPECIALBUILDING_TOOLS") == 0)) iBestPriority = std::max(iBestPriority, 8);
+			else if (eYield == YIELD_COATS && std::strcmp(szBuilding, "SPECIALBUILDING_COATS") == 0) iBestPriority = std::max(iBestPriority, 5);
+			else if ((eYield == YIELD_RUM && std::strcmp(szBuilding, "SPECIALBUILDING_RUM") == 0)
+				|| (eYield == YIELD_CIGARS && std::strcmp(szBuilding, "SPECIALBUILDING_CIGARS") == 0)) iBestPriority = std::max(iBestPriority, 3);
+			else if (eYield == YIELD_CLOTH && std::strcmp(szBuilding, "SPECIALBUILDING_CLOTH") == 0) iBestPriority = std::max(iBestPriority, 1);
+		}
+		else if (std::strcmp(szType, "UNIT_ELDER") == 0)
+		{
+			if (eYield == YIELD_BELLS && std::strcmp(szBuilding, "SPECIALBUILDING_BELLS") == 0) iBestPriority = std::max(iBestPriority, 5);
+			else if (eYield == YIELD_IDEAS && std::strcmp(szBuilding, "SPECIALBUILDING_IDEAS") == 0) iBestPriority = std::max(iBestPriority, 4);
+			else if (eYield == YIELD_CROSSES && std::strcmp(szBuilding, "SPECIALBUILDING_CROSSES") == 0) iBestPriority = std::max(iBestPriority, 3);
+		}
+		else if (std::strcmp(szType, "UNIT_POLYMATH") == 0)
+		{
+			if (eYield == YIELD_COATS && std::strcmp(szBuilding, "SPECIALBUILDING_COATS") == 0) iBestPriority = std::max(iBestPriority, 5);
+			else if ((eYield == YIELD_RUM && std::strcmp(szBuilding, "SPECIALBUILDING_RUM") == 0)
+				|| (eYield == YIELD_CIGARS && std::strcmp(szBuilding, "SPECIALBUILDING_CIGARS") == 0)) iBestPriority = std::max(iBestPriority, 3);
+			else if (eYield == YIELD_CLOTH && std::strcmp(szBuilding, "SPECIALBUILDING_CLOTH") == 0) iBestPriority = std::max(iBestPriority, 1);
+		}
+		else
+		{
+			if ((eYield == YIELD_HAMMERS && std::strcmp(szBuilding, "SPECIALBUILDING_HAMMERS") == 0)
+				|| (eYield == YIELD_TOOLS && std::strcmp(szBuilding, "SPECIALBUILDING_TOOLS") == 0)) iBestPriority = std::max(iBestPriority, 3);
+			else if ((eYield == YIELD_MUSKETS && std::strcmp(szBuilding, "SPECIALBUILDING_MUSKETS") == 0)
+				|| (eYield == YIELD_HORSES && std::strcmp(szBuilding, "SPECIALBUILDING_HORSES") == 0)) iBestPriority = std::max(iBestPriority, 4);
+		}
+	}
+	//Kaszkaj - Give an available expert first use of its job without blocking ordinary Aliens from other jobs.
+	if (bNativeWorker && iBestPriority > 0 && pCity != NULL)
+	{
+		for (int i = 0; i < pCity->getPopulation(); ++i)
+		{
+			CvUnit* pExpert = pCity->getPopulationUnitByIndex(i);
+			if (pExpert == NULL || !AI_isProfessionExpert(pExpert->getUnitType(), eProfession)) continue;
+			const CvPlot* pWorkedPlot = pCity->getPlotWorkedByUnit(pExpert);
+			if (pExpert->isColonistLocked() && (pExpert->getProfession() != eProfession || pWorkedPlot != pPlot)) continue;
+			if (pExpert->getProfession() == NO_PROFESSION || (pExpert->getProfession() == eProfession && pWorkedPlot == pPlot))
+			{
+				return 0;
+			}
+		}
+	}
+	return iBestPriority;
+}
+
+//Kaszkaj - Count ordinary Alien units when planning Colony defence.
+bool CvPlayerAI::AI_isNativeMilitaryUnit(UnitTypes eUnit) const
+{
+	return isNative() && !isHuman() && eUnit != NO_UNIT
+		&& std::strcmp(GC.getUnitInfo(eUnit).getType(), "UNIT_NATIVE") == 0;
+}
+
+int CvPlayerAI::AI_nativeDefendersNeeded(const CvCity* pCity) const
+{
+	if (pCity == NULL || pCity->getOwnerINLINE() != getID()) return 0;
+	int iNeeded = 1 + pCity->getPopulation() / 6;
+	if (GET_TEAM(getTeam()).getAnyWarPlanCount() > 0) ++iNeeded;
+	if (pCity->AI_isDanger()) iNeeded = std::max(iNeeded, pCity->AI_neededDefenders());
+	return iNeeded;
+}
+
+int CvPlayerAI::AI_nativeDefenderCount(const CvCity* pCity, const CvUnit* pSkip, bool bArmedOnly) const
+{
+	if (pCity == NULL) return 0;
+	int iCount = 0;
+	CLLNode<IDInfo>* pNode = pCity->plot()->headUnitNode();
+	while (pNode != NULL)
+	{
+		const CvUnit* pUnit = ::getUnit(pNode->m_data);
+		pNode = pCity->plot()->nextUnitNode(pNode);
+		if (pUnit == NULL || pUnit == pSkip || pUnit->getOwnerINLINE() != getID()
+			|| pUnit->getDomainType() != DOMAIN_LAND || pUnit->isCargo() || pUnit->isDelayedDeath()
+			|| !pUnit->canDefend() || AI_isDedicatedWorker(pUnit->getUnitType())
+			|| AI_isNativeCitySpecialist(pUnit->getUnitType()) || AI_isNativeHumanSpecialist(pUnit->getUnitType())
+			|| AI_isNativeStudent(pUnit->getUnitType())
+			|| AI_isNativeExplorer(pUnit->getUnitType())) continue;
+		ProfessionTypes eProfession = pUnit->getProfession();
+		if (bArmedOnly && (eProfession == NO_PROFESSION || getYieldEquipmentAmount(eProfession, YIELD_MUSKETS) <= 0)) continue;
+		++iCount;
+	}
+	return iCount;
+}
+
+bool CvPlayerAI::AI_nativeUnitMayWork(const CvCity* pCity, const CvUnit* pUnit) const
+{
+	return pUnit == NULL || !AI_isNativeMilitaryUnit(pUnit->getUnitType())
+		|| AI_nativeDefenderCount(pCity, pUnit) >= AI_nativeDefendersNeeded(pCity);
+}
+
+//Kaszkaj - Prefer Alien Soldier for Colony defence and Alien Mecha or Alien Corsair for mobile combat roles.
+int CvPlayerAI::AI_nativeMilitaryProfessionValue(ProfessionTypes eProfession, UnitAITypes eUnitAI) const
+{
+	if (eProfession == NO_PROFESSION) return 0;
+	const CvProfessionInfo& kProfession = GC.getProfessionInfo(eProfession);
+	if (kProfession.isCitizen() || kProfession.isWorkPlot()) return 0;
+	const char* szType = kProfession.getType();
+	if (std::strcmp(szType, "PROFESSION_BRAVE") != 0 && std::strcmp(szType, "PROFESSION_ARMED_BRAVE") != 0
+		&& std::strcmp(szType, "PROFESSION_MOUNTED_BRAVE") != 0 && std::strcmp(szType, "PROFESSION_ARMED_MOUNTED_BRAVE") != 0) return 0;
+	int iCombat = std::max(0, kProfession.getCombatChange());
+	int iMoves = std::max(0, kProfession.getMovesChange());
+	if (eUnitAI == UNITAI_DEFENSIVE)
+	{
+		return 10 + 30 * iCombat + 15 * kProfession.isCityDefender() + 5 * iMoves;
+	}
+	return 10 + 25 * iCombat + 25 * iMoves;
+}
+
+//Kaszkaj - Equip soldiers from Colony stocks and recruit only ordinary Aliens the Colony can spare.
+void CvPlayerAI::AI_doNativeMilitary()
+{
+	if (!isNative() || isHuman() || isEurope() || isBarbarian()) return;
+	int iLoop;
+	bool bAtWar = GET_TEAM(getTeam()).getAnyWarPlanCount() > 0;
+	int iMobileWanted = std::max(1, getTotalPopulation() / 15) + (bAtWar ? getNumCities() : 0);
+	int iMobileCount = 0;
+	for (CvUnit* pUnit = firstUnit(&iLoop); pUnit != NULL; pUnit = nextUnit(&iLoop))
+	{
+		if (AI_isNativeMilitaryUnit(pUnit->getUnitType()) && !pUnit->isDelayedDeath()
+			&& (pUnit->AI_getUnitAIType() == UNITAI_OFFENSIVE || pUnit->AI_getUnitAIType() == UNITAI_COUNTER)) ++iMobileCount;
+	}
+	for (CvCity* pCity = firstCity(&iLoop); pCity != NULL; pCity = nextCity(&iLoop))
+	{
+		if (pCity->isOccupation()) continue;
+		int iNeeded = AI_nativeDefendersNeeded(pCity);
+		int iDefenders = AI_nativeDefenderCount(pCity);
+		CLLNode<IDInfo>* pNode = pCity->plot()->headUnitNode();
+		while (pNode != NULL)
+		{
+			CvUnit* pUnit = ::getUnit(pNode->m_data);
+			pNode = pCity->plot()->nextUnitNode(pNode);
+			if (pUnit == NULL || !AI_isNativeMilitaryUnit(pUnit->getUnitType())
+				|| pUnit->isCargo() || pUnit->isDelayedDeath()) continue;
+			UnitAITypes eRole = pUnit->AI_getUnitAIType();
+			if (iDefenders <= iNeeded || !AI_unitAIIsCombat(eRole)) eRole = UNITAI_DEFENSIVE;
+			ProfessionTypes eBest = pUnit->getProfession();
+			int iBestValue = AI_nativeMilitaryProfessionValue(eBest, eRole);
+			for (int i = 0; i < GC.getNumProfessionInfos(); ++i)
+			{
+				ProfessionTypes eProfession = (ProfessionTypes)i;
+				int iValue = AI_nativeMilitaryProfessionValue(eProfession, eRole);
+				if (iValue > iBestValue && pUnit->canHaveProfession(eProfession, false, pCity->plot()))
+				{
+					eBest = eProfession;
+					iBestValue = iValue;
+				}
+			}
+			if (eBest != pUnit->getProfession()) pUnit->setProfession(eBest);
+			if (iDefenders <= iNeeded) pUnit->AI_setUnitAIType(eRole);
+		}
+		bool bGarrison = iDefenders < iNeeded;
+		if (pCity->getPopulation() <= 1 || (!bGarrison && (iMobileCount >= iMobileWanted || pCity->getPopulation() <= 4))) continue;
+		UnitAITypes eRecruitRole = bGarrison ? UNITAI_DEFENSIVE : UNITAI_COUNTER;
+		CvUnit* pBestUnit = NULL;
+		ProfessionTypes eBestProfession = NO_PROFESSION;
+		int iBestValue = 0;
+		for (int i = 0; i < pCity->getPopulation(); ++i)
+		{
+			CvUnit* pUnit = pCity->getPopulationUnitByIndex(i);
+			if (pUnit == NULL || !AI_isNativeMilitaryUnit(pUnit->getUnitType()) || pUnit->isColonistLocked()) continue;
+			CvPlot* pWorkedPlot = pCity->getPlotWorkedByUnit(pUnit);
+			int iFoodLost = pWorkedPlot == NULL ? 0 : pWorkedPlot->getYield(YIELD_FOOD);
+			if (pCity->foodDifference() - iFoodLost + GC.getFOOD_CONSUMPTION_PER_POPULATION() < 0) continue;
+			if (!pCity->AI_isDanger() && pWorkedPlot != NULL && static_cast<const CvCityAI*>(pCity)->AI_improvementUpgradeWorkValue(pWorkedPlot) > 0) continue;
+			ProfessionTypes eProfession = NO_PROFESSION;
+			int iProfessionValue = 0;
+			for (int j = 0; j < GC.getNumProfessionInfos(); ++j)
+			{
+				ProfessionTypes eLoopProfession = (ProfessionTypes)j;
+				int iValue = AI_nativeMilitaryProfessionValue(eLoopProfession, eRecruitRole);
+				if (iValue > iProfessionValue && pUnit->canHaveProfession(eLoopProfession, false, pCity->plot()))
+				{
+					eProfession = eLoopProfession;
+					iProfessionValue = iValue;
+				}
+			}
+			if (eProfession == NO_PROFESSION) continue;
+			if (!bGarrison && (eProfession == (ProfessionTypes)GC.getCivilizationInfo(getCivilizationType()).getDefaultProfession()
+				|| (!bAtWar && GC.getProfessionInfo(eProfession).getMovesChange() <= 0))) continue;
+			int iJobValue = pUnit->getProfession() == NO_PROFESSION ? 0
+				: pCity->AI_professionValue(pUnit->getProfession(), pUnit, pWorkedPlot, NULL);
+			int iValue = 1000 * iProfessionValue / (100 + std::max(0, iJobValue));
+			if (iValue > iBestValue)
+			{
+				pBestUnit = pUnit;
+				eBestProfession = eProfession;
+				iBestValue = iValue;
+			}
+		}
+		if (pBestUnit != NULL && pCity->removePopulationUnit(pBestUnit, false, eBestProfession))
+		{
+			pBestUnit->AI_setUnitAIType(eRecruitRole);
+			if (!bGarrison) ++iMobileCount;
+			pCity->AI_setAssignWorkDirty(true);
+		}
+	}
+}
+
+//Kaszkaj - Recruit Alien specialists for usable jobs, counting current residents and incoming workers.
+int CvPlayerAI::AI_nativeUnitProductionValue(const CvCity* pCity, UnitTypes eUnit)
+{
+	if (!isNative() || isHuman() || isEurope() || isBarbarian() || pCity == NULL || eUnit == NO_UNIT) return 0;
+	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+	UnitClassTypes eClass = (UnitClassTypes)kUnit.getUnitClassType();
+	if (AI_isNativeExplorer(eUnit))
+	{
+		int iTargets = AI_scoutTargetCount(pCity->area());
+		int iDesired = iTargets > 0 ? std::min(3, 1 + iTargets / 300) : 0;
+		if (GET_TEAM(getTeam()).getAnyWarPlanCount() > 0) iDesired = std::max(iDesired, 1 + getNumCities() / 3);
+		return getUnitClassCountPlusMaking(eClass) < iDesired ? 800 : 0;
+	}
+	if (AI_isDedicatedWorker(eUnit) && kUnit.getDomainType() == DOMAIN_LAND)
+	{
+		int iNeed = std::max(0, pCity->AI_getWorkersNeeded() - pCity->AI_getWorkersHave());
+		return iNeed > 0 && getUnitClassCountPlusMaking(eClass) < std::max(1, getNumCities() / 2)
+			? 400 + 100 * std::min(4, iNeed) : 0;
+	}
+	if (!AI_isNativeCitySpecialist(eUnit) || pCity->foodDifference() < GC.getFOOD_CONSUMPTION_PER_POPULATION()) return 0;
+	int iPresent = 0;
+	for (int i = 0; i < pCity->getPopulation(); ++i)
+	{
+		if (pCity->getPopulationUnitByIndex(i)->getUnitType() == eUnit) ++iPresent;
+	}
+	int iLoop;
+	for (CvUnit* pUnit = firstUnit(&iLoop); pUnit != NULL; pUnit = nextUnit(&iLoop))
+	{
+		if (pUnit->getUnitType() == eUnit && !pUnit->isDelayedDeath()
+			&& (pUnit->getHomeCity() == pCity || pUnit->atPlot(pCity->plot()))) ++iPresent;
+	}
+	for (const CvCity* pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
+	{
+		if (pLoopCity != pCity) continue;
+		for (CLLNode<OrderData>* pOrder = pLoopCity->headOrderQueueNode(); pOrder != NULL; pOrder = pLoopCity->nextOrderQueueNode(pOrder))
+		{
+			if (pOrder->m_data.eOrderType == ORDER_TRAIN && pOrder->m_data.iData1 == eUnit) ++iPresent;
+		}
+	}
+	if (iPresent >= std::max(1, 1 + pCity->getPopulation() / 4)) return 0;
+	int iBestGain = 0;
+	int iBestShortage = 0;
+	for (int i = 0; i < GC.getNumProfessionInfos(); ++i)
+	{
+		ProfessionTypes eProfession = (ProfessionTypes)i;
+		const CvProfessionInfo& kProfession = GC.getProfessionInfo(eProfession);
+		if (!AI_isProfessionExpert(eUnit, eProfession) || !isProfessionValid(eProfession, eUnit)
+			|| kProfession.getNumYieldsProduced() == 0) continue;
+		YieldTypes eYield = (YieldTypes)kProfession.getYieldsProduced(0);
+		if (eYield < 0 || eYield >= NUM_YIELD_TYPES || eYield == YIELD_EDUCATION
+			|| (eYield == YIELD_IDEAS && (!AI_hasResearchTarget() || pCity->canResearch() <= 0))) continue;
+		bool bHasInputs = true;
+		for (int j = 0; j < kProfession.getNumYieldsConsumed(getID()); ++j)
+		{
+			YieldTypes eInput = (YieldTypes)kProfession.getYieldsConsumed(j, getID());
+			if (eInput != NO_YIELD && (eInput < 0 || eInput >= NUM_YIELD_TYPES
+				|| (pCity->getYieldStored(eInput) <= 0 && pCity->getRawYieldProduced(eInput) <= pCity->getRawYieldConsumed(eInput)
+					&& pCity->AI_getTradeBalance(eInput) <= 0))) bHasInputs = false;
+		}
+		if (!bHasInputs) continue;
+		int iGain = 0;
+		if (kProfession.isWorkPlot())
+		{
+			for (int j = 1; j < NUM_CITY_PLOTS; ++j)
+			{
+				const CvPlot* pPlot = pCity->getCityIndexPlot(j);
+				if (pPlot == NULL || pPlot->getWorkingCity() != pCity || !pCity->canWork(pPlot)
+					|| pPlot->isWater() != kProfession.isWater()) continue;
+				int iOutput = pCity->AI_professionBasicOutput(eProfession, eUnit, pPlot);
+				CvUnit* pWorker = pCity->getUnitWorkingPlot(pPlot);
+				if (pWorker != NULL && pWorker->isColonistLocked()) continue;
+				int iOld = pWorker != NULL && pWorker->getProfession() == eProfession
+					? pCity->AI_professionBasicOutput(eProfession, pWorker->getUnitType(), pPlot) : 0;
+				iGain = std::max(iGain, iOutput - iOld);
+			}
+		}
+		else
+		{
+			int iSlots = pCity->getNumProfessionBuildingSlots(eProfession);
+			if (iSlots <= 0) continue;
+			int iOccupied = 0;
+			int iOld = MAX_INT;
+			for (int j = 0; j < pCity->getPopulation(); ++j)
+			{
+				CvUnit* pWorker = pCity->getPopulationUnitByIndex(j);
+				if (pWorker->getProfession() != eProfession) continue;
+				++iOccupied;
+				if (!pWorker->isColonistLocked()) iOld = std::min(iOld, pCity->AI_professionBasicOutput(eProfession, pWorker->getUnitType(), NULL));
+			}
+			if (iOccupied < iSlots) iOld = 0;
+			if (iOld != MAX_INT) iGain = pCity->AI_professionBasicOutput(eProfession, eUnit, NULL) - iOld;
+		}
+		if (iGain <= 0) continue;
+		iBestGain = std::max(iBestGain, std::min(10, iGain));
+		if (AI_cityYieldTarget(pCity, eYield) > (eYield == YIELD_HAMMERS ? pCity->getRawYieldProduced(eYield) : pCity->getYieldStored(eYield)))
+		{
+			iBestShortage = std::max(iBestShortage, eYield == YIELD_MUSKETS || eYield == YIELD_HORSES ? 1400
+				: (eYield == YIELD_HAMMERS || eYield == YIELD_TOOLS ? 1000 : 600));
+		}
+	}
+	if (iBestGain == 0) return 0;
+	int iBase = std::strcmp(kUnit.getType(), "UNIT_POLYMATH") == 0 ? 1800
+		: (std::strcmp(kUnit.getType(), "UNIT_ELDER") == 0 ? 1400 : 1200);
+	if (getUnitClassCountPlusMaking(eClass) == 0) iBase *= 2;
+	return (iBase + iBestShortage + 100 * iBestGain) / (1 + iPresent);
+}
+
+//Kaszkaj - Plan industry and equipment from Colony orders and defence needs instead of fixed Food preferences.
+int CvPlayerAI::AI_cityYieldTarget(const CvCity* pCity, YieldTypes eYield, int iDepth) const
+{
+	int aiTargets[4 * NUM_YIELD_TYPES];
+	std::fill(aiTargets, aiTargets + 4 * NUM_YIELD_TYPES, -1);
+	return AI_calculateCityYieldTarget(pCity, eYield, iDepth, aiTargets);
+}
+
+int CvPlayerAI::AI_calculateCityYieldTarget(const CvCity* pCity, YieldTypes eYield, int iDepth, int* aiTargets) const
+{
+	if (pCity == NULL || eYield < 0 || eYield >= NUM_YIELD_TYPES) return 0;
+	int iCacheIndex = std::min(3, std::max(0, iDepth)) * NUM_YIELD_TYPES + eYield;
+	if (iDepth >= 0 && aiTargets[iCacheIndex] >= 0) return aiTargets[iCacheIndex];
+	if (eYield == YIELD_HAMMERS)
+	{
+		return pCity->isProduction() ? std::min(30, 6 + pCity->getPopulation() / 3) : 0;
+	}
+	int iTarget = 0;
+	UnitTypes eUnit = pCity->getProductionUnit();
+	BuildingTypes eBuilding = pCity->getProductionBuilding();
+	if (eUnit != NO_UNIT) iTarget = pCity->getYieldProductionNeeded(eUnit, eYield);
+	if (eBuilding != NO_BUILDING) iTarget = std::max(iTarget, pCity->getYieldProductionNeeded(eBuilding, eYield));
+	if (eYield == YIELD_TOOLS) iTarget = std::max(iTarget, 25);
+	if (isNative() && (eYield == YIELD_MUSKETS || eYield == YIELD_HORSES))
+	{
+		ProfessionTypes eProfession = (ProfessionTypes)GC.getInfoTypeForString(
+			eYield == YIELD_MUSKETS ? "PROFESSION_ARMED_BRAVE" : "PROFESSION_ARMED_MOUNTED_BRAVE", true);
+		if (eProfession != NO_PROFESSION)
+		{
+			int iNeeded = std::max(0, AI_nativeDefendersNeeded(pCity) - AI_nativeDefenderCount(pCity, NULL, true));
+			if (eYield == YIELD_HORSES) iNeeded = GET_TEAM(getTeam()).getAnyWarPlanCount() > 0 ? std::max(1, iNeeded / 2) : 1;
+			iTarget = std::max(iTarget, getYieldEquipmentAmount(eProfession, eYield) * std::max(1, iNeeded));
+		}
+	}
+	//Kaszkaj - Keep recruitment goods for the next Alien specialist instead of exporting the whole supply.
+	if (isNative() && (eYield == YIELD_COATS || eYield == YIELD_RUM || eYield == YIELD_CIGARS || eYield == YIELD_CLOTH))
+	{
+		const char* szType = eYield == YIELD_COATS ? "UNIT_POLYMATH" : (eYield == YIELD_RUM ? "UNIT_ELDER"
+			: (eYield == YIELD_CIGARS ? "UNIT_CYBORG" : "UNIT_CULTIVATOR"));
+		UnitTypes eRecruit = (UnitTypes)GC.getInfoTypeForString(szType, true);
+		if (eRecruit != NO_UNIT && getUnitClassCountPlusMaking((UnitClassTypes)GC.getUnitInfo(eRecruit).getUnitClassType()) < 2 * getNumCities()
+			&& (eYield != YIELD_CLOTH || pCity->AI_getWorkersNeeded() > pCity->AI_getWorkersHave()))
+		{
+			iTarget = std::max(iTarget, pCity->getYieldProductionNeeded(eRecruit, eYield));
+		}
+	}
+	if (eYield != YIELD_FOOD && GC.getYieldInfo(eYield).isCargo())
+	{
+		iTarget = std::max(iTarget, 5 * std::max(pCity->AI_getNeededYield(eYield), pCity->getRawYieldConsumed(eYield)));
+		//Kaszkaj - Follow production shortages back to their inputs, even before the factory has a worker.
+		if (iDepth < 3)
+		{
+			for (int i = 0; i < GC.getNumProfessionInfos(); ++i)
+			{
+				ProfessionTypes eProfession = (ProfessionTypes)i;
+				const CvProfessionInfo& kProfession = GC.getProfessionInfo(eProfession);
+				if (!kProfession.isCitizen() || kProfession.isWorkPlot()) continue;
+				bool bUsesYield = false;
+				for (int j = 0; j < kProfession.getNumYieldsConsumed(getID()); ++j)
+				{
+					if (kProfession.getYieldsConsumed(j, getID()) == eYield) bUsesYield = true;
+				}
+				if (!bUsesYield || !isProfessionValid(eProfession, NO_UNIT)
+					|| pCity->getNumProfessionBuildingSlots(eProfession) <= 0) continue;
+				int iInput = pCity->getProfessionInput(eProfession, NULL);
+				int iOutput = pCity->getProfessionOutput(eProfession, NULL);
+				if (iInput <= 0 || iOutput <= 0) continue;
+				for (int j = 0; j < kProfession.getNumYieldsProduced(); ++j)
+				{
+					YieldTypes eProduct = (YieldTypes)kProfession.getYieldsProduced(j);
+					if (eProduct < 0 || eProduct >= NUM_YIELD_TYPES || eProduct == eYield || eProduct == YIELD_FOOD) continue;
+					int iShortage = AI_calculateCityYieldTarget(pCity, eProduct, iDepth + 1, aiTargets);
+					iShortage -= eProduct == YIELD_HAMMERS ? pCity->getRawYieldProduced(eProduct) : pCity->getYieldStored(eProduct);
+					iShortage = std::max(0, iShortage);
+					if (eProduct == YIELD_HAMMERS) iShortage *= 5;
+					iTarget = std::max(iTarget, std::min(pCity->getMaxYieldCapacity(), (iShortage * iInput + iOutput - 1) / iOutput));
+				}
+			}
+		}
+	}
+	if (iDepth >= 0) aiTargets[iCacheIndex] = iTarget;
+	return iTarget;
+}
+
+int CvPlayerAI::AI_europePassengerCount() const
+{
+	int iCount = 0;
+	for (int i = 0; i < getNumEuropeUnits(); ++i)
+	{
+		CvUnit* pUnit = getEuropeUnit(i);
+		if (pUnit != NULL && pUnit->getDomainType() == DOMAIN_LAND && !pUnit->isGoods()) ++iCount;
+	}
+	return iCount;
+}
+
+int CvPlayerAI::AI_transportCapacity(bool bIncludeProduction) const
+{
+	int iCapacity = 0;
+	int iLoop;
+	for (const CvUnit* pUnit = firstUnit(&iLoop); pUnit != NULL; pUnit = nextUnit(&iLoop))
+	{
+		if (pUnit->getDomainType() == DOMAIN_SEA && pUnit->AI_getUnitAIType() == UNITAI_TRANSPORT_SEA
+			&& !pUnit->isDelayedDeath() && !AI_isDedicatedWorker(pUnit->getUnitType())) iCapacity += pUnit->cargoSpace();
+	}
+	if (bIncludeProduction)
+	{
+		for (const CvCity* pCity = firstCity(&iLoop); pCity != NULL; pCity = nextCity(&iLoop))
+		{
+			for (CLLNode<OrderData>* pNode = pCity->headOrderQueueNode(); pNode != NULL; pNode = pCity->nextOrderQueueNode(pNode))
+			{
+				if (pNode->m_data.eOrderType == ORDER_TRAIN && pNode->m_data.iData2 == UNITAI_TRANSPORT_SEA)
+				{
+					iCapacity += GC.getUnitInfo((UnitTypes)pNode->m_data.iData1).getCargoSpace();
+				}
+			}
+		}
+	}
+	return iCapacity;
+}
+
+//Kaszkaj - Size the transport fleet for waiting passengers, export goods and the Colonies it serves.
+int CvPlayerAI::AI_transportCapacityNeeded()
+{
+	if (getNumCities() == 0 || countNumCoastalCities() == 0) return 0;
+	int iDemand = 0;
+	int iForecast = 0;
+	int iTreasure = 0;
+	int iScout = 0;
+	int iDistance = 0;
+	int iMoves = 1;
+	int iTravel = 1;
+	int iPassengers = 0;
+	int iLoop;
+	UnitClassTypes eGalleon = (UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_GALLEON", true);
+	UnitTypes eFreighter = eGalleon == NO_UNITCLASS ? NO_UNIT : (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eGalleon);
+	if (eFreighter != NO_UNIT) iMoves = std::max(1, GC.getUnitInfo(eFreighter).getMoves());
+	for (CvUnit* pUnit = firstUnit(&iLoop); pUnit != NULL; pUnit = nextUnit(&iLoop))
+	{
+		if (pUnit->isDelayedDeath()) continue;
+		if (pUnit->getUnitInfo().isTreasure() && !pUnit->isCargo()) ++iTreasure;
+		if (AI_isColonialScout(pUnit->getUnitType()) && !pUnit->isCargo()
+			&& pUnit->getGroup()->AI_getMissionAIType() == MISSIONAI_AWAIT_PICKUP) ++iScout;
+	}
+	if (canTradeWithEurope()) iPassengers = AI_europePassengerCount();
+	for (CvCity* pCity = firstCity(&iLoop); pCity != NULL; pCity = nextCity(&iLoop))
+	{
+		if (pCity->isCoastal(GC.getMIN_WATER_SIZE_FOR_OCEAN()))
+		{
+			int iOceanDistance = pCity->plot()->getDistanceToOcean();
+			if (iOceanDistance == MAX_SHORT) continue;
+			iDistance = std::max(iDistance, std::max(0, iOceanDistance));
+			EuropeTypes eEurope = pCity->plot()->getNearestEurope();
+			if (eEurope != NO_EUROPE) iTravel = std::max(iTravel, GC.getEuropeInfo(eEurope).getTripLength());
+		}
+		for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+		{
+			YieldTypes eYield = (YieldTypes)i;
+			if (!GC.getYieldInfo(eYield).isCargo() || !pCity->AI_shouldExportYield(eYield)
+				|| (canTradeWithEurope() && !isYieldEuropeTradable(eYield))) continue;
+			int iSurplus = std::max(0, pCity->getYieldStored(eYield) - std::max(pCity->getMaintainLevel(eYield), AI_cityYieldTarget(pCity, eYield)));
+			iDemand += (iSurplus + GC.getGameINLINE().getCargoYieldCapacity() - 1) / std::max(1, GC.getGameINLINE().getCargoYieldCapacity());
+			int iNet = pCity->getRawYieldProduced(eYield) - pCity->getRawYieldConsumed(eYield);
+			if (eYield == YIELD_FOOD) iNet -= pCity->foodConsumption();
+			iForecast += std::max(0, iNet);
+		}
+	}
+	int iSpeed = std::max(1, GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getGrowthPercent());
+	int iPlanning = std::max(3, GC.getDefineINT("AI_TRANSPORT_FORECAST_TURNS") * iSpeed / 100);
+	iPlanning = std::max(iPlanning, 2 * ((iDistance + iMoves - 1) / iMoves + std::max(1, iTravel * iSpeed / 100) + 1));
+	iForecast = (iPlanning * iForecast + GC.getGameINLINE().getCargoYieldCapacity() - 1) / std::max(1, GC.getGameINLINE().getCargoYieldCapacity());
+	int iBaseline = std::max(3, countNumCoastalCities() + getTotalPopulation() / 12);
+	return std::max(iBaseline, std::max(iPassengers, (iDemand + iForecast + 1) / 2) + iTreasure + iScout);
+}
+
+//Kaszkaj - Use the same space-build benefits when ordering a ship and when choosing its work site.
+int CvPlayerAI::AI_buildPlanValue(UnitTypes eUnit, const CvPlot* pPlot, BuildTypes eBuild)
+{
+	if (eUnit == NO_UNIT || pPlot == NULL || eBuild == NO_BUILD || !GC.getUnitInfo(eUnit).getBuilds(eBuild)) return 0;
+	const CvBuildInfo& kBuild = GC.getBuildInfo(eBuild);
+	FeatureTypes eFeature = pPlot->getFeatureType();
+	ImprovementTypes eImprovement = (ImprovementTypes)kBuild.getImprovement();
+	if (eImprovement == NO_IMPROVEMENT && (eFeature == NO_FEATURE || !kBuild.isFeatureRemove(eFeature))) return 0;
+	if (!canBuild(pPlot, eBuild, false, true)) return 0;
+	bool bColonyShip = GC.getUnitInfo(eUnit).getUnitClassType() == GC.getInfoTypeForString("UNITCLASS_COLONYSHIP", true);
+	if (bColonyShip)
+	{
+		CvCity* pCity = pPlot->getWorkingCity();
+		if (pPlot->getOwnerINLINE() != getID() || pCity == NULL || pCity->getOwnerINLINE() != getID()
+			|| pCity->isOccupation() || pCity->getPopulation() <= 1 || !pPlot->isPotentialCityWork()) return 0;
+		if (!pCity->isWorksWater() && !GC.getCivilizationInfo(getCivilizationType()).isWaterWorks()) return 0;
+	}
+	int iValue = eBuild == (BuildTypes)GC.getInfoTypeForString("BUILD_EXCAVATION", true) ? 600 : 0;
+	if (eBuild == (BuildTypes)GC.getInfoTypeForString("BUILD_JANUS_DEVICE", true))
+	{
+		iValue = AI_janusDevicePlotValue(pPlot);
+		if (iValue <= 0) return 0;
+	}
+	for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+	{
+		YieldTypes eYield = (YieldTypes)i;
+		int iWeight = std::max(0, AI_yieldValue(eYield));
+		if (eFeature != NO_FEATURE && kBuild.isFeatureRemove(eFeature)) iValue += iWeight * std::max(0, kBuild.getFeatureYield(eFeature, eYield));
+		if (eImprovement != NO_IMPROVEMENT)
+		{
+			int iChange = pPlot->calculateImprovementYieldChange(eImprovement, eYield, getID());
+			if (pPlot->getImprovementType() != NO_IMPROVEMENT) iChange -= pPlot->calculateImprovementYieldChange(pPlot->getImprovementType(), eYield, getID());
+			iValue += 8 * iWeight * iChange;
+			if (bColonyShip)
+			{
+				ImprovementTypes eFuture = (ImprovementTypes)GC.getImprovementInfo(eImprovement).getImprovementUpgrade();
+				for (int iUpgrade = 0; eFuture != NO_IMPROVEMENT && iUpgrade < 2; ++iUpgrade)
+				{
+					int iFuture = pPlot->calculateImprovementYieldChange(eFuture, eYield, getID());
+					iValue += (iUpgrade == 0 ? 6 : 3) * iWeight * std::max(0, iFuture);
+					eFuture = (ImprovementTypes)GC.getImprovementInfo(eFuture).getImprovementUpgrade();
+				}
+			}
+		}
+	}
+	if (eFeature != NO_FEATURE && kBuild.isFeatureRemove(eFeature) && pPlot->getWorkingCity() != NULL
+		&& pPlot->getWorkingCity()->getOwnerINLINE() == getID() && pPlot->getImprovementType() != NO_IMPROVEMENT)
+	{
+		for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+		{
+			YieldTypes eYield = (YieldTypes)i;
+			iValue -= 8 * AI_yieldValue(eYield) * GC.getFeatureInfo(eFeature).getYieldChange(i);
+		}
+	}
+	iValue -= getBuildCost(pPlot, eBuild) / 2;
+	return std::max(0, iValue);
+}
+
+int CvPlayerAI::AI_builderTaskCount(UnitTypes eUnit)
+{
+	if (eUnit == NO_UNIT || !AI_isDedicatedWorker(eUnit)) return 0;
+	bool bSeaWorker = GC.getUnitInfo(eUnit).getDomainType() == DOMAIN_SEA;
+	if (!bSeaWorker && isNative()) return 0;
+	int iTurn = GC.getGameINLINE().getGameTurn();
+	if (m_iBuilderTaskCacheTurn != iTurn)
+	{
+		m_iBuilderTaskCacheTurn = iTurn;
+		m_aiBuilderTaskCounts.clear();
+		m_aiBuilderTaskCosts.clear();
+	}
+	std::map<UnitTypes, int>::const_iterator it = m_aiBuilderTaskCounts.find(eUnit);
+	if (it != m_aiBuilderTaskCounts.end()) return it->second;
+	std::vector<BuildTypes> aeBuilds;
+	for (int i = 0; i < GC.getNumBuildInfos(); ++i)
+	{
+		if (GC.getUnitInfo(eUnit).getBuilds(i) && (bSeaWorker
+			|| i == GC.getInfoTypeForString("BUILD_EXCAVATION", true))) aeBuilds.push_back((BuildTypes)i);
+	}
+	int iCount = 0;
+	int iNextCost = MAX_INT;
+	for (int i = 0; i < GC.getMapINLINE().numPlotsINLINE(); ++i)
+	{
+		CvPlot* pPlot = GC.getMapINLINE().plotByIndexINLINE(i);
+		if (pPlot->isWater() != bSeaWorker || (!bSeaWorker
+			&& (!pPlot->isRevealed(getTeam(), false) || pPlot->area()->getCitiesPerPlayer(getID()) == 0))) continue;
+		bool bTaskCounted = false;
+		for (int j = 0; j < (int)aeBuilds.size(); ++j)
+		{
+			if (AI_buildPlanValue(eUnit, pPlot, aeBuilds[j]) > 0)
+			{
+				iNextCost = std::min(iNextCost, getBuildCost(pPlot, aeBuilds[j]));
+				if (!bTaskCounted) ++iCount;
+				bTaskCounted = true;
+			}
+		}
+	}
+	m_aiBuilderTaskCounts[eUnit] = iCount;
+	m_aiBuilderTaskCosts[eUnit] = iNextCost == MAX_INT ? 0 : iNextCost;
+	return iCount;
+}
+
+int CvPlayerAI::AI_neededSeaBuilders(UnitTypes eUnit)
+{
+	int iTasks = AI_builderTaskCount(eUnit);
+	if (iTasks == 0) return 0;
+	int iDesired = GC.getUnitInfo(eUnit).getUnitClassType() == GC.getInfoTypeForString("UNITCLASS_COLONYSHIP", true)
+		? std::min(2, iTasks) : std::min(3, 1 + (iTasks - 1) / 8);
+	return std::max(0, iDesired - getUnitClassCountPlusMaking((UnitClassTypes)GC.getUnitInfo(eUnit).getUnitClassType()));
+}
+
+//Kaszkaj - Choose one suitable Colony for ordinary Aliens to work in indoor research jobs.
+const CvCity* CvPlayerAI::AI_nativeResearchCity() const
+{
+	if (getNumCities() == 0) return NULL;
+	AI_validateProfessionCache();
+	const std::vector<ProfessionTypes>& aeResearchProfessions = m_aeResearchProfessions;
+	const CvCity* pBestCity = NULL;
+	int iBestValue = 0;
+	int iLoop;
+	for (const CvCity* pCity = firstCity(&iLoop); pCity != NULL; pCity = nextCity(&iLoop))
+	{
+		if (pCity->isOccupation()) continue;
+		int iOutput = 0;
+		for (int i = 0; i < (int)aeResearchProfessions.size(); ++i)
+		{
+			ProfessionTypes eProfession = aeResearchProfessions[i];
+			if (pCity->getNumProfessionBuildingSlots(eProfession) > 0)
+			{
+				iOutput = std::max(iOutput, pCity->getProfessionOutput(eProfession, NULL));
+			}
+		}
+		int iValue = iOutput * pCity->getBaseYieldRateModifier(YIELD_IDEAS) * std::max(1, pCity->getPopulation() - 1);
+		if (iValue > iBestValue || (iValue > 0 && iValue == iBestValue && pBestCity != NULL && pCity->getID() < pBestCity->getID()))
+		{
+			iBestValue = iValue;
+			pBestCity = pCity;
+		}
+	}
+	return pBestCity;
+}
+
+//Kaszkaj - Reserve Weapons for a queued spaceship once the minimum armed garrison is equipped.
+bool CvPlayerAI::AI_shouldReserveNavalWeapons(const CvCity* pCity, ProfessionTypes eProfession, ProfessionTypes eCurrent) const
+{
+	if (isHuman() || !isNative() || pCity == NULL || eProfession == NO_PROFESSION) return false;
+	int iNeeded = getYieldEquipmentAmount(eProfession, YIELD_MUSKETS)
+		- (eCurrent == NO_PROFESSION ? 0 : getYieldEquipmentAmount(eCurrent, YIELD_MUSKETS));
+	if (iNeeded <= 0 || AI_nativeDefenderCount(pCity, NULL, true) < AI_nativeDefendersNeeded(pCity)) return false;
+	UnitTypes eUnit = pCity->getProductionUnit();
+	if (eUnit == NO_UNIT || GC.getUnitInfo(eUnit).getDomainType() != DOMAIN_SEA) return false;
+	int iCost = pCity->getYieldProductionNeeded(eUnit, YIELD_MUSKETS);
+	return iCost > 0 && pCity->getYieldStored(YIELD_MUSKETS) - iNeeded < iCost;
+}
+
+//Kaszkaj - Choose one unequipped Intrepid Explorer for Colonist AI's free outfit, using unit IDs to break ties.
+CvUnit* CvPlayerAI::AI_getScoutEquipmentCandidate() const
+{
+	if (isHuman() || isNative() || isEurope() || AI_scoutTargetCount() == 0)
+	{
+		return NULL;
+	}
+	ProfessionTypes eScout = (ProfessionTypes)GC.getInfoTypeForString("PROFESSION_SCOUT", true);
+	if (eScout == NO_PROFESSION)
+	{
+		return NULL;
+	}
+	CvUnit* pBestUnit = NULL;
+	int iLoop;
+	for (CvUnit* pUnit = firstUnit(&iLoop); pUnit != NULL; pUnit = nextUnit(&iLoop))
+	{
+		if (AI_isColonialScout(pUnit->getUnitType()) && pUnit->isOnMap() && !pUnit->isCargo()
+			&& !pUnit->isDelayedDeath() && pUnit->getProfession() != eScout
+			&& isProfessionValid(eScout, pUnit->getUnitType()) && !pUnit->getUnitInfo().getProfessionsNotAllowed(eScout))
+		{
+			if (pBestUnit == NULL || pUnit->getID() < pBestUnit->getID())
+			{
+				pBestUnit = pUnit;
+			}
+		}
+	}
+	return pBestUnit;
+}
+
+//Kaszkaj - Equip one AI Intrepid Explorer for free in an owned Colony; XML sets the interval and normal profession restrictions apply.
+bool CvPlayerAI::AI_equipScoutFree(CvUnit* pUnit)
+{
+	if (pUnit == NULL || pUnit != AI_getScoutEquipmentCandidate()
+		|| GC.getGameINLINE().getGameTurn() < m_iNextFreeScoutEquipmentTurn || !pUnit->canMove())
+	{
+		return false;
+	}
+	CvPlot* pPlot = pUnit->plot();
+	CvCity* pCity = pPlot == NULL ? NULL : pPlot->getPlotCity();
+	if (pCity == NULL || pCity->getOwnerINLINE() != getID() || pCity->isDisorder())
+	{
+		return false;
+	}
+	ProfessionTypes eScout = (ProfessionTypes)GC.getInfoTypeForString("PROFESSION_SCOUT", true);
+	int aiStored[NUM_YIELD_TYPES];
+	for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+	{
+		YieldTypes eYield = (YieldTypes)i;
+		aiStored[i] = pCity->getYieldStored(eYield);
+		int iCarried = pUnit->getProfession() == NO_PROFESSION ? 0 : getYieldEquipmentAmount(pUnit->getProfession(), eYield);
+		int iMissing = getYieldEquipmentAmount(eScout, eYield) - iCarried - aiStored[i];
+		if (iMissing > 0)
+		{
+			pCity->changeYieldStored(eYield, iMissing);
+		}
+	}
+	bool bAllowed = pUnit->canHaveProfession(eScout, false);
+	if (bAllowed)
+	{
+		pUnit->setProfession(eScout);
+	}
+	//Kaszkaj - Restore the Colony's stocks after the normal equipment transaction, including failed attempts.
+	for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+	{
+		YieldTypes eYield = (YieldTypes)i;
+		if (pCity->getYieldStored(eYield) != aiStored[i])
+		{
+			pCity->setYieldStored(eYield, aiStored[i]);
+		}
+	}
+	if (!bAllowed || pUnit->getProfession() != eScout)
+	{
+		return false;
+	}
+	m_iNextFreeScoutEquipmentTurn = GC.getGameINLINE().getGameTurn()
+		+ std::max(1, GC.getDefineINT("AI_SCOUT_FREE_EQUIPMENT_INTERVAL"));
+	return true;
+}
+
 int CvPlayerAI::AI_scoutTargetCount(const CvArea* pArea) const
 {
 	if (pArea == NULL)
@@ -5050,7 +5972,7 @@ int CvPlayerAI::AI_scoutTargetCount(const CvArea* pArea) const
 	for (int i = 0; i < GC.getNumImprovementInfos(); ++i)
 	{
 		ImprovementTypes eImprovement = (ImprovementTypes)i;
-		if (GC.getImprovementInfo(eImprovement).isGoody())
+		if (!isNative() && GC.getImprovementInfo(eImprovement).isGoody())
 		{
 			iTargets += 8 * pArea->getNumImprovements(eImprovement);
 		}
@@ -5844,7 +6766,7 @@ void CvPlayerAI::AI_setAttitudeExtra(PlayerTypes eIndex, int iNewValue)
 	FAssertMsg(eIndex >= 0, "eIndex is expected to be non-negative (invalid Index)");
 	FAssertMsg(eIndex < MAX_PLAYERS, "eIndex is expected to be within maximum bounds (invalid Index)");
 	m_aiAttitudeExtra[eIndex] = iNewValue;
-	//Kaszkaj - Refresh the displayed attitude when the final royal insult makes the king Furious.
+	//Kaszkaj - Refresh the displayed attitude when the final insult makes the State or Progenitor Exarch Furious.
 	if (iNewValue == -100 && isEurope() && GET_PLAYER(eIndex).isHuman()
 		&& GET_PLAYER(eIndex).getParent() == getID() && GET_PLAYER(eIndex).getTaxRate() > 100
 		&& gDLL->isDiplomacy() && gDLL->getDiplomacyPlayer() == getID())
@@ -6146,7 +7068,7 @@ void CvPlayerAI::AI_doDiplo()
 {
 	PROFILE_FUNC();
 
-	//Kaszkaj - Do not start negotiations that the barbarian leader will always refuse.
+	//Kaszkaj - Do not start negotiations the Outer Gods Pantheon's leader will always refuse.
 	if (isBarbarian())
 	{
 		return;
@@ -7044,69 +7966,392 @@ bool CvPlayerAI::AI_doDiploCollaborateResearch(PlayerTypes ePlayer)
 {
     return false;
 }
-//Kaszkaj - AI uses the same royal trade rules, prefers gold and checks the full tax cost before buying.
+//Kaszkaj - Recover the Janus Device state from old saves after the map has loaded.
+void CvPlayerAI::AI_initJanusDeviceState()
+{
+	if (m_bJanusDeviceStateChecked) return;
+	m_bJanusDeviceStateChecked = true;
+	ImprovementTypes eDevice = (ImprovementTypes)GC.getInfoTypeForString("IMPROVEMENT_DEVICE1", true);
+	BuildTypes eBuild = (BuildTypes)GC.getInfoTypeForString("BUILD_JANUS_DEVICE", true);
+	if (eDevice == NO_IMPROVEMENT || eBuild == NO_BUILD) return;
+	for (int iPlot = 0; iPlot < GC.getMapINLINE().numPlotsINLINE(); ++iPlot)
+	{
+		const CvPlot* pPlot = GC.getMapINLINE().plotByIndexINLINE(iPlot);
+		if (pPlot->getOwnerINLINE() != getID()) continue;
+		ImprovementTypes eStage = eDevice;
+		for (int iStage = 0; eStage != NO_IMPROVEMENT && iStage < GC.getNumImprovementInfos(); ++iStage)
+		{
+			if (pPlot->getImprovementType() == eStage) { m_bJanusDeviceBuilt = true; return; }
+			eStage = (ImprovementTypes)GC.getImprovementInfo(eStage).getImprovementUpgrade();
+		}
+		if (m_iJanusDeviceBuildPlot < 0 && pPlot->getBuildProgress(eBuild) > 0) m_iJanusDeviceBuildPlot = iPlot;
+	}
+}
+
+//Kaszkaj - Remember unfinished work so a cancelled order does not create a second construction site.
+void CvPlayerAI::AI_setJanusDeviceBuildPlot(const CvPlot* pPlot)
+{
+	if (pPlot != NULL) m_iJanusDeviceBuildPlot = GC.getMapINLINE().plotNumINLINE(pPlot->getX_INLINE(), pPlot->getY_INLINE());
+}
+
+//Kaszkaj - Keep the Janus Device marked as built after it is destroyed or captured.
+void CvPlayerAI::AI_setJanusDeviceBuilt()
+{
+	m_bJanusDeviceBuilt = true;
+	m_iJanusDeviceBuildPlot = -1;
+}
+
+//Kaszkaj - Count completed devices, unfinished work and reserved sites towards the one-device limit.
+bool CvPlayerAI::AI_canBuildJanusDevice(const CvPlot* pPlot) const
+{
+	if (isHuman()) return true;
+	if (m_bJanusDeviceBuilt || pPlot == NULL || pPlot->getOwnerINLINE() != getID()) return false;
+	BuildTypes eBuild = (BuildTypes)GC.getInfoTypeForString("BUILD_JANUS_DEVICE", true);
+	if (eBuild == NO_BUILD) return false;
+	if (m_iJanusDeviceBuildPlot >= 0 && m_iJanusDeviceBuildPlot < GC.getMapINLINE().numPlotsINLINE())
+	{
+		const CvPlot* pStartedPlot = GC.getMapINLINE().plotByIndexINLINE(m_iJanusDeviceBuildPlot);
+		if (pStartedPlot->getOwnerINLINE() == getID() && pStartedPlot->getBuildProgress(eBuild) > 0) return pStartedPlot == pPlot;
+	}
+	int iReservedGroup = MAX_INT;
+	const CvPlot* pReservedPlot = NULL;
+	int iLoop;
+	for (CvSelectionGroup* pGroup = firstSelectionGroup(&iLoop); pGroup != NULL; pGroup = nextSelectionGroup(&iLoop))
+	{
+		if (pGroup->getID() >= iReservedGroup) continue;
+		for (int iMission = 0; iMission < pGroup->getLengthMissionQueue(); ++iMission)
+		{
+			if (pGroup->getMissionType(iMission) == MISSION_BUILD && pGroup->getMissionData1(iMission) == eBuild
+				&& pGroup->AI_getMissionAIPlot() != NULL)
+			{
+				iReservedGroup = pGroup->getID();
+				pReservedPlot = pGroup->AI_getMissionAIPlot();
+				break;
+			}
+		}
+	}
+	return pReservedPlot == NULL || pReservedPlot == pPlot;
+}
+
+//Kaszkaj - Prefer narrow space passages, approaches to our Colonies and threatened borders for the Janus Device.
+int CvPlayerAI::AI_janusDevicePlotValue(const CvPlot* pPlot) const
+{
+	if (pPlot == NULL || !pPlot->isWater() || pPlot->getOwnerINLINE() != getID()) return 0;
+	int iWater = 0;
+	int iLand = 0;
+	int iEnemies = 0;
+	for (int i = 0; i < NUM_DIRECTION_TYPES; ++i)
+	{
+		CvPlot* pAdjacent = plotDirection(pPlot->getX_INLINE(), pPlot->getY_INLINE(), (DirectionTypes)i);
+		if (pAdjacent == NULL || pAdjacent->isImpassable()) continue;
+		if (pAdjacent->isWater()) ++iWater; else ++iLand;
+		if (pAdjacent->getOwnerINLINE() != NO_PLAYER && pAdjacent->getOwnerINLINE() != getID()
+			&& pAdjacent->isRevealed(getTeam(), false) && atWar(getTeam(), pAdjacent->getTeam())) ++iEnemies;
+	}
+	int iDistance = MAX_INT;
+	int iLoop;
+	for (CvCity* pCity = firstCity(&iLoop); pCity != NULL; pCity = nextCity(&iLoop))
+	{
+		iDistance = std::min(iDistance, stepDistance(pPlot->getX_INLINE(), pPlot->getY_INLINE(), pCity->getX_INLINE(), pCity->getY_INLINE()));
+	}
+	int iValue = iWater >= 2 && iWater <= 5 && iLand >= 2 ? 100 * (7 - iWater) : 0;
+	if (iDistance > 1 && iDistance <= 6) iValue += 30 * (7 - iDistance);
+	iValue += 100 * iEnemies;
+	// Do not replace a lunar colony, a resource installation or any other existing improvement.
+	return pPlot->getImprovementType() == NO_IMPROVEMENT ? iValue : 0;
+}
+
+void CvPlayerAI::AI_invalidateResearchCache()
+{
+	m_iResearchTargetCache = -1;
+	m_iResearchTargetCacheTurn = -1;
+	m_iResearchTargetCacheNumCivics = -1;
+	m_iResearchTargetCacheCivicOption = -1;
+}
+
+//Kaszkaj - Research availability follows the real prerequisite rules and ignores branch headings.
+bool CvPlayerAI::AI_hasResearchTarget() const
+{
+	if (isEurope() || isBarbarian() || (isNative() && GC.getDefineINT("TK_ALLOWS_NATIVES_TO_RESEARCH") == 0)) return false;
+	if (GC.getUSE_CAN_DO_CIVIC_CALLBACK() || GC.getUSE_CANNOT_DO_CIVIC_CALLBACK())
+	{
+		return AI_hasResearchTargetUncached();
+	}
+	int iTurn = GC.getGameINLINE().getGameTurn();
+	int iNumCivics = GC.getNumCivicInfos();
+	int iCivicOption = GC.getDefineINT("CIVICOPTION_INVENTIONS");
+	if (m_iResearchTargetCache < 0 || m_iResearchTargetCacheTurn != iTurn
+		|| m_iResearchTargetCacheNumCivics != iNumCivics || m_iResearchTargetCacheCivicOption != iCivicOption)
+	{
+		m_iResearchTargetCache = AI_hasResearchTargetUncached() ? 1 : 0;
+		m_iResearchTargetCacheTurn = iTurn;
+		m_iResearchTargetCacheNumCivics = iNumCivics;
+		m_iResearchTargetCacheCivicOption = iCivicOption;
+	}
+	return m_iResearchTargetCache != 0;
+}
+
+bool CvPlayerAI::AI_hasResearchTargetUncached() const
+{
+	if (isEurope() || isBarbarian() || (isNative() && GC.getDefineINT("TK_ALLOWS_NATIVES_TO_RESEARCH") == 0)) return false;
+	int iCivicOption = GC.getDefineINT("CIVICOPTION_INVENTIONS");
+	CivicTypes eResearch = getCurrentResearch();
+	if (eResearch != NO_CIVIC && !GC.getUSE_CAN_DO_CIVIC_CALLBACK() && !GC.getUSE_CANNOT_DO_CIVIC_CALLBACK())
+	{
+		const CvCivicInfo& kResearch = GC.getCivicInfo(eResearch);
+		if (kResearch.getCivicOptionType() == iCivicOption && std::strncmp(kResearch.getType(), "BRANCH_", 7) != 0
+			&& getIdeasResearched(eResearch) <= 0 && canDoCivics(eResearch)) return true;
+	}
+	for (int i = 0; i < GC.getNumCivicInfos(); ++i)
+	{
+		const CvCivicInfo& kCivic = GC.getCivicInfo((CivicTypes)i);
+		if (kCivic.getCivicOptionType() == iCivicOption
+			&& std::strncmp(kCivic.getType(), "BRANCH_", 7) != 0 && getIdeasResearched((CivicTypes)i) <= 0
+			&& canDoCivics((CivicTypes)i)) return true;
+	}
+	return false;
+}
+
+//Kaszkaj - Choose research for Alien and Colonist AI; stop Research jobs when no research remains.
+void CvPlayerAI::AI_updateResearch()
+{
+	if (isHuman() || isEurope() || isBarbarian()) return;
+	//Kaszkaj - Let the existing Advanced Tech Start grant its free inventions before selecting a normal research project.
+	if (!getTechsInitialized() && !isNative() && GC.getDefineINT("AI_ADVANCED_TECH_START") > 0) return;
+	bool bAvailable = AI_hasResearchTarget();
+	setAllResearchComplete(!bAvailable);
+	if (!bAvailable)
+	{
+		setCurrentResearch(NO_CIVIC);
+		return;
+	}
+	if (getCurrentResearch() != NO_CIVIC && std::strncmp(GC.getCivicInfo(getCurrentResearch()).getType(), "BRANCH_", 7) != 0
+		&& canDoCivics(getCurrentResearch())) return;
+	CivicTypes eBest = NO_CIVIC;
+	int iBestValue = -1;
+	int iCivicOption = GC.getDefineINT("CIVICOPTION_INVENTIONS");
+	for (int i = 0; i < GC.getNumCivicInfos(); ++i)
+	{
+		CivicTypes eCivic = (CivicTypes)i;
+		if (GC.getCivicInfo(eCivic).getCivicOptionType() != iCivicOption
+			|| std::strncmp(GC.getCivicInfo(eCivic).getType(), "BRANCH_", 7) == 0 || !canDoCivics(eCivic)) continue;
+		int iValue = AI_technologyValue(eCivic) * 100 / std::max(1, getCostToResearch(eCivic) - getIdeaProgress(eCivic));
+		if (iValue > iBestValue) { iBestValue = iValue; eBest = eCivic; }
+	}
+	setCurrentResearch(eBest);
+}
+
+//Kaszkaj - Value technologies by their usable economic and military benefits, not just XML AIWeight.
+int CvPlayerAI::AI_technologyValue(CivicTypes eCivic)
+{
+	if (eCivic == NO_CIVIC || getIdeasResearched(eCivic) > 0) return 0;
+	const CvCivicInfo& kCivic = GC.getCivicInfo(eCivic);
+	if (kCivic.getCivicOptionType() != GC.getDefineINT("CIVICOPTION_INVENTIONS")
+		|| std::strncmp(kCivic.getType(), "BRANCH_", 7) == 0) return 0;
+	int iTurns = std::max(1, GC.getDefineINT("AI_KING_TECHNOLOGY_PLANNING_TURNS"))
+		* std::max(1, GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getGrowthPercent()) / 100;
+	iTurns = std::max(1, iTurns);
+	bool bWar = GET_TEAM(getTeam()).getAtWarCount() > 0;
+	int iValue = std::max(0, kCivic.getGoldBonus()) + 2 * std::max(0, getCostToResearch(eCivic) - getIdeaProgress(eCivic));
+	int iPerTurn = 0;
+	int iLoop;
+	for (CvCity* pCity = firstCity(&iLoop); pCity != NULL; pCity = nextCity(&iLoop))
+	{
+		if (pCity->isOccupation()) continue;
+		iPerTurn += kCivic.getCenterPlotFoodBonus() * std::max(1, AI_yieldValue(YIELD_FOOD));
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			YieldTypes eYield = (YieldTypes)iYield;
+			int iOutput = pCity->getRawYieldProduced(eYield);
+			int iWeight = std::max(1, AI_yieldValue(eYield));
+			int iModifier = kCivic.getYieldModifier(eYield) + (pCity->isCapital() ? kCivic.getCapitalYieldModifier(eYield) : 0);
+			iPerTurn += iOutput * iWeight * iModifier / 100;
+			if (kCivic.getAllowsYields(eYield) > 0 && iOutput == 0)
+			{
+				int iPotential = 0;
+				for (int iPlot = 0; iPlot < NUM_CITY_PLOTS; ++iPlot)
+				{
+					CvPlot* pPlot = pCity->getCityIndexPlot(iPlot);
+					if (pPlot != NULL && pPlot->getOwnerINLINE() == getID()) iPotential = std::max(iPotential, pPlot->calculateNatureYield(eYield, getTeam(), false));
+				}
+				iPerTurn += iWeight * iPotential / 2;
+			}
+		}
+		for (int iPlot = 0; iPlot < NUM_CITY_PLOTS; ++iPlot)
+		{
+			CvPlot* pPlot = pCity->getCityIndexPlot(iPlot);
+			if (pPlot == NULL || pPlot->getWorkingCity() != pCity || pPlot->getImprovementType() == NO_IMPROVEMENT) continue;
+			for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+			{
+				iPerTurn += kCivic.getImprovementYieldChanges(pPlot->getImprovementType(), iYield)
+					* std::max(1, AI_yieldValue((YieldTypes)iYield)) / (pPlot->isBeingWorked() ? 1 : 4);
+			}
+		}
+		//Kaszkaj - Research can unlock direct production from ancient improvements without factory inputs.
+		for (int iProfession = 0; iProfession < GC.getNumProfessionInfos(); ++iProfession)
+		{
+			ProfessionTypes eProfession = (ProfessionTypes)iProfession;
+			const CvProfessionInfo& kProfession = GC.getProfessionInfo(eProfession);
+			if (kCivic.getAllowsProfessions(iProfession) <= 0 || !kProfession.isCitizen() || !kProfession.isWorkPlot()
+				|| !GC.getCivilizationInfo(getCivilizationType()).isValidProfession(eProfession)
+				|| isProfessionValid(eProfession, NO_UNIT)) continue;
+			bool bConsumesYield = false;
+			for (int i = 0; i < kProfession.getNumYieldsConsumed(getID()); ++i)
+			{
+				if (kProfession.getYieldsConsumed(i, getID()) != NO_YIELD) bConsumesYield = true;
+			}
+			if (bConsumesYield) continue;
+			int iBestGain = 0;
+			for (int iPlot = 1; iPlot < NUM_CITY_PLOTS; ++iPlot)
+			{
+				CvPlot* pPlot = pCity->getCityIndexPlot(iPlot);
+				if (pPlot == NULL || pPlot->getWorkingCity() != pCity || !pCity->canWork(pPlot)
+					|| pPlot->isWater() != kProfession.isWater()) continue;
+				int iNewValue = 0;
+				for (int i = 0; i < kProfession.getNumYieldsProduced(); ++i)
+				{
+					YieldTypes eYield = (YieldTypes)kProfession.getYieldsProduced(i);
+					if (eYield < 0 || eYield >= NUM_YIELD_TYPES || (eYield == YIELD_IDEAS && !AI_hasResearchTarget())) continue;
+					int iOutput = pPlot->calculatePotentialYield(eYield, getID(), pPlot->getImprovementType(), false, pPlot->getRouteType(), NO_UNIT, false);
+					iNewValue += iOutput * std::max(1, AI_yieldValue(eYield)) * pCity->getBaseYieldRateModifier(eYield) / 100;
+				}
+				CvUnit* pWorker = pCity->getUnitWorkingPlot(pPlot);
+				if (pWorker != NULL && pWorker->isColonistLocked()) continue;
+				int iOldValue = pWorker != NULL && pWorker->getProfession() != NO_PROFESSION
+					? static_cast<CvCityAI*>(pCity)->AI_jobReplacementValue(pWorker->getProfession(), pWorker, pPlot) / 100
+					: GC.getFOOD_CONSUMPTION_PER_POPULATION() * std::max(1, AI_yieldValue(YIELD_FOOD));
+				iBestGain = std::max(iBestGain, iNewValue - iOldValue);
+			}
+			iPerTurn += iBestGain;
+		}
+		for (int i = 0; i < GC.getNumBuildingClassInfos(); ++i)
+		{
+			BuildingTypes eBuilding = (BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(i);
+			if (eBuilding == NO_BUILDING || kCivic.getAllowsBuildingTypes(eBuilding) <= 0 || pCity->isHasConceptualBuilding(eBuilding)
+				|| pCity->canConstruct(eBuilding, false, true, true)) continue;
+			const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+			int iBestGain = 0;
+			for (int iProfession = 0; iProfession < GC.getNumProfessionInfos(); ++iProfession)
+			{
+				ProfessionTypes eProfession = (ProfessionTypes)iProfession;
+				const CvProfessionInfo& kProfession = GC.getProfessionInfo(eProfession);
+				if (!kProfession.isCitizen() || kProfession.isWorkPlot() || kBuilding.getSpecialBuildingType() == NO_SPECIALBUILDING
+					|| kBuilding.getSpecialBuildingType() != kProfession.getSpecialBuilding()
+					|| !GC.getCivilizationInfo(getCivilizationType()).isValidProfession(eProfession)) continue;
+				YieldTypes eYield = (YieldTypes)kProfession.getYieldsProduced(0);
+				YieldTypes eInput = (YieldTypes)kProfession.getYieldsConsumed(0, getID());
+				if (eYield == NO_YIELD || (eInput != NO_YIELD && pCity->getYieldStored(eInput) + pCity->getRawYieldProduced(eInput) == 0)) continue;
+				iBestGain = std::max(iBestGain, std::max(0, kBuilding.getProfessionOutput() - pCity->getProfessionOutput(eProfession, NULL))
+					* std::max(1, AI_yieldValue(eYield)));
+			}
+			iValue += iBestGain * iTurns / 2;
+		}
+	}
+	iValue += std::max(0, iPerTurn) * iTurns;
+	iValue += std::max(0, kCivic.getCheaperPopulationGrowth()) * getNumCities() * 8;
+	iValue += std::max(0, kCivic.getWorkerSpeedModifier()) * AI_totalUnitAIs(UNITAI_WORKER) * 8;
+	iValue += std::max(0, kCivic.getImprovementUpgradeRateModifier()) * getNumCities() * 2;
+	iValue += std::max(0, kCivic.getMilitaryProductionModifier() + kCivic.getFreeExperience()) * (bWar ? 20 : 5) * getNumCities();
+	for (int i = 0; i < GC.getNumUnitClassInfos(); ++i)
+	{
+		UnitTypes eUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(i);
+		if (eUnit == NO_UNIT || kCivic.getAllowsUnitClasses(i) <= 0 || canTrain(eUnit, false, true, true)) continue;
+		const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+		if (kUnit.getCombat() > 0) iValue += (bWar ? 80 : 20) * kUnit.getCombat();
+		else if (kUnit.getDefaultUnitAIType() == UNITAI_WORKER) iValue += 100 + 30 * getNumCities();
+		else if (kUnit.getCargoSpace() > 0 && !AI_hasSeaTransport(NULL)) iValue += 250;
+		else iValue += 40;
+	}
+	// AIWeight breaks ties; first-discovery gold is deliberately excluded from purchased technology.
+	iValue += std::min(300, std::max(0, kCivic.getAIWeight())) / 3;
+	return std::max(0, iValue);
+}
+
+//Kaszkaj - Value the actual extra output from active tax-linked traits, including traits granted by Board Directors.
+int CvPlayerAI::AI_taxRateProductionValue(int iTaxIncrease, int iPlanningTurns)
+{
+	if (iTaxIncrease <= 0 || iPlanningTurns <= 0 || getTaxRate() > 100 - iTaxIncrease) return 0;
+	int iValue = 0;
+	int iLoop;
+	for (CvCity* pCity = firstCity(&iLoop); pCity != NULL; pCity = nextCity(&iLoop))
+	{
+		if (pCity->isOccupation()) continue;
+		for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+		{
+			YieldTypes eYield = (YieldTypes)i;
+			if (getTaxYieldModifierCount(eYield) <= 0 || (eYield == YIELD_IDEAS && !AI_hasResearchTarget())) continue;
+			int iRawOutput = std::max(0, pCity->getBaseRawYieldProduced(eYield));
+			int iModifier = pCity->getBaseYieldRateModifier(eYield);
+			int iExtraOutput = iRawOutput * (iModifier + iTaxIncrease) / 100 - iRawOutput * iModifier / 100;
+			iValue += std::max(0, iExtraOutput) * std::max(0, AI_yieldValue(eYield)) * iPlanningTurns;
+		}
+	}
+	return iValue;
+}
+
+//Kaszkaj - Compare Credits with voluntary tax, including production benefits; ordinary tax limits do not restrict these deals.
 void CvPlayerAI::AI_doKingTechnologyTrade()
 {
 	if (isHuman() || isEurope() || isBarbarian() || !isAlive() || getNumCities() == 0
-		|| getParent() == NO_PLAYER || AI_getContactTimer(getParent(), CONTACT_TRADE_IDEAS) > 0)
-	{
-		return;
-	}
+		|| getParent() == NO_PLAYER || AI_getContactTimer(getParent(), CONTACT_TRADE_IDEAS) > 0) return;
 	CvPlayer& kKing = GET_PLAYER(getParent());
-	if (!kKing.canTradeKingTechnology(getID()))
+	if (!kKing.canTradeKingTechnology(getID())) return;
+	int iPlanningTurns = std::max(1, GC.getDefineINT("AI_KING_TECHNOLOGY_PLANNING_TURNS"))
+		* std::max(1, GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getGrowthPercent()) / 100;
+	iPlanningTurns = std::max(1, iPlanningTurns);
+	int iIdeas = std::max(0, calculateTotalYield(YIELD_IDEAS));
+	bool bWar = GET_TEAM(getTeam()).getAtWarCount() > 0;
+	bool bResearchStalled = iIdeas == 0;
+	int iGoldReserve = std::max(0, AI_goldTarget());
+	int iTaxIncrease = getKingTechnologyTaxIncrease();
+	int iTaxProductionValue = AI_taxRateProductionValue(iTaxIncrease, iPlanningTurns);
+	int iTradeIncome = 0;
+	for (int i = 0; i < NUM_YIELD_TYPES; ++i)
 	{
-		return;
+		YieldTypes eYield = (YieldTypes)i;
+		if (GC.getYieldInfo(eYield).isCargo() && eYield != YIELD_FOOD)
+		{
+			int iExport = std::max(0, calculateTotalYield(eYield));
+			iTradeIncome += iExport * std::max(0, kKing.getYieldBuyPrice(eYield));
+		}
 	}
-	bool bDesperate = isNative() || calculateTotalYield(YIELD_IDEAS) <= 0
-		|| GET_TEAM(getTeam()).getAtWarCount() > 0;
 	CivicTypes eBestTech = NO_CIVIC;
 	int iBestValue = 0;
 	bool bBestTax = false;
 	for (int iCivic = 0; iCivic < GC.getNumCivicInfos(); ++iCivic)
 	{
-		CivicTypes eCivic = (CivicTypes) iCivic;
+		CivicTypes eCivic = (CivicTypes)iCivic;
 		TradeData technology;
 		setTradeItem(&technology, TRADE_IDEAS, iCivic, NULL);
-		if (!kKing.canTradeItem(getID(), technology, true))
-		{
-			continue;
-		}
-		// Avoid paying to finish a project which is already nearly complete.
-		if (getCurrentResearch() == eCivic && (getCostToResearch(eCivic) <= 0
-			|| getCurrentResearchProgress(false) >= 75))
-		{
-			continue;
-		}
+		if (!kKing.canTradeItem(getID(), technology, true)) continue;
+		int iRemaining = std::max(0, getCostToResearch(eCivic) - getIdeaProgress(eCivic));
+		if (getCurrentResearch() == eCivic && (iRemaining == 0 || (iIdeas > 0 && iRemaining <= 3 * iIdeas))) continue;
 		int iPrice = kKing.getKingTechnologyPrice(eCivic);
-		bool bTax = getGold() < iPrice;
-		if (bTax && (!bDesperate || getKingTechnologyTaxIncrease() <= 0
-			|| getTaxRate() > 100 - getKingTechnologyTaxIncrease()))
+		int iBenefit = AI_technologyValue(eCivic);
+		if (iBenefit <= 0) continue;
+		if (getGold() - iGoldReserve >= iPrice)
 		{
-			continue;
+			int iRequiredPercent = std::max(100, GC.getDefineINT("AI_KING_TECHNOLOGY_GOLD_VALUE_PERCENT"));
+			int iValue = iBenefit - iPrice * iRequiredPercent / 100;
+			if (iValue > iBestValue) { iBestValue = iValue; eBestTech = eCivic; bBestTax = false; }
 		}
-		int iWeight = std::min(1000000, std::max(0, GC.getCivicInfo(eCivic).getAIWeight()));
-		int iValue = 100 + iWeight;
-		if (getCurrentResearch() == eCivic)
+		if (iTaxIncrease > 0 && getTaxRate() <= 100 - iTaxIncrease)
 		{
-			iValue += 200;
-		}
-		iValue = (iValue * 1000) / std::max(1, iPrice);
-		if (iValue > iBestValue)
-		{
-			iBestValue = iValue;
-			eBestTech = eCivic;
-			bBestTax = bTax;
+			bool bDesperate = (bResearchStalled || bWar) && (iIdeas == 0 || iRemaining > iIdeas * iPlanningTurns / 2);
+			// Retain the gold reserve and weigh permanent export losses against active production bonuses.
+			int iCost = std::max(iPrice, iTradeIncome * iTaxIncrease * iPlanningTurns / 100);
+			iCost = iCost * 100 / std::max(16, 100 - getTaxRate());
+			int iRequiredPercent = bDesperate ? 125 : std::max(150, GC.getDefineINT("AI_KING_TECHNOLOGY_TAX_VALUE_PERCENT"));
+			int iValue = iBenefit + iTaxProductionValue - iCost * iRequiredPercent / 100;
+			if (iValue > iBestValue) { iBestValue = iValue; eBestTech = eCivic; bBestTax = true; }
 		}
 	}
-	if (eBestTech == NO_CIVIC)
-	{
-		return;
-	}
+	if (eBestTech == NO_CIVIC) return;
 	TradeData technology;
 	TradeData payment;
 	setTradeItem(&technology, TRADE_IDEAS, eBestTech, NULL);
 	setTradeItem(&payment, bBestTax ? TRADE_TAX : TRADE_GOLD,
-		bBestTax ? getKingTechnologyTaxIncrease() : kKing.getKingTechnologyPrice(eBestTech), NULL);
+		bBestTax ? iTaxIncrease : kKing.getKingTechnologyPrice(eBestTech), NULL);
 	CLinkList<TradeData> technologies;
 	CLinkList<TradeData> payments;
 	technologies.insertAtEnd(technology);
@@ -7564,7 +8809,7 @@ void CvPlayerAI::AI_doProfessions()
 							for (int i = 0; i < pLoopCity->getPopulation(); ++i)
 							{
 								CvUnit* pUnit = pLoopCity->getPopulationUnitByIndex(i);
-								if (pUnit != NULL)
+								if (pUnit != NULL && !AI_isNativeHumanSpecialist(pUnit->getUnitType()) && !AI_isNativeStudent(pUnit->getUnitType()))
 								{
 									//Kaszkaj - Protect all current expert jobs before converting citizens to map units.
 									if (!AI_isProfessionExpert(pUnit->getUnitType(), pUnit->getProfession()))
@@ -7597,7 +8842,7 @@ void CvPlayerAI::AI_doProfessions()
 								for (int i = 0; i < pLoopCity->getPopulation(); ++i)
 								{
 									CvUnit* pUnit = pLoopCity->getPopulationUnitByIndex(i);
-									if (pUnit != NULL)
+									if (pUnit != NULL && !AI_isNativeHumanSpecialist(pUnit->getUnitType()) && !AI_isNativeStudent(pUnit->getUnitType()))
 									{
 										if (pUnit->canHaveProfession(eProfession, false))
 										{
@@ -7681,7 +8926,7 @@ void CvPlayerAI::AI_doProfessions()
 						for (int i = 0; i < pLoopCity->getPopulation(); ++i)
 						{
 							CvUnit* pUnit = pLoopCity->getPopulationUnitByIndex(i);
-							if (pUnit != NULL)
+							if (pUnit != NULL && !AI_isNativeHumanSpecialist(pUnit->getUnitType()) && !AI_isNativeStudent(pUnit->getUnitType()))
 							{
 								if (pUnit->canHaveProfession(eProfession, false))
 								{
@@ -7736,12 +8981,17 @@ void CvPlayerAI::AI_doEurope()
 	{
 		return;
 	}
+	int iGoldReserve = std::max(0, AI_goldTarget());
+	int iSpendable = std::max(0, getGold() - iGoldReserve);
+	int iEuropePassengers = AI_europePassengerCount();
+	int iTransportCapacity = AI_transportCapacity(false);
+	bool bPassengerBacklog = iEuropePassengers >= std::max(4, iTransportCapacity);
 //orlanth aliens changed "if (!isHuman() && !isNative() && !isEurope())" to "if (!isHuman() && !isEurope())"
 	if (!isHuman() && !isEurope())
 	{
 		//Always refresh at start of new turn (maybe do this smarter but it's okay for now)
-		AI_updateNextBuyUnit();
-		AI_updateNextBuyProfession();
+		AI_updateNextBuyUnit(iEuropePassengers, iTransportCapacity, iSpendable);
+		if (!bPassengerBacklog) AI_updateNextBuyProfession();
 	}
 
 
@@ -7761,20 +9011,28 @@ void CvPlayerAI::AI_doEurope()
 		iUnitPrice = getEuropeUnitBuyPrice(eBuyUnit);
 	}
 
-	if ((eBuyUnit != NO_UNIT) && ((iBuyUnitValue > iBuyProfessionValue) || (iUnitPrice < getGold())))
+	int iProfessionPrice = eBuyProfessionUnit != NO_UNIT ? getEuropeUnitBuyPrice(eBuyProfessionUnit) : -1;
+	bool bProfessionAffordable = !bPassengerBacklog && iProfessionPrice > 0 && iSpendable >= iProfessionPrice;
+	bool bBoughtUnit = false;
+	if ((eBuyUnit != NO_UNIT) && (iBuyUnitValue >= iBuyProfessionValue || !bProfessionAffordable))
 	{
-		if (getGold() > iUnitPrice)
+		if (iUnitPrice > 0 && iSpendable >= iUnitPrice
+			&& (!bPassengerBacklog || GC.getUnitInfo(eBuyUnit).getDomainType() == DOMAIN_SEA))
 		{
 			CvUnit* pUnit = buyEuropeUnit(eBuyUnit, 100);
 
-			FAssert(pUnit != NULL);
-			pUnit->AI_setUnitAIType(eBuyUnitAI);
-
-			AI_updateNextBuyUnit();
+			if (pUnit != NULL)
+			{
+				pUnit->AI_setUnitAIType(eBuyUnitAI);
+				if (eBuyUnitAI == UNITAI_TRANSPORT_SEA) iTransportCapacity += pUnit->cargoSpace();
+				bBoughtUnit = true;
+			}
+			iSpendable = std::max(0, getGold() - iGoldReserve);
+			AI_updateNextBuyUnit(iEuropePassengers, iTransportCapacity, iSpendable);
 		}
 	}
 
-	if ((eBuyProfession != NO_PROFESSION) && (iBuyProfessionValue > iBuyUnitValue))
+	if (!bBoughtUnit && !bPassengerBacklog && eBuyProfession != NO_PROFESSION)
 	{
 		ProfessionTypes eDefaultProfession = (ProfessionTypes) GC.getCivilizationInfo(getCivilizationType()).getDefaultProfession();
 
@@ -7810,7 +9068,8 @@ void CvPlayerAI::AI_doEurope()
 					{
 						if (pLoopUnit->getProfession() == eDefaultProfession)
 						{
-							if (pLoopUnit->canHaveProfession(eBuyProfession, false))
+							if (pLoopUnit->canHaveProfession(eBuyProfession, false)
+								&& getGold() - pLoopUnit->getEuropeProfessionChangeCost(eBuyProfession) >= iGoldReserve)
 							{
 								int iValue = AI_professionSuitability(pLoopUnit, eBuyProfession, NULL);
 
@@ -7858,10 +9117,15 @@ void CvPlayerAI::AI_doEurope()
 		else if (eBuyProfessionUnit != NO_UNIT)
 		{
 			FAssert(iBuyPrice >= 0);
-			if (getGold() > iBuyPrice)
+			if (!bPassengerBacklog && iBuyPrice > 0 && getGold() - iGoldReserve >= iBuyPrice)
 			{
+				CvCity* pDestination = eBuyProfessionAI == UNITAI_COLONIST ? AI_bestCityForUnit(eBuyProfessionUnit) : NULL;
 				CvUnit* pUnit = buyEuropeUnit(eBuyProfessionUnit, 100);
-				pUnit->AI_setUnitAIType(eBuyProfessionAI);
+				if (pUnit != NULL)
+				{
+					pUnit->AI_setUnitAIType(eBuyProfessionAI);
+					if (pDestination != NULL) pUnit->setHomeCity(pDestination);
+				}
 			}
 		}
 	}
@@ -7870,6 +9134,17 @@ void CvPlayerAI::AI_doEurope()
 	for (int i = 0; i < getNumEuropeUnits(); i++)
 	{
 		CvUnit *pUnit = getEuropeUnit(i);
+		//Kaszkaj - Deliver experts and Convict students as civilians; sell old military equipment through normal Earth trade.
+		if (AI_isNativeHumanSpecialist(pUnit->getUnitType()) || AI_isNativeStudent(pUnit->getUnitType()))
+		{
+			ProfessionTypes eDefault = (ProfessionTypes)GC.getCivilizationInfo(getCivilizationType()).getDefaultProfession();
+			if (pUnit->getProfession() != eDefault && pUnit->canHaveProfession(eDefault, false))
+			{
+				changeProfessionEurope(pUnit->getID(), eDefault);
+			}
+			pUnit->AI_setUnitAIType(UNITAI_COLONIST);
+			continue;
+		}
 
 		int iUndefended = 0;
 		int iNeeded = AI_totalDefendersNeeded(&iUndefended);
@@ -7885,7 +9160,8 @@ void CvPlayerAI::AI_doEurope()
 				eBestProfession = GET_PLAYER(pUnit->getOwnerINLINE()).AI_idealProfessionForUnitAIType(UNITAI_COUNTER);
 			}
 
-			if (eBestProfession != NO_PROFESSION && pUnit->canHaveProfession(eBestProfession, false))
+			if (eBestProfession != NO_PROFESSION && pUnit->canHaveProfession(eBestProfession, false)
+				&& getGold() - pUnit->getEuropeProfessionChangeCost(eBestProfession) >= iGoldReserve)
 			{
 				changeProfessionEurope(pUnit->getID(), eBestProfession);
 			}
@@ -8155,7 +9431,7 @@ bool CvPlayerAI::AI_shouldBuyFromEurope(YieldTypes eYield) const
 }
 ///TKs Invention Core Mod v 1.0
 
-//Kaszkaj - Protect colonists, workers, treasure and transports even when they are armed.
+//Kaszkaj - Protect colonists, workers, Progenitor Treasures and transports even when they are armed.
 bool CvPlayerAI::AI_needsProtection(UnitAITypes eUnitAI) const
 {
 	if (isHuman())
@@ -8178,7 +9454,6 @@ bool CvPlayerAI::AI_needsProtection(UnitAITypes eUnitAI) const
 	}
 }
 
-//Kaszkaj - Use the difficulty's immigration chance and transfer surplus materials between AI cities.
 void CvPlayerAI::AI_doEconomicHelp()
 {
 	if (isHuman() || isEurope() || !isAlive() || getNumCities() == 0)
@@ -8189,11 +9464,24 @@ void CvPlayerAI::AI_doEconomicHelp()
 	int iImmigrationChance = range(GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIImmigration(), 0, 100);
 	if (!isNative() && getParent() != NO_PLAYER && canTradeWithEurope()
 		&& GC.getGameINLINE().getElapsedGameTurns() > 1 && iImmigrationChance > 0
-		&& !m_aDocksNextUnits.empty())
+		&& !m_aDocksNextUnits.empty()
+		&& AI_europePassengerCount() < std::max(4, 2 * AI_transportCapacity(false)))
 	{
-		iImmigrationChance = std::min(100, iImmigrationChance * 100
-			/ std::max(1, GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getGrowthPercent()));
-		if (GC.getGameINLINE().getSorenRandNum(100, "AI extra immigrant") < iImmigrationChance)
+		//Kaszkaj - Scale immigration for world size and land per civilisation while keeping independent rolls and dock limits.
+		const CvWorldInfo& kWorld = GC.getWorldInfo(GC.getMapINLINE().getWorldSize());
+		int iLandPlayers = 0;
+		for (int i = 0; i < MAX_PLAYERS; ++i)
+		{
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)i);
+			if (kPlayer.isAlive() && !kPlayer.isEurope() && !kPlayer.isBarbarian()) ++iLandPlayers;
+		}
+		int iLandFactor = range(GC.getMapINLINE().getLandPlots() * 100
+			/ std::max(1, iLandPlayers * std::max(1, kWorld.getTargetNumCities()) * 4), 50, 100);
+		int iChanceTimes100 = iImmigrationChance * 10000
+			/ std::max(1, GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getGrowthPercent());
+		iChanceTimes100 = iChanceTimes100 * range(kWorld.getAIImmigrationModifier(), 0, 200) / 100;
+		iChanceTimes100 = std::min(10000, iChanceTimes100 * iLandFactor / 100);
+		if (GC.getGameINLINE().getSorenRandNum(10000, "AI extra immigrant") < iChanceTimes100)
 		{
 			doAIImmigrant(m_aDocksNextUnits.size() > 1 ? 1 : 0);
 		}
@@ -8202,7 +9490,7 @@ void CvPlayerAI::AI_doEconomicHelp()
 	redistributeMaterials();
 }
 
-//Kaszkaj - Give new AI cities low-cost defenders allowed by their civilization.
+//Kaszkaj - Give new AI Colonies low-cost defenders available to their civilisation.
 void CvPlayerAI::AI_addFreeCityDefenders(CvCity* pCity)
 {
 	if (isHuman() || isEurope() || pCity == NULL || pCity->getOwnerINLINE() != getID())
@@ -8261,42 +9549,27 @@ void CvPlayerAI::AI_addFreeCityDefenders(CvCity* pCity)
 
 int CvPlayerAI::AI_yieldValue(YieldTypes eYield, bool bProduce, int iAmount, bool bFood)
 {
+	//Kaszkaj - Branch headings are not research projects; completed research makes Research production worthless.
+	if (!isHuman() && bProduce && eYield == YIELD_IDEAS && !AI_hasResearchTarget()) return 0;
+	//Kaszkaj - Use the same production values and market estimates for every AI civilisation.
 	int iValue = 0;
 	if (bProduce)
 	{
-		iValue += 100 * (isNative() ? GC.getYieldInfo(eYield).getNativeBaseValue() : GC.getYieldInfo(eYield).getAIBaseValue());
+		iValue += 100 * GC.getYieldInfo(eYield).getAIBaseValue();
 	}
 	if (eYield == YIELD_FOOD)
 	{
-		//Kaszkaj - Increase food value for worker improvements while keeping trade values unchanged.
+		//Kaszkaj - Food shortages increase production value, including the Food needed to train Alien units.
+		if (bProduce && !isHuman() && !isEurope())
+		{
+			CvPlayer& kMarket = GET_PLAYER(getParent() == NO_PLAYER ? getID() : getParent());
+			int iMarketValue = std::max(0, (kMarket.getYieldSellPrice(eYield) + kMarket.getYieldBuyPrice(eYield)) / 2);
+			iValue += std::max(0, m_aiYieldValuesTimes100[eYield] - 100 * iMarketValue);
+		}
+		//Kaszkaj - Increase Food value for worker improvements while keeping trade values unchanged.
 		if (bFood)
 		{
-			iValue += 75 * (isNative() ? GC.getYieldInfo(eYield).getNativeBaseValue() : GC.getYieldInfo(eYield).getAIBaseValue());
-		}
-	}
-	else if (isNative())
-	{
-		CvYieldInfo& kYieldInfo = GC.getYieldInfo(eYield);
-		int iPrice = 0;
-		int iValidPrices = 0;
-		if (kYieldInfo.getNativeBuyPrice() > 0)
-		{
-			iPrice += kYieldInfo.getNativeBuyPrice();
-			iValidPrices++;
-		}
-		if (kYieldInfo.getNativeSellPrice() > 0)
-		{
-			iPrice += kYieldInfo.getNativeSellPrice();
-			iValidPrices++;
-		}
-
-		if (iPrice > 0)
-		{
-			//If both buy and sell, use average. Otherwise, use 2/3rd the value.
-			iPrice *= 2;
-			iPrice /= 2 + iValidPrices;
-
-			iValue += iPrice * 100;
+			iValue += 75 * GC.getYieldInfo(eYield).getAIBaseValue();
 		}
 	}
 	else
@@ -8498,6 +9771,50 @@ void CvPlayerAI::AI_updateYieldValues()
 
 		m_aiYieldValuesTimes100[i] = 100 * iValue;
 	}
+	//Kaszkaj - Materials needed by current production and industry are worth more than unneeded export stock.
+	if (!isHuman() && !isEurope())
+	{
+		int iPlanningTurns = std::max(3, GC.getDefineINT("AI_TRANSPORT_FORECAST_TURNS")
+			* GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getGrowthPercent() / 100);
+		for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+		{
+			YieldTypes eYield = (YieldTypes)i;
+			if (!GC.getYieldInfo(eYield).isCargo()) continue;
+			int iTarget = 0;
+			int iMissing = 0;
+			int iStored = 0;
+			int iLoop;
+			for (CvCity* pCity = firstCity(&iLoop); pCity != NULL; pCity = nextCity(&iLoop))
+			{
+				int iCityTarget = AI_cityYieldTarget(pCity, eYield);
+				if (eYield == YIELD_FOOD) iCityTarget = std::max(iCityTarget, pCity->AI_foodReserve());
+				int iAvailable = pCity->getYieldStored(eYield) + pCity->getYieldRushed(eYield);
+				int iNet = pCity->getRawYieldProduced(eYield) - pCity->getRawYieldConsumed(eYield);
+				if (eYield == YIELD_FOOD) iNet -= pCity->foodConsumption();
+				iAvailable += std::min(3, iPlanningTurns) * iNet;
+				iTarget += iCityTarget;
+				iMissing += std::max(0, iCityTarget - std::max(0, iAvailable));
+				iStored += pCity->getYieldStored(eYield);
+			}
+			int iMarketValue = std::max(0, kParent.getYieldBuyPrice(eYield));
+			if (eYield == YIELD_FOOD)
+			{
+				int iMarket = std::max(0, (kParent.getYieldSellPrice(eYield) + kParent.getYieldBuyPrice(eYield)) / 2);
+				int iScarcity = std::min(75, 75 * iMissing / std::max(1, iTarget));
+				m_aiYieldValuesTimes100[i] = 100 * iMarket + GC.getYieldInfo(eYield).getAIBaseValue() * iScarcity;
+			}
+			else if (iMissing > 0)
+			{
+				int iValue = std::max(iMarketValue, m_aiYieldValuesTimes100[i] / 100);
+				m_aiYieldValuesTimes100[i] = std::max(m_aiYieldValuesTimes100[i],
+					100 * iValue * (100 + std::min(75, 75 * iMissing / std::max(1, iTarget))) / 100);
+			}
+			else if (eYield != YIELD_FOOD && iStored > 2 * iTarget && isYieldEuropeTradable(eYield))
+			{
+				m_aiYieldValuesTimes100[i] = 100 * iMarketValue * std::max(0, 100 - getTaxRate()) / 100;
+			}
+		}
+	}
 	int iCrossValue = m_aiYieldValuesTimes100[YIELD_FOOD] * getGrowthThreshold(1) / (50 + immigrationThreshold() * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getGrowthPercent() / 100);
 	iCrossValue /= 2;
 
@@ -8529,6 +9846,7 @@ void CvPlayerAI::AI_updateYieldValues()
 						int iInput = pLoopCity->getProfessionInput(eProfession, pLoopUnit);
 						int iOutput = pLoopCity->getProfessionOutput(eProfession, pLoopUnit);
 
+						if (iInput <= 0 || iOutput <= 0) continue;
 						int iProfit = (m_aiYieldValuesTimes100[kProfession.getYieldsProduced(0)] * iOutput);
 						// MultipleYieldsProduced End
 						int iInputValue = iProfit / (2 * iInput); //Assign 50% of the yield value to the input.
@@ -9087,7 +10405,7 @@ bool CvPlayerAI::AI_isKing()
 	return isEurope();
 }
 
-CvPlot* CvPlayerAI::AI_getImperialShipSpawnPlot()
+CvPlot* CvPlayerAI::AI_getImperialShipSpawnPlot(const CvUnit* pShip)
 {
 	CvPlot* pBestPlot = NULL;
 	int iBestValue = 0;
@@ -9116,7 +10434,8 @@ CvPlot* CvPlayerAI::AI_getImperialShipSpawnPlot()
 
 	if (AI_isStrategy(STRATEGY_CONCENTRATED_ATTACK))
 	{
-		pTargetPlot = GC.getMapINLINE().plotByIndexINLINE(AI_getStrategyData(STRATEGY_CONCENTRATED_ATTACK));
+		int iTarget = AI_getStrategyData(STRATEGY_CONCENTRATED_ATTACK);
+		if (iTarget >= 0 && iTarget < GC.getMapINLINE().numPlotsINLINE()) pTargetPlot = GC.getMapINLINE().plotByIndexINLINE(iTarget);
 	}
 
 	for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
@@ -9124,7 +10443,8 @@ CvPlot* CvPlayerAI::AI_getImperialShipSpawnPlot()
 		CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
 
 		EuropeTypes eEurope = pLoopPlot->getEurope();
-		if (eEurope != NO_EUROPE)
+		if (eEurope != NO_EUROPE && pLoopPlot->isWater() && !pLoopPlot->isImpassable()
+			&& (pShip == NULL || pShip->canCrossOcean(pLoopPlot, UNIT_TRAVEL_STATE_FROM_EUROPE)))
 		{
 			if (bNoneAllowable || zoneAllowable[eEurope])
 			{
@@ -9202,7 +10522,6 @@ CvPlot* CvPlayerAI::AI_getImperialShipSpawnPlot()
 		}
 	}
 
-	FAssert(pBestPlot != NULL);
 
 	return pBestPlot;
 }
@@ -9387,6 +10706,96 @@ int CvPlayerAI::AI_desiredCityCount()
 	return std::max(1, iCount);
 }
 
+//Kaszkaj - Buy a specialist for a legal job where the real gain exceeds the current worker's output.
+CvCity* CvPlayerAI::AI_bestCityForUnit(UnitTypes eUnit, int* piValue)
+{
+	CvCity* pBestCity = NULL;
+	int iBestValue = 0;
+	if (piValue != NULL) *piValue = 0;
+	if (eUnit == NO_UNIT || AI_isDedicatedWorker(eUnit)) return NULL;
+	int iLoop;
+	for (CvCity* pCity = firstCity(&iLoop); pCity != NULL; pCity = nextCity(&iLoop))
+	{
+		if (pCity->isOccupation() || pCity->AI_isDanger()) continue;
+		bool bPending = false;
+		for (int i = 0; i < getNumEuropeUnits(); ++i)
+		{
+			CvUnit* pUnit = getEuropeUnit(i);
+			if (pUnit != NULL && pUnit->getUnitType() == eUnit && pUnit->getHomeCity() == pCity) bPending = true;
+		}
+		int iUnitLoop;
+		for (CvUnit* pUnit = firstUnit(&iUnitLoop); pUnit != NULL; pUnit = nextUnit(&iUnitLoop))
+		{
+			if (pUnit->getUnitType() == eUnit && pUnit->getHomeCity() == pCity && !pUnit->atPlot(pCity->plot()) && !pUnit->isDelayedDeath()) bPending = true;
+		}
+		if (bPending) continue;
+		for (int i = 0; i < GC.getNumProfessionInfos(); ++i)
+		{
+			ProfessionTypes eProfession = (ProfessionTypes)i;
+			const CvProfessionInfo& kProfession = GC.getProfessionInfo(eProfession);
+			if (!AI_isProfessionExpert(eUnit, eProfession) || !isProfessionValid(eProfession, eUnit)) continue;
+			YieldTypes eYield = (YieldTypes)kProfession.getYieldsProduced(0);
+			if (eYield < 0 || eYield >= NUM_YIELD_TYPES || eYield == YIELD_EDUCATION
+				|| (eYield == YIELD_IDEAS && (!AI_hasResearchTarget() || pCity->canResearch() <= 0))) continue;
+			int iGain = 0;
+			int iJobValue = 0;
+			if (kProfession.isWorkPlot())
+			{
+				for (int j = 1; j < NUM_CITY_PLOTS; ++j)
+				{
+					CvPlot* pPlot = pCity->getCityIndexPlot(j);
+					if (pPlot == NULL || pPlot->getWorkingCity() != pCity || !pCity->canWork(pPlot) || pPlot->isWater() != kProfession.isWater()) continue;
+					CvUnit* pWorker = pCity->getUnitWorkingPlot(pPlot);
+					if (pWorker != NULL && pWorker->isColonistLocked()) continue;
+					int iOld = pWorker == NULL || pWorker->getProfession() == NO_PROFESSION ? 0
+						: pCity->AI_professionBasicOutput(pWorker->getProfession(), pWorker->getUnitType(), pPlot);
+					int iNew = pCity->AI_professionBasicOutput(eProfession, eUnit, pPlot);
+					YieldTypes eOldYield = pWorker == NULL || pWorker->getProfession() == NO_PROFESSION ? NO_YIELD
+						: (YieldTypes)GC.getProfessionInfo(pWorker->getProfession()).getYieldsProduced(0);
+					int iOldValue = eOldYield >= 0 && eOldYield < NUM_YIELD_TYPES ? AI_yieldValue(eOldYield, true, iOld) : 0;
+					iJobValue = std::max(iJobValue, AI_yieldValue(eYield, true, iNew) - iOldValue);
+				}
+			}
+			else
+			{
+				int iSlots = pCity->getNumProfessionBuildingSlots(eProfession);
+				if (iSlots <= 0) continue;
+				bool bInputs = true;
+				for (int j = 0; j < kProfession.getNumYieldsConsumed(getID()); ++j)
+				{
+					YieldTypes eInput = (YieldTypes)kProfession.getYieldsConsumed(j, getID());
+					if (eInput >= 0 && eInput < NUM_YIELD_TYPES && pCity->getYieldStored(eInput) <= 0
+						&& pCity->getRawYieldProduced(eInput) <= pCity->getRawYieldConsumed(eInput) && pCity->AI_getTradeBalance(eInput) <= 0) bInputs = false;
+				}
+				if (!bInputs) continue;
+				int iCount = 0;
+				int iOld = MAX_INT;
+				for (int j = 0; j < pCity->getPopulation(); ++j)
+				{
+					CvUnit* pWorker = pCity->getPopulationUnitByIndex(j);
+					if (pWorker == NULL || pWorker->getProfession() != eProfession) continue;
+					++iCount;
+					if (!pWorker->isColonistLocked()) iOld = std::min(iOld, pCity->AI_professionBasicOutput(eProfession, pWorker->getUnitType(), NULL));
+				}
+				if (iCount < iSlots) iOld = 0;
+				if (iOld != MAX_INT) iGain = pCity->AI_professionBasicOutput(eProfession, eUnit, NULL) - iOld;
+			}
+			if (kProfession.isWorkPlot() ? iJobValue <= 0 : iGain <= 0) continue;
+			if (eYield != YIELD_FOOD && pCity->foodDifference() < GC.getFOOD_CONSUMPTION_PER_POPULATION()
+				&& pCity->getYieldStored(YIELD_FOOD) < pCity->AI_foodReserve()) continue;
+			int iValue = kProfession.isWorkPlot() ? iJobValue : AI_yieldValue(eYield, true, iGain);
+			if (AI_cityYieldTarget(pCity, eYield) > pCity->getYieldStored(eYield)) iValue = iValue * 3 / 2;
+			if (iValue > iBestValue)
+			{
+				iBestValue = iValue;
+				pBestCity = pCity;
+			}
+		}
+	}
+	if (piValue != NULL) *piValue = iBestValue;
+	return pBestCity;
+}
+
 int CvPlayerAI::AI_professionBasicValue(ProfessionTypes eProfession, UnitTypes eUnit, CvCity* pCity)
 {
 	CvProfessionInfo& kProfession = GC.getProfessionInfo(eProfession);
@@ -9552,7 +10961,6 @@ int CvPlayerAI::AI_professionUpgradeValue(ProfessionTypes eProfession, UnitTypes
 				}
 				else
 				{
-					//Kaszkaj - Compare overridden worker bonuses without deriving the new output from an XML penalty.
 					if (bExistingOverride || bNewOverride)
 					{
 						iExistingYield = pLoopCity->AI_professionBasicOutput(eProfession, pLoopUnit->getUnitType(), NULL);
@@ -9694,7 +11102,7 @@ int CvPlayerAI::AI_professionValue(ProfessionTypes eProfession, UnitAITypes eUni
 		case UNITAI_COUNTER:
 			{
 				int iExtraCombatStrength = kProfession.getCombatChange() - iDefaultCombatChange;
-				//Kaszkaj - Give native counter professions a +10 base score so the AI can select them.
+				//Kaszkaj - Give Alien counter professions a +10 base score so the AI can select them.
 				if (isNative())
 				{
 					iValue += 10;
@@ -9720,7 +11128,6 @@ int CvPlayerAI::AI_professionValue(ProfessionTypes eProfession, UnitAITypes eUni
 	return iValue;
 }
 
-//Kaszkaj - Keep Pioneer-class units and ships with Worker roles and Builds on construction duties.
 bool CvPlayerAI::AI_isDedicatedWorker(UnitTypes eUnit) const
 {
 	if (eUnit < 0 || eUnit >= GC.getNumUnitInfos())
@@ -9745,7 +11152,6 @@ bool CvPlayerAI::AI_isDedicatedWorker(UnitTypes eUnit) const
 	return false;
 }
 
-//Kaszkaj - Read each yield once; return true when AI uses different values from the unit XML.
 bool CvPlayerAI::AI_getUnitYieldBonuses(UnitTypes eUnit, YieldTypes eYield, int& iModifier, int& iChange, int& iBonusChange) const
 {
 	iModifier = 0;
@@ -9757,13 +11163,16 @@ bool CvPlayerAI::AI_getUnitYieldBonuses(UnitTypes eUnit, YieldTypes eYield, int&
 	}
 
 	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
-	//Kaszkaj - Treat Native workers as generalists in AI decisions, ignoring all XML yield bonuses and penalties.
+	//Kaszkaj - Count Alien workers' positive yield bonuses when judging expertise; ignore their penalties here.
 	if (std::strcmp(kUnit.getType(), "UNIT_NATIVE") == 0)
 	{
+		iModifier = std::max(0, kUnit.getYieldModifier(eYield));
+		iChange = std::max(0, kUnit.getYieldChange(eYield));
+		iBonusChange = std::max(0, kUnit.getBonusYieldChange(eYield));
 		return true;
 	}
 
-	//Kaszkaj - Pioneer-class workers prefer construction; AI values each yield at -3 with no production bonuses.
+	//Kaszkaj - Score Hardy Laborers and Cultivators (UNITCLASS_PIONEER) at -3 per yield to favour construction over Colony work.
 	if (kUnit.getUnitClassType() == GC.getDefineINT("UNITCLASS_PIONEER"))
 	{
 		iChange = -3;
@@ -9774,7 +11183,7 @@ bool CvPlayerAI::AI_getUnitYieldBonuses(UnitTypes eUnit, YieldTypes eYield, int&
 	iChange = kUnit.getYieldChange(eYield);
 	iBonusChange = kUnit.getBonusYieldChange(eYield);
 
-	//Kaszkaj - For native civilisations, value Criminal students at +100 percent and +3 Education.
+	//Kaszkaj - For Alien civilisations, score Convict students with +100% and +3 Education; actual training uses XML production.
 	if (eYield == YIELD_EDUCATION && isNative() && std::strcmp(kUnit.getType(), "UNIT_CRIMINAL") == 0)
 	{
 		iModifier = 100;
@@ -9805,7 +11214,6 @@ int CvPlayerAI::AI_getUnitBonusYieldChange(UnitTypes eUnit, YieldTypes eYield) c
 	return iBonusChange;
 }
 
-//Kaszkaj - Only XML specialists with a positive teacher weight can be learned.
 bool CvPlayerAI::AI_isEducationSpecialist(UnitTypes eUnit) const
 {
 	if (eUnit < 0 || eUnit >= GC.getNumUnitInfos())
@@ -9874,7 +11282,6 @@ int CvPlayerAI::AI_educationUnitValue(UnitTypes eUnit)
 	return iBestValue / (1 + getUnitClassCount((UnitClassTypes)kUnit.getUnitClassType()) / std::max(1, getNumCities()));
 }
 
-//Kaszkaj - Test each expert job separately; a unit can have more than one specialisation.
 bool CvPlayerAI::AI_isProfessionExpert(UnitTypes eUnit, ProfessionTypes eProfession) const
 {
 	if (eUnit < 0 || eUnit >= GC.getNumUnitInfos() || eProfession < 0 || eProfession >= GC.getNumProfessionInfos())
@@ -9882,6 +11289,10 @@ bool CvPlayerAI::AI_isProfessionExpert(UnitTypes eUnit, ProfessionTypes eProfess
 		return false;
 	}
 
+	AI_validateProfessionCache();
+	signed char& iCached = m_abProfessionExpertCache[eUnit * m_iProfessionCacheNumProfessions + eProfession];
+	if (iCached >= 0) return iCached != 0;
+	iCached = 0;
 	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 	const CvProfessionInfo& kProfession = GC.getProfessionInfo(eProfession);
 	if (!kProfession.isCitizen() || kUnit.getProfessionsNotAllowed(eProfession)
@@ -9909,6 +11320,7 @@ bool CvPlayerAI::AI_isProfessionExpert(UnitTypes eUnit, ProfessionTypes eProfess
 		int iBonus = iModifier + 22 * iChange + 17 * iBonusChange;
 		if (iBonus > 0)
 		{
+			iCached = 1;
 			return true;
 		}
 	}
@@ -9922,7 +11334,6 @@ ProfessionTypes CvPlayerAI::AI_idealProfessionForUnit(UnitTypes eUnitType)
 	int iSecondBestValue = 0;
 	ProfessionTypes eBestProfession = NO_PROFESSION;
 
-	//Kaszkaj - Use every produced yield; callers needing one profession still get NONE when the best jobs tie.
 	for (int iProfession = 0; iProfession < GC.getNumProfessionInfos(); ++iProfession)
 	{
 		ProfessionTypes eProfession = (ProfessionTypes)iProfession;
@@ -10035,7 +11446,13 @@ int CvPlayerAI::AI_unitAIValueMultipler(UnitAITypes eUnitAI)
 			if (!AI_isStrategy(STRATEGY_REVOLUTION_DECLARING))
 			{
 				int iNeeded = AI_neededWorkers(NULL);
-
+				int iLandWorkers = 0;
+				int iLoop;
+				for (CvUnit* pUnit = firstUnit(&iLoop); pUnit != NULL; pUnit = nextUnit(&iLoop))
+				{
+					if (pUnit->getDomainType() == DOMAIN_LAND && pUnit->AI_getUnitAIType() == UNITAI_WORKER) ++iLandWorkers;
+				}
+				iCount = iLandWorkers + AI_getNumTrainAIUnits(UNITAI_WORKER);
 				if (iNeeded > iCount)
 				{
 					iValue = 100 + 20 * iNeeded + (50 * iNeeded) / (iCount + 1);
@@ -10070,7 +11487,7 @@ int CvPlayerAI::AI_unitAIValueMultipler(UnitAITypes eUnitAI)
 			break;
 
 		case UNITAI_SCOUT:
-			//Kaszkaj - Count unrevealed land and uncollected goodies, and replace scouts retired by older AI code.
+			//Kaszkaj - Count unrevealed land and uncollected rewards, and replace Intrepid Explorers retired by older AI code.
 			if (!isHuman() && !isNative() && !isEurope())
 			{
 				int iTargets = AI_scoutTargetCount();
@@ -10238,14 +11655,8 @@ int CvPlayerAI::AI_unitAIValueMultipler(UnitAITypes eUnitAI)
 		case UNITAI_TRANSPORT_SEA:
 			if (!AI_isStrategy(STRATEGY_REVOLUTION))
 			{
-				if (iCount < 6)
-				{
-					int iLowerPop = 5 - countNumCoastalCities();
-					int iPop = 13 + 26 * iCount;
-					iValue = 150 * std::max(0, iPopulation - (iLowerPop + iPop * iCount)) / iPop;
-
-					iValue += 25 * std::max(0, AI_countYieldWaiting() - 4 * iCount);
-				}
+				int iShortfall = AI_transportCapacityNeeded() - AI_transportCapacity();
+				if (iShortfall > 0) iValue = 150 + 40 * iShortfall;
 			}
 			break;
 
@@ -10319,7 +11730,7 @@ int CvPlayerAI::AI_professionSuitability(UnitTypes eUnit, ProfessionTypes eProfe
 	}
 
 
-	//Kaszkaj - After world exploration, value combat jobs like the civilisation's Veteran and favour Dragoon.
+	//Kaszkaj - After world exploration, score combat jobs like the civilisation's UNITCLASS_VETERAN unit and favour Mecha Pilot.
 	if (AI_isColonialScout(eUnit) && AI_scoutTargetCount() == 0 &&
 		!GC.getProfessionInfo(eProfession).isCitizen() && !GC.getProfessionInfo(eProfession).isScout() &&
 		GC.getProfessionInfo(eProfession).getCombatChange() > 0)
@@ -10339,6 +11750,13 @@ int CvPlayerAI::AI_professionSuitability(UnitTypes eUnit, ProfessionTypes eProfe
 		return iValue;
 	}
 
+	//Kaszkaj - Keep Alien specialists, human experts and Convict students out of map combat professions.
+	if (!GC.getProfessionInfo(eProfession).isCitizen()
+		&& (AI_isNativeCitySpecialist(eUnit) || AI_isNativeHumanSpecialist(eUnit) || AI_isNativeStudent(eUnit))
+		&& eProfession != (ProfessionTypes)GC.getCivilizationInfo(getCivilizationType()).getDefaultProfession())
+	{
+		return 0;
+	}
 	CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
 	if (kUnit.getDefaultProfession() == NO_PROFESSION)
@@ -10825,6 +12243,11 @@ int CvPlayerAI::AI_setUnitAIStatesRange(CvPlot* pPlot, int iRange, UnitAIStates 
 void CvPlayerAI::read(FDataStreamBase* pStream)
 {
 	CvPlayer::read(pStream);	// read base class data first
+	AI_clearProfessionCache();
+	AI_invalidateResearchCache();
+	m_iBuilderTaskCacheTurn = -1;
+	m_aiBuilderTaskCounts.clear();
+	m_aiBuilderTaskCosts.clear();
 
 	uint uiFlag=0;
 	pStream->Read(&uiFlag);	// flags for expansion
@@ -10921,6 +12344,21 @@ void CvPlayerAI::read(FDataStreamBase* pStream)
 	pStream->Read(NUM_EMOTION_TYPES, m_aiEmotions);
 	pStream->Read(NUM_STRATEGY_TYPES, m_aiStrategyStartedTurn);
 	pStream->Read(NUM_STRATEGY_TYPES, m_aiStrategyData);
+	//Kaszkaj - Load the saved free Intrepid Explorer outfit turn; older saves make the first outfit available immediately.
+	m_iNextFreeScoutEquipmentTurn = 0;
+	if (uiFlag >= 3)
+	{
+		pStream->Read(&m_iNextFreeScoutEquipmentTurn);
+	}
+	//Kaszkaj - Saves before version 4 infer their Janus Device flag from an existing owned device.
+	m_bJanusDeviceBuilt = false;
+	m_iJanusDeviceBuildPlot = -1;
+	m_bJanusDeviceStateChecked = uiFlag >= 4;
+	if (uiFlag >= 4)
+	{
+		pStream->Read(&m_bJanusDeviceBuilt);
+		pStream->Read(&m_iJanusDeviceBuildPlot);
+	}
 
 }
 
@@ -10933,7 +12371,7 @@ void CvPlayerAI::write(FDataStreamBase* pStream)
 {
 	CvPlayer::write(pStream);	// write base class data first
 
-	uint uiFlag=2;
+	uint uiFlag=4;
 	pStream->Write(uiFlag);		// flag for expansion
 
 	pStream->Write(m_distanceMap.size());
@@ -11015,6 +12453,9 @@ void CvPlayerAI::write(FDataStreamBase* pStream)
 	pStream->Write(NUM_EMOTION_TYPES, m_aiEmotions);
 	pStream->Write(NUM_STRATEGY_TYPES, m_aiStrategyStartedTurn);
 	pStream->Write(NUM_STRATEGY_TYPES, m_aiStrategyData);
+	pStream->Write(m_iNextFreeScoutEquipmentTurn);
+	pStream->Write(m_bJanusDeviceBuilt);
+	pStream->Write(m_iJanusDeviceBuildPlot);
 }
 
 
@@ -11459,6 +12900,19 @@ void CvPlayerAI::AI_doNativeArmy(TeamTypes eTeam)
 	CvUnit* pLoopUnit;
 	for (pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
 	{
+		//Kaszkaj - Army planning leaves ships, builders and explorers in their existing roles.
+		if (pLoopUnit->getDomainType() != DOMAIN_LAND || pLoopUnit->isCargo() || pLoopUnit->isDelayedDeath()
+			|| pLoopUnit->getUnitTravelState() != NO_UNIT_TRAVEL_STATE
+			|| AI_isDedicatedWorker(pLoopUnit->getUnitType()) || AI_isNativeExplorer(pLoopUnit->getUnitType())) continue;
+		//Kaszkaj - Alien and human specialists and Convict students keep civilian jobs during army planning.
+		if (AI_isNativeCitySpecialist(pLoopUnit->getUnitType()) || AI_isNativeHumanSpecialist(pLoopUnit->getUnitType())
+			|| AI_isNativeStudent(pLoopUnit->getUnitType()))
+		{
+			pLoopUnit->AI_setUnitAIType(UNITAI_COLONIST);
+			continue;
+		}
+		UnitAITypes eRole = pLoopUnit->AI_getUnitAIType();
+		if (eRole != UNITAI_DEFENSIVE && eRole != UNITAI_OFFENSIVE && eRole != UNITAI_COUNTER) continue;
 		CvArea* pArea = pLoopUnit->area();
 		AreaAITypes eAreaAI = pArea->getAreaAIType(getTeam());
 		if (pLoopUnit->AI_getUnitAIType() == UNITAI_DEFENSIVE)
@@ -11532,7 +12986,9 @@ void CvPlayerAI::AI_doNativeArmy(TeamTypes eTeam)
 							for (int iPopulation = 0; iPopulation < pLoopCity->getPopulation(); ++iPopulation)
 							{
 								CvUnit* pPopulationUnit = pLoopCity->getPopulationUnitByIndex(iPopulation);
-								if (pPopulationUnit != NULL && pPopulationUnit->canHaveProfession(eLoopProfession, false))
+								if (pPopulationUnit != NULL && !AI_isNativeHumanSpecialist(pPopulationUnit->getUnitType())
+									&& !AI_isNativeStudent(pPopulationUnit->getUnitType())
+									&& pPopulationUnit->canHaveProfession(eLoopProfession, false))
 								{
 									int iSuitability = AI_professionSuitability(pPopulationUnit, eLoopProfession, pLoopCity->plot(), eLoopUnitAI);
 									if (iSuitability > 0)
@@ -11688,6 +13144,109 @@ void CvPlayerAI::AI_doMilitaryStrategy()
 	return;
 }
 
+namespace
+{
+	bool imperialCargoFits(const CvUnit* pShip, const CvUnit* pSoldier)
+	{
+		return pShip != NULL && pSoldier != NULL && pShip->getDomainType() == DOMAIN_SEA
+			&& pShip->cargoSpace() > 0 && pShip->cargoSpace() >= pSoldier->getUnitInfo().getRequiredTransportSize()
+			&& (pShip->domainCargo() == NO_DOMAIN || pShip->domainCargo() == pSoldier->getDomainType())
+			&& (pShip->specialCargo() == NO_SPECIALUNIT || pShip->specialCargo() == pSoldier->getSpecialUnitType());
+	}
+
+	struct ImperialTransportOrder
+	{
+		bool operator()(const CvUnit* pFirst, const CvUnit* pSecond) const
+		{
+			if (pFirst->cargoSpace() != pSecond->cargoSpace()) return pFirst->cargoSpace() > pSecond->cargoSpace();
+			return pFirst->getID() < pSecond->getID();
+		}
+	};
+
+	struct ImperialSoldierOrder
+	{
+		bool operator()(const CvUnit* pFirst, const CvUnit* pSecond) const
+		{
+			return pFirst->getUnitInfo().getRequiredTransportSize() > pSecond->getUnitInfo().getRequiredTransportSize();
+		}
+	};
+
+	bool dispatchImperialTransport(CvPlayerAI& kOwner, CvUnit* pShip, CvPlot* pEntry, std::vector<CvUnit*>& apSoldiers, bool bRequireCargo)
+	{
+		if (pShip == NULL || pEntry == NULL || !pEntry->isWater() || pShip->isDelayedDeath() || pShip->isCargo()
+			|| pShip->getUnitTravelState() != UNIT_TRAVEL_STATE_IN_EUROPE
+			|| !pShip->canCrossOcean(pEntry, UNIT_TRAVEL_STATE_FROM_EUROPE)) return false;
+		std::vector<CvUnit*> apCargo;
+		CvPlot* pOldPlot = pShip->plot();
+		if (pOldPlot != NULL)
+		{
+			for (CLLNode<IDInfo>* pNode = pOldPlot->headUnitNode(); pNode != NULL; pNode = pOldPlot->nextUnitNode(pNode))
+			{
+				CvUnit* pUnit = ::getUnit(pNode->m_data);
+				if (pUnit != NULL && pUnit->getTransportUnit() == pShip) apCargo.push_back(pUnit);
+			}
+		}
+		if (!pShip->atPlot(pEntry)) pShip->setXY(pEntry->getX_INLINE(), pEntry->getY_INLINE(), false, false, false);
+		for (uint i = 0; i < apCargo.size(); ++i)
+		{
+			if (!apCargo[i]->atPlot(pEntry)) apCargo[i]->setXY(pEntry->getX_INLINE(), pEntry->getY_INLINE(), false, false, false);
+		}
+		for (uint i = 0; i < apSoldiers.size() && !pShip->isFull(); ++i)
+		{
+			CvUnit* pSoldier = apSoldiers[i];
+			if (pSoldier == NULL || !imperialCargoFits(pShip, pSoldier)) continue;
+			kOwner.loadUnitFromEurope(pSoldier, pShip);
+			if (pSoldier->getTransportUnit() == pShip) apSoldiers[i] = NULL;
+		}
+		if ((bRequireCargo && pShip->getCargo() == 0) || !pShip->canCrossOcean(pShip->plot(), UNIT_TRAVEL_STATE_FROM_EUROPE)) return false;
+		pShip->crossOcean(UNIT_TRAVEL_STATE_FROM_EUROPE);
+		return pShip->getUnitTravelState() != UNIT_TRAVEL_STATE_IN_EUROPE;
+	}
+}
+
+//Kaszkaj - Reserve return trips for the waiting army; spare empty ships stay in the war zone.
+bool CvPlayerAI::AI_shouldReturnImperialShip(const CvUnit* pShip) const
+{
+	if (pShip == NULL || pShip->plot() == NULL || pShip->cargoSpace() <= 0 || pShip->getCargo() > 0
+		|| pShip->getUnitTravelState() != NO_UNIT_TRAVEL_STATE || pShip->isCargo()) return false;
+	std::vector<CvUnit*> apSoldiers;
+	for (int i = 0; i < getNumEuropeUnits(); ++i)
+	{
+		CvUnit* pUnit = getEuropeUnit(i);
+		if (pUnit != NULL && !pUnit->isDelayedDeath() && pUnit->getDomainType() == DOMAIN_LAND && imperialCargoFits(pShip, pUnit)) apSoldiers.push_back(pUnit);
+	}
+	if (apSoldiers.empty()) return false;
+	int iReserved = 0;
+	int iCloser = 0;
+	int iOurDistance = std::min(10000, std::max(0, pShip->plot()->getDistanceToOcean())) / std::max(1, pShip->baseMoves());
+	int iLoop;
+	for (CvUnit* pOther = firstUnit(&iLoop); pOther != NULL; pOther = nextUnit(&iLoop))
+	{
+		if (pOther == pShip || pOther->isDelayedDeath() || pOther->isCargo() || pOther->cargoSpace() <= 0) continue;
+		bool bCompatible = true;
+		for (uint i = 0; i < apSoldiers.size(); ++i)
+		{
+			if (!imperialCargoFits(pOther, apSoldiers[i])) bCompatible = false;
+		}
+		if (!bCompatible) continue;
+		UnitTravelStates eState = pOther->getUnitTravelState();
+		if (eState == UNIT_TRAVEL_STATE_IN_EUROPE || eState == UNIT_TRAVEL_STATE_TO_EUROPE
+			|| (eState == NO_UNIT_TRAVEL_STATE && pOther->getCargo() == 0 && pOther->getGroup()->AI_getMissionAIType() == MISSIONAI_SAIL_TO_EUROPE))
+		{
+			iReserved += std::max(0, pOther->cargoSpace() - pOther->getCargo());
+		}
+		else if (eState == NO_UNIT_TRAVEL_STATE && pOther->getCargo() == 0 && pOther->plot() != NULL)
+		{
+			int iDistance = std::min(10000, std::max(0, pOther->plot()->getDistanceToOcean())) / std::max(1, pOther->baseMoves());
+			if (iDistance < iOurDistance || (iDistance == iOurDistance && pOther->getID() < pShip->getID())) iCloser += pOther->cargoSpace();
+		}
+	}
+	int iNeeded = (int)apSoldiers.size() - iReserved;
+	if (iNeeded <= 0) return false;
+	if (pShip->getGroup()->AI_getMissionAIType() == MISSIONAI_SAIL_TO_EUROPE) return true;
+	return iCloser < iNeeded;
+}
+
 void CvPlayerAI::AI_doSuppressRevolution()
 {
 	bool bContinue = false;
@@ -11716,9 +13275,8 @@ void CvPlayerAI::AI_doSuppressRevolution()
 
 	CvPlayerAI& kColony = GET_PLAYER(eColony);
 
-	if (!AI_isAnyStrategy())
+	if (!AI_isStrategy(STRATEGY_CONCENTRATED_ATTACK) && !AI_isStrategy(STRATEGY_DISTRIBUTED_ATTACK))
 	{
-		AI_setStrategy(STRATEGY_SMALL_WAVES);
 
 		int iTactics = GC.getGameINLINE().getSorenRandNum(5, "AI Choose Strategy");
 		switch (iTactics)
@@ -11780,153 +13338,47 @@ void CvPlayerAI::AI_doSuppressRevolution()
 		}
 	}
 
-	int iShipCount = 0;
-	int iSoldierCount = 0;
-	int iCargoSpace = 0;
-
-	std::vector<CvUnit*> ships;
-	std::vector<CvUnit*> soldiers;
-
+	//Kaszkaj - Launch timed waves using each ship's real compatible cargo capacity.
+	if (!AI_isStrategy(STRATEGY_SMALL_WAVES)) AI_setStrategy(STRATEGY_SMALL_WAVES, 0);
+	AI_clearStrategy(STRATEGY_BUILDUP);
+	int iInterval = std::max(1, GC.getDefineINT("REF_WAVE_INTERVAL") * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getGrowthPercent() / 100);
+	if (AI_getStrategyData(STRATEGY_SMALL_WAVES) > 0 && AI_getStrategyDuration(STRATEGY_SMALL_WAVES) < iInterval) return;
+	std::vector<CvUnit*> apTransports;
+	std::vector<CvUnit*> apEscorts;
+	std::vector<CvUnit*> apSoldiers;
+	int iTotalTransports = 0;
 	int iLoop;
-	for (CvUnit* pLoopUnit = firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = nextUnit(&iLoop))
+	for (CvUnit* pShip = firstUnit(&iLoop); pShip != NULL; pShip = nextUnit(&iLoop))
 	{
-		if (pLoopUnit->getDomainType() == DOMAIN_SEA)
-		{
-			if (pLoopUnit->getUnitTravelState() == UNIT_TRAVEL_STATE_IN_EUROPE)
-			{
-				ships.push_back(pLoopUnit);
-				iShipCount++;
-				iCargoSpace += pLoopUnit->cargoSpace();
-			}
-	    }
+		if (pShip->getDomainType() != DOMAIN_SEA || pShip->isCargo() || pShip->isDelayedDeath()) continue;
+		if (pShip->cargoSpace() > 0 && (pShip->domainCargo() == NO_DOMAIN || pShip->domainCargo() == DOMAIN_LAND)) ++iTotalTransports;
+		if (pShip->getUnitTravelState() != UNIT_TRAVEL_STATE_IN_EUROPE) continue;
+		if (pShip->cargoSpace() > 0) apTransports.push_back(pShip);
+		else apEscorts.push_back(pShip);
 	}
-
-	std::vector<int> shuffle(getNumEuropeUnits());
 	for (int i = 0; i < getNumEuropeUnits(); ++i)
 	{
-		shuffle[i] = i;
+		CvUnit* pUnit = getEuropeUnit(i);
+		if (pUnit != NULL && !pUnit->isDelayedDeath() && pUnit->getDomainType() == DOMAIN_LAND) apSoldiers.push_back(pUnit);
 	}
-	GC.getGameINLINE().getSorenRand().shuffleArray(shuffle, NULL);
-
-	for (int i = 0; i < getNumEuropeUnits(); ++i)
+	std::stable_sort(apTransports.begin(), apTransports.end(), ImperialTransportOrder());
+	std::stable_sort(apSoldiers.begin(), apSoldiers.end(), ImperialSoldierOrder());
+	bool bWaitingArmy = !apSoldiers.empty();
+	int iQuota = bWaitingArmy ? std::max(1, (iTotalTransports * range(GC.getDefineINT("REF_WAVE_PERCENT"), 1, 100) + 99) / 100) : (int)apTransports.size();
+	int iLaunched = 0;
+	for (uint i = 0; i < apTransports.size() && iLaunched < iQuota; ++i)
 	{
-		CvUnit* pLoopUnit = getEuropeUnit(shuffle[i]);
-		FAssert(pLoopUnit != NULL);
-        if (pLoopUnit->getDomainType() == DOMAIN_LAND)
-		{
-			soldiers.push_back(pLoopUnit);
-			iSoldierCount++;
-		}
+		CvUnit* pShip = apTransports[i];
+		if (dispatchImperialTransport(*this, pShip, AI_getImperialShipSpawnPlot(pShip), apSoldiers, bWaitingArmy)) ++iLaunched;
 	}
-
-	if (iShipCount == 0)
+	int iEscortQuota = bWaitingArmy ? iLaunched : (int)apEscorts.size();
+	int iEscortsLaunched = 0;
+	for (uint i = 0; i < apEscorts.size() && iEscortsLaunched < iEscortQuota; ++i)
 	{
-		//FAssertMsg(iSoldierCount == 0, "Uh oh, soldiers stuck in europe");
-		return;
+		CvUnit* pShip = apEscorts[i];
+		if (dispatchImperialTransport(*this, pShip, AI_getImperialShipSpawnPlot(pShip), apSoldiers, false)) ++iEscortsLaunched;
 	}
-
-	int iTotalShipCount = AI_getNumAIUnits(UNITAI_COMBAT_SEA);
-
-	int iShipsToLaunch = 0;
-
-	if (AI_isStrategy(STRATEGY_SMALL_WAVES))//Set at start of revolution.
-	{
-		iShipsToLaunch = (iTotalShipCount + 9) / 10;
-	}
-	else if (AI_isStrategy(STRATEGY_BUILDUP))//Set when first ship gets back.
-	{
-		if (iShipCount > (iTotalShipCount / 2))
-		{
-			iShipsToLaunch = (iTotalShipCount + 2) / 3;
-
-			AI_clearStrategy(STRATEGY_BUILDUP);
-			AI_setStrategy(STRATEGY_SMALL_WAVES);
-		}
-	}
-
-	int iMinWaveSize = 3;
-
-	if (iShipCount < iMinWaveSize)
-	{
-		if (iTotalShipCount >= iMinWaveSize)
-		{
-			return;
-		}
-	}
-
-	iShipsToLaunch = std::max(iShipsToLaunch, iMinWaveSize);
-	iShipsToLaunch = std::min(iShipsToLaunch, iShipCount);
-
-
-	int iSoldiersToLoad = 0;
-
-	int iMaxCargo = iCargoSpace * iShipsToLaunch / iShipCount;
-	if (iSoldierCount < iMaxCargo)
-	{
-		iSoldiersToLoad = iSoldierCount;
-	}
-	else if (iSoldierCount < iMaxCargo * 2)
-	{
-		iSoldiersToLoad = iSoldierCount / 2;
-	}
-	else
-	{
-		iSoldiersToLoad = iMaxCargo;
-	}
-
-	if (iSoldiersToLoad > 0)
-	{
-		int iSoldiersLoaded = 0;
-		for (int i = 0; i < iShipCount; ++i)
-		{
-			CvUnit* pLoopUnit = ships[i];
-			FAssert(pLoopUnit != NULL);
-			if (i < iShipsToLaunch)
-			{
-				while (iSoldiersLoaded < iSoldiersToLoad)
-				{
-					CvUnit* pSoldier = soldiers[iSoldiersLoaded];
-					FAssert(pSoldier != NULL);
-
-					iSoldiersLoaded++;
-					loadUnitFromEurope(pSoldier, pLoopUnit);
-					if (pLoopUnit->isFull())
-					{
-						break;
-					}
-				}
-
-				CvPlot* pTargetPlot = AI_getImperialShipSpawnPlot();
-
-				if (!pLoopUnit->atPlot(pTargetPlot))
-				{
-					pLoopUnit->setXY(pTargetPlot->getX_INLINE(), pTargetPlot->getY_INLINE(), false, false, false);
-				}
-
-
-				pLoopUnit->crossOcean(UNIT_TRAVEL_STATE_FROM_EUROPE);
-			}
-		}
-	}
-	else if (iSoldierCount == 0)
-	{
-		//Lets wander around the New World!
-		for (int i = 0; i < iShipCount; ++i)
-		{
-			CvUnit* pLoopUnit = ships[i];
-			FAssert(pLoopUnit != NULL);
-
-			CvPlot* pTargetPlot = AI_getImperialShipSpawnPlot();
-
-			if (!pLoopUnit->atPlot(pTargetPlot))
-			{
-				pLoopUnit->setXY(pTargetPlot->getX_INLINE(), pTargetPlot->getY_INLINE(), false, false, false);
-			}
-
-			pLoopUnit->crossOcean(UNIT_TRAVEL_STATE_FROM_EUROPE);
-		}
-	}
-
+	if (iLaunched + iEscortsLaunched > 0) AI_setStrategy(STRATEGY_SMALL_WAVES, 1);
 }
 
 void CvPlayerAI::AI_doUnitAIWeights()
@@ -14009,16 +15461,22 @@ UnitTypes CvPlayerAI::AI_nextBuyProfessionUnit(ProfessionTypes* peProfession, Un
 	return m_eNextBuyProfessionUnit;
 }
 
-void CvPlayerAI::AI_updateNextBuyUnit()
+void CvPlayerAI::AI_updateNextBuyUnit(int iEuropePassengers, int iTransportCapacity, int iSpendable)
 {
 	PROFILE_FUNC();
 	int iBestValue = 0;
 	UnitTypes eBestUnit = NO_UNIT;
 	UnitAITypes eBestUnitAI = NO_UNITAI;
+	//Kaszkaj - Clear the Earth passenger backlog before buying ships for other roles.
+	if (iEuropePassengers < 0) iEuropePassengers = AI_europePassengerCount();
+	if (iTransportCapacity < 0) iTransportCapacity = AI_transportCapacity(false);
+	bool bPassengerBacklog = iEuropePassengers >= std::max(4, iTransportCapacity);
+	if (bPassengerBacklog && iSpendable < 0) iSpendable = std::max(0, getGold() - AI_goldTarget());
 
 	for (int iUnitAI = 0; iUnitAI < NUM_UNITAI_TYPES; ++iUnitAI)
 	{
 		UnitAITypes eLoopUnitAI = (UnitAITypes) iUnitAI;
+		if (bPassengerBacklog && eLoopUnitAI != UNITAI_TRANSPORT_SEA) continue;
 		bool bValid = false;
 
 		int iMultipler = AI_unitAIValueMultipler(eLoopUnitAI);
@@ -14026,7 +15484,7 @@ void CvPlayerAI::AI_updateNextBuyUnit()
 		{
 			bValid = true;
 		}
-		int iTreasureSum = -1;
+		int iTreasureSum = 0;
 		int iTreasureSize = -1;
 
 		if ((eLoopUnitAI == UNITAI_TRANSPORT_SEA) && (AI_totalUnitAIs(UNITAI_TREASURE) > 0))
@@ -14053,7 +15511,7 @@ void CvPlayerAI::AI_updateNextBuyUnit()
 			{
 				if (pLoopUnit->AI_getUnitAIType() == UNITAI_TRANSPORT_SEA)
 				{
-					if (pLoopUnit->cargoSpace() >= iTreasureSize)
+					if (pLoopUnit->getUnitInfo().getUnitClassType() == GC.getInfoTypeForString("UNITCLASS_GALLEON", true) && pLoopUnit->cargoSpace() >= iTreasureSize)
 					{
 						//Can already transport all treasure, cancel.
 						iTreasureSize = -1;
@@ -14064,10 +15522,7 @@ void CvPlayerAI::AI_updateNextBuyUnit()
 			}
 		}
 
-		if (iTreasureSum < 1)
-		{
-			iTreasureSum = 1;
-		}
+		if (iTreasureSum < 1) iTreasureSum = 0;
 
 		if (iTreasureSize < 1)
 		{
@@ -14088,23 +15543,26 @@ void CvPlayerAI::AI_updateNextBuyUnit()
 				if (eLoopUnit != NO_UNIT)
 				{
 					CvUnitInfo& kUnitInfo = GC.getUnitInfo(eLoopUnit);
+					if (kUnitInfo.getDomainType() == DOMAIN_SEA && AI_isDedicatedWorker(eLoopUnit)
+						&& eLoopUnitAI != UNITAI_WORKER) continue;
 					if (kUnitInfo.getDefaultProfession() == NO_PROFESSION || kUnitInfo.getDefaultUnitAIType() == UNITAI_DEFENSIVE || kUnitInfo.getDefaultUnitAIType() == UNITAI_COUNTER)
 					{
 						int iPrice = getEuropeUnitBuyPrice(eLoopUnit);
-						if (iPrice > 0)// && !kUnitInfo.getUnitAIType(eLoopUnitAI))
+						if (iPrice > 0 && (!bPassengerBacklog || iPrice <= iSpendable))
 						{
-							if (iTreasureSum > 0) //Perform treasure calculations
+							int iUnitMultiplier = iMultipler;
+							if (iTreasureSum > 0 && kUnitInfo.getUnitClassType() == GC.getInfoTypeForString("UNITCLASS_GALLEON", true))
 							{
 								if (kUnitInfo.getCargoSpace() >= iTreasureSize)
 								{
-									iMultipler += 100 + (100 * iTreasureSum) / iPrice;
+									iUnitMultiplier += 100 + (100 * iTreasureSum) / iPrice;
 									iPrice = std::max(iPrice / 3, iPrice - iTreasureSum);
 								}
 							}
 
 							if (kUnitInfo.getDefaultUnitAIType() == UNITAI_COMBAT_SEA)
 							{
-								iMultipler += 100 + (100 * (kUnitInfo.getCombat() * 1000)) / iPrice;
+								iUnitMultiplier += 100 + (100 * (kUnitInfo.getCombat() * 1000)) / iPrice;
 								if (getGold() > iPrice)
 								{
 									iPrice /= 4;
@@ -14113,7 +15571,7 @@ void CvPlayerAI::AI_updateNextBuyUnit()
 
 							int iGoldValue = AI_unitGoldValue(eLoopUnit, eLoopUnitAI, NULL);
 
-							int iValue = (iMultipler * iGoldValue) / iPrice;
+							int iValue = (iUnitMultiplier * iGoldValue) / iPrice;
 
 							if (iValue > iBestValue)
 							{
@@ -14149,100 +15607,21 @@ void CvPlayerAI::AI_updateNextBuyProfession()
 	ProfessionTypes eDefaultProfession = (ProfessionTypes) GC.getCivilizationInfo(getCivilizationType()).getDefaultProfession();
 
 	int iColMultiplier = AI_unitAIValueMultipler(UNITAI_COLONIST);
-	//Professions which work in cities.
-	for (int iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
+	for (int i = 0; i < GC.getNumUnitClassInfos(); ++i)
 	{
-		UnitTypes eLoopUnit = ((UnitTypes)(GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(iI)));
-
-		if (eLoopUnit != NO_UNIT)
+		UnitTypes eUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(i);
+		if (eUnit == NO_UNIT || GC.getUnitInfo(eUnit).getDefaultProfession() == NO_PROFESSION) continue;
+		int iPrice = getEuropeUnitBuyPrice(eUnit);
+		if (iPrice <= 0) continue;
+		int iGain = 0;
+		if (AI_bestCityForUnit(eUnit, &iGain) == NULL || iGain <= 0) continue;
+		int iValue = iGain * 100 * std::max(100, iColMultiplier) / iPrice;
+		if (iValue > iBestValue)
 		{
-			CvUnitInfo& kUnitInfo = GC.getUnitInfo(eLoopUnit);
-
-			int iPrice = getEuropeUnitBuyPrice(eLoopUnit);
-			if (iPrice > 0)
-			{
-				if (kUnitInfo.getDefaultProfession() != NO_PROFESSION)
-				{
-					int iValue = 0;
-					UnitAITypes eUnitAI = NO_UNITAI;
-					//if (kUnitInfo.getDefaultProfession() == eDefaultProfession)
-					{
-						//Kaszkaj - Consider every expert job when buying a worker with several specialisations.
-						ProfessionTypes eProfession = NO_PROFESSION;
-						int iBestUpgradeValue = -1;
-						for (int iJob = 0; iJob < GC.getNumProfessionInfos(); ++iJob)
-						{
-							ProfessionTypes eJob = (ProfessionTypes)iJob;
-							if (AI_isProfessionExpert(eLoopUnit, eJob) && isProfessionValid(eJob, eLoopUnit))
-							{
-								int iUpgradeValue = AI_professionUpgradeValue(eJob, eLoopUnit);
-								if (iUpgradeValue > iBestUpgradeValue)
-								{
-									iBestUpgradeValue = iUpgradeValue;
-									eProfession = eJob;
-								}
-							}
-						}
-						if (eProfession != NO_PROFESSION)
-						{
-
-							int iValue = 50 + 3 * iBestUpgradeValue;
-
-							iValue *= iColMultiplier;
-							iValue /= 100;
-
-							int iExisting = getUnitClassCountPlusMaking((UnitClassTypes)iI);
-
-							if (iExisting < 3)
-							{
-								iValue *= 100 + (5 + getTotalPopulation()) * AI_getUnitYieldModifier(eLoopUnit, YIELD_LUMBER) / (5 * (1 + iExisting));
-								iValue /= 100;
-
-								iValue *= 100 + (5 + getTotalPopulation()) * (44 * AI_getUnitYieldChange(eLoopUnit, YIELD_FOOD) + 34 * AI_getUnitBonusYieldChange(eLoopUnit, YIELD_FOOD)) / (5 * (1 + iExisting)) ;
-								iValue /= 100;
-
-								if (AI_isStrategy(STRATEGY_FAST_BELLS))
-								{
-									iValue *= 100 + AI_getUnitYieldModifier(eLoopUnit, YIELD_BELLS) / (2 + iExisting);
-									iValue /= 100;
-								}
-							}
-
-							for (int i = 0; i < NUM_YIELD_TYPES; ++i)
-							{
-								YieldTypes eLoopYield = (YieldTypes)i;
-
-								int iModifier = AI_getUnitYieldModifier(eLoopUnit, eLoopYield);
-								if (iModifier > 0)
-								{
-									if (AI_highestYieldAdvantage(eLoopYield) == 100)
-									{
-										if (!AI_isYieldFinalProduct(eLoopYield))
-										{
-											iModifier /= 4;
-										}
-										iValue *= 100 + iModifier;
-										iValue /= 100;
-									}
-								}
-							}
-
-							if (iExisting < 4)
-							{
-								iValue *= 2;
-								iValue /= 2 + iExisting;
-								if (iValue > iBestValue)
-								{
-									iBestValue = iValue;
-									eBestProfession = eDefaultProfession;
-									eBestProfessionUnit = eLoopUnit;
-									eBestUnitAI = UNITAI_COLONIST;
-								}
-							}
-						}
-					}
-				}
-			}
+			iBestValue = iValue;
+			eBestProfession = eDefaultProfession;
+			eBestProfessionUnit = eUnit;
+			eBestUnitAI = UNITAI_COLONIST;
 		}
 	}
 
@@ -14704,7 +16083,6 @@ int CvPlayerAI::AI_countNumCityUnits(UnitTypes eUnit)
 int CvPlayerAI::AI_getNumCityUnitsNeeded(UnitTypes eUnit)
 {
 	int iCount = 0;
-	//Kaszkaj - Count indoor jobs for every supported specialisation, including equally good ones.
 	for (int iProfession = 0; iProfession < GC.getNumProfessionInfos(); ++iProfession)
 	{
 		ProfessionTypes eProfession = (ProfessionTypes)iProfession;

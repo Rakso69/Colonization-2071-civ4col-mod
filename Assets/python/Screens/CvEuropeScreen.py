@@ -167,6 +167,20 @@ class CvEuropeScreen:
 		# draw the contents
 		self.drawContents()
 
+	def _getShipCargo(self, unit, cargoByPlot):
+		plot = unit.plot()
+		plotKey = (plot.getX(), plot.getY())
+		if plotKey not in cargoByPlot:
+			byShip = {}
+			for i in range(plot.getNumUnits()):
+				loopUnit = plot.getUnit(i)
+				transportUnit = loopUnit.getTransportUnit()
+				if not transportUnit.isNone():
+					shipKey = (transportUnit.getOwner(), transportUnit.getID())
+					byShip.setdefault(shipKey, []).append((loopUnit, transportUnit))
+			cargoByPlot[plotKey] = byShip
+		return cargoByPlot[plotKey].get((unit.getOwner(), unit.getID()), [])
+
 	def drawContents(self):
 	
 		player = gc.getPlayer(gc.getGame().getActivePlayer())
@@ -182,6 +196,7 @@ class CvEuropeScreen:
 		EuropeUnitsList = []
 		InboundUnitsList = []
 		OutboundUnitsList = []
+		CargoByPlot = {}
 		(unit, iter) = player.firstUnit()
 		while (unit):
 			if (not unit.isCargo() and not unit.isDelayedDeath()):
@@ -217,22 +232,18 @@ class CvEuropeScreen:
 
 			YieldOnBoard = False
 			iCargoCount = 0
-			plot = unit.plot()
-			for i in range(plot.getNumUnits()):
-				loopUnit = plot.getUnit(i)
-				transportUnit = loopUnit.getTransportUnit()
-				if (not transportUnit.isNone() and transportUnit.getID() == unit.getID() and transportUnit.getOwner() == unit.getOwner()):
-					if loopUnit.isGoods():
-						szText = u"<font=2>%s</font>" % loopUnit.getYieldStored()
-						iWidgetId = self.YIELD_CARGO_BUTTON_ID
-						YieldOnBoard = True
-					else:
-						szText = ""
-						iWidgetId = self.UNIT_CARGO_BUTTON_ID
+			for loopUnit, transportUnit in self._getShipCargo(unit, CargoByPlot):
+				if loopUnit.isGoods():
+					szText = u"<font=2>%s</font>" % loopUnit.getYieldStored()
+					iWidgetId = self.YIELD_CARGO_BUTTON_ID
+					YieldOnBoard = True
+				else:
+					szText = ""
+					iWidgetId = self.UNIT_CARGO_BUTTON_ID
 
-					screen.addDragableButtonAt("LoadingList", self.getNextWidgetName(), loopUnit.getButton(), "", ShipPanelWidth - ((self.CARGO_SPACING * 2 / 3) * (iCargoCount + 2)) - (self.CARGO_SPACING / 4), yLocation_InPort + self.SHIP_ICON_SIZE + (ShipPanelHight / 2) - (self.CARGO_ICON_SIZE / 6), self.CARGO_ICON_SIZE * 2 / 3, self.CARGO_ICON_SIZE * 2 / 3, WidgetTypes.WIDGET_SHIP_CARGO, loopUnit.getID(), transportUnit.getID(), ButtonStyles.BUTTON_STYLE_LABEL)
-					screen.setLabelAt( self.getNextWidgetName(), "LoadingList", szText, CvUtil.FONT_LEFT_JUSTIFY, ShipPanelWidth - ((self.CARGO_SPACING * 2 / 3) * (iCargoCount + 2)) - (self.CARGO_SPACING / 4), yLocation_InPort + self.SHIP_ICON_SIZE + ShipPanelHight - 10, -0.1, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_SHIP_CARGO, loopUnit.getID(), transportUnit.getID())
-					iCargoCount = iCargoCount + 1
+				screen.addDragableButtonAt("LoadingList", self.getNextWidgetName(), loopUnit.getButton(), "", ShipPanelWidth - ((self.CARGO_SPACING * 2 / 3) * (iCargoCount + 2)) - (self.CARGO_SPACING / 4), yLocation_InPort + self.SHIP_ICON_SIZE + (ShipPanelHight / 2) - (self.CARGO_ICON_SIZE / 6), self.CARGO_ICON_SIZE * 2 / 3, self.CARGO_ICON_SIZE * 2 / 3, WidgetTypes.WIDGET_SHIP_CARGO, loopUnit.getID(), transportUnit.getID(), ButtonStyles.BUTTON_STYLE_LABEL)
+				screen.setLabelAt( self.getNextWidgetName(), "LoadingList", szText, CvUtil.FONT_LEFT_JUSTIFY, ShipPanelWidth - ((self.CARGO_SPACING * 2 / 3) * (iCargoCount + 2)) - (self.CARGO_SPACING / 4), yLocation_InPort + self.SHIP_ICON_SIZE + ShipPanelHight - 10, -0.1, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_SHIP_CARGO, loopUnit.getID(), transportUnit.getID())
+				iCargoCount = iCargoCount + 1
 
 			if (YieldOnBoard):
 				screen.setImageButtonAt(self.getNextWidgetName(), "LoadingList", gc.getActionInfo(gc.getInfoTypeForString("COMMAND_YIELD_TRADE")).getButton(), ShipPanelWidth - (self.CARGO_ICON_SIZE * 2 / 2), yLocation_InPort + self.SHIP_ICON_SIZE + (self.CARGO_ICON_SIZE * 3 / 4), self.CARGO_ICON_SIZE * 3 / 2, self.CARGO_ICON_SIZE * 3 / 2, WidgetTypes.WIDGET_GENERAL, self.SELL_ALL, unit.getID())
@@ -261,13 +272,9 @@ class CvEuropeScreen:
 				screen.addDDSGFCAt(self.getNextWidgetName(), "InBoundList", ArtFileMgr.getInterfaceArtInfo("INTERFACE_EUROPE_BOX_CARGO").getPath(), self.W_SLIDER - (self.W_TEXT_MARGIN * 2) - ((self.CARGO_SPACING / 2) * (i)), yLocation_ToEurope + (self.SHIP_ICON_SIZE / 3) + (self.SHIP_ICON_SIZE / 2) - (self.CARGO_ICON_SIZE/4), self.CARGO_ICON_SIZE / 2, self.CARGO_ICON_SIZE / 2, WidgetTypes.WIDGET_SHIP_CARGO, unit.getID(), -1, False)
 
 			iCargoCount = 0
-			plot = unit.plot()
-			for i in range(plot.getNumUnits()):
-				loopUnit = plot.getUnit(i)
-				transportUnit = loopUnit.getTransportUnit()
-				if (not transportUnit.isNone() and transportUnit.getID() == unit.getID() and transportUnit.getOwner() == unit.getOwner()):
-					screen.setImageButtonAt( self.getNextWidgetName(), "InBoundList", loopUnit.getButton(), self.W_SLIDER - (self.W_TEXT_MARGIN * 2) - ((self.CARGO_SPACING / 2) * (iCargoCount)), yLocation_ToEurope + (self.SHIP_ICON_SIZE / 3) + (self.SHIP_ICON_SIZE / 2) - (self.CARGO_ICON_SIZE / 4), self.CARGO_ICON_SIZE / 2, self.CARGO_ICON_SIZE / 2, WidgetTypes.WIDGET_GENERAL, -1, -1)
-					iCargoCount += 1
+			for loopUnit, transportUnit in self._getShipCargo(unit, CargoByPlot):
+				screen.setImageButtonAt( self.getNextWidgetName(), "InBoundList", loopUnit.getButton(), self.W_SLIDER - (self.W_TEXT_MARGIN * 2) - ((self.CARGO_SPACING / 2) * (iCargoCount)), yLocation_ToEurope + (self.SHIP_ICON_SIZE / 3) + (self.SHIP_ICON_SIZE / 2) - (self.CARGO_ICON_SIZE / 4), self.CARGO_ICON_SIZE / 2, self.CARGO_ICON_SIZE / 2, WidgetTypes.WIDGET_GENERAL, -1, -1)
+				iCargoCount += 1
 
 			screen.addDDSGFCAt(self.getNextWidgetName(), "InBoundList", unit.getFullLengthIcon(), 0, yLocation_ToEurope - (self.SHIP_ICON_SIZE / 3), self.SHIP_ICON_SIZE * 4 / 3, self.SHIP_ICON_SIZE * 4 / 3, WidgetTypes.WIDGET_GENERAL, -1, -1, False)
 			yLocation_ToEurope += ShipPanelHight + (self.H_TEXT_MARGIN)
@@ -283,13 +290,9 @@ class CvEuropeScreen:
 				screen.addDDSGFCAt(self.getNextWidgetName(), "OutBoundList", ArtFileMgr.getInterfaceArtInfo("INTERFACE_EUROPE_BOX_CARGO").getPath(), self.W_SLIDER - (self.W_TEXT_MARGIN * 2) - ((self.CARGO_SPACING / 2) * (i)), yLocation_FromEurope + (self.SHIP_ICON_SIZE / 3) + (self.SHIP_ICON_SIZE / 2) - (self.CARGO_ICON_SIZE/4), self.CARGO_ICON_SIZE / 2, self.CARGO_ICON_SIZE / 2, WidgetTypes.WIDGET_SAIL, UnitTravelStates.UNIT_TRAVEL_STATE_FROM_EUROPE, -1, False)
 
 			iCargoCount = 0
-			plot = unit.plot()
-			for i in range(plot.getNumUnits()):
-				loopUnit = plot.getUnit(i)
-				transportUnit = loopUnit.getTransportUnit()
-				if (not transportUnit.isNone() and transportUnit.getID() == unit.getID() and transportUnit.getOwner() == unit.getOwner()):
-					screen.setImageButtonAt( self.getNextWidgetName(), "OutBoundList", loopUnit.getButton(), self.W_SLIDER - (self.W_TEXT_MARGIN * 2) - ((self.CARGO_SPACING / 2) * iCargoCount), yLocation_FromEurope + (self.SHIP_ICON_SIZE / 3) + (self.SHIP_ICON_SIZE / 2) - (self.CARGO_ICON_SIZE / 4), self.CARGO_ICON_SIZE / 2, self.CARGO_ICON_SIZE / 2, WidgetTypes.WIDGET_GENERAL, -1, -1)
-					iCargoCount += 1
+			for loopUnit, transportUnit in self._getShipCargo(unit, CargoByPlot):
+				screen.setImageButtonAt( self.getNextWidgetName(), "OutBoundList", loopUnit.getButton(), self.W_SLIDER - (self.W_TEXT_MARGIN * 2) - ((self.CARGO_SPACING / 2) * iCargoCount), yLocation_FromEurope + (self.SHIP_ICON_SIZE / 3) + (self.SHIP_ICON_SIZE / 2) - (self.CARGO_ICON_SIZE / 4), self.CARGO_ICON_SIZE / 2, self.CARGO_ICON_SIZE / 2, WidgetTypes.WIDGET_GENERAL, -1, -1)
+				iCargoCount += 1
 
 			screen.addDDSGFCAt( self.getNextWidgetName(), "OutBoundList", unit.getFullLengthIcon(), 0, yLocation_FromEurope - (self.SHIP_ICON_SIZE / 3), self.SHIP_ICON_SIZE * 4 / 3, self.SHIP_ICON_SIZE * 4 / 3, WidgetTypes.WIDGET_SAIL, UnitTravelStates.UNIT_TRAVEL_STATE_FROM_EUROPE, -1, False)
 			yLocation_FromEurope += ShipPanelHight + (self.H_TEXT_MARGIN)

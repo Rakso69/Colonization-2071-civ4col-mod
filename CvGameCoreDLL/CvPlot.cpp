@@ -166,7 +166,6 @@ void CvPlot::reset(int iX, int iY, bool bConstructorCall)
 	m_bImpassable = false;
 
 	m_eOwner = NO_PLAYER;
-	//Kaszkaj - Clear the excavation builder when resetting a plot.
 	m_eExcavationBuilder = NO_PLAYER;
 	m_ePlotType = PLOT_OCEAN;
 	m_eTerrainType = NO_TERRAIN;
@@ -399,24 +398,21 @@ void CvPlot::doImprovementUpgrade()
 	{
 		ImprovementTypes eImprovementUpdrade = (ImprovementTypes)GC.getImprovementInfo(getImprovementType()).getImprovementUpgrade();
 
+		if (eImprovementUpdrade == NO_IMPROVEMENT) return;
+
 		///TK Update 1.1
 		PlayerTypes eOwner = getOwner();
 		if (eOwner != NO_PLAYER)
 		{
-            for (int iCivic = 0; iCivic < GC.getNumCivicInfos(); ++iCivic)
-            {
-                if (GC.getCivicInfo((CivicTypes) iCivic).getCivicOptionType() == (CivicOptionTypes)GC.getDefineINT("CIVICOPTION_INVENTIONS"))
-                {
-                    CvCivicInfo& kCivicInfo = GC.getCivicInfo((CivicTypes) iCivic);
-                    if (kCivicInfo.getAllowsBuildTypes(eImprovementUpdrade) > 0)
-                    {
-                        if (GET_PLAYER(eOwner).getIdeasResearched((CivicTypes) iCivic) <= 0)
-                        {
-                            return;
-                        }
-                    }
-                }
-            }
+			const std::vector<CivicTypes>& aeRestrictions = GC.getImprovementInfo(eImprovementUpdrade).getBuildTechnologyRestrictions();
+			int iCivicOption = GC.getDefineINT("CIVICOPTION_INVENTIONS");
+			for (int i = 0; i < (int)aeRestrictions.size(); ++i)
+			{
+				CivicTypes eCivic = aeRestrictions[i];
+				const CvCivicInfo& kCivic = GC.getCivicInfo(eCivic);
+				if (kCivic.getCivicOptionType() == iCivicOption && kCivic.getAllowsBuildTypes(eImprovementUpdrade) > 0
+					&& GET_PLAYER(eOwner).getIdeasResearched(eCivic) <= 0) return;
+			}
 		}
 		///TKe
 		if (eImprovementUpdrade != NO_IMPROVEMENT)
@@ -2180,21 +2176,17 @@ int CvPlot::movementCost(const CvUnit* pUnit, const CvPlot* pFromPlot) const
 	if (pFromPlot->isValidRoute(pUnit) && isValidRoute(pUnit))
 	{
 	    int iTechRouteMod = 0;
-	    if (!pUnit->isNative() && !GET_PLAYER(pUnit->getOwner()).isEurope())
+	    //Kaszkaj - Apply researched road movement bonuses to Alien units as well.
+	    if (!GET_PLAYER(pUnit->getOwner()).isEurope())
         {
-            for (int iCivic = 0; iCivic < GC.getNumCivicInfos(); ++iCivic)
+            const std::vector<CivicTypes>& aeCivics = GC.getRouteInfo(getRouteType()).getMovementModifierCivics();
+            const CvPlayer& kPlayer = GET_PLAYER(pUnit->getOwnerINLINE());
+            for (int i = 0; i < (int)aeCivics.size(); ++i)
             {
-                if (GC.getCivicInfo((CivicTypes) iCivic).getCivicOptionType() == (CivicOptionTypes)GC.getDefineINT("CIVICOPTION_INVENTIONS"))
+                CivicTypes eCivic = aeCivics[i];
+                if (kPlayer.getIdeasResearched(eCivic) > 0)
                 {
-                    CvCivicInfo& kCivicInfo = GC.getCivicInfo((CivicTypes) iCivic);
-                    if (kCivicInfo.getRouteMovementMod(getRouteType()) != 0)
-                    {
-                        if (GET_PLAYER(pUnit->getOwnerINLINE()).getIdeasResearched((CivicTypes) iCivic) > 0)
-                        {
-                            iTechRouteMod = kCivicInfo.getRouteMovementMod(getRouteType());
-                            iTechRouteMod = iTechRouteMod * 10 * -1;
-                        }
-                    }
+                    iTechRouteMod = GC.getCivicInfo(eCivic).getRouteMovementMod(getRouteType()) * 10 * -1;
                 }
             }
         }
@@ -4334,6 +4326,12 @@ void CvPlot::setImprovementType(ImprovementTypes eNewValue)
 		}
 
 		updateYield(true);
+		//Kaszkaj - Reconsider Colony jobs after an improvement changes, even when the cached yield amounts stay the same.
+		CvCity* pWorkingCity = getWorkingCity();
+		if (pWorkingCity != NULL)
+		{
+			pWorkingCity->AI_setAssignWorkDirty(true);
+		}
 
 		if (NO_FEATURE != eOldImprovement && GC.getImprovementInfo(eOldImprovement).isActsAsCity())
 		{
@@ -4815,10 +4813,7 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 
 	if (bOptimal || ePlayer == NO_PLAYER)
 	{
-		for (iI = 0; iI < GC.getNumCivicInfos(); ++iI)
-		{
-			iYield += GC.getCivicInfo((CivicTypes) iI).getImprovementYieldChanges(eImprovement, eYield);
-		}
+		iYield += GC.getImprovementInfo(eImprovement).getCivicYieldChange(eYield);
 	}
 	else
 	{
@@ -5557,7 +5552,7 @@ void CvPlot::changeVisibilityCount(TeamTypes eTeam, int iChange, InvisibleTypes 
 			{
 				setRevealed(eTeam, true, false, NO_TEAM);
 
-				//Kaszkaj - Discover barbarians when their territory or visible units enter the human team's sight.
+				//Kaszkaj - Discover the Outer Gods Pantheon when its territory or visible units enter the human team's sight.
 				if (GET_TEAM(eTeam).isHuman())
 				{
 					if (isOwned() && GET_TEAM(getTeam()).isBarbarian())
@@ -6196,6 +6191,13 @@ bool CvPlot::changeBuildProgress(BuildTypes eBuild, int iChange, TeamTypes eTeam
 			}
 		}
 
+		//Kaszkaj - Reserve the first unfinished Janus Device site before another AI builder chooses a plot.
+		if (iChange > 0 && eBuild == (BuildTypes)GC.getInfoTypeForString("BUILD_JANUS_DEVICE", true)
+			&& eBuilder >= 0 && eBuilder < MAX_PLAYERS && GET_PLAYER(eBuilder).getTeam() == eTeam)
+		{
+			GET_PLAYER(eBuilder).AI_setJanusDeviceBuildPlot(this);
+		}
+
 		m_paiBuildProgress[eBuild] += iChange;
 		FAssert(getBuildProgress(eBuild) >= 0);
 
@@ -6216,6 +6218,13 @@ bool CvPlot::changeBuildProgress(BuildTypes eBuild, int iChange, TeamTypes eTeam
 			if (GC.getBuildInfo(eBuild).getImprovement() != NO_IMPROVEMENT)
 			{
 				setImprovementType((ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement());
+			}
+
+			//Kaszkaj - Record the builder's completed Janus Device before another AI ship can order one.
+			if (eBuild == (BuildTypes)GC.getInfoTypeForString("BUILD_JANUS_DEVICE", true)
+				&& eBuilder >= 0 && eBuilder < MAX_PLAYERS && GET_PLAYER(eBuilder).getTeam() == eTeam)
+			{
+				GET_PLAYER(eBuilder).AI_setJanusDeviceBuilt();
 			}
 
 			if (GC.getBuildInfo(eBuild).getRoute() != NO_ROUTE)
@@ -6267,7 +6276,7 @@ PlayerTypes CvPlot::getExcavationBuilder() const
 	return m_eExcavationBuilder;
 }
 
-//Kaszkaj - Check excavation events for the builder using the normal activation and chance rules.
+//Kaszkaj - Roll excavation events for the builder, using the normal event delay and chance.
 void CvPlot::triggerExcavationEvent(PlayerTypes eBuilder)
 {
 	if (eBuilder < 0 || eBuilder >= MAX_PLAYERS || m_eExcavationBuilder != eBuilder
@@ -6869,7 +6878,7 @@ void CvPlot::addUnit(CvUnit* pUnit, bool bUpdate)
 		m_units.insertAtEnd(pUnit->getIDInfo());
 	}
 
-	//Kaszkaj - Reveal the barbarian leader when a unit enters a plot the human team can already see.
+	//Kaszkaj - Meet the Outer Gods Pantheon when one of its units enters a plot the human team can already see.
 	if (GET_PLAYER(pUnit->getOwnerINLINE()).isBarbarian())
 	{
 		for (int iTeam = 0; iTeam < MAX_TEAMS; ++iTeam)

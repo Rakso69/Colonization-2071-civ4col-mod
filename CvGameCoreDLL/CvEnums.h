@@ -1724,7 +1724,7 @@ enum DllExport TradeableItems
 	TRADE_PEACE,
 	TRADE_WAR,
 	TRADE_EMBARGO,
-	//Kaszkaj - Append royal tax payment to preserve all existing trade item IDs.
+	//Kaszkaj - Append tax payment to the State or Progenitor Exarch without changing existing trade item IDs.
 	TRADE_TAX,
 
 #ifdef _USRDLL

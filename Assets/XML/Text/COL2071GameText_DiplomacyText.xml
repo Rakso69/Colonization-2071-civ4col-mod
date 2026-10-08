@@ -692,7 +692,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_TRADE_TAX_HELP</Tag>
-		<English>Pay for every selected technology with a permanent tax increase of %D1%%. This replaces the gold payment.</English>
+		<English>Pay for every selected technology with a permanent tax increase of %D1%%. This replaces the Credits payment.</English>
 		<French></French>
 		<German></German>
 		<Italian></Italian>

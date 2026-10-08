@@ -370,6 +370,8 @@ public:
 	DllExport void write(FDataStreamBase* stream);
 	DllExport bool read(CvXMLLoadUtility* pXML);
 	DllExport bool readPass3();
+	const std::vector<CivicTypes>& getTechnologyRestrictions() const;
+	void clearTechnologyCache();
 
 	//---------------------------------------PROTECTED MEMBER VARIABLES---------------------------------
 protected:
@@ -414,6 +416,9 @@ protected:
 	// MultipleYieldsProduced End
 	// MultipleYieldsConsumed Start by Aymerick 05/01/2010
 	std::vector<int> m_aiYieldsConsumed;
+	mutable int m_iCachedCivicCount;
+	mutable int m_iCachedCivicOption;
+	mutable std::vector<CivicTypes> m_aeTechnologyRestrictions;
 	// MultipleYieldsConsumed End
 };
 
@@ -999,7 +1004,6 @@ public:
 	DllExport int getIncreasedEnemyHealRate() const;
 	DllExport int getGoldBonusForFirstToResearch() const;
 	DllExport int getFreeHurriedImmigrants() const;
-	//Kaszkaj - Declare the getter for the civic Inventor rate.
 	DllExport int getInventorRateChange() const;
 	DllExport int getGoldBonus() const;
 	DllExport int getFreeTechs() const;
@@ -1030,6 +1034,9 @@ public:
 	DllExport int getRequiredYields(int i) const;
 	DllExport int* getRequiredYieldsArray() const;
 	DllExport int getRequiredYieldsArraySize() const;
+	const std::vector<YieldTypes>& getRequiredYieldTypes() const;
+	const std::vector<CivicTypes>& getBlockingCivics() const;
+	void clearTechnologyCache();
 	///Tke
 	DllExport int getNativeAttitudeChange() const;
 	DllExport int getNativeCombatModifier() const;
@@ -1082,7 +1089,6 @@ protected:
 	int m_iCenterPlotFoodBonus;
 	int m_iIncreasedEnemyHealRate;
     int m_iGoldBonusForFirstToResearch;
-    //Kaszkaj - Store the civic Inventor rate under the name used by XML.
     int m_iInventorRateChange;
     int m_iNewDefaultUnitClass;
     int m_iFreeTechs;
@@ -1137,6 +1143,11 @@ protected:
 	std::vector<int*> m_aaiImprovementYieldChanges;
 
 	std::vector<int> m_aFreeUnitClasses;
+	mutable bool m_bRequiredYieldCacheValid;
+	mutable std::vector<YieldTypes> m_aeRequiredYieldTypes;
+	mutable int m_iCachedCivicCount;
+	mutable int m_iCachedCivicOption;
+	mutable std::vector<CivicTypes> m_aeBlockingCivics;
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1372,6 +1383,8 @@ public:
 	DllExport int getChar() const;
 	DllExport void setChar(int i);
 	DllExport int getFontButtonIndex() const;
+	const std::vector<BuildingTypes>& getBuildingTypes() const;
+	void clearBuildingCache();
 
 	// Arrays
 	DllExport int getProductionTraits(int i) const;
@@ -1384,6 +1397,8 @@ protected:
 	int m_iFontButtonIndex;
 	// Arrays
 	int* m_aiProductionTraits;
+	mutable int m_iCachedBuildingCount;
+	mutable std::vector<BuildingTypes> m_aeBuildingTypes;
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1743,8 +1758,9 @@ public:
 	DllExport int getAIConstructPercent() const;
 	DllExport int getAIUnitUpgradePercent() const;
 	DllExport int getAIHurryPercent() const;
-	//Kaszkaj - Declare the getter for the AI immigration chance.
 	DllExport int getAIImmigration() const;
+	int getAIMaxTaxrate() const;
+	int getAIMinimumStorageLossSellPercentage() const;
 	DllExport int getAIExtraTradePercent() const;
 	DllExport int getAIPerEraModifier() const;
 	DllExport int getAIAdvancedStartPercent() const;
@@ -1785,8 +1801,9 @@ protected:
 	int m_iAIConstructPercent;
 	int m_iAIUnitUpgradePercent;
 	int m_iAIHurryPercent;
-	//Kaszkaj - Store the AI immigration chance with the difficulty settings.
 	int m_iAIImmigration;
+	int m_iAIMaxTaxrate;
+	int m_iAIMinimumStorageLossSellPercentage;
 	int m_iAIExtraTradePercent;
 	int m_iAIPerEraModifier;
 	int m_iAIAdvancedStartPercent;
@@ -1996,6 +2013,8 @@ public:
 	DllExport int getValue() const;
 	DllExport int getMovementCost() const;
 	DllExport int getFlatMovementCost() const;
+	const std::vector<CivicTypes>& getMovementModifierCivics() const;
+	void clearTechnologyCache();
 
 	// Arrays
 	DllExport int getYieldChange(int i) const;
@@ -2010,6 +2029,9 @@ protected:
 	int m_iFlatMovementCost;
 	// Arrays
 	int* m_aiYieldChange;
+	mutable int m_iCachedCivicCount;
+	mutable int m_iCachedCivicOption;
+	mutable std::vector<CivicTypes> m_aeMovementModifierCivics;
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -2101,6 +2123,9 @@ public:
 	DllExport bool getTerrainMakesValid(int i) const;
 	DllExport bool getFeatureMakesValid(int i) const;
 
+	const std::vector<CivicTypes>& getBuildTechnologyRestrictions() const;
+	int getCivicYieldChange(YieldTypes eYield) const;
+	void clearCivicYieldCache();
 	DllExport int getRouteYieldChanges(int i, int j) const;
 	DllExport int* getRouteYieldChangesArray(int i);				// For Moose - CvWidgetData XXX
 	DllExport int getImprovementBonusYield(int i, int j) const;
@@ -2138,7 +2163,6 @@ protected:
 	bool m_bGoody;
 	bool m_bPermanent;
 	bool m_bUseLSystem;
-	//Kaszkaj - Store all three bOutsideBorders modes as an integer.
 	int m_iOutsideBorders;
 	CvString m_szArtDefineTag;
 
@@ -2152,6 +2176,10 @@ protected:
 	bool* m_abFeatureMakesValid;
 	std::vector<int*> m_aaiRouteYieldChanges;
 	CvImprovementBonusInfo* m_paImprovementBonus;
+	mutable int m_iCachedCivicCount;
+	mutable std::vector<int> m_aiCivicYieldChanges;
+	mutable int m_iCachedBuildCivicCount;
+	mutable std::vector<CivicTypes> m_aeBuildTechnologyRestrictions;
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -2652,6 +2680,7 @@ public:
 	DllExport virtual ~CvWorldInfo();
 	DllExport int getDefaultPlayers() const;
 	DllExport int getDefaultNativePlayers() const;
+	int getAIImmigrationModifier() const;
 	DllExport int getUnitNameModifier() const;
 	DllExport int getTargetNumCities() const;
 	DllExport int getBuildingClassPrereqModifier() const;
@@ -2667,6 +2696,7 @@ public:
 protected:
 	int m_iDefaultPlayers;
 	int m_iDefaultNativePlayers;
+	int m_iAIImmigrationModifier;
 	int m_iUnitNameModifier;
 	int m_iTargetNumCities;
 	int m_iBuildingClassPrereqModifier;

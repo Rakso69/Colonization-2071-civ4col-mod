@@ -1,54 +1,150 @@
+### 08.10.2026 Colonization 2071 v2.2.3 Patch Notes:<br>
+---
+☑️Optimised building lookups and Colony production calculations.<br>
+☑️Reduced repeated checks of profession requirements, research availability and research materials.<br>
+☑️Optimised technology bonuses for routes and yield calculations for Improvements.<br>
+☑️Reduced repeated data lookups when updating Colony workers, garrisons and transport cargo.<br>
+☑️Streamlined the Technology Advisor while preserving its layout and prerequisite arrows.<br>
+☑️Removed unnecessary data lookups when combat logging is disabled, while preserving Progenitor AI rewards.<br>
+☑️Fixed failed resident departures clearing professions. Residents remain in their Colony until their default map profession becomes available.<br>
+☑️Fixed Colony yield modifier tooltips to include technology bonuses and count tax bonuses only once.<br>
+☑️Corrected displayed production totals during material shortages and Immigration conversion.<br>
+☑️Fixed processing jobs being selected despite producing no actual output; AI-only worker bonuses no longer hide zero production.<br>
+☑️Fixed workforce replacement loops that could trigger the “AI plot assignment confusion” assertion.<br>
+☑️Fixed AI building plans ignoring availability requirements, including civilisation-specific restrictions.<br>
+☑️Fixed AI retreats choosing routes that could not be followed immediately. Units wait when they need movement points from the next turn.<br>
+☑️Fixed first settlers waiting for an existing Colony instead of moving towards a founding site.<br>
+☑️Fixed Alien attackers attempting actions after profession changes exhausted their movement. Transported attackers handle their cargo state before selecting combat missions.<br>
+☑️Fixed saved AI ships retaining land combat roles. Affected ships recover an appropriate space role on their next AI turn.<br>
+☑️Fixed Alien workforce changes removing Food production needed to prevent starvation, including when Convicts enter education. Food checks now include Colony production modifiers.<br>
+☑️Fixed useful Alien specialists remaining unassigned when workforce reassignment assessed their jobs before assigning Food experts.<br>
+☑️Worker construction plans refresh after loading a game without changing the saved-game data format.<br>
+☑️Alien units now benefit from researched road movement bonuses.<br>
+☑️Removed additional Alien settlement restrictions based on Colony distance and nearby ownership; standard founding restrictions still apply.<br>
+<br>
+💻Computer Opponents (Both):<br>
+☑️Specialist job assignments account for Food needs, available workplaces and production materials.<br>
+☑️Computer opponents select valid research projects, exclude technology branch headings and stop assigning Research workers when no research is available. Colony jobs are reassessed when research ends or becomes available again.<br>
+☑️Technology purchases from the State or Progenitor Exarch account for practical benefits, export income and tax-linked production bonuses. AI compares payments in Credits with tax increases, using tax purchases for urgent or exceptionally useful research.<br>
+☑️Technology purchases for Credits preserve an economic reserve.<br>
+☑️Computer opponents attack visible feral units units when the odds are favourable. Progenitor AI units receive greater target priority because of their rewards, without lowering the required chance of victory.<br>
+☑️Computer opponents prioritise work on Lunar Outposts and Lunar Settlements so these Improvements can develop.<br>
+☑️Each computer opponent is limited to one Janus Device, including queued construction, unfinished work and upgraded stages. It favours useful defensive locations, and the limit persists in saved games and after the device is lost.<br>
+☑️Production choices compare buildings, specialists and ships according to current needs, while retaining emergency defence and valuing useful workplace upgrades.<br>
+☑️Transport demand accounts for export stocks, production, journey times, passengers, Progenitor Treasures, waiting Explorers and ships already in production.<br>
+☑️AI places greater value on transport ships with larger cargo capacity. Transports deliver passengers before returning to Earth, and recruitment slows when passenger queues grow.<br>
+☑️When Earth has a passenger backlog, AI prioritises affordable transport ships while retaining a reserve of Credits; purchases of further specialists wait until the backlog eases.<br>
+☑️Mining Vessels, Science Vessels and Colony Ships are produced, purchased and deployed for useful construction tasks. Space builders are purchased as workers rather than passenger transports, and lunar construction is planned on owned moons that a parent Colony can work.<br>
+☑️Combat ships, Privateers and UFOs carrying colonists prioritise passenger delivery before resuming their space combat duties.<br>
+☑️Industrial planning considers workers, input goods and factories already built or queued elsewhere, avoiding factories without usable raw materials.<br>
+☑️Direct manufactured goods from Progenitor Improvements are recognised when assigning workers, evaluating technologies and choosing Colony sites.<br>
+☑️Computer opponents reserve Credits for useful construction work and release surplus goods when production requirements change.<br>
+☑️Production blocked by missing materials is reconsidered, with greater value placed on shortages of Food and industrial inputs.<br>
+☑️Specialist purchases are ranked by useful production gains relative to their cost in Credits, and purchased specialists are delivered to the selected Colony.<br>
+☑️Progenitor Treasures are sent to Earth aboard Freighters and Carriers instead of paying the State or Progenitor Exarch to transport them.<br>
+☑️Goods otherwise lost to warehouse overflow can be sold without changing Earth market prices or trade-volume tax counters.<br>
+☑️Difficulty settings limit ordinary AI tax increases; voluntary technology purchases retain their separate tax payment rules.<br>
+☑️On Illuminatus difficulty, AI workers receive a +150% work-rate bonus.<br>
+☑️Whenever a capital building is completed, AI selects its best Colony as the capital using its existing assessment. The current capital is retained on a tied score, and the selection runs once for each completed capital building.
+<br>
+🧑‍🚀💻Colonist AI:<br>
+☑️Colonist AI can equip one Intrepid Explorer for free at an owned Colony, with a default cooldown of 35 turns. Waiting Explorers account for this allowance, and its cooldown is retained in saved games.<br>
+☑️Workers favour suitable productive Improvements when replacing inherited Alien Fertilizers, Future Farms and Alien Burrows.<br>
+☑️Workers can seek revealed Ancient Mounds and establish Excavations using normal construction costs and reward ownership rules.<br>
+☑️Intrepid Explorers gain transport priority after a configurable wait; accepted pickup requests retain their assigned unit and destination.<br>
+☑️Additional immigration scales with world size, available land and game speed, while retaining independent rolls and dock capacity limits. These immigrants do not consume Propaganda or raise the normal immigration threshold.<br>
+<br>
+👽💻Alien AI:<br>
+☑️Civilian units join useful Colony jobs instead of remaining idle outside, while armed defenders retain their military duties.<br>
+☑️Transports without a usable trade route can return to a reachable owned Colony and unload their goods.<br>
+☑️Venerable Elders follow revised priorities for Research sites and Liberty, Research and Propaganda workplaces. Research jobs require an available research project.<br>
+☑️Brilliant Polymaths prioritise Progenitor Tech sites and workplaces, followed by Narcotics and Fusion Cores, then Biotech.<br>
+☑️Industrious Cyborgs prioritise outdoor Weapons and Vehicles production, then outdoor Tools and Industry, followed by suitable indoor jobs. Urgent equipment shortages can raise the priority of Weapons and Vehicles production.<br>
+☑️Colony workers are reassigned when a worked reward site disappears or changes ownership, even if its production totals remain unchanged.<br>
+☑️Venerable Elders, Brilliant Polymaths, Industrious Cyborgs and acquired human specialists retain civilian jobs rather than switching to Alien Soldier, Alien Mecha or Alien Corsair professions.<br>
+☑️The Alien Soldier, Alien Mecha and Alien Corsair professions are restricted to Aliens, Elite Warriors and Alien Crossbreeds. Convicts prioritise schooling or lessons in Alien settlements when the Colony can spare their labour.<br>
+☑️Elite Warriors explore their planet without changing unit type or seeking ruin rewards unavailable to Alien civilisations. They favour the Alien Corsair profession when suitable equipment is available.<br>
+☑️Ordinary workers follow yield and workplace priorities, fill gaps left by unavailable experts and concentrate indoor Research production in one suitable Colony.<br>
+☑️Weapons are reserved for spaceship production when an eligible vessel can be built with the materials available.<br>
+☑️Acquired human specialists, including Expert Farmers and Expert Astronauts, replace less productive residents where actual output improves, including Venerable Elders, Brilliant Polymaths and Industrious Cyborgs.<br>
+☑️Ordinary jobs and specialist jobs use comparable valuation scales, preserving Food requirements and specialist priorities during worker replacement.<br>
+☑️Alien AI uses the same production and market valuation rules as Colonist AI.<br>
+☑️Food, production inputs and construction materials are protected when goods are sold.<br>
+☑️Desired trade goods prioritise missing construction materials and production inputs.<br>
+☑️Specialist recruitment favours Brilliant Polymaths for development; recruitment of Venerable Elders and Industrious Cyborgs adapts to available jobs, resources and shortages.<br>
+☑️Progenitor Tech, Narcotics, Fusion Cores and Biotech are reserved for recruitment, accounting for specialists already present, travelling or in production.<br>
+☑️Elite Warriors are recruited for exploration and military needs; Cultivators are recruited where more improvement workers are needed.<br>
+☑️Ordinary Aliens needed for defence remain available as soldiers. Military professions use existing Weapons and Vehicles, while Colony specialists retain civilian roles.<br>
+☑️Food assignments support upkeep and modest growth while maintaining work on developing lunar colonies, Alien Fertilizers and Alien Burrows.<br>
+☑️Venerable Elders, Brilliant Polymaths and Industrious Cyborgs are kept out of unnecessary surplus Food jobs; ordinary workers help gather Food required for recruitment.<br>
+☑️Specialist recruitment responds to individual Colony needs, allowing useful economic buildings to compete with routine recruitment.<br>
+☑️The Alien unit's positive production bonuses count towards job suitability, while its production penalties are ignored during assessment. Actual production still applies all bonuses and penalties.<br>
+☑️Surplus Food can be redistributed for unit production while preserving the donor Colony's upkeep, growth and production needs.<br>
+☑️Army planning preserves ships, builders, explorers and civilian specialists in their appropriate roles.<br>
+☑️Colonies preparing for independence prioritise assigning their first worker to Liberty production while below 75% Rebel Sentiment, provided their Food needs are met.<br>
+<br>
+👽🟩Alien:<br>
+☑️Alien (Replaces Free Colonist) Research production: -1 → 0.<br>
+<br>
+🤖🔳Royal Expeditionary Force (Earth):<br>
+☑️Expeditionary Forces stage sufficient transport capacity and load ships according to their compatible cargo limits.<br>
+☑️Expeditionary Forces use configurable landing waves and valid Deep Space entry plots. Only empty ships needed for reinforcements return to Earth; spare ships support the war.<br>
+👾🔳Royal Expeditionary Force (Progenitor):<br>
+☑️Expeditionary Forces stage sufficient transport capacity and load ships according to their compatible cargo limits.<br>
+☑️Expeditionary Forces use configurable landing waves and valid Deep Space entry plots. Only empty ships needed for reinforcements return to Earth; spare ships support the war.<br>
+<br>
 ### 06.10.2026 Colonization 2071 v2.2.2 Patch Notes:<br>
 ---
 ☑️Fixed further assertion failures and crashes involving professions, production yields and unit movement.<br>
-☑️Fixed Civilopedia errors when viewing Constitution and technology help without an active player.<br>
-☑️Fixed the Technology Advisor crashing when the Inventor progress threshold was zero or unavailable.<br>
-☑️Fixed trait promotion updates for Colony residents and repeated trait bonuses, preventing negative promotion counts after profession changes.<br>
-☑️Fixed missing dialogue lines for leaders unique to 2071.<br>
-☑️Excavations can now be established anywhere in the world. The associated reward events will occur for the player who built them, regardless of the distance from their territory and regardless of whether the territory is neutral or owned by another Civilization.<br>
-☑️Starting technologies now apply their effects and bonuses to Alien civilisations and both Royal Expeditionary Force factions.<br>
-☑️Restored the first-research Credit bonuses for Venture Capital and Corporate Investment. Starting knowledge and acquired technologies no longer claim or block these rewards; the bonus goes to the first civilisation to complete the research.<br>
-☑️Improved the texture quality of the following leaders: The Chief of Staff (NAFTA Colonies), NAFTA President (NAFTA).<br>
-☑️Improved the texture quality of many leader backgrounds.<br>
-<br>
-💻Computer Opponents:<br>
-☑️Improved AI protection of civilian units, Treasure and transports. Units assigned to these roles now avoid dangerous routes even when they have combat strength.<br>
-☑️Improved AI assessment of threats to Colonies, taking nearby rivals, war plans and diplomatic relations into account.<br>
-☑️Improved AI handling of ships in planetary ports. Regular space units use the connected space area, while amphibious Alien ships retain their current land or space area.<br>
-☑️AI danger checks now detect hostile amphibious units across the boundaries between planetary terrain and space.<br>
-☑️AI pickup requests now include transport ships docked at Colonies.<br>
-☑️Improved specialist assignments. Suitable experts can replace less effective workers in occupied jobs, and locked workers no longer prevent the AI from finding other available replacements.<br>
-☑️AI job selection now considers every production bonus a unit provides, including multiple specialities. This covers Industrious Cyborgs, Brilliant Polymaths, Venerable Elders and other units with several productive roles.<br>
-☑️AI treats the basic Alien unit as a generalist when assigning Colony jobs.<br>
-☑️Improved building selection to favour production facilities that can be staffed by available experts and supplied with the required input materials, including experts with multiple specialities.<br>
-☑️Hardy Laborers and Cultivators now prioritise construction work over jobs inside Colonies.<br>
-☑️Mining Vessels and Science Vessels now search space for suitable construction and research tasks, including on unexplored plots. Colony Ships seek their construction tasks within their own territory.<br>
-☑️AI Workers now place greater value on Food when choosing Improvements.<br>
-☑️Improved AI evaluation of Improvements on plots producing Plasteel, Progenitor Artifacts, Hydrocarbons or bonus resources, reducing the risk of replacing valuable production with less useful Improvements.<br>
-☑️Colonial AI now has a 10 % chance per turn to receive an additional immigrant on Earth at Normal game speed. This does not consume Propaganda or increase the normal immigration threshold, and the chance adjusts to game speed.<br>
-☑️Each newly founded AI Colony can now receive one free defender chosen from its civilisation's eligible units. This applies to both colonial and Alien AI.<br>
-☑️Added Food relief for the last starving resident of an AI Colony: +20 Food. Colonial AI pays up to 100 Credits at Normal game speed, while Alien AI receives this aid for free. The price adjusts to game speed.<br>
-☑️AI civilisations now automatically transfer surplus materials between their Colonies every 10 turns to supply current production. Transfers respect the supplying Colony's own production needs and a 50-unit reserve of each material. Food is excluded.<br>
-☑️Fixed material-transfer calculations when deliveries resume or complete production, preventing later deliveries from using outdated material requirements.<br>
-☑️Computer opponents now receive faction-appropriate event rewards, including Human and Alien starting events.<br>
-☑️AI civilisations now receive all valid rewards from events with multiple choices. Human-controlled civilisations still choose a single reward option.<br>
-☑️AI Treasure rewards from Excavations no longer replace the site with City Ruins. Excavations that remain active can trigger further discoveries in later turns.<br>
-☑️Colonial AI now uses Intrepid Explorers to explore planetary land and collect rewards from explorable sites.<br>
-☑️Once a planet has been fully explored and its reward sites exhausted, an available transport can take an Intrepid Explorer to another planet. The unit receives the Explorer profession before its first transfer and keeps it for later expeditions.<br>
-☑️After all land has been explored and its reward sites exhausted, colonial AI seeks to equip its Intrepid Explorers as Mecha Pilots and use them in offensive or defensive roles.<br>
-☑️Alien AI now considers Convicts for schooling or lessons in other Alien settlements, taking actual training speed, travel time and available jobs into account.<br>
-☑️After completing school training, Alien AI can choose any eligible teachable specialist for free, without requiring that specialist to be present beforehand.<br>
-☑️Colonial AI now considers useful training in Alien settlements throughout the game, including settlements controlled by a human player. Units visit the chief before starting their lessons.<br>
-☑️Fixed AI ships being unable to return from Earth because they were attached to an invalid map location. Purchased and free ships now use valid entry plots, and affected AI ships are relocated together with their cargo.<br>
+☑️Fixed Civilopedia errors when displaying Constitution and technology help without an active player.<br>
+☑️Fixed the Technology Advisor crashing when the Visionary Researcher progress threshold was zero or unavailable.<br>
+☑️Fixed trait promotion updates for Colony residents and repeated trait bonuses, preventing negative promotion counts and errors after profession changes.<br>
+☑️Fixed missing dialogue for leaders unique to 2071.<br>
+☑️Excavations can be established worldwide. Reward events belong to the player who built the site, regardless of its distance from their territory or whether the land is neutral or owned by another civilisation.<br>
+☑️Starting technologies apply their effects and bonuses to Alien civilisations and both Imperial Expeditionary Forces.<br>
+☑️Restored rewards in Credits for being the first to research Venture Capital and Corporate Investment. Starting knowledge and acquired technologies neither claim nor block these rewards; they go to the first civilisation to complete the research.<br>
+☑️Fixed AI ships being unable to return from Earth because of invalid map locations. Purchased and free ships use valid entry plots, and affected ships are relocated together with their cargo.<br>
 ☑️Fixed errors in AI profession assignment, worker exchanges and resident removal when no valid profession or unit was available.<br>
-☑️Improved combat profession selection for Alien AI counter units.<br>
-☑️Added a fallback production order for AI Colonies that cannot select a suitable unit or building.<br>
-☑️Fixed AI diplomatic attitude and gold-trade calculations that could trigger errors when a civilisation was evaluated against itself.<br>
-☑️Fixed trait-promotion updates for AI Colony residents, preventing errors during subsequent profession changes.<br>
-☑️Alien AI now receives a starting Saucer in normal new games outside Advanced Start, matching player-controlled Alien civilisations.<br>
-☑️Improved Alien AI handling of transported counter units and defenders. Passengers unload at suitable Colonies or wait for transport without attempting ground actions while aboard, including when they have no movement remaining.<br>
-☑️Alien AI military units now recheck movement after profession changes and wait when they can no longer move.<br>
-☑️AI counterattacks are now considered only when the unit can move, preventing errors after movement is exhausted or the unit becomes immobilised.<br>
+☑️Fixed AI diplomatic attitude calculations and Credits trade valuations when a civilisation was evaluated against itself.<br>
+☑️Fixed material-transfer calculations using outdated requirements when deliveries resumed or completed production.<br>
+☑️Fixed AI counterattacks being attempted after movement was exhausted or a unit became immobilised.<br>
+☑️Improved textures for The Chief of Staff (NAFTA Colonies) and NAFTA President (NAFTA).<br>
+☑️Improved textures for many leader backgrounds.<br>
+<br>
+💻Computer Opponents (Both):<br>
+☑️Improved protection of civilians, Progenitor Treasures and transports. Units in these roles avoid dangerous routes even when they have combat strength.<br>
+☑️Colony threat assessments account for nearby rivals, war plans and diplomatic relations.<br>
+☑️Ships in planetary ports use the appropriate area for their movement rules: regular space units use connected space, while amphibious Alien ships retain their current land or space area.<br>
+☑️Danger checks detect hostile amphibious units across the boundary between planetary terrain and space.<br>
+☑️Pickup requests include transports docked at Colonies.<br>
+☑️Suitable experts replace less effective workers in occupied jobs, and locked workers do not prevent other valid replacements.<br>
+☑️Job selection considers all a unit's production bonuses, including multiple specialities such as those of Industrious Cyborgs, Brilliant Polymaths and Venerable Elders.<br>
+☑️Building selection favours facilities that available experts can staff and that have the required production materials.<br>
+☑️Hardy Laborers and Cultivators prioritise construction over Colony jobs.<br>
+☑️Mining Vessels and Science Vessels search space for suitable tasks, including on unexplored plots. Colony Ships seek construction tasks within their own territory.<br>
+☑️Workers place greater value on Food when choosing Improvements.<br>
+☑️Improvement choices account for Plasteel, Progenitor Artifacts, Hydrocarbons and bonus resources, reducing replacements that would lower valuable production.<br>
+☑️Each newly founded AI Colony can receive one free defender from its civilisation's eligible units.<br>
+☑️The last starving resident can receive +20 Food. At Normal game speed, Colonist AI pays up to 100 Credits while Alien AI receives this aid for free; the price adjusts to game speed.<br>
+☑️Surplus materials other than Food are transferred between Colonies every 10 turns to supply current production, preserving the donor Colony's own needs and a 50-unit reserve of each material.<br>
+☑️Event rewards match the civilisation, including Human and Alien starting events.<br>
+☑️Computer opponents receive all valid rewards from events with multiple choices; human players still choose one option.<br>
+☑️AI Progenitor Treasure rewards no longer replace Excavations with Ruined Settlements. Active sites can produce further discoveries in later turns.<br>
+☑️Colonies without a suitable unit or building choice receive a fallback production order.<br>
+<br>
+🧑‍🚀💻Colonist AI:<br>
+☑️Intrepid Explorers explore planetary land and collect rewards from eligible sites.<br>
+☑️After a planet is explored and its reward sites are exhausted, an available transport can take an Intrepid Explorer to another planet. The unit receives the Explorer profession before its first transfer and retains it for later expeditions.<br>
+☑️After all land and reward sites are exhausted, Intrepid Explorers can be equipped as Mecha Pilots for offensive or defensive duties.<br>
+☑️Useful training in Alien settlements is considered throughout the game, including settlements controlled by a human player. Units visit the chief before starting lessons.<br>
+<br>
+👽💻Alien AI:<br>
+☑️Convicts are considered for schooling or lessons in other Alien settlements, accounting for training speed, travel time and available jobs.<br>
+☑️School graduates can become any eligible teachable specialist for free, without requiring that specialist to be present beforehand.<br>
+☑️Improved combat profession selection for counter units.<br>
+☑️Normal new games outside Advanced Start provide a starting Saucer, matching human-controlled Alien civilisations.<br>
+☑️Transported counter units and defenders unload at suitable Colonies or wait aboard, without attempting ground actions or actions that require movement they no longer have.<br>
+☑️Military units recheck movement after profession changes and wait when they can no longer move.<br>
 <br>
 🧑‍🚀🟦Human:<br>
 ☑️The Intrepid Explorer now Can Explore Rival Territory.<br>

@@ -151,16 +151,13 @@ public:
 	void unloadAll();
 
 	bool canLearn() const;
-	//Kaszkaj - Check a future village lesson with normal availability rules.
 	bool canLearn(const CvPlot* pPlot, bool bTestVisible) const;
 	void learn();
 	void doLiveAmongNatives();
 	void doLearn();
 	UnitTypes getLearnUnitType(const CvPlot* pPlot) const;
-	//Kaszkaj - Plan a legal chief visit before a village lesson; keep actual learning rules intact.
 	UnitTypes getLearnUnitType(const CvPlot* pPlot, bool bTestVisible) const;
 	int getLearnTime() const;
-	//Kaszkaj - Allow the AI to forecast another village's actual training timer.
 	int getLearnTime(const CvPlot* pPlot, bool bAfterTeachIncrease) const;
 
 	bool canKingTransport() const;

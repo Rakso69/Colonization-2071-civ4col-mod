@@ -329,7 +329,7 @@ void CvGame::regenerateMap()
 
 	for (iI = 0; iI < MAX_TEAMS; iI++)
 	{
-		//Kaszkaj - A replacement map requires a new sighting of the barbarian faction.
+		//Kaszkaj - A replacement map requires a new sighting of the Outer Gods Pantheon.
 		GET_TEAM((TeamTypes)iI).resetBarbarianContacts();
 		GC.getMapINLINE().setRevealedPlots(((TeamTypes)iI), false);
 	}
@@ -3091,7 +3091,7 @@ void CvGame::implementDeal(PlayerTypes eWho, PlayerTypes eOtherWho, CLinkList<Tr
 	FAssertMsg(eOtherWho != NO_PLAYER, "OtherWho is not assigned a valid value");
 	FAssertMsg(eWho != eOtherWho, "eWho is not expected to be equal with eOtherWho");
 
-	//Kaszkaj - Never apply a barbarian deal, even through direct gifts or forced deal calls.
+	//Kaszkaj - Never settle a deal with the Outer Gods Pantheon, including direct gifts or forced deals.
 	if (GET_PLAYER(eWho).isBarbarian() || GET_PLAYER(eOtherWho).isBarbarian())
 	{
 		return;
@@ -6321,7 +6321,7 @@ void CvGame::addPlayer(PlayerTypes eNewPlayer, LeaderHeadTypes eLeader, Civiliza
 	GC.getInitCore().setCiv(eNewPlayer, eCiv);
 	GC.getInitCore().setSlotStatus(eNewPlayer, SS_COMPUTER);
 	GC.getInitCore().setColor(eNewPlayer, eColor);
-	//Kaszkaj - A new barbarian team must not inherit human contacts from its empty player slot.
+	//Kaszkaj - A new team for the Outer Gods Pantheon must not inherit human contacts from its empty player slot.
 	if (eCiv == (CivilizationTypes)GC.getDefineINT("BARBARIAN_CIVILIZATION")
 		&& !GET_TEAM(GET_PLAYER(eNewPlayer).getTeam()).isEverAlive())
 	{

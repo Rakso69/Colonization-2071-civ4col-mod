@@ -378,7 +378,6 @@ bool CvXMLLoadUtility::SetPostGlobalsGlobalDefines()
 		GC.getDefinesVarSystem()->SetValue("CONTACT_YIELD_GIFT_TECH", idx);
 
 		///TK Hydrocarbons
-        //Kaszkaj - Resolve profession and building defines using their matching XML type names.
         SetGlobalDefine("PROFESSION_REFINERY_WORKER", szVal);
 		idx = FindInInfoClass(szVal);
 		GC.getDefinesVarSystem()->SetValue("PROFESSION_REFINERY_WORKER", idx);

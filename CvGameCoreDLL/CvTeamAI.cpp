@@ -2446,7 +2446,7 @@ void CvTeamAI::AI_doWar()
 
 	FAssert(!isHuman());
 
-	//Kaszkaj - Declare total war on every legal opponent, including while other wars continue.
+	//Kaszkaj - Declare war on every legal rival, even while other wars are still active.
 	// Keep the normal peace period, contact and treaty checks; do not lock diplomacy.
 	if (isBarbarian())
 	{

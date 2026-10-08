@@ -38,7 +38,7 @@ public:
 	DllExport void makePeace(TeamTypes eTeam, bool bBumpUnits = true);
 	bool canContact(TeamTypes eTeam) const;
 	void meet(TeamTypes eTeam, bool bNewDiplo);
-	//Kaszkaj - Clear barbarian discovery when generating a replacement map.
+	//Kaszkaj - Clear discovery of the Outer Gods Pantheon when generating a replacement map.
 	void resetBarbarianContacts();
 	void signOpenBorders(TeamTypes eTeam);
 	void signDefensivePact(TeamTypes eTeam);
@@ -84,7 +84,7 @@ public:
 	void convinceFather(FatherTypes eFather, bool bAccept);
 
 	bool isHuman() const;
-	//Kaszkaj - Identify the team containing the living barbarian player.
+	//Kaszkaj - Identify the team containing the living player for the Outer Gods Pantheon.
 	bool isBarbarian() const;
 	bool hasNativePlayer() const;
 	bool hasColonialPlayer() const;
@@ -224,7 +224,7 @@ protected:
 
 	bool* m_abAtWar;
 	bool* m_abHasMet;
-	//Kaszkaj - Saved contact confirmation prevents early barbarian discovery.
+	//Kaszkaj - Require a confirmed sighting before humans can contact the Outer Gods Pantheon's team.
 	bool* m_abHasMetVerified;
 	bool* m_abPermanentWarPeace;
 	bool* m_abOpenBorders;

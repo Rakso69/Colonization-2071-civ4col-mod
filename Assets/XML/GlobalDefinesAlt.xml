@@ -172,19 +172,74 @@
 		<DefineName>AI_MATERIAL_RESERVE</DefineName>
 		<iDefineIntVal>50</iDefineIntVal>
 	</Define>
-	<!-- Annoyed or better Kings sell technology to their own colonial or alien subjects. -->
+<!-- Turns between free Intrepid Explorer equipment for colonial AI; the first is immediate and values below 1 use one turn. -->
+	<Define>
+		<DefineName>AI_SCOUT_FREE_EQUIPMENT_INTERVAL</DefineName>
+		<iDefineIntVal>35</iDefineIntVal>
+	</Define>
+<!-- Minimum royal attitude for technology trade: 0 Furious, 1 Annoyed, 2 Cautious, 3 Pleased, 4 Friendly. -->
 	<Define>
 		<DefineName>KING_TECHNOLOGY_TRADE_ATTITUDE</DefineName>
 		<iDefineIntVal>1</iDefineIntVal>
 	</Define>
-	<!-- Royal technology tax uses fixed percentage points on every game speed. -->
+<!-- Set the tax purchase trade attitude bonus from +0 to +4; 0 disables extra goodwill. -->
+	<Define>
+		<DefineName>KING_TECHNOLOGY_TAX_ATTITUDE_BONUS</DefineName>
+		<iDefineIntVal>2</iDefineIntVal>
+	</Define>
+<!-- Royal technology tax uses fixed percentage points on every game speed. -->
 	<Define>
 		<DefineName>KING_TECHNOLOGY_TAX_INCREASE</DefineName>
 		<iDefineIntVal>16</iDefineIntVal>
 	</Define>
-	<!-- Set the tax purchase trade attitude bonus from +0 to +4; 0 disables extra goodwill. -->
+<!-- Turns used to estimate technology benefits and future tax losses on normal speed; scaled by the game speed growth percent. -->
 	<Define>
-		<DefineName>KING_TECHNOLOGY_TAX_ATTITUDE_BONUS</DefineName>
-		<iDefineIntVal>2</iDefineIntVal>
+		<DefineName>AI_KING_TECHNOLOGY_PLANNING_TURNS</DefineName>
+		<iDefineIntVal>35</iDefineIntVal>
+	</Define>
+<!-- Required benefit as a percent of the Credits price; higher values make AI purchases less frequent. Values below 100 use 100. -->
+	<Define>
+		<DefineName>AI_KING_TECHNOLOGY_GOLD_VALUE_PERCENT</DefineName>
+		<iDefineIntVal>125</iDefineIntVal>
+	</Define>
+<!-- Required benefit as a percent of the estimated tax cost for non-urgent purchases; values below 150 use 150. Urgent purchases use 125 instead. -->
+	<Define>
+		<DefineName>AI_KING_TECHNOLOGY_TAX_VALUE_PERCENT</DefineName>
+		<iDefineIntVal>200</iDefineIntVal>
+	</Define>
+<!-- Minimum estimated victory chance for AI barbarian hunts; 75 means 75 percent. Normal attack rules may require higher odds. -->
+	<Define>
+		<DefineName>AI_BARBARIAN_ATTACK_ODDS</DefineName>
+		<iDefineIntVal>50</iDefineIntVal>
+	</Define>
+<!-- Turns of population food consumption kept by alien donors, in addition to growth and production reserves; not scaled by game speed. -->
+	<Define>
+		<DefineName>AI_MATERIAL_FOOD_RESERVE_TURNS</DefineName>
+		<iDefineIntVal>10</iDefineIntVal>
+	</Define>
+<!-- Turns of waiting before an equipped Explorer takes priority over routine Earth trips; scaled by growth speed. -->
+	<Define>
+		<DefineName>AI_SCOUT_TRANSPORT_PRIORITY_TURNS</DefineName>
+		<iDefineIntVal>8</iDefineIntVal>
+	</Define>
+<!-- Minimum planning period for export cargo on normal speed; longer estimated round trips increase it. -->
+	<Define>
+		<DefineName>AI_TRANSPORT_FORECAST_TURNS</DefineName>
+		<iDefineIntVal>12</iDefineIntVal>
+	</Define>
+<!-- Minimum transport capacity as a percentage of the expeditionary army cargo requirement; additional ships preserve all existing soldiers. -->
+	<Define>
+		<DefineName>REF_TRANSPORT_CAPACITY_PERCENT</DefineName>
+		<iDefineIntVal>30</iDefineIntVal>
+	</Define>
+<!-- Minimum turns between expeditionary departures on normal speed; scaled by growth speed, and only successful departures restart the interval. -->
+	<Define>
+		<DefineName>REF_WAVE_INTERVAL</DefineName>
+		<iDefineIntVal>5</iDefineIntVal>
+	</Define>
+<!-- Percentage of the surviving transport fleet dispatched per expeditionary wave; at least one compatible transport is sent. -->
+	<Define>
+		<DefineName>REF_WAVE_PERCENT</DefineName>
+		<iDefineIntVal>25</iDefineIntVal>
 	</Define>
 </Civ4Defines>

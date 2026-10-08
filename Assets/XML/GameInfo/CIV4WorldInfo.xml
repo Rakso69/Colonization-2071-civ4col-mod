@@ -13,6 +13,7 @@
 			<Help>TXT_KEY_WORLD_TINY_HELP</Help>
 			<iDefaultPlayers>12</iDefaultPlayers>
 			<iDefaultNativePlayers>6</iDefaultNativePlayers>
+			<iAIImmigrationModifier>50</iAIImmigrationModifier>
 			<iUnitNameModifier>40</iUnitNameModifier>
 			<iTargetNumCities>4</iTargetNumCities>
 			<iBuildingClassPrereqModifier>0</iBuildingClassPrereqModifier>
@@ -29,6 +30,7 @@
 			<Help>TXT_KEY_WORLD_SMALL_HELP</Help>
 			<iDefaultPlayers>14</iDefaultPlayers>
 			<iDefaultNativePlayers>7</iDefaultNativePlayers>
+			<iAIImmigrationModifier>75</iAIImmigrationModifier>
 			<iUnitNameModifier>30</iUnitNameModifier>
 			<iTargetNumCities>5</iTargetNumCities>
 			<iBuildingClassPrereqModifier>25</iBuildingClassPrereqModifier>
@@ -45,6 +47,7 @@
 			<Help>TXT_KEY_WORLD_STANDARD_HELP</Help>
 			<iDefaultPlayers>16</iDefaultPlayers>
 			<iDefaultNativePlayers>8</iDefaultNativePlayers>
+			<iAIImmigrationModifier>100</iAIImmigrationModifier>
 			<iUnitNameModifier>20</iUnitNameModifier>
 			<iTargetNumCities>5</iTargetNumCities>
 			<iBuildingClassPrereqModifier>50</iBuildingClassPrereqModifier>
@@ -61,6 +64,7 @@
 			<Help>TXT_KEY_WORLD_LARGE_HELP</Help>
 			<iDefaultPlayers>18</iDefaultPlayers>
 			<iDefaultNativePlayers>9</iDefaultNativePlayers>
+			<iAIImmigrationModifier>100</iAIImmigrationModifier>
 			<iUnitNameModifier>10</iUnitNameModifier>
 			<iTargetNumCities>6</iTargetNumCities>
 			<iBuildingClassPrereqModifier>75</iBuildingClassPrereqModifier>
@@ -77,6 +81,7 @@
 			<Help>TXT_KEY_WORLD_HUGE_HELP</Help>
 			<iDefaultPlayers>19</iDefaultPlayers>
 			<iDefaultNativePlayers>9</iDefaultNativePlayers>
+			<iAIImmigrationModifier>100</iAIImmigrationModifier>
 			<iUnitNameModifier>0</iUnitNameModifier>
 			<iTargetNumCities>6</iTargetNumCities>
 			<iBuildingClassPrereqModifier>100</iBuildingClassPrereqModifier>

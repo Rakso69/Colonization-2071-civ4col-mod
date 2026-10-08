@@ -32,6 +32,8 @@
 			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
 			<iAIHurryPercent>80</iAIHurryPercent>
 			<iAIImmigration>10</iAIImmigration>
+			<iAIMaxTaxrate>70</iAIMaxTaxrate>
+			<iAIMinimumStorageLossSellPercentage>0</iAIMinimumStorageLossSellPercentage>
 			<iAIExtraTradePercent>0</iAIExtraTradePercent>
 			<iAIPerEraModifier>0</iAIPerEraModifier>
 			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
@@ -89,6 +91,8 @@
 			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
 			<iAIHurryPercent>80</iAIHurryPercent>
 			<iAIImmigration>10</iAIImmigration>
+			<iAIMaxTaxrate>60</iAIMaxTaxrate>
+			<iAIMinimumStorageLossSellPercentage>25</iAIMinimumStorageLossSellPercentage>
 			<iAIExtraTradePercent>5</iAIExtraTradePercent>
 			<iAIPerEraModifier>0</iAIPerEraModifier>
 			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
@@ -147,6 +151,8 @@
 			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
 			<iAIHurryPercent>70</iAIHurryPercent>
 			<iAIImmigration>10</iAIImmigration>
+			<iAIMaxTaxrate>50</iAIMaxTaxrate>
+			<iAIMinimumStorageLossSellPercentage>40</iAIMinimumStorageLossSellPercentage>
 			<iAIExtraTradePercent>10</iAIExtraTradePercent>
 			<iAIPerEraModifier>0</iAIPerEraModifier>
 			<iAIAdvancedStartPercent>100</iAIAdvancedStartPercent>
@@ -209,6 +215,8 @@
 			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
 			<iAIHurryPercent>65</iAIHurryPercent>
 			<iAIImmigration>10</iAIImmigration>
+			<iAIMaxTaxrate>40</iAIMaxTaxrate>
+			<iAIMinimumStorageLossSellPercentage>55</iAIMinimumStorageLossSellPercentage>
 			<iAIExtraTradePercent>15</iAIExtraTradePercent>
 			<iAIPerEraModifier>-1</iAIPerEraModifier>
 			<iAIAdvancedStartPercent>110</iAIAdvancedStartPercent>
@@ -269,6 +277,8 @@
 			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
 			<iAIHurryPercent>60</iAIHurryPercent>
 			<iAIImmigration>10</iAIImmigration>
+			<iAIMaxTaxrate>30</iAIMaxTaxrate>
+			<iAIMinimumStorageLossSellPercentage>70</iAIMinimumStorageLossSellPercentage>
 			<iAIExtraTradePercent>20</iAIExtraTradePercent>
 			<iAIPerEraModifier>-2</iAIPerEraModifier>
 			<iAIAdvancedStartPercent>120</iAIAdvancedStartPercent>
@@ -329,6 +339,8 @@
 			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
 			<iAIHurryPercent>55</iAIHurryPercent>
 			<iAIImmigration>10</iAIImmigration>
+			<iAIMaxTaxrate>20</iAIMaxTaxrate>
+			<iAIMinimumStorageLossSellPercentage>85</iAIMinimumStorageLossSellPercentage>
 			<iAIExtraTradePercent>25</iAIExtraTradePercent>
 			<iAIPerEraModifier>-3</iAIPerEraModifier>
 			<iAIAdvancedStartPercent>135</iAIAdvancedStartPercent>
@@ -381,7 +393,7 @@
 			<iAIStartingWorkerUnits>1</iAIStartingWorkerUnits>
 			<iAIStartingExploreUnits>1</iAIStartingExploreUnits>
 			<iAIDeclareWarProb>100</iAIDeclareWarProb>
-			<iAIWorkRateModifier>100</iAIWorkRateModifier>
+			<iAIWorkRateModifier>150</iAIWorkRateModifier>
 			<iAINativeCombatModifier>75</iAINativeCombatModifier>
 			<iAIKingCombatModifier>50</iAIKingCombatModifier>
 			<iAIRebelModifier>50</iAIRebelModifier>
@@ -391,6 +403,8 @@
 			<iAIUnitUpgradePercent>50</iAIUnitUpgradePercent>
 			<iAIHurryPercent>50</iAIHurryPercent>
 			<iAIImmigration>10</iAIImmigration>
+			<iAIMaxTaxrate>20</iAIMaxTaxrate>
+			<iAIMinimumStorageLossSellPercentage>100</iAIMinimumStorageLossSellPercentage>
 			<iAIExtraTradePercent>30</iAIExtraTradePercent>
 			<iAIPerEraModifier>-4</iAIPerEraModifier>
 			<iAIAdvancedStartPercent>150</iAIAdvancedStartPercent>

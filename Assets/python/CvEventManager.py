@@ -332,7 +332,7 @@ class CvEventManager:
 	def onLoadGame(self, argsList):
 		return 0
 
-	#Kaszkaj - Reuse the barbarian civilization, or create it in a free player and team slot.
+	#Kaszkaj - Reuse the Outer Gods Pantheon player, or create it with unused player and team slots.
 	def createBarbarianPlayer(self):
 		iCivilization = gc.getDefineINT("BARBARIAN_CIVILIZATION")
 		iLeader = gc.getInfoTypeForString('LEADER_INVASION_OUTER_GODS')
@@ -388,7 +388,7 @@ class CvEventManager:
 					popupInfo.setButtonPopupType(ButtonPopupTypes.BUTTONPOPUP_PYTHON_SCREEN)
 					popupInfo.setText(u"showDawnOfMan")
 					popupInfo.addPopup(iPlayer)
-				#Kaszkaj - Give each living native player one starting Saucer, including AI players.
+				#Kaszkaj - Give every living Alien player one starting Saucer, including computer opponents.
 				if player.isNative():
 					iRnd = CyGame().getSorenRandNum(CyMap().numPlots(), "Saucer")
 					pPlot = CyMap().plotByIndex(iRnd)
@@ -418,7 +418,7 @@ class CvEventManager:
 
 	        iNewUnit = CvUtil.findInfoTypeNum('UNIT_KILLBOT')
 	        iNewProfession = ProfessionTypes.NO_PROFESSION
-	        #Kaszkaj - Use the barbarian civilization as the owner of the existing map spawns.
+	        #Kaszkaj - Assign the existing map spawns to the Outer Gods Pantheon.
 	        bPlayer = self.createBarbarianPlayer()
 	        for i in range(CyMap().numPlots()):
 	            pPlot = CyMap().plotByIndex(i)
@@ -647,7 +647,7 @@ class CvEventManager:
 		unitX = gc.getUnitInfo(pWinner.getUnitType())
 		playerY = gc.getPlayer(pLoser.getOwner())
 		unitY = gc.getUnitInfo(pLoser.getUnitType())
-		#Kaszkaj - Defeating a Progenitor AI gives ruins treasure and 500 Credits to humans or 1000 to AI.
+		#Kaszkaj - Defeating a Progenitor AI grants Progenitor Treasure and an extra 500 Credits to a human player or 1000 to a computer opponent.
 		if pLoser.getUnitType() == gc.getInfoTypeForString('UNIT_PROGENITORAI'):
 			playerX.receiveGoody(pLoser.plot(), gc.getInfoTypeForString('GOODY_TREASURE'), pWinner)
 			if playerX.isHuman():

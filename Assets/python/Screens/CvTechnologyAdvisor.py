@@ -164,14 +164,14 @@ class CvTechnologyAdvisor:
 	def drawIdeasExperience(self):
 		self.pActivePlayer = gc.getPlayer(gc.getGame().getActivePlayer())
 		screen = self.getScreen()
-		#Kaszkaj - Use the shared Inventor widget, DLL method and text key on the research screen.
+		#Kaszkaj - Use InventorBar, inventorThreshold() and TXT_KEY_INVENTOR_XP for Visionary Researcher progress on the Technology Advisor.
 		szWidget = "InventorBar"
 		screen.addStackedBarGFC(szWidget, self.XResolution / 2 - ((self.XResolution / 4) / 2), self.YResolution - 36, self.XResolution / 4, 30, InfoBarTypes.NUM_INFOBAR_TYPES, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		screen.setStackedBarColors(szWidget, InfoBarTypes.INFOBAR_STORED, gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_STORED"))
 		screen.setStackedBarColors(szWidget, InfoBarTypes.INFOBAR_RATE, gc.getInfoTypeForString("COLOR_GREAT_PEOPLE_RATE"))
 		screen.setStackedBarColors(szWidget, InfoBarTypes.INFOBAR_RATE_EXTRA, gc.getInfoTypeForString("COLOR_EMPTY"))
 		screen.setStackedBarColors(szWidget, InfoBarTypes.INFOBAR_EMPTY, gc.getInfoTypeForString("COLOR_EMPTY"))
-		#Kaszkaj - Keep the Inventor bar empty when its threshold is disabled; clamp valid progress to the bar.
+		#Kaszkaj - Keep the Visionary Researcher progress bar empty when its threshold is disabled; clamp valid progress to the bar.
 		iExperience = self.pActivePlayer.getIdeasExperience()
 		iThreshold = self.pActivePlayer.inventorThreshold()
 		fProgress = 0.0

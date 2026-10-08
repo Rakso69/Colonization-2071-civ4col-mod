@@ -43,7 +43,7 @@ protected:
 public:
 
 	void initFreeState();
-	//Kaszkaj - Apply starting invention effects once for colonies, aliens and kings.
+	//Kaszkaj - Apply starting technology effects once for Colonist and Alien factions, the State and Progenitor Exarch.
 	void initInventions();
 	void initFreeUnits();
 	void initImmigration();
@@ -71,7 +71,7 @@ public:
 	DllExport bool isHuman() const;
 	DllExport void updateHuman();
 	bool isNative() const;
-	//Kaszkaj - Identify the barbarian civilization using its XML define.
+	//Kaszkaj - Identify the Outer Gods Pantheon using its XML define.
 	bool isBarbarian() const;
 	bool isAlwaysOpenBorders() const;
 	DllExport const wchar* getName(uint uiForm = 0) const;
@@ -117,7 +117,7 @@ public:
 	void contact(PlayerTypes ePlayer);
 	DllExport void handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer, int iData1, int iData2);
 	bool canTradeWith(PlayerTypes eWhoTo) const;
-	//Kaszkaj - Share royal technology prices, payment checks and confiscation rules across trade callers.
+	//Kaszkaj - Share technology prices, payment checks and confiscation rules for the State and Progenitor Exarch across trade callers.
 	bool canTradeKingTechnology(PlayerTypes eBuyer) const;
 	int getKingTechnologyPrice(CivicTypes eCivic) const;
 	int getKingTechnologyTaxIncrease() const;
@@ -509,6 +509,7 @@ public:
 	int getBellsStored() const;
 	void changeBellsStored(int iChange);
 	int getTaxRate() const;
+	int getNewTaxRate(int iRequested) const;
 	void setTaxRate(int iValue);
 	void changeTaxRate(int iChange);
 	int getNativeCombatModifier() const;
@@ -539,7 +540,6 @@ public:
 	void changeFreeTechs(int iChange);
 	int getDoTechFlag() const;
 	void changeDoTechFlag(int iChange);
-	//Kaszkaj - Declare the Inventor methods used by the DLL and Python.
 	int inventorThreshold() const;
     int getIdeasExperience() const;
     void changeInventorModifier(int iChange);
@@ -560,7 +560,7 @@ public:
 	void changeIdeasResearched(CivicTypes eIndex, int iChange);
 	int getCurrentResearchProgress(bool bGetTurns, CivicTypes eCivic = NO_CIVIC);
 	int getTurnstoCompleteResearch(bool bReturnNetResearch=false, CivicTypes eCivic = NO_CIVIC);
-	//Kaszkaj - Pass true only for completed research; grants and trades still apply every invention effect.
+	//Kaszkaj - Only completed research counts as first discovery; grants and trades still apply technology effects.
 	void processCivics(CivicTypes eCivic, int iChange, bool bResearch = false);
 	int getIdea(bool Research, PlayerTypes ePlayer = NO_PLAYER) const;
 	void setResearchPartner(PlayerTypes ePartner);
@@ -623,6 +623,7 @@ public:
 	UnitTypes getRevolutionEuropeUnit(int i) const;
 	ProfessionTypes getRevolutionEuropeProfession(int i) const;
 	void addRevolutionEuropeUnit(UnitTypes eUnit, ProfessionTypes eProfession);
+	void ensureRevolutionTransportCapacity();
 	void clearRevolutionEuropeUnits();
 
 	UnitTypes getDocksNextUnit(int i) const;
@@ -634,7 +635,6 @@ public:
 	///TKs Invention Core Mod v 1.0
 	void doImmigrant(int iIndex, int iReason = 0);
 	///TKe
-	//Kaszkaj - Declare AI immigration and construction material transfer helpers.
 	void doAIImmigrant(int iIndex);
 	void redistributeMaterials();
 
@@ -744,7 +744,6 @@ protected:
 	int m_iMissionaryRateModifier;
 	int m_iMissionarySuccessPercent;
     ///TKs Invention Core Mod v 1.0
-    //Kaszkaj - Store the player's Inventor progress and threshold modifiers.
     int m_iInventorModifier;
 	int m_iInventorThresholdModifier;
 	int m_iIdeasExperience;

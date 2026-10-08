@@ -41,6 +41,9 @@ public:
 	BuildingTypes AI_bestBuildingIgnoreRequirements(int iFocusFlags = 0, int iMaxTurns = 0);
 
 	DllExport int AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags = 0) const;
+	int AI_productionBuildingValue(BuildingTypes eBuilding) const;
+	int AI_productionSupplyPercent(UnitTypes eUnit, BuildingTypes eBuilding) const;
+	int AI_foodReserve() const;
 
 	DllExport int AI_neededSeaWorkers() const;
 
@@ -88,7 +91,6 @@ public:
 
 	int AI_playerCloseness(PlayerTypes eIndex, int iMaxDistance) const;
 	int AI_cityThreat(bool bDangerPercent = false) const;
-	//Kaszkaj - Declare the helper that values buildings for the city's available experts.
 	int AI_expertBuildingValue(BuildingTypes eBuilding) const;
 
 	int AI_getWorkersHave() const;
@@ -99,6 +101,9 @@ public:
 	ProfessionTypes AI_bestPlotProfession(const CvUnit* pUnit, const CvPlot* pPlot) const;
 	int AI_bestProfessionPlot(ProfessionTypes eProfession, const CvUnit* pUnit) const;
 	int AI_professionValue(ProfessionTypes eProfession, const CvUnit* pUnit, const CvPlot* pPlot, const CvUnit* pDisplaceUnit) const;
+	//Kaszkaj - Compare replacements using production which does not depend on the current workforce.
+	int AI_jobReplacementValue(ProfessionTypes eProfession, const CvUnit* pUnit, const CvPlot* pPlot) const;
+	int AI_improvementUpgradeWorkValue(const CvPlot* pPlot) const;
 	int AI_professionBasicOutput(ProfessionTypes eProfession, UnitTypes eUnit, const CvPlot* pPlot) const;
 	CvUnit* AI_getWorstProfessionUnit(ProfessionTypes eProfession) const;
 

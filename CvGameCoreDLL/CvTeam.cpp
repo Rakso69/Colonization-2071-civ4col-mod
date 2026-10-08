@@ -638,7 +638,7 @@ bool CvTeam::canDeclareWar(TeamTypes eTeam) const
 		}
 	}
 
-	//Kaszkaj - Apply the initial peace period to barbarian declarations as well.
+	//Kaszkaj - Apply the initial peace period to declarations of war by the Outer Gods Pantheon.
 	if (isBarbarian() || (hasColonialPlayer() && GET_TEAM(eTeam).hasColonialPlayer()))
 	{
 		if (GC.getGameINLINE().getElapsedGameTurns() < GC.getDefineINT("COLONIAL_FORCED_PEACE_TURNS"))
@@ -1061,7 +1061,7 @@ void CvTeam::meet(TeamTypes eTeam, bool bNewDiplo)
 {
 	if (!isHasMet(eTeam))
 	{
-		//Kaszkaj - Meet barbarians only after the human team sees their units or territory.
+		//Kaszkaj - Allow human teams to meet the Outer Gods Pantheon after seeing its units or territory.
 		CvTeam& kOtherTeam = GET_TEAM(eTeam);
 		if (getID() != eTeam && ((isBarbarian() && kOtherTeam.isHuman()) ||
 			(isHuman() && kOtherTeam.isBarbarian())))
@@ -1120,7 +1120,7 @@ void CvTeam::meet(TeamTypes eTeam, bool bNewDiplo)
 }
 
 
-//Kaszkaj - Regenerating the map removes human contacts with the old map's barbarians.
+//Kaszkaj - Regenerating the map removes human contacts with the previous map's Outer Gods Pantheon.
 void CvTeam::resetBarbarianContacts()
 {
 	const bool bBarbarian = isBarbarian();
@@ -1873,7 +1873,7 @@ bool CvTeam::isHuman() const
 	return false;
 }
 
-//Kaszkaj - Identify assigned barbarian teams before their players become alive.
+//Kaszkaj - Identify assigned teams for the Outer Gods Pantheon before their players become alive.
 bool CvTeam::isBarbarian() const
 {
 	if (getID() == NO_TEAM)
@@ -2245,7 +2245,7 @@ bool CvTeam::isHasMet(TeamTypes eIndex)	const
 		return m_abHasMet[eIndex];
 	}
 
-	//Kaszkaj - A stored barbarian contact needs a confirmed sighting before humans can use it.
+	//Kaszkaj - A stored contact with the Outer Gods Pantheon needs a confirmed sighting before humans can use it.
 	const CvTeam& kOtherTeam = GET_TEAM(eIndex);
 	if ((isBarbarian() && kOtherTeam.isHuman()) || (isHuman() && kOtherTeam.isBarbarian()))
 	{
@@ -2814,6 +2814,18 @@ void CvTeam::doRevolution()
 		return;
 	}
 
+	std::vector<CvPlot*> apOceanPlots(MAX_PLAYERS);
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+	{
+		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+		if (kPlayer.isAlive() && kPlayer.getTeam() == getID() && kPlayer.getParent() != NO_PLAYER)
+		{
+			CvPlot* pEntry = GET_PLAYER(kPlayer.getParent()).AI_getImperialShipSpawnPlot();
+			if (pEntry == NULL) return;
+			apOceanPlots[iPlayer] = pEntry;
+		}
+	}
+
 	CvGame& kGame = GC.getGameINLINE();
 	if (!kGame.isMaxTurnsExtended())
 	{
@@ -2836,6 +2848,7 @@ void CvTeam::doRevolution()
 			{
 				CvPlayerAI& kParent = GET_PLAYER(kTeamPlayer.getParent());
 
+				kTeamPlayer.ensureRevolutionTransportCapacity();
 				GET_TEAM(kParent.getTeam()).declareWarNoRevolution(getID(), true, WARPLAN_TOTAL, false);
 
 				//create REF in Europe
@@ -2844,17 +2857,17 @@ void CvTeam::doRevolution()
 					CvUnit* pRevolutionUnit = NULL;
 					if (GC.getUnitInfo(kTeamPlayer.getRevolutionEuropeUnit(i)).getDomainType() == DOMAIN_SEA)
 					{
-						CvPlot* pOceanPlot = kParent.AI_getImperialShipSpawnPlot();
+						CvPlot* pOceanPlot = apOceanPlots[iPlayer];
 						if (pOceanPlot != NULL)
 						{
 							pRevolutionUnit = kParent.initUnit(kTeamPlayer.getRevolutionEuropeUnit(i), kTeamPlayer.getRevolutionEuropeProfession(i), pOceanPlot->getX_INLINE(), pOceanPlot->getY_INLINE());
-							pRevolutionUnit->setUnitTravelState(UNIT_TRAVEL_STATE_IN_EUROPE, false);
+							if (pRevolutionUnit != NULL) pRevolutionUnit->setUnitTravelState(UNIT_TRAVEL_STATE_IN_EUROPE, false);
 						}
 					}
 					else
 					{
 						pRevolutionUnit = kParent.initEuropeUnit(kTeamPlayer.getRevolutionEuropeUnit(i));
-						pRevolutionUnit->setProfession(kTeamPlayer.getRevolutionEuropeProfession(i));
+						if (pRevolutionUnit != NULL) pRevolutionUnit->setProfession(kTeamPlayer.getRevolutionEuropeProfession(i));
 					}
 					FAssert(pRevolutionUnit != NULL);
 				}
@@ -3003,7 +3016,7 @@ void CvTeam::read(FDataStreamBase* pStream)
 		m_aeRevealedBonuses.push_back(eBonus);
 	}
 
-	//Kaszkaj - Older saves have no sight history, so humans must discover barbarians again.
+	//Kaszkaj - Older saves have no sight history, so humans must discover the Outer Gods Pantheon again.
 	if (uiFlag >= 1)
 	{
 		pStream->Read(MAX_TEAMS, m_abHasMetVerified);

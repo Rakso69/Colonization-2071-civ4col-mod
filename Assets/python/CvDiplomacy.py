@@ -31,7 +31,7 @@ class CvDiplomacy:
 		# Eliminate previous comments
 		self.diploScreen.clearUserComments()
 
-		#Kaszkaj - A confiscation response can only be acknowledged before the player's defeat.
+		#Kaszkaj - Allow only acknowledgement of the confiscation notice from the State or Progenitor Exarch.
 		if self.isComment(eComment, "AI_DIPLOCOMMENT_KING_ULTIMATE_INSULT"):
 			self.addUserComment("USER_DIPLOCOMMENT_EXIT", -1, -1)
 			self.diploScreen.endTrade()
@@ -413,11 +413,11 @@ class CvDiplomacy:
 
 	def setAIComment (self, eComment, *args):
 		" Handles the determining the AI comments"
-		#Kaszkaj - Replace normal acceptance with the king's response to a tax purchase above 100 percent.
+		#Kaszkaj - Show the confiscation response from the State or Progenitor Exarch when the player's tax rate exceeds 100 percent.
 		player = gc.getPlayer(gc.getGame().getActivePlayer())
 		if player.getTaxRate() > 100 and player.getParent() == self.diploScreen.getWhoTradingWith():
 			eComment = self.getCommentID("AI_DIPLOCOMMENT_KING_ULTIMATE_INSULT")
-			#Kaszkaj - Set the king's attitude to -100 when the final insult is displayed.
+			#Kaszkaj - Set the State or Progenitor Exarch's extra attitude towards the player to -100 when displaying the confiscation notice.
 			gc.getPlayer(self.diploScreen.getWhoTradingWith()).AI_setAttitudeExtra(gc.getGame().getActivePlayer(), -100)
 			args = ()
 		AIString = self.getDiplomacyComment(eComment)
@@ -593,7 +593,7 @@ class CvDiplomacy:
 
 		diploScreen = CyDiplomacy()
 
-		#Kaszkaj - Wait for the exit response before ending the confiscated player's game.
+		#Kaszkaj - End the player's game only after they acknowledge the confiscation notice.
 		player = gc.getPlayer(gc.getGame().getActivePlayer())
 		if player.getTaxRate() > 100 and player.getParent() == diploScreen.getWhoTradingWith():
 			if self.isComment(eComment, "USER_DIPLOCOMMENT_EXIT"):
@@ -603,7 +603,7 @@ class CvDiplomacy:
 				self.setAIComment(self.getCommentID("AI_DIPLOCOMMENT_KING_ULTIMATE_INSULT"))
 			return
 
-		#Kaszkaj - Reject all barbarian requests and gifts before an action or acceptance message is sent.
+		#Kaszkaj - Reject requests and gifts from the Outer Gods Pantheon before applying an action or sending an acceptance message.
 		iPlayer = diploScreen.getWhoTradingWith()
 		iBarbarianCivilization = gc.getDefineINT("BARBARIAN_CIVILIZATION")
 		if iPlayer >= 0 and iPlayer < gc.getMAX_PLAYERS() and iBarbarianCivilization >= 0:

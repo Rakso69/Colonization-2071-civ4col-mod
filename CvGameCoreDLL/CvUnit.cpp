@@ -2941,6 +2941,12 @@ bool CvUnit::canLoadUnit(const CvUnit* pTransport, const CvPlot* pPlot, bool bCh
 	{
 		return false;
 	}
+	//Kaszkaj - AI Progenitor Treasure uses Freighters or Carriers; human loading rules remain unchanged.
+	if (!isHuman() && !GET_PLAYER(getOwnerINLINE()).isEurope() && getUnitInfo().isTreasure()
+		&& pTransport->getUnitInfo().getUnitClassType() != GC.getInfoTypeForString("UNITCLASS_GALLEON", true))
+	{
+		return false;
+	}
 
 	if (getTransportUnit() == pTransport)
 	{
@@ -3724,7 +3730,7 @@ bool CvUnit::canLearn() const
 	return canLearn(plot(), false);
 }
 
-//Kaszkaj - Check a future village lesson without requiring the unit to have arrived or unloaded yet.
+//Kaszkaj - Check a future lesson at an Alien Colony without requiring the unit to have arrived or unloaded yet.
 bool CvUnit::canLearn(const CvPlot* pPlot, bool bTestVisible) const
 {
 	UnitTypes eUnitType = getLearnUnitType(pPlot, bTestVisible);
@@ -3888,7 +3894,7 @@ UnitTypes CvUnit::getLearnUnitType(const CvPlot* pPlot) const
 	return getLearnUnitType(pPlot, false);
 }
 
-//Kaszkaj - Forecast a village lesson without skipping the chief visit when learning actually starts.
+//Kaszkaj - Forecast a lesson at an Alien Colony without skipping the Elder visit when learning actually starts.
 UnitTypes CvUnit::getLearnUnitType(const CvPlot* pPlot, bool bTestVisible) const
 {
 	if (getUnitInfo().getLearnTime() < 0)
@@ -3912,7 +3918,7 @@ UnitTypes CvUnit::getLearnUnitType(const CvPlot* pPlot, bool bTestVisible) const
 		return NO_UNIT;
 	}
 
-	//Kaszkaj - Planning may include a legal chief visit; actual training still requires that visit.
+	//Kaszkaj - Planning may include a legal Elder visit; actual training still requires that visit.
 	if (!pCity->isScoutVisited(getTeam())
 		&& (!bTestVisible || !canSpeakWithChief(pCity->plot())))
 	{
@@ -3926,7 +3932,7 @@ UnitTypes CvUnit::getLearnUnitType(const CvPlot* pPlot, bool bTestVisible) const
 	}
 
 	UnitTypes eTeachUnit = (UnitTypes) GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(eTeachUnitClass);
-	//Kaszkaj - A zero XML teacher weight forbids learning this unit in a native settlement.
+	//Kaszkaj - A zero XML teacher weight forbids learning this unit type in an Alien Colony.
 	if (eTeachUnit < 0 || eTeachUnit >= GC.getNumUnitInfos()
 		|| GC.getUnitInfo(eTeachUnit).getTeacherWeight() <= 0 || eTeachUnit == getUnitType())
 	{
@@ -3941,7 +3947,7 @@ int CvUnit::getLearnTime() const
 	return getLearnTime(plot(), false);
 }
 
-//Kaszkaj - Predict village training with the same speed, traits and teaching multiplier as the actual lesson.
+//Kaszkaj - Predict training at an Alien Colony with the same speed, traits and teaching multiplier as the actual lesson.
 int CvUnit::getLearnTime(const CvPlot* pPlot, bool bAfterTeachIncrease) const
 {
 	CvCity* pCity = pPlot == NULL ? NULL : pPlot->getPlotCity();
@@ -4174,7 +4180,7 @@ int CvUnit::getMissionarySuccessPercent() const
 	return GET_PLAYER(getOwnerINLINE()).getMissionarySuccessPercent() * (100 + (getUnitInfo().getMissionaryRateModifier() * GC.getDefineINT("MISSIONARY_RATE_EFFECT_ON_SUCCESS") / 100)) / 100;
 }
 
-//Kaszkaj - Colonists and natives may speak with chiefs in other native settlements.
+//Kaszkaj - Colonists and Aliens may speak with Elders in other Alien Colonies.
 bool CvUnit::canSpeakWithChief(CvPlot* pPlot) const
 {
 	ProfessionTypes eProfession = getProfession();
@@ -8011,7 +8017,6 @@ CvCity* CvUnit::getCity() const
 
 int CvUnit::getArea() const
 {
-	//Kaszkaj - Return the same area ID that area() uses for movement and AI.
 	CvArea* pArea = area();
 	return pArea == NULL ? FFreeList::INVALID_INDEX : pArea->getID();
 }
@@ -8025,7 +8030,7 @@ CvArea* CvUnit::area() const
 		return NULL;
 	}
 
-	//Kaszkaj - Use the adjacent sea area for normal ships in port; amphibious ships keep their current area.
+	//Kaszkaj - Use the adjacent space area for normal ships in port; amphibious ships keep their current area.
 	if (getDomainType() == DOMAIN_SEA && !m_pUnitInfo->isCanMoveAllTerrain() && !pPlot->isWater())
 	{
 		CvArea* pWaterArea = pPlot->waterArea();
@@ -8788,6 +8793,24 @@ ProfessionTypes CvUnit::getProfession() const
 
 void CvUnit::setProfession(ProfessionTypes eProfession, bool bForce)
 {
+	//Kaszkaj - Apply Alien AI restrictions on the Alien Soldier, Alien Mecha and Alien Corsair professions during unit conversion and forced profession changes too.
+	if (bForce && isNative() && !isHuman() && eProfession != NO_PROFESSION)
+	{
+		const char* szProfession = GC.getProfessionInfo(eProfession).getType();
+		CvPlayer& kOwner = GET_PLAYER(getOwnerINLINE());
+		if ((std::strcmp(szProfession, "PROFESSION_MOUNTED_BRAVE") == 0
+			|| std::strcmp(szProfession, "PROFESSION_ARMED_BRAVE") == 0
+			|| std::strcmp(szProfession, "PROFESSION_ARMED_MOUNTED_BRAVE") == 0)
+			&& !kOwner.isProfessionValid(eProfession, getUnitType()))
+		{
+			eProfession = (ProfessionTypes)GC.getCivilizationInfo(getCivilizationType()).getDefaultProfession();
+			if (!kOwner.isProfessionValid(eProfession, getUnitType()))
+			{
+				eProfession = (ProfessionTypes)getUnitInfo().getDefaultProfession();
+				if (!kOwner.isProfessionValid(eProfession, getUnitType())) eProfession = NO_PROFESSION;
+			}
+		}
+	}
 	if (!bForce && !canHaveProfession(eProfession, false))
 	{
 		char szAssert[1024];
@@ -8902,7 +8925,9 @@ bool CvUnit::canHaveProfession(ProfessionTypes eProfession, bool bBumpOther, con
 
 	if (eProfession == getProfession())
 	{
-		return true;
+		//Kaszkaj - Old equipped units must still satisfy Alien AI's profession restriction.
+		return !isNative() || isHuman() || GC.getProfessionInfo(eProfession).isCitizen()
+			|| GET_PLAYER(getOwnerINLINE()).isProfessionValid(eProfession, getUnitType());
 	}
 
 	///TK Viscos Mod
@@ -8976,6 +9001,9 @@ bool CvUnit::canHaveProfession(ProfessionTypes eProfession, bool bBumpOther, con
 		bEuropeUnit = (pUnit != NULL);
 		FAssert(pUnit == this || pUnit == NULL);
 	}
+
+	//Kaszkaj - Keep Weapons for queued spaceship production once the minimum armed garrison is equipped.
+	if (pCity != NULL && GET_PLAYER(getOwnerINLINE()).AI_shouldReserveNavalWeapons(pCity, eProfession, getProfession())) return false;
 
 	if (pCity != NULL)
 	{

@@ -1237,16 +1237,13 @@ int CvCity::getNumProfessionBuildingSlots(ProfessionTypes eProfession) const
 	}
 
 	int iTotalSlots = 0;
-	for (int i = 0; i < GC.getNumBuildingInfos(); ++i)
+	const std::vector<BuildingTypes>& aeBuildings = GC.getSpecialBuildingInfo(eSpecialBuilding).getBuildingTypes();
+	for (int i = 0; i < (int)aeBuildings.size(); ++i)
 	{
-		BuildingTypes eBuilding = (BuildingTypes) i;
-		CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-		if (kBuilding.getSpecialBuildingType() == eSpecialBuilding)
+		BuildingTypes eBuilding = aeBuildings[i];
+		if (isHasBuilding(eBuilding))
 		{
-			if (isHasBuilding(eBuilding))
-			{
-				iTotalSlots += kBuilding.getMaxWorkers();
-			}
+			iTotalSlots += GC.getBuildingInfo(eBuilding).getMaxWorkers();
 		}
 	}
 
@@ -2904,12 +2901,10 @@ int CvCity::getProfessionOutput(ProfessionTypes eProfession, const CvUnit* pUnit
 	if (pUnit != NULL)
 	{
 	    ///TK Hydrocarbons
-	    //Kaszkaj - Apply the Pioneer production bonus to the Refinery Worker profession defined in XML.
 	    if (eProfession == (ProfessionTypes)GC.getDefineINT("PROFESSION_REFINERY_WORKER"))
 	    {
 	        if (pUnit->getUnitClassType() == GC.getDefineINT("UNITCLASS_PIONEER"))
 	        {
-	            //Kaszkaj - Read the Pioneer production bonus from the renamed XML setting with its original TK_ prefix.
 	            iModifier += GC.getDefineINT("TK_PIONEER_REFINERY_WORKER_PRODUCTION_BONUS");
 	        }
 	    }
@@ -2928,21 +2923,19 @@ int CvCity::getProfessionOutput(ProfessionTypes eProfession, const CvUnit* pUnit
 	}
 
 	int iProfessionOutput = 0;
-	for (int i = 0; i < GC.getNumBuildingInfos(); i++)
+	const std::vector<BuildingTypes>& aeBuildings = GC.getSpecialBuildingInfo(eSpecialBuilding).getBuildingTypes();
+	for (int i = 0; i < (int)aeBuildings.size(); ++i)
 	{
-		BuildingTypes eBuilding = (BuildingTypes) i;
-		if (GC.getBuildingInfo(eBuilding).getSpecialBuildingType() == eSpecialBuilding)
+		BuildingTypes eBuilding = aeBuildings[i];
+		if (isHasBuilding(eBuilding))
 		{
-			if (isHasBuilding(eBuilding))
+			int iBuildingOutput = (GC.getBuildingInfo(eBuilding).getProfessionOutput() + iExtra) * iModifier / 100;
+			if (iBuildingOutput > iProfessionOutput)
 			{
-				int iBuildingOutput = (GC.getBuildingInfo(eBuilding).getProfessionOutput() + iExtra) * iModifier / 100;
-				if (iBuildingOutput > iProfessionOutput)
+				iProfessionOutput = iBuildingOutput;
+				if (peBuilding != NULL)
 				{
-					iProfessionOutput = iBuildingOutput;
-					if (peBuilding != NULL)
-					{
-						*peBuilding = eBuilding;
-					}
+					*peBuilding = eBuilding;
 				}
 			}
 		}
@@ -2961,9 +2954,10 @@ int CvCity::getProfessionInput(ProfessionTypes eProfession, const CvUnit* pUnit)
 
 	CvProfessionInfo& kProfessionInfo = GC.getProfessionInfo(eProfession);
 	// MultipleYieldsConsumed Start by Aymerick 05/01/2010
-	for (int i = 0; i < kProfessionInfo.getNumYieldsConsumed(getOwner()); i++)
+	int iNumInputs = kProfessionInfo.getNumYieldsConsumed(getOwner());
+	for (int i = 0; i < iNumInputs; i++)
 	{
-		if (kProfessionInfo.getYieldsConsumed(i, GET_PLAYER(getOwner()).getID()) == NO_YIELD)
+		if (kProfessionInfo.getYieldsConsumed(i, getOwnerINLINE()) == NO_YIELD)
 		{
 			return 0;
 		}
@@ -2982,16 +2976,17 @@ int CvCity::getProfessionInputs(ProfessionTypes eProfession, const CvUnit* pUnit
 	}
 
 	CvProfessionInfo& kProfessionInfo = GC.getProfessionInfo(eProfession);
-	int iProfessionInput = 0;
-	for (int i = 0; i < kProfessionInfo.getNumYieldsConsumed(getOwner()); i++)
+	int iNumInputs = kProfessionInfo.getNumYieldsConsumed(getOwner());
+	int iValidInputs = 0;
+	for (int i = 0; i < iNumInputs; i++)
 	{
-		if (kProfessionInfo.getYieldsConsumed(i, GET_PLAYER(getOwner()).getID()) != NO_YIELD)
+		if (kProfessionInfo.getYieldsConsumed(i, getOwnerINLINE()) != NO_YIELD)
 		{
-			iProfessionInput += getProfessionOutput(eProfession, pUnit);
+			++iValidInputs;
 		}
 	}
 
-	return iProfessionInput;
+	return iValidInputs > 0 ? getProfessionOutput(eProfession, pUnit) * iValidInputs : 0;
 }
 // MultipleYieldsConsumed End
 BuildingTypes CvCity::getYieldBuilding(YieldTypes eYield) const
@@ -3006,15 +3001,13 @@ BuildingTypes CvCity::getYieldBuilding(YieldTypes eYield) const
 			SpecialBuildingTypes eSpecialBuilding = (SpecialBuildingTypes) GC.getProfessionInfo(eProfession).getSpecialBuilding();
 			if(eSpecialBuilding != NO_SPECIALBUILDING)
 			{
-				for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); ++iBuilding)
+				const std::vector<BuildingTypes>& aeBuildings = GC.getSpecialBuildingInfo(eSpecialBuilding).getBuildingTypes();
+				for (int iBuilding = 0; iBuilding < (int)aeBuildings.size(); ++iBuilding)
 				{
-					BuildingTypes eBuilding = (BuildingTypes) iBuilding;
+					BuildingTypes eBuilding = aeBuildings[iBuilding];
 					if(isHasBuilding(eBuilding))
 					{
-						if (GC.getBuildingInfo(eBuilding).getSpecialBuildingType() == eSpecialBuilding)
-						{
-							return eBuilding;
-						}
+						return eBuilding;
 					}
 				}
 			}
@@ -3960,7 +3953,6 @@ int CvCity::getBaseRawYieldProduced(YieldTypes eYieldType) const
 	CvPlayer& owner = GET_PLAYER(getOwnerINLINE());
     ///TK Hydrocarbons
 	int iExtra = 0;
-	//Kaszkaj - Use the Oil Refinery settings when calculating raw production.
 	if (eYieldType != YIELD_HYDROCARBONS && isHasRealBuilding((BuildingTypes)GC.getDefineINT("BUILDING_OIL_REFINERY")))
 	{
         int iConsumedHydrocarbons = getRawYieldConsumed(YIELD_HYDROCARBONS);
@@ -3970,7 +3962,6 @@ int CvCity::getBaseRawYieldProduced(YieldTypes eYieldType) const
             int iHydrocarbonsSurplus = getYieldStored(YIELD_HYDROCARBONS) + getBaseRawYieldProduced(YIELD_HYDROCARBONS) * getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedHydrocarbons;
             if (iHydrocarbonsSurplus != -iConsumedHydrocarbons)
             {
-                //Kaszkaj - Read refinery consumption from the renamed XML setting with its original TK_ prefix.
                 int iOilRefineryProductionDivisor = std::max(1, GC.getDefineINT("TK_OIL_REFINERY_HYDROCARBONS_PER_PRODUCTION"));
                 if (iHydrocarbonsSurplus != -iConsumedHydrocarbons)
                 {
@@ -4083,14 +4074,12 @@ int CvCity::getRawYieldConsumed(YieldTypes eYieldType) const
 	}
     ///TK Hydrocarbons
 	int iExtra = 0;
-	//Kaszkaj - Use the Oil Refinery settings when calculating input consumption.
 	if (eYieldType != YIELD_HYDROCARBONS && isHasRealBuilding((BuildingTypes)GC.getDefineINT("BUILDING_OIL_REFINERY")))
 	{
         int iConsumedHydrocarbons = getRawYieldConsumed(YIELD_HYDROCARBONS);
         if (iConsumedHydrocarbons > 0)
         {
             int iHydrocarbonsSurplus = getYieldStored(YIELD_HYDROCARBONS) + getBaseRawYieldProduced(YIELD_HYDROCARBONS) * getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedHydrocarbons;
-            //Kaszkaj - Read refinery consumption from the renamed XML setting with its original TK_ prefix.
             int iOilRefineryProductionDivisor = std::max(1, GC.getDefineINT("TK_OIL_REFINERY_HYDROCARBONS_PER_PRODUCTION"));
             if (iHydrocarbonsSurplus != -iConsumedHydrocarbons)
             {
@@ -4412,6 +4401,8 @@ void CvCity::setYieldStored(YieldTypes eYield, int iValue)
 {
 	FAssertMsg(eYield >= 0, "eYield expected to be >= 0");
 	FAssertMsg(eYield < NUM_YIELD_TYPES	, "eYield expected to be < NUM_YIELD_TYPES");
+	//Kaszkaj fix: .\.\CvCity.cpp, Line:  4410, Expression:  iValue >= 0 || eYield == YIELD_FOOD.
+	// Balance production and consumption before storing the turn's yields; only food may become negative.
 	FAssert(iValue >= 0 || eYield == YIELD_FOOD);
 
 	int iChange = iValue - getYieldStored(eYield);
@@ -4466,14 +4457,12 @@ void CvCity::calculateNetYields(int aiYields[NUM_YIELD_TYPES], int* aiProducedYi
     ///TK Hydrocarbons
 
 	int iExtra = 0;
-	//Kaszkaj - Use the Oil Refinery settings when calculating the city's net yields.
 	if (isHasRealBuilding((BuildingTypes)GC.getDefineINT("BUILDING_OIL_REFINERY")))
 	{
         int iConsumedHydrocarbons = getRawYieldConsumed(YIELD_HYDROCARBONS);
         if (iConsumedHydrocarbons > 0)
         {
             int iHydrocarbonsSurplus = getYieldStored(YIELD_HYDROCARBONS) + getBaseRawYieldProduced(YIELD_HYDROCARBONS) * getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedHydrocarbons;
-            //Kaszkaj - Read refinery consumption from the renamed XML setting with its original TK_ prefix.
             int iOilRefineryProductionDivisor = std::max(1, GC.getDefineINT("TK_OIL_REFINERY_HYDROCARBONS_PER_PRODUCTION"));
             if (iHydrocarbonsSurplus != -iConsumedHydrocarbons)
             {
@@ -4495,10 +4484,6 @@ void CvCity::calculateNetYields(int aiYields[NUM_YIELD_TYPES], int* aiProducedYi
 	///Tke
 	int aiConsumed[NUM_YIELD_TYPES];
 	int aiProduced[NUM_YIELD_TYPES];
-	// MultipleYieldsConsumed Start by Aymerick 05/01/2009
-	int aiProducedTemp[NUM_YIELD_TYPES];
-	int aiYieldStored[NUM_YIELD_TYPES];
-	// MultipleYieldsConsumed End
 	if (aiProducedYields == NULL)
 	{
 		aiProducedYields = aiProduced;
@@ -4519,7 +4504,6 @@ void CvCity::calculateNetYields(int aiYields[NUM_YIELD_TYPES], int* aiProducedYi
             {
                 aiConsumedYields[iYield] = 0;
                 aiProducedYields[iYield] = 0;
-                aiProducedTemp[iYield] = 0;
                 aiYields[eYield] = getYieldStored(eYield) - aiConsumedYields[iYield] + aiProducedYields[iYield] * getBaseYieldRateModifier(eYield) / 100;
                 bNoResearch = true;
                 continue;
@@ -4532,166 +4516,133 @@ void CvCity::calculateNetYields(int aiYields[NUM_YIELD_TYPES], int* aiProducedYi
 
 		aiConsumedYields[iYield] = getRawYieldConsumed(eYield);
 		aiProducedYields[iYield] = getBaseRawYieldProduced(eYield);
-		// MultipleYieldsConsumed Start by Aymerick 05/01/2009
-		aiProducedTemp[iYield] = getBaseRawYieldProduced(eYield);
-
-
-		aiYieldStored[iYield] = getYieldStored(eYield);
-		// MultipleYieldsConsumed End
 		aiYields[iYield] = getYieldStored(eYield) - aiConsumedYields[iYield] + aiProducedYields[iYield] * getBaseYieldRateModifier(eYield) / 100;
 	}
 
 	std::set<ProfessionTypes> setUnsatisfiedProfessions;
 
-	// MultipleYieldsConsumed Start by Aymerick 05/01/2009
+	//Kaszkaj fix: .\.\CvCity.cpp, Line:  4693, Expression:  (iYield == YIELD_FOOD) || (aiYields[iYield] >= 0).
+	// Recheck production chains after each shortage and reduce a worker's inputs and output together.
 	if (!isOccupation())
 	{
-		std::vector<bool> bHasDeficit;
-		std::vector<int> aiYieldsAvailable;
-		std::vector< std::vector<int> > aaiYieldsAvailable;
-
-		bHasDeficit.resize(m_aPopulationUnits.size());
-		aaiYieldsAvailable.resize(m_aPopulationUnits.size());
-			///TKs Invention Core Mod v 1.0
-        int iPushback = 0;
-		for (uint i = 0; i < m_aPopulationUnits.size(); ++i)
+		const int iPopulation = (int)m_aPopulationUnits.size();
+		std::vector<int> aiFullProduction(iPopulation, 0);
+		std::vector<int> aiProductionAvailable(iPopulation, 0);
+		std::vector< std::vector<int> > aaiInputs(iPopulation, std::vector<int>(NUM_YIELD_TYPES, 0));
+		int aiExtraInput[NUM_YIELD_TYPES];
+		int aiExtraOutput[NUM_YIELD_TYPES];
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 		{
-			CvUnit* pUnit = m_aPopulationUnits[i];
+			YieldTypes eYield = (YieldTypes)iYield;
+			bool bRefineryYield = eYield != YIELD_HYDROCARBONS && GC.getYieldInfo(eYield).getUnitClass() != NO_UNITCLASS;
+			aiExtraInput[iYield] = bRefineryYield ? iExtra : 0;
+			aiExtraOutput[iYield] = bRefineryYield ? iExtra : 0;
+		}
 
-
-			if (pUnit->getProfession() != NO_PROFESSION)
+		for (int iUnitIndex = 0; iUnitIndex < iPopulation; ++iUnitIndex)
+		{
+			CvUnit* pUnit = m_aPopulationUnits[iUnitIndex];
+			if (pUnit == NULL || pUnit->getProfession() == NO_PROFESSION)
 			{
-
-			    if (pUnit->getProfession() == (ProfessionTypes)GC.getDefineINT("PROFESSION_INVENTOR"))
-			    {
-			        if (bNoResearch)
-			        {
-			            aiYieldsAvailable.push_back(0);
-			            continue;
-			        }
-			    }
-
-				CvProfessionInfo& kProfession = GC.getProfessionInfo(pUnit->getProfession());
-				YieldTypes eYieldConsumed = (YieldTypes) kProfession.getYieldsConsumed(0);
-                YieldTypes eYieldProduced = (YieldTypes) kProfession.getYieldsProduced(0);
-				aaiYieldsAvailable[i].resize(kProfession.getNumYieldsConsumed(getOwner()), 0);
-				if (eYieldConsumed != NO_YIELD && GC.getYieldInfo(eYieldProduced).getUnitClass() != NO_UNITCLASS && eYieldProduced != YIELD_HAMMERS)
-                {
-                    iPushback = getProfessionInput(pUnit->getProfession(), pUnit) + iExtra;
-                    aiYieldsAvailable.push_back(iPushback);
-                }
-                else
-                {
-                    iExtra = 0;
-                    aiYieldsAvailable.push_back(getProfessionInputs(pUnit->getProfession(), pUnit));
-                }
-
-				for (int j = 0; j < kProfession.getNumYieldsConsumed(getOwner()); j++)
+				continue;
+			}
+			CvProfessionInfo& kProfession = GC.getProfessionInfo(pUnit->getProfession());
+			YieldTypes eYieldProduced = (YieldTypes)kProfession.getYieldsProduced(0);
+			if (eYieldProduced == NO_YIELD || (eYieldProduced == YIELD_IDEAS && bNoResearch))
+			{
+				continue;
+			}
+			int iInput = getProfessionInput(pUnit->getProfession(), pUnit);
+			if (iInput <= 0)
+			{
+				continue;
+			}
+			bool bHasInput = false;
+			for (int j = 0; j < kProfession.getNumYieldsConsumed(getOwnerINLINE()); ++j)
+			{
+				YieldTypes eYieldConsumed = (YieldTypes)kProfession.getYieldsConsumed(j, getOwnerINLINE());
+				if (eYieldConsumed != NO_YIELD)
 				{
-					if (kProfession.getYieldsConsumed(j, GET_PLAYER(getOwner()).getID()) != NO_YIELD)
+					aaiInputs[iUnitIndex][eYieldConsumed] += iInput;
+					bHasInput = true;
+				}
+			}
+			if (!bHasInput)
+			{
+				continue;
+			}
+			for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+			{
+				if (aaiInputs[iUnitIndex][iYield] > 0)
+				{
+					aaiInputs[iUnitIndex][iYield] += aiExtraInput[iYield];
+					aiExtraInput[iYield] = 0;
+				}
+			}
+			aiFullProduction[iUnitIndex] = getProfessionOutput(pUnit->getProfession(), pUnit) + aiExtraOutput[eYieldProduced];
+			aiExtraOutput[eYieldProduced] = 0;
+			aiProductionAvailable[iUnitIndex] = aiFullProduction[iUnitIndex];
+		}
+
+		bool bFound;
+		do
+		{
+			bFound = false;
+			for (int iUnitIndex = 0; iUnitIndex < iPopulation; ++iUnitIndex)
+			{
+				int iAvailable = aiProductionAvailable[iUnitIndex];
+				if (iAvailable <= 0)
+				{
+					continue;
+				}
+				int iFullProduction = aiFullProduction[iUnitIndex];
+				int iReduction = 0;
+				for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+				{
+					int iFullInput = aaiInputs[iUnitIndex][iYield];
+					if (iFullInput > 0 && aiYields[iYield] < 0)
 					{
-						aaiYieldsAvailable[i][j] = getProfessionInput(pUnit->getProfession(), pUnit)  + iExtra;
-						if (aaiYieldsAvailable[i][j] > 0)
+						int iDeficit = -aiYields[iYield];
+						int iInputAvailable = (iFullInput * iAvailable + iFullProduction - 1) / iFullProduction;
+						if (iInputAvailable > 0)
 						{
-							int iYieldsStoredTemp = aiYields[kProfession.getYieldsConsumed(j, GET_PLAYER(getOwner()).getID())];
-							if (iYieldsStoredTemp < 0)
-							{
-								bHasDeficit[i] = true;
-							}
+							int iRequiredReduction = iDeficit >= iInputAvailable ? iAvailable : (iDeficit * iFullProduction + iFullInput - 1) / iFullInput;
+							iReduction = std::max(iReduction, std::max(1, iRequiredReduction));
 						}
 					}
 				}
-			}
-			else
-			{
-				aiYieldsAvailable.push_back(0);
-			}
-			   ///TKe
-		}
-
-		for (uint i = 0; i < m_aPopulationUnits.size(); ++i)
-		{
-			bool bFound = false;
-			for (int iUnitIndex = 0; iUnitIndex < (int)m_aPopulationUnits.size(); ++iUnitIndex)
-			{
+				if (iReduction == 0)
+				{
+					continue;
+				}
 				CvUnit* pUnit = m_aPopulationUnits[iUnitIndex];
-
-				if (aiYieldsAvailable[iUnitIndex] > 0)
+				CvProfessionInfo& kProfession = GC.getProfessionInfo(pUnit->getProfession());
+				YieldTypes eYieldProduced = (YieldTypes)kProfession.getYieldsProduced(0);
+				int iRemaining = std::max(0, iAvailable - iReduction);
+				aiProductionAvailable[iUnitIndex] = iRemaining;
+				aiProducedYields[eYieldProduced] -= iAvailable - iRemaining;
+				for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 				{
-					CvProfessionInfo& kProfession = GC.getProfessionInfo(pUnit->getProfession());
-
-					if (bHasDeficit[iUnitIndex])
+					int iFullInput = aaiInputs[iUnitIndex][iYield];
+					if (iFullInput > 0)
 					{
-						std::vector<int> aiYieldStoredTemp;
-						for (int j = 0; j < kProfession.getNumYieldsConsumed(getOwner()); j++)
-						{
-							aiYieldStoredTemp.push_back(aiYields[kProfession.getYieldsConsumed(j, GET_PLAYER(getOwner()).getID())]);
-						}
-
-						int iYieldStored = *std::min_element(aiYieldStoredTemp.begin(), aiYieldStoredTemp.end());
-						if (iYieldStored < 0)
-						{
-							for (int iYieldConsumed = 0; iYieldConsumed < kProfession.getNumYieldsConsumed(getOwner()); iYieldConsumed++)
-							{
-								YieldTypes eYieldConsumed = (YieldTypes) kProfession.getYieldsConsumed(iYieldConsumed, GET_PLAYER(getOwner()).getID());
-
-								if (eYieldConsumed != NO_YIELD)
-								{
-									if (aaiYieldsAvailable[iUnitIndex][iYieldConsumed] > 0)
-									{
-										if (bPrintWarning)
-										{
-											setUnsatisfiedProfessions.insert(pUnit->getProfession());
-										}
-
-										bFound = true;
-										// MultipleYieldsProduced Start by Aymerick 22/01/2010**
-										YieldTypes eYieldProduced = (YieldTypes) kProfession.getYieldsProduced(0);
-										// MultipleYieldsProduced End
-										if (NO_YIELD != eYieldProduced)
-										{
-											int iDeficit = std::min(-iYieldStored, aaiYieldsAvailable[iUnitIndex][iYieldConsumed]);;
-											if (iYieldConsumed == (kProfession.getNumYieldsConsumed(getOwner()) - 1))
-											{
-												aaiYieldsAvailable[iUnitIndex][iYieldConsumed] -= iDeficit;
-												aiYieldsAvailable[iUnitIndex] -= iDeficit;
-
-												aiConsumedYields[eYieldConsumed] -= iDeficit;
-												aiProducedYields[eYieldProduced] -= iDeficit;
-
-												aiYields[eYieldProduced] = getYieldStored(eYieldProduced) - aiConsumedYields[eYieldProduced] + aiProducedYields[eYieldProduced] * getBaseYieldRateModifier(eYieldProduced) / 100;
-												aiYields[eYieldConsumed] = getYieldStored(eYieldConsumed) - aiConsumedYields[eYieldConsumed] + aiProducedYields[eYieldConsumed] * getBaseYieldRateModifier(eYieldConsumed) / 100;
-											}
-											else
-											{
-												aaiYieldsAvailable[iUnitIndex][iYieldConsumed] -= iDeficit;
-												aiYieldsAvailable[iUnitIndex] -= iDeficit;
-
-												aiConsumedYields[eYieldConsumed] -= iDeficit;
-												aiProducedTemp[eYieldProduced] -= iDeficit;
-
-												aiYields[eYieldProduced] = getYieldStored(eYieldProduced) - aiConsumedYields[eYieldProduced] + aiProducedTemp[eYieldProduced] * getBaseYieldRateModifier(eYieldProduced) / 100;
-												aiYields[eYieldConsumed] = getYieldStored(eYieldConsumed) - aiConsumedYields[eYieldConsumed] + aiProducedTemp[eYieldConsumed] * getBaseYieldRateModifier(eYieldConsumed) / 100;
-											}
-										}
-										else
-										{
-											FAssertMsg(false, "Could not find matching production for negative yield rate.");
-										}
-									}
-								}
-							}
-						}
+						aiConsumedYields[iYield] -= (iFullInput * iAvailable + iFullProduction - 1) / iFullProduction - (iFullInput * iRemaining + iFullProduction - 1) / iFullProduction;
 					}
 				}
-			}
-			if(!bFound)
-			{
-				break;
+				for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+				{
+					YieldTypes eYield = (YieldTypes)iYield;
+					aiYields[iYield] = getYieldStored(eYield) - aiConsumedYields[iYield] + aiProducedYields[iYield] * getBaseYieldRateModifier(eYield) / 100;
+				}
+				if (bPrintWarning)
+				{
+					setUnsatisfiedProfessions.insert(pUnit->getProfession());
+				}
+				bFound = true;
 			}
 		}
+		while (bFound);
 	}
-	// MultipleYieldsConsumed End
 
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
@@ -5535,7 +5486,29 @@ void CvCity::setHasRealBuildingTimed(BuildingTypes eIndex, bool bNewValue, bool 
 			{
 				if (GC.getBuildingInfo(eIndex).isCapital())
 				{
-					GET_PLAYER(getOwnerINLINE()).setCapitalCity(this);
+					CvPlayer& kOwner = GET_PLAYER(getOwnerINLINE());
+					CvCity* pBestCity = this;
+					if (!kOwner.isHuman())
+					{
+						//Kaszkaj - Each completed capital building makes AI choose its best Colony once, retaining the current capital on a tied score.
+						CvCity* pOldCapital = kOwner.getCapitalCity();
+						int iBestValue = MIN_INT;
+						int iLoop;
+						for (CvCity* pLoopCity = kOwner.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kOwner.nextCity(&iLoop))
+						{
+							int iValue = pLoopCity->getPopulation() * 4;
+							iValue += pLoopCity->getYieldRate(YIELD_FOOD);
+							iValue += pLoopCity->getCultureLevel();
+							iValue *= pLoopCity->calculateCulturePercent(getOwnerINLINE()) + 100;
+							iValue /= 100;
+							if (iValue > iBestValue || (iValue == iBestValue && pLoopCity == pOldCapital))
+							{
+								iBestValue = iValue;
+								pBestCity = pLoopCity;
+							}
+						}
+					}
+					kOwner.setCapitalCity(pBestCity);
 				}
 
 				GC.getGameINLINE().incrementBuildingClassCreatedCount((BuildingClassTypes)(GC.getBuildingInfo(eIndex).getBuildingClassType()));
@@ -6241,7 +6214,7 @@ void CvCity::doGrowth()
 
 			gDLL->getInterfaceIFace()->addMessage(getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), gDLL->getText("TXT_KEY_CITY_STARVING", getNameKey()), "AS2D_DEAL_CANCELLED", MESSAGE_TYPE_INFO, GC.getYieldInfo(YIELD_FOOD).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_RED"), getX_INLINE(), getY_INLINE(), true, true);
 		}
-		//Kaszkaj - Give food to the last starving AI resident; colonial AI pays half price and native AI receives it free.
+		//Kaszkaj - Give Food to the last starving AI resident; Colonist AI pays half price and Alien AI receives it free.
 		else if (!isHuman() && !GET_PLAYER(getOwnerINLINE()).isEurope()
 			&& GC.getDefineINT("CITY_STARVATION_DONATION_FOOD_RECEIVED") > 0)
 		{
@@ -6249,7 +6222,7 @@ void CvCity::doGrowth()
 			if (!isNative())
 			{
 				int iPrice = std::max(0, GC.getDefineINT("CITY_STARVATION_DONATION_GOLD_PAYED"));
-				//Kaszkaj - Scale the food donation price by game speed, then halve it for AI colonists.
+				//Kaszkaj - Scale the Food donation price by game speed, then halve it for Colonist AI.
 				iPrice = iPrice * GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getStoragePercent() / 100 / 2;
 				kOwner.changeGold(-std::min(std::max(0, kOwner.getGold()), iPrice));
 			}
@@ -6348,11 +6321,8 @@ void CvCity::doYields()
                     GET_PLAYER(getOwner()).changeIdeaProgress(eCivic, aiYields[eYield]);
                     //GET_PLAYER(getOwner()).setTemporyIdeasStored(aiYields[eYield]);
 
-                    //Kaszkaj - Use TK_INVENTOR_PROGRESS and the player's bonus for Inventor experience.
-                    //Kaszkaj - Read the Inventor threshold under the same TK_ name used in XML.
                     if (aiYields[eYield] > 1 && GC.getDefineINT("TK_INVENTOR_THRESHOLD") > 0)
                     {
-						//Kaszkaj - Read Inventor progress under the same TK_ name used in XML.
 						int iExperience = GC.getDefineINT("TK_INVENTOR_PROGRESS") + GET_PLAYER(getOwner()).getInventorModifier();
 						GET_PLAYER(getOwner()).setIdeasExperience(iExperience);
                         //int iLeftover = GET_PLAYER(getOwner()).getTemporyIdeasStored();
@@ -6442,16 +6412,26 @@ void CvCity::doYields()
 					iLoss = std::min(iLoss, iExcess);
 					changeYieldStored(eYield, -iLoss);
 
-					int iProfit = getOverflowYieldSellPercent() * GET_PLAYER(getOwnerINLINE()).getSellToEuropeProfit(eYield, iLoss) / 100;
+					//Kaszkaj - AI sells goods that would decay without adding this assistance to Earth price or tax-volume counters.
+					CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+					bool bAIAssistance = !isHuman() && !kOwner.isEurope() && kOwner.getParent() != NO_PLAYER
+						&& kOwner.canTradeWithEurope();
+					int iSellPercent = getOverflowYieldSellPercent();
+					if (bAIAssistance)
+						iSellPercent = std::max(iSellPercent, range(GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIMinimumStorageLossSellPercentage(), 0, 100));
+					int iProfit = iSellPercent * kOwner.getSellToEuropeProfit(eYield, iLoss) / 100;
 					if (iProfit > 0)
 					{
 						CvPlayer& kPlayerEurope = GET_PLAYER(GET_PLAYER(getOwnerINLINE()).getParent());
 						GET_PLAYER(getOwnerINLINE()).changeGold(iProfit * GET_PLAYER(getOwnerINLINE()).getExtraTradeMultiplier(kPlayerEurope.getID()) / 100);
 
-						int iDiscountedLoss = getOverflowYieldSellPercent() * iLoss / 100;
-						GET_PLAYER(getOwnerINLINE()).changeYieldTradedTotal(eYield, iDiscountedLoss);
-						kPlayerEurope.changeYieldTradedTotal(eYield, iDiscountedLoss);
-						GC.getGameINLINE().changeYieldBoughtTotal(kPlayerEurope.getID(), eYield, -iDiscountedLoss);
+						if (!bAIAssistance)
+						{
+							int iDiscountedLoss = iSellPercent * iLoss / 100;
+							GET_PLAYER(getOwnerINLINE()).changeYieldTradedTotal(eYield, iDiscountedLoss);
+							kPlayerEurope.changeYieldTradedTotal(eYield, iDiscountedLoss);
+							GC.getGameINLINE().changeYieldBoughtTotal(kPlayerEurope.getID(), eYield, -iDiscountedLoss);
+						}
 
 						CvWString szBuffer = gDLL->getText("TXT_KEY_GOODS_LOST_SOLD", iLoss, GC.getYieldInfo(eYield).getChar(), getNameKey(), iProfit);
 						gDLL->getInterfaceIFace()->addMessage(getOwnerINLINE(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_BUILD_BANK", MESSAGE_TYPE_MINOR_EVENT, GC.getYieldInfo(eYield).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_WHITE"), getX_INLINE(), getY_INLINE(), true, true);
@@ -6996,6 +6976,23 @@ void CvCity::read(FDataStreamBase* pStream)
 		kChange.read(pStream);
 		m_aBuildingYieldChange.push_back(kChange);
 	}
+	//Kaszkaj - Restore invalid non-Food stocks from older saves and update their asset and power totals.
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		YieldTypes eYield = (YieldTypes)iYield;
+		if (eYield != YIELD_FOOD && m_aiYieldStored[iYield] < 0)
+		{
+			int iChange = -m_aiYieldStored[iYield];
+			m_aiYieldStored[iYield] = 0;
+			CvYieldInfo& kYield = GC.getYieldInfo(eYield);
+			GET_PLAYER(getOwnerINLINE()).changePower(kYield.getPowerValue() * iChange);
+			GET_PLAYER(getOwnerINLINE()).changeAssets(kYield.getAssetValue() * iChange);
+			if (area() != NULL)
+			{
+				area()->changePower(getOwnerINLINE(), kYield.getPowerValue() * iChange);
+			}
+		}
+	}
 }
 
 void CvCity::write(FDataStreamBase* pStream)
@@ -7284,7 +7281,7 @@ void CvCity::getCityBillboardSizeIconColors(NiColorA& kDotColor, NiColorA& kText
 
 const TCHAR* CvCity::getCityBillboardProductionIcon() const
 {
-	//Kaszkaj - Show the desired trade good in native cities for their owner as well as visitors.
+	//Kaszkaj - Show the desired goods in Alien Colonies for their owner as well as visitors.
 	if (isNative() && AI_getDesiredYield() != NO_YIELD)
 	{
 		return GC.getYieldInfo(AI_getDesiredYield()).getButton();
@@ -8140,10 +8137,10 @@ bool CvCity::removePopulationUnit(CvUnit* pUnit, bool bDelete, ProfessionTypes e
 		return false;
 	}
 
-	if (!pUnit->canHaveProfession(eProfession, false))
+	//Kaszkaj fix: .\.\CvCity.cpp, Line:  8145, Expression:  false.
+	// Check the profession only for ejection; a failed request leaves the resident's job unchanged.
+	if (!bDelete && !pUnit->canHaveProfession(eProfession, false))
 	{
-		FAssertMsg(false, "Illegal Profession");
-		pUnit->setProfession(NO_PROFESSION);
 		return false;
 	}
 
@@ -8932,7 +8929,6 @@ bool CvCity::canTradeAway(PlayerTypes eToPlayer) const
 	return true;
 }
 
-//Kaszkaj - Estimate remaining school turns from real XML output, city modifiers and stored progress.
 int CvCity::getEducationTurnsLeft(const CvUnit* pUnit, ProfessionTypes eProfession) const
 {
 	if (pUnit == NULL || eProfession < 0 || eProfession >= GC.getNumProfessionInfos())
@@ -8961,11 +8957,11 @@ bool CvCity::educateStudent(int iUnitId, UnitTypes eUnit)
 	}
 
 	CvPlayer& kPlayer = GET_PLAYER(getOwnerINLINE());
-	//Kaszkaj - Native AI receives free specialists only after completing education in a school building.
+	//Kaszkaj - Give Alien AI a free specialist only after the student finishes school.
 	if (isNative() && !isHuman())
 	{
 		ProfessionTypes eProfession = pUnit->getProfession();
-		//Kaszkaj - Keep completed progress if the last resident cannot leave the city yet.
+		//Kaszkaj - Keep completed progress if the last resident cannot leave the Colony yet.
 		if (getPopulation() <= 1 || eProfession == NO_PROFESSION || getEducationTurnsLeft(pUnit, eProfession) != 0)
 		{
 			return false;
@@ -9014,12 +9010,12 @@ int CvCity::getSpecialistTuition(UnitTypes eUnit) const
 	{
 		return -1;
 	}
-	//Kaszkaj - A zero XML teacher weight forbids school training, even with saved teacher progress.
+	//Kaszkaj - Forbid school training for units with zero XML teacher weight, even if saved progress exists.
 	if (GC.getUnitInfo(eUnit).getTeacherWeight() <= 0)
 	{
 		return -1;
 	}
-	//Kaszkaj - Native AI learns eligible specialists for free without owning a teacher first.
+	//Kaszkaj - Let Alien AI learn eligible specialists for free without an existing teacher or technology prerequisite.
 	if (isNative() && !isHuman())
 	{
 		return GET_PLAYER(getOwnerINLINE()).AI_isEducationSpecialist(eUnit) ? 0 : -1;

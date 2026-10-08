@@ -20,6 +20,12 @@ class CvDomesticAdvisor:
 	# Screen construction function
 	def interfaceScreen(self):
 		player = gc.getPlayer(gc.getGame().getActivePlayer())
+		self.BuildingInfos = [gc.getBuildingInfo(i) for i in range(gc.getNumBuildingInfos())]
+		self.BuildingTypesBySpecial = [[] for i in range(gc.getNumSpecialBuildingInfos())]
+		for iBuilding in range(len(self.BuildingInfos)):
+			iSpecial = self.BuildingInfos[iBuilding].getSpecialBuildingType()
+			if iSpecial >= 0 and iSpecial < len(self.BuildingTypesBySpecial):
+				self.BuildingTypesBySpecial[iSpecial].append(iBuilding)
 
 		# Create a new screen, called DomesticAdvisur, using the file CvDomesticAdvisor.py for input
 		screen = CyGInterfaceScreen( "DomesticAdvisor", CvScreenEnums.DOMESTIC_ADVISOR )
@@ -310,13 +316,12 @@ class CvDomesticAdvisor:
 			for iSpecial in range(gc.getNumSpecialBuildingInfos()):
 				if (iSpecial != gc.getInfoTypeForString("SPECIALBUILDING_BELLS")):
 					iIconBuilding = -1
-					for iBuilding in range(gc.getNumBuildingInfos()):
-						if gc.getBuildingInfo(iBuilding).getSpecialBuildingType() == iSpecial:
-							if pLoopCity.isHasBuilding(iBuilding):
-								iIconBuilding = iBuilding
-								break
+					for iBuilding in self.BuildingTypesBySpecial[iSpecial]:
+						if pLoopCity.isHasBuilding(iBuilding):
+							iIconBuilding = iBuilding
+							break
 					if iIconBuilding != -1:
-						screen.setTableInt("BuildingStateListBackground", iSpecial + 1, i, "", gc.getBuildingInfo(iBuilding).getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iBuilding, -1, CvUtil.FONT_LEFT_JUSTIFY )
+						screen.setTableInt("BuildingStateListBackground", iSpecial + 1, i, "", self.BuildingInfos[iBuilding].getButton(), WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, iBuilding, -1, CvUtil.FONT_LEFT_JUSTIFY )
 
 		elif(self.CurrentState == self.IMPORTEXPORT_STATE):
 

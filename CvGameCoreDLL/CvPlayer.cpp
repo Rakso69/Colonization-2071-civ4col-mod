@@ -344,14 +344,13 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	///TKs Invention Core Mod v 1.0
 	m_iTemporyIdeasStored = 0;
 	m_iIdeasStored = 0;
-	//Kaszkaj - Reset the Inventor modifiers when resetting the player.
 	m_iInventorModifier = 0;
 	m_iInventorThresholdModifier = 0;
 	m_iIdeasExperience = 0;
 	m_iFreeTechs = 0;
 	m_iDoTechFlag = 0;
 	m_bTechsInitialized = false;
-	//Kaszkaj - This temporary guard prevents defeat checks while royal assets are being transferred.
+	//Kaszkaj - Delay defeat checks while the State or Progenitor Exarch transfers the subject's possessions.
 	m_bKingAssetsSeizing = false;
 	m_bAllResearchComplete = false;
 	///TKe
@@ -615,7 +614,7 @@ void CvPlayer::initFreeState()
 	setGold(0);
 	changeGold(GC.getHandicapInfo(getHandicapType()).getStartingGold());
 	changeGold(GC.getEraInfo(GC.getGameINLINE().getStartEra()).getStartingGold());
-	//Kaszkaj - Apply starting technologies after starting gold is set, before free units are created.
+	//Kaszkaj - Apply starting technologies after the initial Credits balance is set, before free units are created.
 	initInventions();
 }
 
@@ -1381,7 +1380,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade)
 	for(int i=0;i<(int)aOldPopulationUnits.size();i++)
 	{
 		CvUnit* pOldUnit = aOldPopulationUnits[i];
-		//Kaszkaj - A king confiscating its colony keeps the resident's original unit type.
+		//Kaszkaj - Keep each resident's original unit type when the State or Progenitor Exarch confiscates a Colony.
 	bool bRoyalSeizure = bTrade && isEurope() && GET_PLAYER(eOldOwner).getParent() == getID();
 	UnitTypes eNewUnitType = bRoyalSeizure ? pOldUnit->getUnitType()
 		: (UnitTypes) GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(pOldUnit->getUnitClassType());
@@ -1447,7 +1446,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade)
 		if (pabHasRealBuilding[iI])
 		{
 			BuildingClassTypes eBuildingClass = (BuildingClassTypes)GC.getBuildingInfo((BuildingTypes)iI).getBuildingClassType();
-			//Kaszkaj - Preserve the colony's actual buildings during royal confiscation.
+			//Kaszkaj - Preserve the Colony's actual buildings during confiscation by the State or Progenitor Exarch.
 			bool bRoyalSeizure = bTrade && isEurope() && GET_PLAYER(eOldOwner).getParent() == getID();
 			eBuilding = bRoyalSeizure ? (BuildingTypes) iI
 				: (BuildingTypes) GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuildings(eBuildingClass);
@@ -1980,7 +1979,7 @@ bool CvPlayer::isNative() const
 	return GC.getCivilizationInfo(eCivilizationType).isNative();
 }
 
-//Kaszkaj - Identify barbarians by civilization, without reserving a fixed player slot.
+//Kaszkaj - Identify the Outer Gods Pantheon by civilisation without reserving a fixed player slot.
 bool CvPlayer::isBarbarian() const
 {
 	if (getID() == NO_PLAYER)
@@ -2159,7 +2158,7 @@ void CvPlayer::doTurn()
 	CvCity* pLoopCity;
 	int iLoop;
 
-	//Kaszkaj - Pause a confiscated player's turn until the king's dialogue is closed.
+	//Kaszkaj - Pause a confiscated player's turn until dialogue with the State or Progenitor Exarch is closed.
 	if (isHuman() && getParent() != NO_PLAYER && getTaxRate() > 100)
 	{
 		verifyAlive();
@@ -2316,7 +2315,7 @@ void CvPlayer::doTurnUnits()
 
 					//change taxrate
 					int iOldTaxRate = getTaxRate();
-					int iNewTaxRate = std::min(99, iOldTaxRate + 1 + GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("TAX_RATE_MAX_INCREASE"), "Tax Rate Increase for ship"));
+					int iNewTaxRate = getNewTaxRate(std::min(99, iOldTaxRate + 1 + GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("TAX_RATE_MAX_INCREASE"), "Tax Rate Increase for ship")));
 					int iChange = iNewTaxRate - iOldTaxRate;
 					changeTaxRate(iChange);
 
@@ -2714,7 +2713,7 @@ bool CvPlayer::canContact(PlayerTypes ePlayer) const
 
 		if (atWar(getTeam(), GET_PLAYER(ePlayer).getTeam()))
 		{
-			//Kaszkaj - Allow barbarian dialogue even when game rules lock war and peace.
+			//Kaszkaj - Allow dialogue with the Outer Gods Pantheon even when game rules lock war and peace.
 			if (!isBarbarian() && !GET_PLAYER(ePlayer).isBarbarian() &&
 				!(GET_TEAM(getTeam()).canChangeWarPeace(GET_PLAYER(ePlayer).getTeam())))
 			{
@@ -2816,7 +2815,7 @@ void CvPlayer::contact(PlayerTypes ePlayer)
 
 void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer, int iData1, int iData2)
 {
-	//Kaszkaj - Barbarian dialogue allows contact and declarations of war, but no agreed actions.
+	//Kaszkaj - Dialogue with the Outer Gods Pantheon allows contact and declarations of war, but no agreements.
 	if (isBarbarian() || GET_PLAYER(ePlayer).isBarbarian())
 	{
 		switch (eDiploEvent)
@@ -2934,7 +2933,7 @@ void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer
 		AI_changeMemoryCount(ePlayer, MEMORY_MADE_DEMAND_RECENT, 1);
 		break;
 
-	//Kaszkaj - End the confiscated player's game when they choose to leave the king's dialogue.
+	//Kaszkaj - End the confiscated player's game when they leave dialogue with the State or Progenitor Exarch.
 	case DIPLOEVENT_KING_SEIZE_ASSETS:
 		if (isEurope() && GET_PLAYER(ePlayer).getParent() == getID()
 			&& GET_PLAYER(ePlayer).isHuman() && GET_PLAYER(ePlayer).isAlive()
@@ -3072,7 +3071,7 @@ void CvPlayer::initInventions()
 	}
 }
 
-//Kaszkaj - Sell technology only to a king's own subject at peace and with Cautious or better relations.
+//Kaszkaj - Allow the State or Progenitor Exarch to sell technology to its own subject at peace using the XML attitude threshold.
 bool CvPlayer::canTradeKingTechnology(PlayerTypes eBuyer) const
 {
 	if (!isEurope() || !isAlive() || eBuyer < 0 || eBuyer >= MAX_PLAYERS || eBuyer == getID())
@@ -3089,7 +3088,7 @@ bool CvPlayer::canTradeKingTechnology(PlayerTypes eBuyer) const
 	return GET_PLAYER(getID()).AI_getAttitude(eBuyer) >= GC.getDefineINT("KING_TECHNOLOGY_TRADE_ATTITUDE");
 }
 
-//Kaszkaj - Use the existing technology trade valuation as the king's asking price.
+//Kaszkaj - Use the existing technology trade valuation as the State or Progenitor Exarch's asking price.
 int CvPlayer::getKingTechnologyPrice(CivicTypes eCivic) const
 {
 	if (eCivic < 0 || eCivic >= GC.getNumCivicInfos())
@@ -3111,7 +3110,7 @@ int CvPlayer::getKingTechnologyTaxIncrease() const
 	return GC.getDefineINT("KING_TECHNOLOGY_TAX_INCREASE");
 }
 
-//Kaszkaj - Validate the full normal-window trade before any gold, tax or research is changed.
+//Kaszkaj - Validate the entire purchase from the State or Progenitor Exarch before changing Credits, tax or technologies.
 bool CvPlayer::getKingTechnologyDeal(PlayerTypes eBuyer, const CLinkList<TradeData>* pTechnologies,
 	const CLinkList<TradeData>* pPayment, int& iGold, int& iTax) const
 {
@@ -3155,7 +3154,7 @@ bool CvPlayer::getKingTechnologyDeal(PlayerTypes eBuyer, const CLinkList<TradeDa
 	}
 	if (kPayment.m_eItemType == TRADE_GOLD)
 	{
-		//Kaszkaj - Normal AI offer evaluation decides whether the offered gold is enough.
+		//Kaszkaj - Normal AI offer evaluation decides whether the offered Credits are enough.
 		iGold = kPayment.m_iData1;
 		return true;
 	}
@@ -3178,7 +3177,7 @@ bool CvPlayer::getKingTechnologyDeal(PlayerTypes eBuyer, const CLinkList<TradeDa
 	return false;
 }
 
-//Kaszkaj - Settle a royal purchase once and apply every acquired technology's effects.
+//Kaszkaj - Settle a technology purchase from the State or Progenitor Exarch once and apply every acquired technology's effects.
 void CvPlayer::applyKingTechnologyDeal(PlayerTypes eBuyer, const CLinkList<TradeData>* pTechnologies,
 	int iGold, int iTax)
 {
@@ -3227,7 +3226,7 @@ void CvPlayer::applyKingTechnologyDeal(PlayerTypes eBuyer, const CLinkList<Trade
 	gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 }
 
-//Kaszkaj - Confiscate gold, cities, residents, buildings, stores, ships, cargo and units at the docks.
+//Kaszkaj - Confiscate Credits, Colonies, residents, buildings, stores, ships, cargo and units at the docks.
 void CvPlayer::seizeKingAssets()
 {
 	if (m_bKingAssetsSeizing || getParent() == NO_PLAYER || !GET_PLAYER(getParent()).isEurope())
@@ -3355,7 +3354,7 @@ void CvPlayer::seizeKingAssets()
 
 bool CvPlayer::canTradeWith(PlayerTypes eWhoTo) const
 {
-	//Kaszkaj - Use the normal trade window for technology purchases from a player's own king.
+	//Kaszkaj - Use the normal trade window for technology purchases from the player's State or Progenitor Exarch.
 	if (eWhoTo < 0 || eWhoTo >= MAX_PLAYERS || eWhoTo == getID())
 	{
 		return false;
@@ -3426,7 +3425,7 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 {
 	CvPlayer& kWhoTo = GET_PLAYER(eWhoTo);
 
-	//Kaszkaj - Royal technology trades accept gold or a fixed tax increase per technology.
+	//Kaszkaj - Technology purchases from the State or Progenitor Exarch accept Credits or a fixed tax increase per technology.
 	if (isEurope() || kWhoTo.isEurope())
 	{
 		const CvPlayer& kKing = isEurope() ? *this : kWhoTo;
@@ -3727,20 +3726,20 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 
 DenialTypes CvPlayer::getTradeDenial(PlayerTypes eWhoTo, TradeData item) const
 {
-	//Kaszkaj - Refuse every trade involving barbarians, including gold and peace treaties.
+	//Kaszkaj - Refuse every trade with the Outer Gods Pantheon, including Credits and peace treaties.
 	if (isBarbarian() || GET_PLAYER(eWhoTo).isBarbarian())
 	{
 		return DENIAL_NEVER;
 	}
 
-	//Kaszkaj - Other players cannot negotiate a third-party peace with barbarians.
+	//Kaszkaj - Other players cannot negotiate third-party peace with the Outer Gods Pantheon.
 	if (item.m_eItemType == TRADE_PEACE &&
 		GET_TEAM((TeamTypes) item.m_iData1).isBarbarian())
 	{
 		return DENIAL_NEVER;
 	}
 
-	//Kaszkaj - Apply the royal trade rules instead of transport-based yield trade denials.
+	//Kaszkaj - Apply the State or Progenitor Exarch's technology trade rules instead of transport-based cargo trade denials.
 	if (isEurope() || GET_PLAYER(eWhoTo).isEurope())
 	{
 		return canTradeItem(eWhoTo, item, false) ? NO_DENIAL : DENIAL_NEVER;
@@ -4720,7 +4719,7 @@ void CvPlayer::found(int iX, int iY)
 		}
 	}
 
-	//Kaszkaj - Add free AI defenders once when a new city is founded.
+	//Kaszkaj - Add free AI defenders once when a new Colony is founded.
 	GET_PLAYER(getID()).AI_addFreeCityDefenders(pCity);
 
 	gDLL->getEventReporterIFace()->cityBuilt(pCity);
@@ -5326,7 +5325,7 @@ void CvPlayer::processFatherOnce(FatherTypes eFather)
 				{
 					CvPlot* pStartingPlot = getStartingPlot();
 					CvPlot* pEuropePlot = pStartingPlot;
-					//Kaszkaj - Place free ships at a Europe entry plot so they can sail back.
+					//Kaszkaj - Place free ships at an Earth entry plot so they can return from Earth.
 					if (pEuropePlot != NULL && !pEuropePlot->isEurope())
 					{
 						pEuropePlot = NULL;
@@ -5392,6 +5391,13 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra, b
 {
 	PROFILE_FUNC();
 
+	//Kaszkaj - Allow AI to finish one Janus Device; use the normal build rules for humans.
+	if (!isHuman() && eBuild == (BuildTypes)GC.getInfoTypeForString("BUILD_JANUS_DEVICE", true))
+	{
+		GET_PLAYER(getID()).AI_initJanusDeviceState();
+		if (!GET_PLAYER(getID()).AI_canBuildJanusDevice(pPlot)) return false;
+	}
+
 	if (!(pPlot->canBuild(eBuild, getID(), bTestVisible)))
 	{
 		return false;
@@ -5399,55 +5405,21 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestEra, b
 
     ///TKs Invention Core Mod v 1.0
     //orlanth aliens change "if (!isNative() && !isEurope())" to "if !isEurope())
-    if (!isEurope())
+	ImprovementTypes eImprovement = (ImprovementTypes)GC.getBuildInfo(eBuild).getImprovement();
+	if (!isEurope() && eImprovement != NO_IMPROVEMENT)
 	{
-        for (int iCivic = 0; iCivic < GC.getNumCivicInfos(); ++iCivic)
-        {
-            if (GC.getCivicInfo((CivicTypes) iCivic).getCivicOptionType() == (CivicOptionTypes)GC.getDefineINT("CIVICOPTION_INVENTIONS"))
-            {
-                CvCivicInfo& kCivicInfo = GC.getCivicInfo((CivicTypes) iCivic);
-                ImprovementTypes eImprovement = (ImprovementTypes) GC.getBuildInfo(eBuild).getImprovement();
-                if (eImprovement != NO_IMPROVEMENT)
-                {
-                    if (kCivicInfo.getAllowsBuildTypes(eImprovement) > 0)
-                    {
-                        if (kCivicInfo.getAllowsBuildTypesTerrain(pPlot->getTerrainType()) > 0)
-                        {
-                            if (getIdeasResearched((CivicTypes) iCivic) <= 0)
-                            {
-                                return false;
-                            }
-                        }
-
-                        if (getIdeasResearched((CivicTypes) iCivic) <= 0)
-                        {
-                            return false;
-                        }
-                    }
-                    else if (kCivicInfo.getAllowsBuildTypes(eImprovement) < 0)
-                    {
-                        if (kCivicInfo.getAllowsBuildTypesTerrain(pPlot->getTerrainType()) < 0)
-                        {
-                            if (getIdeasResearched((CivicTypes) iCivic) > 0)
-                            {
-                                return false;
-                            }
-                        }
-
-                        if (getIdeasResearched((CivicTypes) iCivic) > 0)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
+		const std::vector<CivicTypes>& aeRestrictions = GC.getImprovementInfo(eImprovement).getBuildTechnologyRestrictions();
+		int iCivicOption = GC.getDefineINT("CIVICOPTION_INVENTIONS");
+		for (int i = 0; i < (int)aeRestrictions.size(); ++i)
+		{
+			CivicTypes eCivic = aeRestrictions[i];
+			const CvCivicInfo& kCivic = GC.getCivicInfo(eCivic);
+			if (kCivic.getCivicOptionType() != iCivicOption) continue;
+			int iAllowed = kCivic.getAllowsBuildTypes(eImprovement);
+			if ((iAllowed > 0 && getIdeasResearched(eCivic) <= 0)
+				|| (iAllowed < 0 && getIdeasResearched(eCivic) > 0)) return false;
+		}
 	}
-
-
-
-
-
 
 	if (!bTestVisible)
 	{
@@ -5584,18 +5556,12 @@ bool CvPlayer::canDoCivics(CivicTypes eCivic) const
 	if (eCivic != NO_CIVIC)
 	{
             ///Disallow Tech Code
-            for (int iCivic = 0; iCivic < GC.getNumCivicInfos(); ++iCivic)
+            const std::vector<CivicTypes>& aeBlockers = GC.getCivicInfo(eCivic).getBlockingCivics();
+            for (int i = 0; i < (int)aeBlockers.size(); ++i)
             {
-                if (GC.getCivicInfo((CivicTypes) iCivic).getCivicOptionType() == (CivicOptionTypes)GC.getDefineINT("CIVICOPTION_INVENTIONS"))
+                if (getIdeasResearched(aeBlockers[i]) > 0)
                 {
-                    CvCivicInfo& kCivicInfo = GC.getCivicInfo((CivicTypes) iCivic);
-                    if (kCivicInfo.getDisallowsTech() == eCivic)
-                    {
-                        if (getIdeasResearched((CivicTypes) iCivic) > 0)
-                        {
-                            return false;
-                        }
-                    }
+                    return false;
                 }
             }
             CvCivicInfo& kCivicInfo = GC.getCivicInfo(eCivic);
@@ -6493,12 +6459,12 @@ void CvPlayer::setAlive(bool bNewValue)
 
 void CvPlayer::verifyAlive()
 {
-	//Kaszkaj - City and unit transfers must finish before checking the defeated player's survival.
+	//Kaszkaj - Colony and unit transfers must finish before checking the defeated player's survival.
 	if (m_bKingAssetsSeizing)
 	{
 		return;
 	}
-	//Kaszkaj - Keep the confiscation dialogue open until the player leaves; never grant a royal rescue.
+	//Kaszkaj - Keep confiscation dialogue open until the player leaves; never grant rescue by the State or Progenitor Exarch.
 	if (isHuman() && getParent() != NO_PLAYER && getTaxRate() > 100)
 	{
 		if (!isAlive() || (GC.getGameINLINE().getActivePlayer() == getID() && gDLL->isDiplomacy()
@@ -6512,7 +6478,7 @@ void CvPlayer::verifyAlive()
 		return;
 	}
 
-	//Kaszkaj - Keep the barbarian faction available when it has no cities or units.
+	//Kaszkaj - Keep the Outer Gods Pantheon available when it has no Colonies or units.
 	if (isBarbarian() && isAlive())
 	{
 		return;
@@ -6552,7 +6518,7 @@ void CvPlayer::verifyAlive()
 
 					//change taxrate
 					int iOldTaxRate = getTaxRate();
-					int iNewTaxRate = std::min(99, iOldTaxRate + 1 + GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("TAX_RATE_MAX_INCREASE"), "Tax Rate Increase"));
+					int iNewTaxRate = getNewTaxRate(std::min(99, iOldTaxRate + 1 + GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("TAX_RATE_MAX_INCREASE"), "Tax Rate Increase")));
 					int iChange = iNewTaxRate - iOldTaxRate;
 					changeTaxRate(iChange);
 
@@ -8985,6 +8951,7 @@ void CvPlayer::doBells()
 						addRevolutionEuropeUnit(eUnit, eUnitProfession);
 					}
 
+					ensureRevolutionTransportCapacity();
 					CvWString szBuffer = gDLL->getText("TXT_KEY_NEW_EUROPE_ARMY_NEW", kParent.getCivilizationShortDescriptionKey(), getCivilizationShortDescriptionKey(), iNumUnits, kParent.getCivilizationAdjectiveKey());
 					gDLL->getInterfaceIFace()->addMessage(getID(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_UNIT_GREATPEOPLE", GC.getGameINLINE().isDebugMode() ? MESSAGE_TYPE_MAJOR_EVENT : MESSAGE_TYPE_INFO, GC.getLeaderHeadInfo(kParent.getLeaderType()).getButton(), (ColorTypes)GC.getInfoTypeForString("COLOR_UNIT_TEXT"));
 				}
@@ -10501,7 +10468,6 @@ void CvPlayer::processCivics(CivicTypes eCivic, int iChange, bool bResearch)
     }
 
     changeFreeTechs(kCivicInfo.getFreeTechs());
-    //Kaszkaj - Apply civic bonuses using the shared Inventor rate and threshold names.
     changeInventorModifier(kCivicInfo.getInventorRateChange());
     changeGold(kCivicInfo.getGoldBonus());
 
@@ -11118,7 +11084,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 	///TKs Invention Core Mod v 1.0
 	pStream->Read(&m_iTemporyIdeasStored);
 	pStream->Read(&m_iIdeasStored);
-	//Kaszkaj - Read the Inventor modifiers from their existing save fields.
 	pStream->Read(&m_iInventorModifier);
     pStream->Read(&m_iInventorThresholdModifier);
 	pStream->Read(&m_iIdeasExperience);
@@ -11488,7 +11453,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 	 ///TKs Invention Core Mod v 1.0
     pStream->Write(m_iTemporyIdeasStored);
 	pStream->Write(m_iIdeasStored);
-	//Kaszkaj - Write the Inventor modifiers to their existing save fields.
 	pStream->Write(m_iInventorModifier);
 	pStream->Write(m_iInventorThresholdModifier);
 	pStream->Write(m_iIdeasExperience);
@@ -13323,7 +13287,7 @@ int CvPlayer::getEventTriggerWeight(EventTriggerTypes eTrigger) const
 {
 	CvEventTriggerInfo& kTrigger = GC.getEventTriggerInfo(eTrigger);
 
-	//Kaszkaj - Allow native and colonial AI start events only for the matching faction; exclude Europe.
+	//Kaszkaj - Allow Alien and Colonist AI start events only for the matching faction; exclude parent factions.
 	if (!isHuman())
 	{
 		if (isEurope())
@@ -14053,7 +14017,7 @@ CvUnit* CvPlayer::buyEuropeUnit(UnitTypes eUnit, int iPriceModifier)
 	CvUnit* pUnit = NULL;
 	CvPlot* pStartingPlot = getStartingPlot();
 	CvPlot* pEuropePlot = pStartingPlot;
-	//Kaszkaj - Place bought ships at a Europe entry plot so they can sail back.
+	//Kaszkaj - Place purchased ships at an Earth entry plot so they can return from Earth.
 	if (pEuropePlot != NULL && !pEuropePlot->isEurope())
 	{
 		pEuropePlot = NULL;
@@ -14225,6 +14189,13 @@ void CvPlayer::changeBellsStored(int iChange)
 int CvPlayer::getTaxRate() const
 {
 	return m_iTaxRate;
+}
+
+//Kaszkaj - Limit ordinary AI tax increases without reducing existing tax or altering voluntary technology deals.
+int CvPlayer::getNewTaxRate(int iRequested) const
+{
+	if (!isHuman()) iRequested = std::min(iRequested, range(GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIMaxTaxrate(), 0, 100));
+	return std::max(getTaxRate(), iRequested);
 }
 
 void CvPlayer::setTaxRate(int iValue)
@@ -14449,6 +14420,25 @@ int CvPlayer::getTradeYieldAmount(YieldTypes eYield, CvUnit* pTransport) const
 		}
 
 		int iCityAmount = pCity->getYieldStored(eYield);
+		//Kaszkaj - Alien AI sells surplus cargo while keeping construction materials, production inputs and Food.
+		if (isNative() && !isHuman() && pCity->getOwnerINLINE() == getID())
+		{
+			int iReserve = std::max(0, pCity->getMaintainLevel(eYield));
+			int iInputNeed = std::max(pCity->AI_getNeededYield(eYield), pCity->getRawYieldConsumed(eYield));
+			int iInputShortage = std::max(0, iInputNeed - pCity->getRawYieldProduced(eYield));
+			iReserve = std::max(iReserve, 4 * iInputShortage);
+			if (eYield == YIELD_FOOD)
+			{
+				iReserve = std::max(iReserve, 2 * pCity->getRawYieldConsumed(YIELD_FOOD));
+			}
+			iCityAmount = std::max(0, iCityAmount - iReserve);
+			if (eYield == YIELD_MUSKETS)
+			{
+				//Kaszkaj - Reserve Weapons when the Colony already has the materials to build an Alien spaceship.
+				ProfessionTypes eArmed = (ProfessionTypes)GC.getInfoTypeForString("PROFESSION_ARMED_BRAVE", true);
+				if (eArmed != NO_PROFESSION && GET_PLAYER(getID()).AI_shouldReserveNavalWeapons(pCity, eArmed)) return 0;
+			}
+		}
 		int iAmountAvailable = pTransport->getLoadYieldAmount(eYield);
 		iAmount = std::min(iCityAmount, iAmountAvailable);
 	}
@@ -14876,42 +14866,23 @@ bool CvPlayer::isProfessionValid(ProfessionTypes eProfession, UnitTypes eUnit) c
 //        {
             if (!isNative() && !isEurope())
             {
-                for (int iCivic = 0; iCivic < GC.getNumCivicInfos(); ++iCivic)
+                const CvProfessionInfo& kProfessionInfo = GC.getProfessionInfo(eProfession);
+                const std::vector<CivicTypes>& aeCivics = kProfessionInfo.getTechnologyRestrictions();
+                YieldTypes eYieldProduced = (YieldTypes)kProfessionInfo.getYieldsProduced(0);
+                for (int i = 0; i < (int)aeCivics.size(); ++i)
                 {
-                    if (GC.getCivicInfo((CivicTypes) iCivic).getCivicOptionType() == (CivicOptionTypes)GC.getDefineINT("CIVICOPTION_INVENTIONS"))
+                    CivicTypes eCivic = aeCivics[i];
+                    const CvCivicInfo& kCivicInfo = GC.getCivicInfo(eCivic);
+                    int iResearched = getIdeasResearched(eCivic);
+                    if (eYieldProduced != NO_YIELD && kCivicInfo.getAllowsYields(eYieldProduced) > 0 && iResearched == 0)
                     {
-                        CvCivicInfo& kCivicInfo = GC.getCivicInfo((CivicTypes) iCivic);
-                        CvProfessionInfo& kProfessionInfo = GC.getProfessionInfo(eProfession);
-                        YieldTypes eYieldProduced = (YieldTypes) kProfessionInfo.getYieldsProduced(0);
-                        if (eYieldProduced != NO_YIELD && kCivicInfo.getAllowsYields(eYieldProduced) > 0)
-                        {
-                            if (getIdeasResearched((CivicTypes) iCivic) == 0)
-                            {
-                                return false;
-                            }
-                        }
-
-                        if (kCivicInfo.getAllowsProfessions(eProfession) > 0)
-                        {
-                            if (getIdeasResearched((CivicTypes) iCivic) == 0)
-                            {
-                                return false;
-                            }
-
-                        }
-                        else if (kCivicInfo.getAllowsProfessions(eProfession) < 0)
-                        {
-                            if (getIdeasResearched((CivicTypes) iCivic) > 0)
-                            {
-                                return false;
-                            }
-
-                        }
-
-
-
+                        return false;
                     }
-
+                    int iAllowsProfession = kCivicInfo.getAllowsProfessions(eProfession);
+                    if ((iAllowsProfession > 0 && iResearched == 0) || (iAllowsProfession < 0 && iResearched > 0))
+                    {
+                        return false;
+                    }
                 }
             }
        //}
@@ -14919,6 +14890,19 @@ bool CvPlayer::isProfessionValid(ProfessionTypes eProfession, UnitTypes eUnit) c
 
 		if (eUnit != NO_UNIT)
 		{
+			//Kaszkaj - Only Alien, Elite Warrior and Alien Crossbreed units may use Alien Soldier, Alien Mecha and Alien Corsair professions under Alien AI.
+			if (isNative() && !isHuman() && !GC.getProfessionInfo(eProfession).isCitizen())
+			{
+				const char* szProfession = GC.getProfessionInfo(eProfession).getType();
+				if (std::strcmp(szProfession, "PROFESSION_MOUNTED_BRAVE") == 0
+					|| std::strcmp(szProfession, "PROFESSION_ARMED_BRAVE") == 0
+					|| std::strcmp(szProfession, "PROFESSION_ARMED_MOUNTED_BRAVE") == 0)
+				{
+					const char* szUnit = GC.getUnitInfo(eUnit).getType();
+					if (std::strcmp(szUnit, "UNIT_NATIVE") != 0 && std::strcmp(szUnit, "UNIT_ELITE") != 0
+						&& std::strcmp(szUnit, "UNIT_ALIENCROSSBREED") != 0) return false;
+				}
+			}
 			if (GC.getUnitInfo(eUnit).isOnlyDefensive())
 			{
 				// Natives cannot be combat professions
@@ -15002,8 +14986,9 @@ void CvPlayer::doPrices()
 					if(GC.getGameINLINE().getSorenRandNum(100, "Tax rate increase") < GC.getDefineINT("TAX_INCREASE_CHANCE"))
 					{
 						int iOldTaxRate = getTaxRate();
-						int iNewTaxRate = std::min(99, iOldTaxRate + 1 + GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("TAX_RATE_MAX_INCREASE"), "Tax Rate Increase"));
+						int iNewTaxRate = getNewTaxRate(std::min(99, iOldTaxRate + 1 + GC.getGameINLINE().getSorenRandNum(GC.getDefineINT("TAX_RATE_MAX_INCREASE"), "Tax Rate Increase")));
 						int iChange = iNewTaxRate - iOldTaxRate;
+						if (iChange <= 0) return;
 
 						if (isHuman())
 						{
@@ -15048,6 +15033,73 @@ ProfessionTypes CvPlayer::getRevolutionEuropeProfession(int i) const
 void CvPlayer::addRevolutionEuropeUnit(UnitTypes eUnit, ProfessionTypes eProfession)
 {
 	m_aEuropeRevolutionUnits.push_back(std::make_pair(eUnit, eProfession));
+}
+
+//Kaszkaj - Keep enough transports for the Imperial Expeditionary Forces (Earth and Progenitor) without removing soldiers.
+void CvPlayer::ensureRevolutionTransportCapacity()
+{
+	if (getParent() == NO_PLAYER || isInRevolution()) return;
+	int iSoldiers = 0;
+	int iRequiredSize = 1;
+	int iCapacity = 0;
+	for (int i = 0; i < getNumRevolutionEuropeUnits(); ++i)
+	{
+		UnitTypes eUnit = getRevolutionEuropeUnit(i);
+		if (eUnit == NO_UNIT) continue;
+		const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+		if (kUnit.getDomainType() == DOMAIN_LAND)
+		{
+			++iSoldiers;
+			iRequiredSize = std::max(iRequiredSize, kUnit.getRequiredTransportSize());
+		}
+	}
+	if (iSoldiers == 0) return;
+	const CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(GET_PLAYER(getParent()).getCivilizationType());
+	UnitTypes eTransport = NO_UNIT;
+	ProfessionTypes eTransportProfession = NO_PROFESSION;
+	for (int i = 0; i < kCivilization.getNumCivilizationFreeUnits(); ++i)
+	{
+		UnitTypes eUnit = (UnitTypes)kCivilization.getCivilizationUnits(kCivilization.getCivilizationFreeUnitsClass(i));
+		if (eUnit == NO_UNIT) continue;
+		const CvUnitInfo& kShip = GC.getUnitInfo(eUnit);
+		if (kShip.getDomainType() != DOMAIN_SEA || kShip.getCargoSpace() < iRequiredSize
+			|| (kShip.getDomainCargo() != NO_DOMAIN && kShip.getDomainCargo() != DOMAIN_LAND)) continue;
+		bool bCompatible = true;
+		for (int j = 0; j < getNumRevolutionEuropeUnits(); ++j)
+		{
+			UnitTypes eSoldier = getRevolutionEuropeUnit(j);
+			if (eSoldier != NO_UNIT && GC.getUnitInfo(eSoldier).getDomainType() == DOMAIN_LAND
+				&& kShip.getSpecialCargo() != NO_SPECIALUNIT && kShip.getSpecialCargo() != GC.getUnitInfo(eSoldier).getSpecialUnitType()) bCompatible = false;
+		}
+		if (bCompatible && (eTransport == NO_UNIT || kShip.getCargoSpace() > GC.getUnitInfo(eTransport).getCargoSpace()))
+		{
+			eTransport = eUnit;
+			eTransportProfession = (ProfessionTypes)kCivilization.getCivilizationFreeUnitsProfession(i);
+		}
+	}
+	if (eTransport == NO_UNIT) return;
+	for (int i = 0; i < getNumRevolutionEuropeUnits(); ++i)
+	{
+		UnitTypes eUnit = getRevolutionEuropeUnit(i);
+		if (eUnit == NO_UNIT) continue;
+		const CvUnitInfo& kShip = GC.getUnitInfo(eUnit);
+		if (kShip.getDomainType() != DOMAIN_SEA || kShip.getCargoSpace() < iRequiredSize
+			|| (kShip.getDomainCargo() != NO_DOMAIN && kShip.getDomainCargo() != DOMAIN_LAND)) continue;
+		bool bCompatible = true;
+		for (int j = 0; j < getNumRevolutionEuropeUnits(); ++j)
+		{
+			UnitTypes eSoldier = getRevolutionEuropeUnit(j);
+			if (eSoldier != NO_UNIT && GC.getUnitInfo(eSoldier).getDomainType() == DOMAIN_LAND
+				&& kShip.getSpecialCargo() != NO_SPECIALUNIT && kShip.getSpecialCargo() != GC.getUnitInfo(eSoldier).getSpecialUnitType()) bCompatible = false;
+		}
+		if (bCompatible) iCapacity += kShip.getCargoSpace();
+	}
+	int iTarget = std::max(1, (iSoldiers * range(GC.getDefineINT("REF_TRANSPORT_CAPACITY_PERCENT"), 1, 100) + 99) / 100);
+	while (iCapacity < iTarget)
+	{
+		addRevolutionEuropeUnit(eTransport, eTransportProfession);
+		iCapacity += GC.getUnitInfo(eTransport).getCargoSpace();
+	}
 }
 
 void CvPlayer::clearRevolutionEuropeUnits()
@@ -15204,7 +15256,7 @@ const wchar* CvPlayer::getHurryItemTextKey(HurryTypes eHurry, int iData) const
 	return L"";
 }
 
-//Kaszkaj - Give AI an immigrant from the docks without spending crosses.
+//Kaszkaj - Give AI an immigrant from the docks without spending Propaganda.
 void CvPlayer::doAIImmigrant(int iIndex)
 {
 	if (iIndex >= 0 && iIndex < (int)m_aDocksNextUnits.size())
@@ -15213,7 +15265,7 @@ void CvPlayer::doAIImmigrant(int iIndex)
 	}
 }
 
-//Kaszkaj - Transfer surplus materials to AI cities that need them for production.
+//Kaszkaj - Transfer surplus materials to AI Colonies that need them for production.
 void CvPlayer::redistributeMaterials()
 {
 	if (isHuman() || isEurope() || !isAlive())
@@ -15230,7 +15282,7 @@ void CvPlayer::redistributeMaterials()
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
 		YieldTypes eYield = (YieldTypes)iYield;
-		if (eYield == YIELD_FOOD || !GC.getYieldInfo(eYield).isCargo())
+		if ((eYield == YIELD_FOOD && !isNative()) || !GC.getYieldInfo(eYield).isCargo())
 		{
 			continue;
 		}
@@ -15250,7 +15302,9 @@ void CvPlayer::redistributeMaterials()
 				{
 					break;
 				}
-				int iNeeded = iProductionNeeded - pReceiver->getYieldStored(eYield) - pReceiver->getYieldRushed(eYield);
+				if (eYield == YIELD_FOOD && iProductionNeeded <= 0) break;
+				int iFoodReserve = eYield == YIELD_FOOD ? pReceiver->AI_foodReserve() : 0;
+				int iNeeded = iProductionNeeded + iFoodReserve - pReceiver->getYieldStored(eYield) - pReceiver->getYieldRushed(eYield);
 				if (iNeeded <= 0)
 				{
 					break;
@@ -15258,6 +15312,13 @@ void CvPlayer::redistributeMaterials()
 				int iOwnProductionNeeded = pDonor->getProductionNeeded(eYield);
 				int iKeep = std::max(iReserve, iOwnProductionNeeded == MAX_INT ? 0
 					: std::max(0, iOwnProductionNeeded - pDonor->getYieldRushed(eYield)));
+				//Kaszkaj - Leave Food for the donor Colony's residents, growth and current recruitment.
+				if (eYield == YIELD_FOOD)
+				{
+					iKeep = pDonor->AI_foodReserve() + (iOwnProductionNeeded == MAX_INT ? 0
+						: std::max(0, iOwnProductionNeeded - pDonor->getYieldRushed(eYield)));
+					if (pDonor->foodDifference() < 0 || pDonor->isOccupation()) continue;
+				}
 				int iTransfer = std::min(iNeeded, std::max(0, pDonor->getYieldStored(eYield) - iKeep));
 				if (iTransfer > 0)
 				{
@@ -15344,7 +15405,7 @@ const wchar* CvPlayer::getTradeMessage(int i) const
 
 void CvPlayer::buildTradeTable(PlayerTypes eOtherPlayer, CLinkList<TradeData>& ourList, const IDInfo& kTransport) const
 {
-	//Kaszkaj - Do not show any royal trade inventory when the buyer is ineligible.
+	//Kaszkaj - Hide the State or Progenitor Exarch's trade inventory when the buyer is ineligible.
 	if ((isEurope() || GET_PLAYER(eOtherPlayer).isEurope()) && !canTradeWith(eOtherPlayer))
 	{
 		return;
@@ -15595,7 +15656,7 @@ bool CvPlayer::getHeadingTradeString(PlayerTypes eOtherPlayer, TradeableItems eI
 		szString = gDLL->getText("TXT_KEY_KNOWLEDGE");
 		break;
     ///TKe
-	//Kaszkaj - Group royal tax payments under their own trade heading.
+	//Kaszkaj - Group tax payments to the State or Progenitor Exarch under their own trade heading.
 	case TRADE_TAX:
 		szString = gDLL->getText("TXT_KEY_TRADE_TAX_HEADING");
 		break;
@@ -15696,7 +15757,6 @@ bool CvPlayer::getItemTradeString(PlayerTypes eOtherPlayer, bool bOffer, bool bS
     case TRADE_IDEAS:
 		{
 		    CvCivicInfo& kCivicInfo = GC.getCivicInfo((CivicTypes)zTradeData.m_iData1);
-           //Kaszkaj - Show the king's technology price without copying the abstract player class.
            const CvPlayer* pSeller = this;
            if (bOffer)
            {
@@ -15776,7 +15836,7 @@ bool CvPlayer::getItemTradeString(PlayerTypes eOtherPlayer, bool bOffer, bool bS
 
 void CvPlayer::updateTradeList(PlayerTypes eOtherPlayer, CLinkList<TradeData>& ourInventory, const CLinkList<TradeData>& ourOffer, const CLinkList<TradeData>& theirOffer, const IDInfo& kTransport) const
 {
-	//Kaszkaj - Update both the tax choice and YOU OFFER whenever the king's selected technologies change.
+	//Kaszkaj - Update the tax choice and YOU OFFER whenever the State or Progenitor Exarch's selected technologies change.
 	if (!isEurope() && getParent() == eOtherPlayer && GET_PLAYER(eOtherPlayer).isEurope())
 	{
 		int iNumTechnologies = 0;
@@ -15871,7 +15931,7 @@ void CvPlayer::updateTradeList(PlayerTypes eOtherPlayer, CLinkList<TradeData>& o
 
 int CvPlayer::getMaxGoldTrade(PlayerTypes eOtherPlayer, const IDInfo& kTransport) const
 {
-	//Kaszkaj - Alien and colonial subjects can pay their king from their full treasury without a transport.
+	//Kaszkaj - Allow Alien and Colonist subjects to pay the State or Progenitor Exarch from their full Credits balance without a transport.
 	if (getParent() == eOtherPlayer && eOtherPlayer != NO_PLAYER
 		&& GET_PLAYER(eOtherPlayer).canTradeKingTechnology(getID()))
 	{
@@ -16265,7 +16325,10 @@ void CvPlayer::setTechsInitialized(bool bSet)
 
 void CvPlayer::setAllResearchComplete(bool bSet)
 {
-    m_bAllResearchComplete = bSet;
+	if ((m_bAllResearchComplete != 0) == bSet) return;
+	m_bAllResearchComplete = bSet;
+	//Kaszkaj - Reassign AI research workers when research finishes or becomes available again.
+	if (!isHuman()) GET_PLAYER(getID()).AI_makeAssignWorkDirty();
 }
 
 
@@ -16306,7 +16369,7 @@ void CvPlayer::doIdeas(bool Cheat)
 		}
 	}
 
-	//Kaszkaj - Initialise start technologies once and keep fully informed kings out of research selection.
+	//Kaszkaj - Apply starting technologies once; the State and Progenitor Exarch start with every technology and do not choose research.
 	initInventions();
 	if (isEurope())
 	{
@@ -16483,7 +16546,7 @@ void CvPlayer::doIdeas(bool Cheat)
 			 char szOut[1024];
                 sprintf(szOut, "######################## Player %d %S has finished researching %d\n", getID(), getNameKey(), getCurrentResearch());
                 gDLL->messageControlLog(szOut);
-			//Kaszkaj - Award first discovery only when an invention is completed through research.
+			//Kaszkaj - Give first-discovery rewards only for completed research, not starting technologies or trades.
 			processCivics(eCivic, 1, !Cheat && !bFreeTech);
 
             int iCheatCode = 0;
@@ -16522,8 +16585,6 @@ void CvPlayer::doIdeas(bool Cheat)
         }
         /*if (gDLL->altKey())
         {
-            //Kaszkaj - Use the Inventor threshold in the disabled Alt-key shortcut.
-            //Kaszkaj - Read the Inventor threshold under the same TK_ name used in XML.
             setIdeasExperience(GC.getDefineINT("TK_INVENTOR_THRESHOLD"));
         }*/
     }
@@ -16574,6 +16635,10 @@ void CvPlayer::setCurrentResearch(CivicTypes eCurrentResearch)
 {
     //changeIdeasStored(-1);
 	m_eCurrentResearch = eCurrentResearch;
+	if (getID() != NO_PLAYER && CvPlayerAI::areStaticsInitialized())
+	{
+		GET_PLAYER(getID()).AI_invalidateResearchCache();
+	}
 }
 
 int CvPlayer::getIdeasResearched(CivicTypes eIndex) const
@@ -16586,6 +16651,10 @@ void CvPlayer::changeIdeasResearched(CivicTypes eIndex, int iChange)
 	if (eIndex != NO_CIVIC)
 	{
 		m_aiIdeasResearched[eIndex] += iChange;
+		if (getID() != NO_PLAYER && CvPlayerAI::areStaticsInitialized())
+		{
+			GET_PLAYER(getID()).AI_invalidateResearchCache();
+		}
 
 	}
 }
@@ -16687,25 +16756,21 @@ void CvPlayer::cancelResearchPact(TeamTypes eEndingTeam)
 		}
 	}
 }
-//Kaszkaj - Return the Inventor threshold modifier.
 int CvPlayer::getInventorThresholdModifier() const
 {
 	return m_iInventorThresholdModifier;
 }
 
-//Kaszkaj - Change the Inventor threshold modifier.
 void CvPlayer::changeInventorThresholdModifier(int iChange)
 {
 	m_iInventorThresholdModifier += iChange;
 }
 
-//Kaszkaj - Return the bonus added to Inventor progress.
 int CvPlayer::getInventorModifier() const
 {
 	return m_iInventorModifier;
 }
 
-//Kaszkaj - Change the bonus added to Inventor progress.
 void CvPlayer::changeInventorModifier(int iChange)
 {
 	m_iInventorModifier += iChange;
@@ -16715,10 +16780,9 @@ int CvPlayer::getIdeasExperience() const
 	return m_iIdeasExperience;
 }
 
-//Kaszkaj - Calculate the Inventor threshold using player modifiers and game speed.
+//Kaszkaj - Calculate the Visionary Researcher threshold using player modifiers and game speed.
 int CvPlayer::inventorThreshold() const
 {
-	//Kaszkaj - Read the Inventor threshold under the same TK_ name used in XML.
 	int iThreshold = (GC.getDefineINT("TK_INVENTOR_THRESHOLD") * ((getInventorThresholdModifier() + 100) / 100));
 ///TK Update 1.1b
 	iThreshold *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getGreatGeneralPercent();
@@ -16738,7 +16802,7 @@ void CvPlayer::setIdeasExperience(int iExperience)
 	//{
 		m_iIdeasExperience = getIdeasExperience() + iExperience;
 
-		//Kaszkaj - Create an Inventor when accumulated experience reaches the threshold.
+		//Kaszkaj - Create a Visionary Researcher when accumulated experience reaches the threshold.
 		int iExperienceThreshold = inventorThreshold();
 		if (getIdeasExperience() >= iExperienceThreshold && iExperienceThreshold > 0)
 		{
@@ -16780,7 +16844,7 @@ void CvPlayer::setIdeasExperience(int iExperience)
 	//}
 }
 
-//Kaszkaj - Create the Inventor in Europe and update the threshold when requested.
+//Kaszkaj - Create the Visionary Researcher on Earth and update the threshold when requested.
 void CvPlayer::createInventor(UnitTypes eInventorUnit, bool bIncrementExperience, int iX, int iY)
 {
 	CvUnit* pGreatUnit = initEuropeUnit(eInventorUnit);

@@ -16,6 +16,37 @@
 #include "CvGameTextMgr.h"
 #include "CvGameCoreUtils.h"
 
+static void clearCivicInfoCaches()
+{
+	for (int i = 0; i < GC.getNumCivicInfos(); ++i)
+	{
+		if (GC.getCivicInfo()[i] != NULL)
+		{
+			GC.getCivicInfo()[i]->clearTechnologyCache();
+		}
+	}
+	for (int i = 0; i < GC.getNumProfessionInfos(); ++i)
+	{
+		GC.getProfessionInfo((ProfessionTypes)i).clearTechnologyCache();
+	}
+	for (int i = 0; i < GC.getNumRouteInfos(); ++i)
+	{
+		GC.getRouteInfo((RouteTypes)i).clearTechnologyCache();
+	}
+	for (int i = 0; i < GC.getNumImprovementInfos(); ++i)
+	{
+		GC.getImprovementInfo((ImprovementTypes)i).clearCivicYieldCache();
+	}
+}
+
+static void clearBuildingInfoCaches()
+{
+	for (int i = 0; i < GC.getNumSpecialBuildingInfos(); ++i)
+	{
+		GC.getSpecialBuildingInfo((SpecialBuildingTypes)i).clearBuildingCache();
+	}
+}
+
 //------------------------------------------------------------------------------------------------------
 //
 //  FUNCTION:   CInfoBase()
@@ -1323,7 +1354,9 @@ CvProfessionInfo::CvProfessionInfo() :
 	m_bUnarmed(false),
 	m_bNoDefensiveBonus(false),
 	m_abFreePromotions(NULL),
-	m_iDefaultUnitAIType(NO_UNITAI)
+	m_iDefaultUnitAIType(NO_UNITAI),
+	m_iCachedCivicCount(-1),
+	m_iCachedCivicOption(NO_CIVICOPTION)
 {
 }
 
@@ -1472,25 +1505,8 @@ int CvProfessionInfo::getYieldsConsumed(int i, PlayerTypes eCurrentPlayer) const
             if (eCurrentResearch != NO_CIVIC)
             {
 				CvCivicInfo& kCivicInfo = GC.getCivicInfo(eCurrentResearch);
-                int iRequiredYield = 0;
-                for (int iResearch = 0; iResearch < NUM_YIELD_TYPES; iResearch++)
-                {
-                    if (kCivicInfo.getRequiredYields(iResearch) > 0)
-                    {
-                        if (iRequiredYield == i)
-                        {
-                            return iResearch;
-                        }
-                        iRequiredYield++;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-
-                }
-
-                return NO_YIELD;
+                const std::vector<YieldTypes>& aeRequiredYields = kCivicInfo.getRequiredYieldTypes();
+                return i < (int)aeRequiredYields.size() ? aeRequiredYields[i] : NO_YIELD;
 
             }
             else
@@ -1515,16 +1531,7 @@ int CvProfessionInfo::getNumYieldsConsumed(PlayerTypes eCurrentPlayer) const
         if (eCurrentResearch != NO_CIVIC)
         {
 			CvCivicInfo& kCivicInfo = GC.getCivicInfo(eCurrentResearch);
-            int iYieldsConsumed = 0;
-            for (int iResearch = 0; iResearch < NUM_YIELD_TYPES; iResearch++)
-            {
-                if (kCivicInfo.getRequiredYields(iResearch) > 0)
-                {
-                    iYieldsConsumed++;
-                }
-            }
-
-            return iYieldsConsumed;
+            return (int)kCivicInfo.getRequiredYieldTypes().size();
         }
         else
         {
@@ -1547,6 +1554,37 @@ int CvProfessionInfo::getNumYieldsConsumedPedia() const
 }
 ///TKe
 // MultipleYieldsConsumed End
+
+const std::vector<CivicTypes>& CvProfessionInfo::getTechnologyRestrictions() const
+{
+	int iCivicCount = GC.getNumCivicInfos();
+	int iCivicOption = GC.getDefineINT("CIVICOPTION_INVENTIONS");
+	if (m_iCachedCivicCount != iCivicCount || m_iCachedCivicOption != iCivicOption)
+	{
+		m_aeTechnologyRestrictions.clear();
+		ProfessionTypes eProfession = (ProfessionTypes)GC.getInfoTypeForString(getType());
+		YieldTypes eYield = getNumYieldsProduced() > 0 ? (YieldTypes)getYieldsProduced(0) : NO_YIELD;
+		for (int i = 0; i < iCivicCount; ++i)
+		{
+			const CvCivicInfo& kCivic = GC.getCivicInfo((CivicTypes)i);
+			if (kCivic.getCivicOptionType() == iCivicOption
+				&& ((eYield != NO_YIELD && kCivic.getAllowsYields(eYield) > 0) || kCivic.getAllowsProfessions(eProfession) != 0))
+			{
+				m_aeTechnologyRestrictions.push_back((CivicTypes)i);
+			}
+		}
+		m_iCachedCivicCount = iCivicCount;
+		m_iCachedCivicOption = iCivicOption;
+	}
+	return m_aeTechnologyRestrictions;
+}
+
+void CvProfessionInfo::clearTechnologyCache()
+{
+	m_iCachedCivicCount = -1;
+	m_aeTechnologyRestrictions.clear();
+}
+
 int CvProfessionInfo::getDefaultUnitAIType() const
 {
     return m_iDefaultUnitAIType;
@@ -1554,6 +1592,7 @@ int CvProfessionInfo::getDefaultUnitAIType() const
 
 void CvProfessionInfo::read(FDataStreamBase* stream)
 {
+	clearTechnologyCache();
 	// MultipleYieldsConsumed Start by Aymerick 05/01/2010
 	int iNumElements;
 	int iElement;
@@ -1679,6 +1718,7 @@ void CvProfessionInfo::write(FDataStreamBase* stream)
 }
 bool CvProfessionInfo::read(CvXMLLoadUtility* pXML)
 {
+	clearTechnologyCache();
 	CvString szTextVal;
 	if (!CvInfoBase::read(pXML))
 	{
@@ -3902,7 +3942,6 @@ m_iIncreasedEnemyHealRate(0),
 m_iCenterPlotFoodBonus(0),
 m_iFreeHurriedImmigrants(0),
 m_iGoldBonusForFirstToResearch(0),
-//Kaszkaj - Initialize the civic Inventor rate to zero.
 m_iInventorRateChange(0),
 m_iGoldBonus(0),
 m_iFreeTechs(0),
@@ -3947,7 +3986,10 @@ m_aiYieldModifier(NULL),
 m_aiCapitalYieldModifier(NULL),
 m_aiProfessionCombatChange(NULL),
 m_pabHurry(NULL),
-m_pabSpecialBuildingNotRequired(NULL)
+m_pabSpecialBuildingNotRequired(NULL),
+m_bRequiredYieldCacheValid(false),
+m_iCachedCivicCount(-1),
+m_iCachedCivicOption(NO_CIVICOPTION)
 {
 }
 //------------------------------------------------------------------------------------------------------
@@ -4125,7 +4167,6 @@ int CvCivicInfo::getGoldBonusForFirstToResearch() const
 	return m_iGoldBonusForFirstToResearch;
 }
 
-//Kaszkaj - Return the civic Inventor rate under the name used by XML.
 int CvCivicInfo::getInventorRateChange() const
 {
 	return m_iInventorRateChange;
@@ -4226,6 +4267,54 @@ int CvCivicInfo::getRequiredYields(int i) const
 	return m_aiRequiredYields ? m_aiRequiredYields[i] : -1;
 }
 
+
+const std::vector<CivicTypes>& CvCivicInfo::getBlockingCivics() const
+{
+	int iCivicCount = GC.getNumCivicInfos();
+	int iCivicOption = GC.getDefineINT("CIVICOPTION_INVENTIONS");
+	if (m_iCachedCivicCount != iCivicCount || m_iCachedCivicOption != iCivicOption)
+	{
+		m_aeBlockingCivics.clear();
+		CivicTypes eCivic = (CivicTypes)GC.getInfoTypeForString(getType());
+		for (int i = 0; i < iCivicCount; ++i)
+		{
+			const CvCivicInfo& kCivic = GC.getCivicInfo((CivicTypes)i);
+			if (kCivic.getCivicOptionType() == iCivicOption && kCivic.getDisallowsTech() == eCivic)
+			{
+				m_aeBlockingCivics.push_back((CivicTypes)i);
+			}
+		}
+		m_iCachedCivicCount = iCivicCount;
+		m_iCachedCivicOption = iCivicOption;
+	}
+	return m_aeBlockingCivics;
+}
+
+void CvCivicInfo::clearTechnologyCache()
+{
+	m_iCachedCivicCount = -1;
+	m_aeBlockingCivics.clear();
+	m_bRequiredYieldCacheValid = false;
+	m_aeRequiredYieldTypes.clear();
+}
+
+const std::vector<YieldTypes>& CvCivicInfo::getRequiredYieldTypes() const
+{
+	if (!m_bRequiredYieldCacheValid)
+	{
+		m_aeRequiredYieldTypes.clear();
+		for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+		{
+			if (getRequiredYields(i) > 0)
+			{
+				m_aeRequiredYieldTypes.push_back((YieldTypes)i);
+			}
+		}
+		m_bRequiredYieldCacheValid = true;
+	}
+	return m_aeRequiredYieldTypes;
+}
+
 int* CvCivicInfo::getRequiredYieldsArray() const
 {
 	return m_aiRequiredYields;
@@ -4317,6 +4406,8 @@ int CvCivicInfo::getFreeUnitClass(int i) const
 }
 void CvCivicInfo::read(FDataStreamBase* stream)
 {
+	clearCivicInfoCaches();
+	clearTechnologyCache();
 	CvInfoBase::read(stream);
 	uint uiFlag=0;
 	stream->Read(&uiFlag);		// flag for expansion
@@ -4351,7 +4442,6 @@ void CvCivicInfo::read(FDataStreamBase* stream)
 	stream->Read(&m_iCheaperPopulationGrowth);
 	stream->Read(&m_iIncreasedEnemyHealRate);
 	stream->Read(&m_iCenterPlotFoodBonus);
-	//Kaszkaj - Read the renamed Inventor rate from its existing cache field.
 	stream->Read(&m_iInventorRateChange);
 	stream->Read(&m_iFreeHurriedImmigrants);
 	stream->Read(&m_iGoldBonusForFirstToResearch);
@@ -4489,7 +4579,6 @@ void CvCivicInfo::write(FDataStreamBase* stream)
 	stream->Write(m_iIncreasedEnemyHealRate);
 	stream->Write(m_iGoldBonusForFirstToResearch);
 	stream->Write(m_iFreeHurriedImmigrants);
-	//Kaszkaj - Write the renamed Inventor rate to its existing cache field.
 	stream->Write(m_iInventorRateChange);
 	stream->Write(m_iGoldBonus);
 	stream->Write(m_iFreeTechs);
@@ -4537,6 +4626,8 @@ void CvCivicInfo::write(FDataStreamBase* stream)
 }
 bool CvCivicInfo::read(CvXMLLoadUtility* pXML)
 {
+	clearCivicInfoCaches();
+	clearTechnologyCache();
 	CvString szTextVal;
 	if (!CvInfoBase::read(pXML))
 	{
@@ -4674,6 +4765,7 @@ bool CvCivicInfo::read(CvXMLLoadUtility* pXML)
 	///TKs Invention Core Mod v 1.0
 bool CvCivicInfo::readPass2(CvXMLLoadUtility* pXML)
 {
+	clearCivicInfoCaches();
     CvString szTextVal;
 
     pXML->GetChildXmlValByName(szTextVal, "DisallowsTech");
@@ -5312,6 +5404,7 @@ const char* CvBuildingInfo::getMovie() const
 //
 void CvBuildingInfo::read(FDataStreamBase* stream)
 {
+	clearBuildingInfoCaches();
 	CvHotkeyInfo::read(stream);
 	uint uiFlag=0;
 	stream->Read(&uiFlag);	// flags for expansion
@@ -5466,6 +5559,7 @@ void CvBuildingInfo::write(FDataStreamBase* stream)
 //
 bool CvBuildingInfo::read(CvXMLLoadUtility* pXML)
 {
+	clearBuildingInfoCaches();
 	CvString szTextVal;
 	if (!CvHotkeyInfo::read(pXML))
 	{
@@ -5572,7 +5666,8 @@ CvSpecialBuildingInfo::CvSpecialBuildingInfo() :
 m_bValid(false),
 m_iChar(0),
 m_iFontButtonIndex(0),
-m_aiProductionTraits(NULL)
+m_aiProductionTraits(NULL),
+m_iCachedBuildingCount(-1)
 {
 }
 //------------------------------------------------------------------------------------------------------
@@ -5609,8 +5704,36 @@ int CvSpecialBuildingInfo::getProductionTraits(int i) const
 	FAssertMsg(i > -1, "Index out of bounds");
 	return m_aiProductionTraits ? m_aiProductionTraits[i] : -1;
 }
+
+const std::vector<BuildingTypes>& CvSpecialBuildingInfo::getBuildingTypes() const
+{
+	int iBuildingCount = GC.getNumBuildingInfos();
+	if (m_iCachedBuildingCount != iBuildingCount)
+	{
+		m_aeBuildingTypes.clear();
+		SpecialBuildingTypes eSpecialBuilding = (SpecialBuildingTypes)GC.getInfoTypeForString(getType());
+		for (int i = 0; i < iBuildingCount; ++i)
+		{
+			BuildingTypes eBuilding = (BuildingTypes)i;
+			if (GC.getBuildingInfo(eBuilding).getSpecialBuildingType() == eSpecialBuilding)
+			{
+				m_aeBuildingTypes.push_back(eBuilding);
+			}
+		}
+		m_iCachedBuildingCount = iBuildingCount;
+	}
+	return m_aeBuildingTypes;
+}
+
+void CvSpecialBuildingInfo::clearBuildingCache()
+{
+	m_iCachedBuildingCount = -1;
+	m_aeBuildingTypes.clear();
+}
+
 bool CvSpecialBuildingInfo::read(CvXMLLoadUtility* pXML)
 {
+	clearBuildingCache();
 	CvString szTextVal;
 	if (!CvInfoBase::read(pXML))
 	{
@@ -6741,8 +6864,10 @@ m_iAITrainPercent(0),
 m_iAIConstructPercent(0),
 m_iAIUnitUpgradePercent(0),
 m_iAIHurryPercent(0),
-//Kaszkaj - Default AI immigration to a 10% base chance when no setting is available.
+//Kaszkaj - Use a base AI immigration chance of 10 when XML has no iAIImmigration value.
 m_iAIImmigration(10),
+m_iAIMaxTaxrate(100),
+m_iAIMinimumStorageLossSellPercentage(0),
 m_iAIExtraTradePercent(0),
 m_iAIPerEraModifier(0),
 m_iAIAdvancedStartPercent(0),
@@ -6851,7 +6976,15 @@ int CvHandicapInfo::getAIHurryPercent() const
 {
 	return m_iAIHurryPercent;
 }
-//Kaszkaj - Return the AI immigration chance for this difficulty level.
+//Kaszkaj - Difficulty settings limit ordinary AI tax rises and set the sale value of storage overflow.
+int CvHandicapInfo::getAIMaxTaxrate() const
+{
+	return m_iAIMaxTaxrate;
+}
+int CvHandicapInfo::getAIMinimumStorageLossSellPercentage() const
+{
+	return m_iAIMinimumStorageLossSellPercentage;
+}
 int CvHandicapInfo::getAIImmigration() const
 {
 	return m_iAIImmigration;
@@ -6952,12 +7085,19 @@ void CvHandicapInfo::read(FDataStreamBase* stream)
 	{
 		stream->Read(&m_iAIImmigration);
 	}
+	m_iAIMaxTaxrate = 100;
+	m_iAIMinimumStorageLossSellPercentage = 0;
+	if (uiFlag >= 2)
+	{
+		stream->Read(&m_iAIMaxTaxrate);
+		stream->Read(&m_iAIMinimumStorageLossSellPercentage);
+	}
 }
 void CvHandicapInfo::write(FDataStreamBase* stream)
 {
 	CvInfoBase::write(stream);
-	//Kaszkaj - Mark caches that include the AI immigration setting.
-	uint uiFlag=1;
+	//Kaszkaj - Version the difficulty cache when adding AI economic settings.
+	uint uiFlag=2;
 	stream->Write(uiFlag);		// Flag for Expansion
 	stream->Write(m_iAdvancedStartPointsMod);
 	stream->Write(m_iStartingGold);
@@ -6995,6 +7135,8 @@ void CvHandicapInfo::write(FDataStreamBase* stream)
 	stream->Write(getNumGoodies(), m_aiGoodies);
 	//Kaszkaj - Append the AI immigration chance after the existing cache fields.
 	stream->Write(m_iAIImmigration);
+	stream->Write(m_iAIMaxTaxrate);
+	stream->Write(m_iAIMinimumStorageLossSellPercentage);
 }
 bool CvHandicapInfo::read(CvXMLLoadUtility* pXML)
 {
@@ -7026,6 +7168,8 @@ bool CvHandicapInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_iAIHurryPercent, "iAIHurryPercent");
 	//Kaszkaj - Read iAIImmigration from XML, keeping 10% when the tag is missing.
 	pXML->GetChildXmlValByName(&m_iAIImmigration, "iAIImmigration", 10);
+	pXML->GetChildXmlValByName(&m_iAIMaxTaxrate, "iAIMaxTaxrate", 100);
+	pXML->GetChildXmlValByName(&m_iAIMinimumStorageLossSellPercentage, "iAIMinimumStorageLossSellPercentage", 0);
 	pXML->GetChildXmlValByName(&m_iAIExtraTradePercent, "iAIExtraTradePercent");
 	pXML->GetChildXmlValByName(&m_iAIPerEraModifier, "iAIPerEraModifier");
 	pXML->GetChildXmlValByName(&m_iAIAdvancedStartPercent, "iAIAdvancedStartPercent");
@@ -7495,7 +7639,9 @@ m_iAdvancedStartCostIncrease(0),
 m_iValue(0),
 m_iMovementCost(0),
 m_iFlatMovementCost(0),
-m_aiYieldChange(NULL)
+m_aiYieldChange(NULL),
+m_iCachedCivicCount(-1),
+m_iCachedCivicOption(NO_CIVICOPTION)
 {
 }
 //------------------------------------------------------------------------------------------------------
@@ -7536,8 +7682,38 @@ int CvRouteInfo::getYieldChange(int i) const
 	FAssertMsg(i > -1, "Index out of bounds");
 	return m_aiYieldChange ? m_aiYieldChange[i] : -1;
 }
+
+const std::vector<CivicTypes>& CvRouteInfo::getMovementModifierCivics() const
+{
+	int iCivicCount = GC.getNumCivicInfos();
+	int iCivicOption = GC.getDefineINT("CIVICOPTION_INVENTIONS");
+	if (m_iCachedCivicCount != iCivicCount || m_iCachedCivicOption != iCivicOption)
+	{
+		m_aeMovementModifierCivics.clear();
+		RouteTypes eRoute = (RouteTypes)GC.getInfoTypeForString(getType());
+		for (int i = 0; i < iCivicCount; ++i)
+		{
+			const CvCivicInfo& kCivic = GC.getCivicInfo((CivicTypes)i);
+			if (kCivic.getCivicOptionType() == iCivicOption && kCivic.getRouteMovementMod(eRoute) != 0)
+			{
+				m_aeMovementModifierCivics.push_back((CivicTypes)i);
+			}
+		}
+		m_iCachedCivicCount = iCivicCount;
+		m_iCachedCivicOption = iCivicOption;
+	}
+	return m_aeMovementModifierCivics;
+}
+
+void CvRouteInfo::clearTechnologyCache()
+{
+	m_iCachedCivicCount = -1;
+	m_aeMovementModifierCivics.clear();
+}
+
 bool CvRouteInfo::read(CvXMLLoadUtility* pXML)
 {
+	clearTechnologyCache();
 	CvString szTextVal;
 	if (!CvInfoBase::read(pXML))
 	{
@@ -7647,7 +7823,6 @@ m_bWater(false),
 m_bGoody(false),
 m_bPermanent(false),
 m_bUseLSystem(false),
-//Kaszkaj - Default bOutsideBorders to 0, requiring the player's team territory.
 m_iOutsideBorders(0),
 m_iWorldSoundscapeScriptId(0),
 m_aiPrereqNatureYield(NULL),
@@ -7656,7 +7831,9 @@ m_aiRiverSideYieldChange(NULL),
 m_aiHillsYieldChange(NULL),
 m_abTerrainMakesValid(NULL),
 m_abFeatureMakesValid(NULL),
-m_paImprovementBonus(NULL)
+m_paImprovementBonus(NULL),
+m_iCachedCivicCount(-1),
+m_iCachedBuildCivicCount(-1)
 {
 }
 //------------------------------------------------------------------------------------------------------
@@ -7712,7 +7889,7 @@ int CvImprovementInfo::getPillageGold() const
 {
 	return m_iPillageGold;
 }
-//Kaszkaj - Return bOutsideBorders as 0, 1 or 2; keep the old boolean getter.
+//Kaszkaj - Keep the boolean border check for existing callers; use getOutsideBorders for modes 0, 1 and 2.
 int CvImprovementInfo::getOutsideBorders() const
 {
 	return m_iOutsideBorders;
@@ -7842,6 +8019,54 @@ bool CvImprovementInfo::getFeatureMakesValid(int i) const
 	FAssertMsg(i > -1, "Index out of bounds");
 	return m_abFeatureMakesValid ? m_abFeatureMakesValid[i] : false;
 }
+
+const std::vector<CivicTypes>& CvImprovementInfo::getBuildTechnologyRestrictions() const
+{
+	int iCivicCount = GC.getNumCivicInfos();
+	if (m_iCachedBuildCivicCount != iCivicCount)
+	{
+		m_aeBuildTechnologyRestrictions.clear();
+		ImprovementTypes eImprovement = (ImprovementTypes)GC.getInfoTypeForString(getType());
+		for (int i = 0; i < iCivicCount; ++i)
+		{
+			if (GC.getCivicInfo((CivicTypes)i).getAllowsBuildTypes(eImprovement) != 0)
+			{
+				m_aeBuildTechnologyRestrictions.push_back((CivicTypes)i);
+			}
+		}
+		m_iCachedBuildCivicCount = iCivicCount;
+	}
+	return m_aeBuildTechnologyRestrictions;
+}
+
+int CvImprovementInfo::getCivicYieldChange(YieldTypes eYield) const
+{
+	int iCivicCount = GC.getNumCivicInfos();
+	if (m_iCachedCivicCount != iCivicCount)
+	{
+		m_aiCivicYieldChanges.assign(NUM_YIELD_TYPES, 0);
+		ImprovementTypes eImprovement = (ImprovementTypes)GC.getInfoTypeForString(getType());
+		for (int i = 0; i < iCivicCount; ++i)
+		{
+			const CvCivicInfo& kCivic = GC.getCivicInfo((CivicTypes)i);
+			for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+			{
+				m_aiCivicYieldChanges[iYield] += kCivic.getImprovementYieldChanges(eImprovement, iYield);
+			}
+		}
+		m_iCachedCivicCount = iCivicCount;
+	}
+	return m_aiCivicYieldChanges[eYield];
+}
+
+void CvImprovementInfo::clearCivicYieldCache()
+{
+	m_iCachedBuildCivicCount = -1;
+	m_aeBuildTechnologyRestrictions.clear();
+	m_iCachedCivicCount = -1;
+	m_aiCivicYieldChanges.clear();
+}
+
 int CvImprovementInfo::getRouteYieldChanges(int i, int j) const
 {
 	FAssertMsg(i < GC.getNumRouteInfos(), "Index out of bounds");
@@ -7890,6 +8115,7 @@ const CvArtInfoImprovement* CvImprovementInfo::getArtInfo() const
 }
 void CvImprovementInfo::read(FDataStreamBase* stream)
 {
+	clearCivicYieldCache();
 	CvInfoBase::read(stream);
 	uint uiFlag=0;
 	stream->Read(&uiFlag);		// flag for expansion
@@ -8016,6 +8242,7 @@ void CvImprovementInfo::write(FDataStreamBase* stream)
 }
 bool CvImprovementInfo::read(CvXMLLoadUtility* pXML)
 {
+	clearCivicYieldCache();
 	CvString szTextVal;
 	if (!CvInfoBase::read(pXML))
 	{
@@ -9698,6 +9925,7 @@ bool CvLeaderHeadInfo::read(CvXMLLoadUtility* pXML)
 CvWorldInfo::CvWorldInfo() :
 m_iDefaultPlayers(0),
 m_iDefaultNativePlayers(0),
+m_iAIImmigrationModifier(100),
 m_iUnitNameModifier(0),
 m_iTargetNumCities(0),
 m_iBuildingClassPrereqModifier(0),
@@ -9726,6 +9954,10 @@ int CvWorldInfo::getDefaultPlayers() const
 int CvWorldInfo::getDefaultNativePlayers() const
 {
 	return m_iDefaultNativePlayers;
+}
+int CvWorldInfo::getAIImmigrationModifier() const
+{
+	return m_iAIImmigrationModifier;
 }
 int CvWorldInfo::getUnitNameModifier() const
 {
@@ -9771,6 +10003,7 @@ bool CvWorldInfo::read(CvXMLLoadUtility* pXML)
 	}
 	pXML->GetChildXmlValByName(&m_iDefaultPlayers, "iDefaultPlayers");
 	pXML->GetChildXmlValByName(&m_iDefaultNativePlayers, "iDefaultNativePlayers");
+	pXML->GetChildXmlValByName(&m_iAIImmigrationModifier, "iAIImmigrationModifier", 100);
 	pXML->GetChildXmlValByName(&m_iUnitNameModifier, "iUnitNameModifier");
 	pXML->GetChildXmlValByName(&m_iTargetNumCities, "iTargetNumCities");
 	pXML->GetChildXmlValByName(&m_iBuildingClassPrereqModifier, "iBuildingClassPrereqModifier");

@@ -798,7 +798,7 @@ int pathDestValid(int iToX, int iToY, const void* pointer, FAStar* finder)
 			}
 		}
 
-		//Kaszkaj - Allow all-terrain units to find paths across separate land and water areas.
+		//Kaszkaj - Allow all-terrain units to find paths across separate land and space areas.
 		if (pSelectionGroup->getDomainType() == DOMAIN_LAND && !pSelectionGroup->canMoveAllTerrain())
 		{
 			int iGroupAreaID = pSelectionGroup->getArea();

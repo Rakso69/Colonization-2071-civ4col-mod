@@ -1,5 +1,0 @@
-CUSTOM_CFLAGS = /DFASSERT_ENABLE
-
-TOOLKIT=C:\Users\oskar\Documents\GitHub\Compiler\Microsoft Visual C++ Toolkit 2003
-PSDK=C:\Users\oskar\Documents\GitHub\Compiler\Microsoft SDKs\Windows\v6.0
-CIV4_PATH=C:\Program Files (x86)\Steam\steamapps\common\Civilization IV Colonization
