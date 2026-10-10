@@ -267,13 +267,14 @@ class CvDomesticAdvisor:
 				szText = localText.getText("TXT_KEY_COLOR_NEGATIVE", ()) + szText + localText.getText("TXT_KEY_COLOR_REVERT", ())			
 			screen.setTableInt(szState + "ListBackground", 5, i, "<font=3>" + szText + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 			# Hammers rate
-			screen.setTableInt(szState + "ListBackground", 6, i, "<font=3>" + unicode(pLoopCity.calculateNetYield(YieldTypes.YIELD_HAMMERS)) + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
+			NetYields = pLoopCity.calculateYieldTotals()[0]
+			screen.setTableInt(szState + "ListBackground", 6, i, "<font=3>" + unicode(NetYields[YieldTypes.YIELD_HAMMERS]) + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 			#Bell rate
-			screen.setTableInt(szState + "ListBackground", 8, i, "<font=3>" + unicode(pLoopCity.calculateNetYield(YieldTypes.YIELD_BELLS)) + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
+			screen.setTableInt(szState + "ListBackground", 8, i, "<font=3>" + unicode(NetYields[YieldTypes.YIELD_BELLS]) + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 			# Crosses rate
-			screen.setTableInt(szState + "ListBackground", 10, i, "<font=3>" + unicode(pLoopCity.calculateNetYield(YieldTypes.YIELD_CROSSES)) + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
+			screen.setTableInt(szState + "ListBackground", 10, i, "<font=3>" + unicode(NetYields[YieldTypes.YIELD_CROSSES]) + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 			# Education rate
-			screen.setTableInt(szState + "ListBackground", 11, i, "<font=3>" + unicode(pLoopCity.calculateNetYield(YieldTypes.YIELD_EDUCATION)) + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
+			screen.setTableInt(szState + "ListBackground", 11, i, "<font=3>" + unicode(NetYields[YieldTypes.YIELD_EDUCATION]) + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 			# Garrison
 			screen.setTableInt(szState + "ListBackground", 13, i, "<font=3>" + unicode(pLoopCity.plot().getNumDefenders(pLoopCity.getOwner())) + "</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 			# Defense
@@ -284,8 +285,9 @@ class CvDomesticAdvisor:
 
 		elif(self.CurrentState == self.PRODUCTION_STATE):
 
+			NetYields = pLoopCity.calculateYieldTotals()[0]
 			for iYield in range(YieldTypes.YIELD_FOOD, YieldTypes.YIELD_TRADE_GOODS + 1):
-				iNetYield = pLoopCity.calculateNetYield(iYield)
+				iNetYield = NetYields[iYield]
 				szText = unicode(iNetYield)
 				if iNetYield > 0:
 					szText = localText.getText("TXT_KEY_COLOR_POSITIVE", ()) + u"+" + szText + localText.getText("TXT_KEY_COLOR_REVERT", ())
@@ -297,6 +299,7 @@ class CvDomesticAdvisor:
 
 		elif(self.CurrentState == self.WAREHOUSE_STATE):
 
+			NetYields = pLoopCity.calculateYieldTotals()[0]
 			screen.setTableInt("WareHouseStateListBackground", 2, i, u"<font=3><color=255,255,255>" + str(pLoopCity.getMaxYieldCapacity()) + u"</color></font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 
 			for iYield in range(YieldTypes.YIELD_FOOD, YieldTypes.YIELD_TRADE_GOODS + 1):
@@ -304,7 +307,7 @@ class CvDomesticAdvisor:
 				szText = unicode(iNetYield)
 				if iNetYield == 0:
 					szText = ""
-				if (pLoopCity.calculateNetYield(iYield) * 5 + pLoopCity.getYieldStored(iYield) <= pLoopCity.getMaxYieldCapacity() or iYield == YieldTypes.YIELD_FOOD):
+				if (NetYields[iYield] * 5 + pLoopCity.getYieldStored(iYield) <= pLoopCity.getMaxYieldCapacity() or iYield == YieldTypes.YIELD_FOOD):
 					screen.setTableInt("WareHouseStateListBackground", iYield + 3, i, u"<font=3><color=0,255,255>" + szText + u"</color></font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
 				elif (pLoopCity.getYieldStored(iYield) <= pLoopCity.getMaxYieldCapacity()):			
 					screen.setTableInt("WareHouseStateListBackground", iYield + 3, i, u"<font=3><color=255,255,0>" + szText + u"</color></font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY )
@@ -383,17 +386,18 @@ class CvDomesticAdvisor:
 				SelectionGroup = self.Transports[iSelectionGroupIndex]
 
 				if (not SelectionGroup.isNone()):
-					GroupHeadID = SelectionGroup.getHeadUnit().getID()
+					HeadUnit = SelectionGroup.getHeadUnit()
+					GroupHeadID = HeadUnit.getID()
 					szButtonName = "UnitGroupButton" + str(SelectionGroup.getID()) + "Route" + str(iRow)
 					if(SelectionGroup.isAssignedTradeRoute(pRoute.getID())):
-						screen.addCheckBoxGFCAt("RoutePanel" + str(iRow), szButtonName, SelectionGroup.getHeadUnit().getButton(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), iSelectionGroupIndex * iSpace, 0, self.iCityButtonSize, self.iCityButtonSize, WidgetTypes.WIDGET_GENERAL, 10001, SelectionGroup.getHeadUnit().getID(), ButtonStyles.BUTTON_STYLE_LABEL )
+						screen.addCheckBoxGFCAt("RoutePanel" + str(iRow), szButtonName, HeadUnit.getButton(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), iSelectionGroupIndex * iSpace, 0, self.iCityButtonSize, self.iCityButtonSize, WidgetTypes.WIDGET_GENERAL, 10001, GroupHeadID, ButtonStyles.BUTTON_STYLE_LABEL )
 					elif (not self.RouteValidity[iSelectionGroupIndex][iRow]):
 						screen.addDDSGFCAt( szButtonName, "RoutePanel" + str(iRow), ArtFileMgr.getInterfaceArtInfo("INTERFACE_BUTTONS_CANCEL").getPath(), iSelectionGroupIndex * iSpace, 0, self.iCityButtonSize, self.iCityButtonSize, WidgetTypes.WIDGET_GENERAL, -1, -1, False )
 
 					iPosition += 20
 					SelectedTransportID = self.selectedSelectionGroupHeadUnitID
 					if (SelectedTransportID != -1):
-						if (SelectedTransportID == SelectionGroup.getHeadUnit().getID()):
+						if (SelectedTransportID == GroupHeadID):
 						
 							if (self.RouteValidity[iSelectionGroupIndex][iRow]):
 								if (SelectionGroup.isAssignedTradeRoute(pRoute.getID())):
@@ -426,15 +430,16 @@ class CvDomesticAdvisor:
 				SelectionGroup = self.Transports[iSelectionGroupIndex]
 
 				if (not SelectionGroup.isNone()):
-					GroupHeadID = SelectionGroup.getHeadUnit().getID()
+					HeadUnit = SelectionGroup.getHeadUnit()
+					GroupHeadID = HeadUnit.getID()
 					szButtonName = "AllTransport" + str(SelectionGroup.getID())
-					screen.addCheckBoxGFCAt("AllTransportPanel", szButtonName, SelectionGroup.getHeadUnit().getButton(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), iSelectionGroupIndex * iSpace, 0, self.iCityButtonSize, self.iCityButtonSize, WidgetTypes.WIDGET_GENERAL, 10001, SelectionGroup.getHeadUnit().getID(), ButtonStyles.BUTTON_STYLE_LABEL )
+					screen.addCheckBoxGFCAt("AllTransportPanel", szButtonName, HeadUnit.getButton(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), iSelectionGroupIndex * iSpace, 0, self.iCityButtonSize, self.iCityButtonSize, WidgetTypes.WIDGET_GENERAL, 10001, GroupHeadID, ButtonStyles.BUTTON_STYLE_LABEL )
 					screen.setLabelAt("SelectionGroupCount" + str(SelectionGroup.getID()), szButtonName, "<font=4>" + str(SelectionGroup.getNumUnits()) + "</font>", CvUtil.FONT_LEFT_JUSTIFY, 35, 35, -1.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
 					iPosition += 20
 					SelectedTransportID = self.selectedSelectionGroupHeadUnitID
 					if (SelectedTransportID != -1):
-						if (SelectedTransportID == SelectionGroup.getHeadUnit().getID()):
+						if (SelectedTransportID == GroupHeadID):
 							screen.setState(szButtonName, True)
 							SelectionState = True
 							
@@ -574,13 +579,9 @@ class CvDomesticAdvisor:
 	def update(self, fDelta):
 		if (CyInterface().isDirty(InterfaceDirtyBits.Domestic_Advisor_DIRTY_BIT)):
 			CyInterface().setDirty(InterfaceDirtyBits.Domestic_Advisor_DIRTY_BIT, False)
-			player = gc.getPlayer(gc.getGame().getActivePlayer())
 
 			self.RebuildArrays()
 			
-			for iCity in range(len(self.Cities)):
-				self.updateCityTable(self.Cities[iCity], iCity)
-
 			self.RebuildRouteTable()
 			self.RebuildTransportTable()
 			

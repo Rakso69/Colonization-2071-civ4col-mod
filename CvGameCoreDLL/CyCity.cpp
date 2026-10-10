@@ -9,6 +9,7 @@
 #include "CyUnit.h"
 #include "CvDLLPythonIFaceBase.h"
 #include "CvGlobals.h"
+#include <boost/python/list.hpp>
 
 CyCity::CyCity() : m_pCity(NULL)
 {
@@ -815,6 +816,26 @@ int CyCity::calculateActualYieldProduced(int /*YieldTypes*/ eYield) const
 int CyCity::calculateActualYieldConsumed(int /*YieldTypes*/ eYield) const
 {
 	return m_pCity ? m_pCity->calculateActualYieldConsumed((YieldTypes)eYield) : -1;
+}
+
+python::tuple CyCity::calculateYieldTotals() const
+{
+	int aiNet[NUM_YIELD_TYPES];
+	int aiProduced[NUM_YIELD_TYPES];
+	int aiConsumed[NUM_YIELD_TYPES];
+	if (m_pCity != NULL)
+		m_pCity->calculateNetYields(aiNet, aiProduced, aiConsumed);
+
+	python::list net;
+	python::list produced;
+	python::list consumed;
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		net.append(m_pCity != NULL ? aiNet[iYield] : -1);
+		produced.append(m_pCity != NULL ? aiProduced[iYield] : -1);
+		consumed.append(m_pCity != NULL ? aiConsumed[iYield] : -1);
+	}
+	return python::make_tuple(net, produced, consumed);
 }
 
 bool CyCity::isEverOwned(int /*PlayerTypes*/ eIndex)

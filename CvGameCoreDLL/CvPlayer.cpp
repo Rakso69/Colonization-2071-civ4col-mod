@@ -2220,8 +2220,10 @@ void CvPlayer::doTurn()
 	interceptEuropeUnits();
 
 	updateEconomyHistory(GC.getGameINLINE().getGameTurn(), getGold());
-	updateIndustryHistory(GC.getGameINLINE().getGameTurn(), calculateTotalYield(YIELD_HAMMERS));
-	updateAgricultureHistory(GC.getGameINLINE().getGameTurn(), calculateTotalYield(YIELD_FOOD));
+	int aiTotalYields[NUM_YIELD_TYPES];
+	calculateTotalYields(aiTotalYields);
+	updateIndustryHistory(GC.getGameINLINE().getGameTurn(), aiTotalYields[YIELD_HAMMERS]);
+	updateAgricultureHistory(GC.getGameINLINE().getGameTurn(), aiTotalYields[YIELD_FOOD]);
 	updatePowerHistory(GC.getGameINLINE().getGameTurn(), getPower());
 	updateCultureHistory(GC.getGameINLINE().getGameTurn(), countTotalCulture());
 	expireMessages();  // turn log
@@ -4832,27 +4834,14 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 	///TKs Invention Core Mod v 1.0
 	if (!isNative() && !isEurope())
 	{
-        for (int iCivic = 0; iCivic < GC.getNumCivicInfos(); ++iCivic)
-        {
-            if (GC.getCivicInfo((CivicTypes) iCivic).getCivicOptionType() == (CivicOptionTypes)GC.getDefineINT("CIVICOPTION_INVENTIONS"))
-            {
-                CvCivicInfo& kCivicInfo = GC.getCivicInfo((CivicTypes) iCivic);
-                if (kCivicInfo.getAllowsUnitClasses(eUnitClass) > 0)
-                {
-                    if (getIdeasResearched((CivicTypes) iCivic) == 0)
-                    {
-                        return false;
-                    }
-                }
-                else if (kCivicInfo.getAllowsUnitClasses(eUnitClass) < 0)
-                {
-                    if (getIdeasResearched((CivicTypes) iCivic) > 0)
-                    {
-                        return false;
-                    }
-                }
-            }
-        }
+		const std::vector<CivicTypes>& aeRestrictions = GC.getUnitInfo(eUnit).getTechnologyRestrictions();
+		for (int i = 0; i < (int)aeRestrictions.size(); ++i)
+		{
+			CivicTypes eCivic = aeRestrictions[i];
+			int iAllowed = GC.getCivicInfo(eCivic).getAllowsUnitClasses(eUnitClass);
+			int iResearched = getIdeasResearched(eCivic);
+			if ((iAllowed > 0 && iResearched == 0) || (iAllowed < 0 && iResearched > 0)) return false;
+		}
 	}
 	///TKe
 
@@ -4920,43 +4909,37 @@ bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestV
 	}
 
 	///TKs Invention Core Mod v 1.0 B&Y
-	//if (isHuman())
-	//{
-        for (int iCivic = 0; iCivic < GC.getNumCivicInfos(); ++iCivic)
-        {	CvCivicInfo& kCivicInfo = GC.getCivicInfo((CivicTypes) iCivic);
-            if (kCivicInfo.getCivicOptionType() == (CivicOptionTypes)GC.getDefineINT("CIVICOPTION_INVENTIONS"))
-            {
-                if (eBuilding != NO_BUILDING && kCivicInfo.getAllowsBuildingTypes(eBuilding) > 0)
-                {
-                    if (getIdeasResearched((CivicTypes) iCivic) == 0)
-                    {
-                        return false;
-                    }
-                }
-                for (int iI = 0; iI < GC.getNumProfessionInfos(); iI++)
-                {
-                    CvProfessionInfo& kProfessionInfo = GC.getProfessionInfo((ProfessionTypes)iI);
-                    if (kProfessionInfo.getSpecialBuilding() != NO_SPECIALBUILDING && kProfessionInfo.getSpecialBuilding() == GC.getBuildingInfo(eBuilding).getSpecialBuildingType())
-                    {
-                        if ((YieldTypes)kProfessionInfo.getYieldsProduced(0) != NO_YIELD && kCivicInfo.getAllowsYields(kProfessionInfo.getYieldsProduced(0)) > 0)
-                        {
-                            if (getIdeasResearched((CivicTypes) iCivic) == 0)
-                            {
-                                return false;
-                            }
-                        }
-                        else if ((YieldTypes)kProfessionInfo.getYieldsConsumed(0, getID()) != NO_YIELD && kCivicInfo.getAllowsYields(kProfessionInfo.getYieldsConsumed(0, getID())) > 0)
-                        {
-                            if (getIdeasResearched((CivicTypes) iCivic) == 0)
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-	//}
+	YieldTypes aeRequiredYields[NUM_YIELD_TYPES];
+	bool abRequiredYields[NUM_YIELD_TYPES] = { false };
+	int iRequiredYieldCount = 0;
+	int iSpecialBuilding = GC.getBuildingInfo(eBuilding).getSpecialBuildingType();
+	if (iSpecialBuilding != NO_SPECIALBUILDING)
+	{
+		for (int i = 0; i < GC.getNumProfessionInfos(); ++i)
+		{
+			CvProfessionInfo& kProfession = GC.getProfessionInfo((ProfessionTypes)i);
+			if (kProfession.getSpecialBuilding() != iSpecialBuilding) continue;
+			YieldTypes aeYields[2] = { (YieldTypes)kProfession.getYieldsProduced(0), (YieldTypes)kProfession.getYieldsConsumed(0, getID()) };
+			for (int j = 0; j < 2; ++j)
+			{
+				YieldTypes eYield = aeYields[j];
+				if (eYield != NO_YIELD && !abRequiredYields[eYield])
+				{
+					abRequiredYields[eYield] = true;
+					aeRequiredYields[iRequiredYieldCount++] = eYield;
+				}
+			}
+		}
+	}
+	int iCivicOption = GC.getDefineINT("CIVICOPTION_INVENTIONS");
+	for (int i = 0; i < GC.getNumCivicInfos(); ++i)
+	{
+		CvCivicInfo& kCivic = GC.getCivicInfo((CivicTypes)i);
+		if (kCivic.getCivicOptionType() != iCivicOption || getIdeasResearched((CivicTypes)i) != 0) continue;
+		if (eBuilding != NO_BUILDING && kCivic.getAllowsBuildingTypes(eBuilding) > 0) return false;
+		for (int j = 0; j < iRequiredYieldCount; ++j)
+			if (kCivic.getAllowsYields(aeRequiredYields[j]) > 0) return false;
+	}
 	///TKe
 
 	if (!bIgnoreCost)
@@ -14463,20 +14446,7 @@ int CvPlayer::getTradeYieldAmount(YieldTypes eYield, CvUnit* pTransport) const
 	int iAmount = 0;
 	if (getID() == pTransport->getOwnerINLINE()) //offer yields on the transport
 	{
-		for (int i=0;i<pPlot->getNumUnits();i++)
-		{
-			CvUnit* pLoopUnit = pPlot->getUnitByIndex(i);
-			if (pLoopUnit != NULL)
-			{
-				if (pLoopUnit->getTransportUnit() == pTransport)
-				{
-					if (pLoopUnit->getYield() == eYield)
-					{
-						iAmount += pLoopUnit->getYieldStored();
-					}
-				}
-			}
-		}
+		iAmount = pTransport->getLoadedYieldAmount(eYield);
 	}
 	else //offer yields from the city
 	{
@@ -14492,12 +14462,13 @@ int CvPlayer::getTradeYieldAmount(YieldTypes eYield, CvUnit* pTransport) const
 		if (isNative() && !isHuman() && pCity->getOwnerINLINE() == getID())
 		{
 			int iReserve = std::max(0, pCity->getMaintainLevel(eYield));
-			int iInputNeed = std::max(pCity->AI_getNeededYield(eYield), pCity->getRawYieldConsumed(eYield));
+			int iConsumed = pCity->getRawYieldConsumed(eYield);
+			int iInputNeed = std::max(pCity->AI_getNeededYield(eYield), iConsumed);
 			int iInputShortage = std::max(0, iInputNeed - pCity->getRawYieldProduced(eYield));
 			iReserve = std::max(iReserve, 4 * iInputShortage);
 			if (eYield == YIELD_FOOD)
 			{
-				iReserve = std::max(iReserve, 2 * pCity->getRawYieldConsumed(YIELD_FOOD));
+				iReserve = std::max(iReserve, 2 * iConsumed);
 			}
 			iCityAmount = std::max(0, iCityAmount - iReserve);
 			if (eYield == YIELD_MUSKETS)

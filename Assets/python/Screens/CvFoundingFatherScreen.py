@@ -55,6 +55,7 @@ class CvFoundingFatherScreen:
 		self.YResolution = self.getScreen().getYResolution()
 
 		screen.setRenderInterfaceOnly(True)
+		screen.setRenderFrozenWorld(True)
 		screen.showScreen(PopupStates.POPUPSTATE_IMMEDIATE, False)
 
 		#Build Body
@@ -218,6 +219,7 @@ class CvFoundingFatherScreen:
 		# Get the screen
 		screen = self.getScreen()
 		activeTeam = gc.getTeam(gc.getPlayer(self.iCivSelected).getTeam())
+		firstPlayersByTeam = None
 
 		for list in self.Fathers:
 			list.sort(lambda x, y: activeTeam.getFatherPointCost(x, gc.getFatherInfo(x).getFatherCategory()) - activeTeam.getFatherPointCost(y, gc.getFatherInfo(y).getFatherCategory()))
@@ -255,11 +257,17 @@ class CvFoundingFatherScreen:
 				screen.attachMultilineTextAt(TextBoxName, "FatherInfo" + str(i), szFatherData, self.FatherRecordHeight / 4, 40, self.FatherRecordWidth+20, (self.FatherRecordHeight / 2) - 45, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_RIGHT_JUSTIFY)
 			
 				if (gc.getGame().getFatherTeam(i) != TeamTypes.NO_TEAM):
-					for k in range(gc.getMAX_PLAYERS()):
+					if firstPlayersByTeam is None:
+						firstPlayersByTeam = {}
+						for iPlayer in range(gc.getMAX_PLAYERS()):
+							iTeam = gc.getPlayer(iPlayer).getTeam()
+							if iTeam not in firstPlayersByTeam:
+								firstPlayersByTeam[iTeam] = (iPlayer,)
+					for k in firstPlayersByTeam.get(gc.getGame().getFatherTeam(i), ()):
 						if (gc.getPlayer(k).getTeam() == gc.getGame().getFatherTeam(i)):
 							if (gc.getTeam(gc.getPlayer(gc.getGame().getActivePlayer()).getTeam()).isHasMet(gc.getGame().getFatherTeam(i))):
 								screen.addDDSGFCAt("Flag Icon" + str(i), ScrollPanel, ArtFileMgr.getCivilizationArtInfo(gc.getCivilizationInfo(gc.getPlayer(k).getCivilizationType()).getArtDefineTag()).getButton() , (self.FatherRecordWidth * (j+ 1)) - (self.FatherRecordHeight * 6 / 7) + (self.FatherRecordHeight * 9 / 10) - (self.FatherRecordHeight / 5), self.BarAreaHeight + self.FatherRecordHeight - 15 + (self.FatherRecordWidth / 5), (self.FatherRecordHeight / 5), (self.FatherRecordHeight / 5), WidgetTypes.WIDGET_GENERAL, -1, -1, False )
-								for m in range(gc.getMAX_PLAYERS()):
+								for m in (k,):
 									if (gc.getPlayer(m).getTeam() == gc.getGame().getFatherTeam(i)):
 										szTempBuffer = u"  <color=%d,%d,%d,%d>%s</color>" %(gc.getPlayer(m).getPlayerTextColorR(), gc.getPlayer(m).getPlayerTextColorG(), gc.getPlayer(m).getPlayerTextColorB(), gc.getPlayer(m).getPlayerTextColorA(), gc.getPlayer(m).getName())
 										if (len(szTempBuffer) > 50):
@@ -285,11 +293,17 @@ class CvFoundingFatherScreen:
 				screen.attachMultilineTextAt(TextBoxName, "FatherInfo" + str(i), szFatherData, 10, 40, 6 * self.FatherRecordWidth / 5, (self.FatherRecordHeight / 2) - 45, WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 
 				if (gc.getGame().getFatherTeam(i) != TeamTypes.NO_TEAM):
-					for k in range(gc.getMAX_PLAYERS()):
+					if firstPlayersByTeam is None:
+						firstPlayersByTeam = {}
+						for iPlayer in range(gc.getMAX_PLAYERS()):
+							iTeam = gc.getPlayer(iPlayer).getTeam()
+							if iTeam not in firstPlayersByTeam:
+								firstPlayersByTeam[iTeam] = (iPlayer,)
+					for k in firstPlayersByTeam.get(gc.getGame().getFatherTeam(i), ()):
 						if (gc.getPlayer(k).getTeam() == gc.getGame().getFatherTeam(i)):
 							if (gc.getTeam(gc.getPlayer(gc.getGame().getActivePlayer()).getTeam()).isHasMet(gc.getGame().getFatherTeam(i))):
 								screen.addDDSGFCAt("Flag Icon" + str(i), ScrollPanel, ArtFileMgr.getCivilizationArtInfo(gc.getCivilizationInfo(gc.getPlayer(k).getCivilizationType()).getArtDefineTag()).getButton(), (self.FatherRecordWidth * (j - 1)) + self.FatherRecordWidth + (self.FatherRecordHeight / 20), self.TopPanelHeight + (self.FatherRecordHeight / 2) - (self.FatherRecordHeight / 12), (self.FatherRecordHeight / 5), (self.FatherRecordHeight / 5), WidgetTypes.WIDGET_GENERAL, -1, -1, False )
-								for m in range(gc.getMAX_PLAYERS()):
+								for m in (k,):
 									if (gc.getPlayer(m).getTeam() == gc.getGame().getFatherTeam(i)):
 										szTempBuffer = u"<color=%d,%d,%d,%d>%s</color>  " %(gc.getPlayer(m).getPlayerTextColorR(), gc.getPlayer(m).getPlayerTextColorG(), gc.getPlayer(m).getPlayerTextColorB(), gc.getPlayer(m).getPlayerTextColorA(), gc.getPlayer(m).getName())
 										if (len(szTempBuffer) > 50):

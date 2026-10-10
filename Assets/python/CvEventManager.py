@@ -778,11 +778,13 @@ class CvEventManager:
 	def onUnitMove(self, argsList):
 		'unit move'
 		pPlot,pUnit,pOldPlot = argsList
-		player = gc.getPlayer(pUnit.getOwner())
-		unitInfo = gc.getUnitInfo(pUnit.getUnitType())
+		iOwner = pUnit.getOwner()
+		iUnitType = pUnit.getUnitType()
 		CvAdvisorUtils.unitMoveFeats(pUnit, pPlot, pOldPlot)
 		if (not self.__LOG_MOVEMENT):
 			return
+		player = gc.getPlayer(iOwner)
+		unitInfo = gc.getUnitInfo(iUnitType)
 		if player and unitInfo:
 			CvUtil.pyPrint('Player %d Civilization %s unit %s is moving to %d, %d'
 				%(player.getID(), player.getCivilizationDescription(0), unitInfo.getDescription(),
@@ -804,40 +806,41 @@ class CvEventManager:
 		'Unit Completed'
 		city = argsList[0]
 		unit = argsList[1]
-		player = gc.getPlayer(city.getOwner())
+		iOwner = city.getOwner()
 
 		CvAdvisorUtils.unitBuiltFeats(city, unit)
 
 		if (not self.__LOG_UNITBUILD):
 			return
+		player = gc.getPlayer(iOwner)
 		CvUtil.pyPrint('%s was finished by Player %d Civilization %s'
 			%(gc.getUnitInfo(unit.getUnitType()).getDescription(), player.getID(), player.getCivilizationDescription(0)))
 
 	def onUnitKilled(self, argsList):
 		'Unit Killed'
 		unit, iAttacker = argsList
-		player = gc.getPlayer(unit.getOwner())
-		attacker = gc.getPlayer(iAttacker)
 		if (not self.__LOG_UNITKILLED):
 			return
+		player = gc.getPlayer(unit.getOwner())
+		attacker = gc.getPlayer(iAttacker)
 		CvUtil.pyPrint('Player %d Civilization %s Unit %s was killed by Player %d'
 			%(player.getID(), player.getCivilizationDescription(0), gc.getUnitInfo(unit.getUnitType()).getDescription(), attacker.getID()))
 
 	def onUnitLost(self, argsList):
 		'Unit Lost'
 		unit = argsList[0]
-		player = gc.getPlayer(unit.getOwner())
 		if (not self.__LOG_UNITLOST):
 			return
+		player = gc.getPlayer(unit.getOwner())
 		CvUtil.pyPrint('%s was lost by Player %d Civilization %s'
 			%(gc.getUnitInfo(unit.getUnitType()).getDescription(), player.getID(), player.getCivilizationDescription(0)))
 
 	def onUnitPromoted(self, argsList):
 		'Unit Promoted'
 		pUnit, iPromotion = argsList
-		player = gc.getPlayer(pUnit.getOwner())
 		if (not self.__LOG_UNITPROMOTED):
 			return
+		player = gc.getPlayer(pUnit.getOwner())
 		CvUtil.pyPrint('Unit Promotion Event: %s - %s' %(player.getCivilizationDescription(0), pUnit.getName(),))
 
 	def onUnitRename(self, argsList):
@@ -849,12 +852,10 @@ class CvEventManager:
 	def onUnitPillage(self, argsList):
 		'Unit pillages a plot'
 		pUnit, iImprovement, iRoute, iOwner = argsList
-		iPlotX = pUnit.getX()
-		iPlotY = pUnit.getY()
-		pPlot = CyMap().plot(iPlotX, iPlotY)
-
 		if (not self.__LOG_UNITPILLAGE):
 			return
+		iPlotX = pUnit.getX()
+		iPlotY = pUnit.getY()
 		CvUtil.pyPrint("Player %d's %s pillaged improvement %d and route %d at plot at (%d, %d)"
 			%(iOwner, gc.getUnitInfo(pUnit.getUnitType()).getDescription(), iImprovement, iRoute, iPlotX, iPlotY))
 
@@ -936,9 +937,9 @@ class CvEventManager:
 	def onCityLost(self, argsList):
 		'City Lost'
 		city = argsList[0]
-		player = gc.getPlayer(city.getOwner())
 		if (not self.__LOG_CITYLOST):
 			return
+		player = gc.getPlayer(city.getOwner())
 		CvUtil.pyPrint('City %s was lost by Player %d Civilization %s'
 			%(city.getName(), player.getID(), player.getCivilizationDescription(0)))
 

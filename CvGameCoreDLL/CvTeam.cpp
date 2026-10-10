@@ -1731,6 +1731,7 @@ int CvTeam::countEnemyDangerByArea(CvArea* pArea) const
 	CvPlot* pLoopPlot;
 	int iCount;
 	int iI;
+	PlayerTypes eLeader = NO_PLAYER;
 
 	iCount = 0;
 
@@ -1738,13 +1739,14 @@ int CvTeam::countEnemyDangerByArea(CvArea* pArea) const
 	{
 		pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
 
-		if (pLoopPlot != NULL)
+		if (pLoopPlot != NULL && pLoopPlot->getNumUnits() > 0)
 		{
 			if (pLoopPlot->area() == pArea)
 			{
 				if (pLoopPlot->getTeam() == getID())
 				{
-					iCount += pLoopPlot->plotCount(PUF_canDefendEnemy, getLeaderID(), false, NO_PLAYER, NO_TEAM, PUF_isVisible, getLeaderID());
+					if (eLeader == NO_PLAYER) eLeader = getLeaderID();
+					iCount += pLoopPlot->plotCount(PUF_canDefendEnemy, eLeader, false, NO_PLAYER, NO_TEAM, PUF_isVisible, eLeader);
 				}
 			}
 		}

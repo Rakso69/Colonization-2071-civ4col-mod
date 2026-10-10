@@ -1131,11 +1131,12 @@ void CvGame::updateScore(bool bForce)
 {
 	bool abPlayerScored[MAX_PLAYERS];
 	bool abTeamScored[MAX_TEAMS];
+	int aiTeamScores[MAX_TEAMS];
 	int iScore;
 	int iBestScore;
 	PlayerTypes eBestPlayer;
 	TeamTypes eBestTeam;
-	int iI, iJ, iK;
+	int iI, iJ;
 
 	if (!isScoreDirty() && !bForce)
 	{
@@ -1181,6 +1182,12 @@ void CvGame::updateScore(bool bForce)
 	for (iI = 0; iI < MAX_TEAMS; iI++)
 	{
 		abTeamScored[iI] = false;
+		aiTeamScores[iI] = 0;
+	}
+	for (iI = 0; iI < MAX_PLAYERS; ++iI)
+	{
+		TeamTypes eTeam = GET_PLAYER((PlayerTypes)iI).getTeam();
+		if (eTeam >= 0 && eTeam < MAX_TEAMS) aiTeamScores[eTeam] += getPlayerScore((PlayerTypes)iI);
 	}
 
 	for (iI = 0; iI < MAX_TEAMS; iI++)
@@ -1192,15 +1199,7 @@ void CvGame::updateScore(bool bForce)
 		{
 			if (!abTeamScored[iJ])
 			{
-				iScore = 0;
-
-				for (iK = 0; iK < MAX_PLAYERS; iK++)
-				{
-					if (GET_PLAYER((PlayerTypes)iK).getTeam() == iJ)
-					{
-						iScore += getPlayerScore((PlayerTypes)iK);
-					}
-				}
+				iScore = aiTeamScores[iJ];
 
 				if (iScore >= iBestScore)
 				{

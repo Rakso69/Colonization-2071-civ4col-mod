@@ -3054,16 +3054,16 @@ bool CvUnit::shouldLoadOnMove(const CvPlot* pPlot) const
 int CvUnit::getLoadedYieldAmount(YieldTypes eYield) const
 {
 	CvPlot* pPlot = plot();
-	if (pPlot == NULL)
+	if (pPlot == NULL || !hasCargo())
 	{
 		return 0;
 	}
 
 	int iTotal = 0;
 	//check if room in other cargo
-	for (int i=0;i<pPlot->getNumUnits();i++)
+	for (CLLNode<IDInfo>* pUnitNode = pPlot->headUnitNode(); pUnitNode != NULL; pUnitNode = pPlot->nextUnitNode(pUnitNode))
 	{
-		CvUnit* pLoopUnit = pPlot->getUnitByIndex(i);
+		CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
 		if(pLoopUnit != NULL)
 		{
 			if(pLoopUnit->getTransportUnit() == this)
@@ -3117,9 +3117,9 @@ int CvUnit::getLoadYieldAmount(YieldTypes eYield) const
 	}
 
 	//check if room in other cargo
-	for (int i=0;i<pPlot->getNumUnits();i++)
+	for (CLLNode<IDInfo>* pUnitNode = pPlot->headUnitNode(); pUnitNode != NULL; pUnitNode = pPlot->nextUnitNode(pUnitNode))
 	{
-		CvUnit* pLoopUnit = pPlot->getUnitByIndex(i);
+		CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
 		if(pLoopUnit != NULL)
 		{
 			if(pLoopUnit->getTransportUnit() == this)
@@ -3267,9 +3267,9 @@ bool CvUnit::canTradeYield(const CvPlot* pPlot) const
 	bool bYieldFound = false;
 	if (hasCargo())
 	{
-		for (int i=0;i<pPlot->getNumUnits();i++)
+		for (CLLNode<IDInfo>* pUnitNode = pPlot->headUnitNode(); pUnitNode != NULL; pUnitNode = pPlot->nextUnitNode(pUnitNode))
 		{
-			CvUnit* pLoopUnit = pPlot->getUnitByIndex(i);
+			CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
 			if (pLoopUnit != NULL)
 			{
 				if (pLoopUnit->getTransportUnit() == this)
@@ -7159,6 +7159,8 @@ bool CvUnit::hasCargo() const
 
 bool CvUnit::canCargoAllMove() const
 {
+	if (!hasCargo()) return true;
+
 	CLLNode<IDInfo>* pUnitNode;
 	CvUnit* pLoopUnit;
 	CvPlot* pPlot;
@@ -7189,6 +7191,8 @@ bool CvUnit::canCargoAllMove() const
 
 bool CvUnit::canCargoEnterArea(PlayerTypes ePlayer, const CvArea* pArea, bool bIgnoreRightOfPassage) const
 {
+	if (!hasCargo()) return true;
+
 	CvPlot* pPlot = plot();
 
 	CLLNode<IDInfo>* pUnitNode = pPlot->headUnitNode();
@@ -7212,6 +7216,8 @@ bool CvUnit::canCargoEnterArea(PlayerTypes ePlayer, const CvArea* pArea, bool bI
 
 int CvUnit::getUnitAICargo(UnitAITypes eUnitAI) const
 {
+	if (!hasCargo()) return 0;
+
 	CLLNode<IDInfo>* pUnitNode;
 	CvUnit* pLoopUnit;
 	CvPlot* pPlot;
@@ -9652,9 +9658,12 @@ bool CvUnit::setTransportUnit(CvUnit* pTransportUnit, bool bUnload)
 				CvPlot* pPlot = pTransportUnit->plot();
 				if (pPlot != NULL)
 				{
+					bool bUseLinkedScan = true;
+					CLLNode<IDInfo>* pUnitNode = pPlot->headUnitNode();
 					for (int i = 0; i < pPlot->getNumUnits(); i++)
 					{
-						CvUnit* pLoopUnit = pPlot->getUnitByIndex(i);
+						CvUnit* pLoopUnit = bUseLinkedScan ? ::getUnit(pUnitNode->m_data) : pPlot->getUnitByIndex(i);
+						if (bUseLinkedScan) pUnitNode = pPlot->nextUnitNode(pUnitNode);
 						if(pLoopUnit != NULL)
 						{
 							if (pLoopUnit->getTransportUnit() == pTransportUnit)
@@ -9665,6 +9674,7 @@ bool CvUnit::setTransportUnit(CvUnit* pTransportUnit, bool bUnload)
 									int iTotalYields = pLoopUnit->getYieldStored() + getYieldStored();
 									int iYield1 = std::min(iTotalYields, GC.getGameINLINE().getCargoYieldCapacity());
 									int iYield2 = iTotalYields - iYield1;
+									if (iYield1 == 0 || iYield2 == 0) bUseLinkedScan = false;
 									pLoopUnit->setYieldStored(iYield1);
 									setYieldStored(iYield2);
 
@@ -10027,18 +10037,12 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion) const
 	///TKs Invention Core Mod v 1.0
     if (!isNative() && !GET_PLAYER(getOwner()).isEurope())
 	{
-        for (int iCivic = 0; iCivic < GC.getNumCivicInfos(); ++iCivic)
+        const std::vector<CivicTypes>& aeRestrictions = GC.getPromotionInfo(ePromotion).getTechnologyRestrictions();
+        for (int i = 0; i < (int)aeRestrictions.size(); ++i)
         {
-            if (GC.getCivicInfo((CivicTypes) iCivic).getCivicOptionType() == (CivicOptionTypes)GC.getDefineINT("CIVICOPTION_INVENTIONS"))
+            if (GET_PLAYER(getOwner()).getIdeasResearched(aeRestrictions[i]) == 0)
             {
-                CvCivicInfo& kCivicInfo = GC.getCivicInfo((CivicTypes) iCivic);
-                if (ePromotion != NO_PROMOTION && kCivicInfo.getAllowsPromotions(ePromotion) > 0)
-                {
-                    if (GET_PLAYER(getOwner()).getIdeasResearched((CivicTypes) iCivic) == 0)
-                    {
-                        return false;
-                    }
-                }
+                return false;
             }
         }
 	}
@@ -11167,16 +11171,7 @@ int CvUnit::getYieldStored() const
 
 YieldTypes CvUnit::getYield() const
 {
-	for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
-	{
-		YieldTypes eYield = (YieldTypes) iYield;
-		if(getUnitClassType() == GC.getYieldInfo(eYield).getUnitClass())
-		{
-			return eYield;
-		}
-	}
-
-	return NO_YIELD;
+	return getUnitClassYieldType(getUnitClassType());
 }
 
 bool CvUnit::isGoods() const

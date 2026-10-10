@@ -16,6 +16,11 @@
 #pragma warning( disable: 4127 )
 class CvXMLLoadUtility;
 
+const std::vector<CivicTypes>& getNatureYieldTechnologyRestrictions(YieldTypes eYield);
+bool isNatureBonusTechnologyRestricted(BonusTypes eBonus);
+const std::vector<CivicTypes>& getCityFoodBonusTechnologies();
+YieldTypes getUnitClassYieldType(UnitClassTypes eUnitClass);
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
 //  class : CvInfoBase
@@ -260,6 +265,8 @@ public:
 	DllExport bool getTerrainDoubleMove(int i) const;
 	DllExport bool getFeatureDoubleMove(int i) const;
 	DllExport bool getUnitCombat(int i) const;
+	const std::vector<CivicTypes>& getTechnologyRestrictions() const;
+	void clearTechnologyCache();
 
 	DllExport void read(FDataStreamBase* stream);
 	DllExport void write(FDataStreamBase* stream);
@@ -312,6 +319,9 @@ protected:
 	bool* m_abTerrainDoubleMove;
 	bool* m_abFeatureDoubleMove;
 	bool* m_abUnitCombat;
+	mutable int m_iCachedCivicCount;
+	mutable int m_iCachedCivicOption;
+	mutable std::vector<CivicTypes> m_aeTechnologyRestrictions;
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -676,6 +686,8 @@ public:
 	DllExport int getAssetValue() const;
 	DllExport int getPowerValue() const;
 	DllExport int getUnitClassType() const;
+	const std::vector<CivicTypes>& getTechnologyRestrictions() const;
+	void clearTechnologyCache();
 	DllExport int getSpecialUnitType() const;
 	DllExport int getUnitCaptureClassType() const;
 	DllExport int getUnitCombatType() const;
@@ -879,6 +891,9 @@ protected:
 	CvString m_szFormationType;
 	CvString m_szArtDefineButton;
 	std::vector<CvUnitMeshGroups> m_aProfessionGroups;
+	mutable int m_iCachedCivicCount;
+	mutable int m_iCachedCivicOption;
+	mutable std::vector<CivicTypes> m_aeTechnologyRestrictions;
 	std::vector<int> m_aiSeeInvisibleTypes;
 };
 

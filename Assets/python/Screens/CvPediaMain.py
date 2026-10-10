@@ -167,6 +167,7 @@ class CvPediaMain( CvPediaScreen.CvPediaScreen ):
 
 		# Create a new screen
 		screen.setRenderInterfaceOnly(True);
+		screen.setRenderFrozenWorld(True)
 		screen.setScreenGroup(1)
 		screen.showScreen(PopupStates.POPUPSTATE_IMMEDIATE, False)
 

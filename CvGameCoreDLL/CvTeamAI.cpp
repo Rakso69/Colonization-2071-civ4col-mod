@@ -40,6 +40,80 @@ DllExport CvTeamAI& CvTeamAI::getTeamNonInl(TeamTypes eTeam)
 }
 
 
+
+struct CvTeamAIWarMapCache
+{
+	TeamTypes eOurTeam;
+	bool bReady;
+	int aiAdjacentLandPlots[MAX_TEAMS];
+	int aiPlotWarValues[MAX_TEAMS];
+
+	explicit CvTeamAIWarMapCache(TeamTypes eTeam) : eOurTeam(eTeam), bReady(false) {}
+
+	void prepare()
+	{
+		if (bReady) return;
+		for (int i = 0; i < MAX_TEAMS; ++i)
+			aiAdjacentLandPlots[i] = aiPlotWarValues[i] = 0;
+		CvMap& kMap = GC.getMapINLINE();
+		for (int i = 0; i < kMap.numPlotsINLINE(); ++i)
+		{
+			CvPlot* pPlot = kMap.plotByIndexINLINE(i);
+			TeamTypes eOwnerTeam = pPlot->getTeam();
+			if (eOwnerTeam < 0 || eOwnerTeam >= MAX_TEAMS || eOwnerTeam == eOurTeam) continue;
+			if (!pPlot->isWater() && pPlot->isAdjacentTeam(eOurTeam, true))
+			{
+				++aiAdjacentLandPlots[eOwnerTeam];
+				aiPlotWarValues[eOwnerTeam] += 4;
+			}
+			BonusTypes eBonus = pPlot->getBonusType();
+			if (eBonus != NO_BONUS) aiPlotWarValues[eOwnerTeam] += 40 * GC.getBonusInfo(eBonus).getAIObjective();
+		}
+		bReady = true;
+	}
+
+	int adjacentLandPlots(TeamTypes eTeam)
+	{
+		prepare();
+		return aiAdjacentLandPlots[eTeam];
+	}
+
+	int plotWarValue(TeamTypes eTeam)
+	{
+		prepare();
+		return aiPlotWarValues[eTeam];
+	}
+};
+
+struct CvTeamAIAreaDangerCache
+{
+	TeamTypes eOurTeam;
+	bool bReady;
+	std::map<const CvArea*, int> aiAreaDanger;
+
+	explicit CvTeamAIAreaDangerCache(TeamTypes eTeam) : eOurTeam(eTeam), bReady(false) {}
+
+	int danger(CvArea* pArea)
+	{
+		if (!bReady)
+		{
+			PlayerTypes eLeader = NO_PLAYER;
+			CvMap& kMap = GC.getMapINLINE();
+			for (int i = 0; i < kMap.numPlotsINLINE(); ++i)
+			{
+				CvPlot* pPlot = kMap.plotByIndexINLINE(i);
+				if (pPlot == NULL || pPlot->getNumUnits() == 0 || pPlot->getTeam() != eOurTeam) continue;
+				if (eLeader == NO_PLAYER) eLeader = GET_TEAM(eOurTeam).getLeaderID();
+				int iDanger = pPlot->plotCount(PUF_canDefendEnemy, eLeader, false, NO_PLAYER, NO_TEAM, PUF_isVisible, eLeader);
+				if (iDanger > 0) aiAreaDanger[pPlot->area()] += iDanger;
+			}
+			bReady = true;
+		}
+		std::map<const CvArea*, int>::const_iterator it = aiAreaDanger.find(pArea);
+		return it == aiAreaDanger.end() ? 0 : it->second;
+	}
+};
+
 // Public Functions...
 
 CvTeamAI::CvTeamAI()
@@ -176,9 +250,12 @@ void CvTeamAI::AI_updateAreaStragies(bool bTargets)
 		return;
 	}
 
+	CvTeamAIAreaDangerCache kDangerCache(getID());
+	CvTeamAIAreaDangerCache* pDangerCache = GC.getUSE_CAN_DECLARE_WAR_CALLBACK()
+		|| GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK() ? NULL : &kDangerCache;
 	for(pLoopArea = GC.getMapINLINE().firstArea(&iLoop); pLoopArea != NULL; pLoopArea = GC.getMapINLINE().nextArea(&iLoop))
 	{
-		pLoopArea->setAreaAIType(getID(), AI_calculateAreaAIType(pLoopArea));
+		pLoopArea->setAreaAIType(getID(), AI_calculateAreaAITypeWithCache(pLoopArea, false, pDangerCache));
 	}
 
 	if (bTargets)
@@ -293,6 +370,11 @@ bool CvTeamAI::AI_hasCitiesInPrimaryArea(TeamTypes eTeam) const
 
 
 AreaAITypes CvTeamAI::AI_calculateAreaAIType(CvArea* pArea, bool bPreparingTotal) const
+{
+	return AI_calculateAreaAITypeWithCache(pArea, bPreparingTotal, NULL);
+}
+
+AreaAITypes CvTeamAI::AI_calculateAreaAITypeWithCache(CvArea* pArea, bool bPreparingTotal, CvTeamAIAreaDangerCache* pCache) const
 {
 	PROFILE_FUNC();
 
@@ -451,7 +533,7 @@ AreaAITypes CvTeamAI::AI_calculateAreaAIType(CvArea* pArea, bool bPreparingTotal
 
 		if (iAreaCities > 0)
 		{
-			if (countEnemyDangerByArea(pArea) > iAreaCities)
+			if ((pCache == NULL ? countEnemyDangerByArea(pArea) : pCache->danger(pArea)) > iAreaCities)
 			{
 				return AREAAI_DEFENSIVE;
 			}
@@ -612,12 +694,17 @@ int CvTeamAI::AI_calculateCapitalProximity(TeamTypes eTeam) const
 
 bool CvTeamAI::AI_isLandTarget(TeamTypes eTeam) const
 {
+	return AI_isLandTargetWithCache(eTeam, NULL);
+}
+
+bool CvTeamAI::AI_isLandTargetWithCache(TeamTypes eTeam, CvTeamAIWarMapCache* pCache) const
+{
 	if (!AI_hasCitiesInPrimaryArea(eTeam))
 	{
 		return false;
 	}
 
-	if (AI_calculateAdjacentLandPlots(eTeam) < 8)
+	if ((pCache == NULL ? AI_calculateAdjacentLandPlots(eTeam) : pCache->adjacentLandPlots(eTeam)) < 8)
 	{
 		return false;
 	}
@@ -794,6 +881,11 @@ int CvTeamAI::AI_getMemoryCount(TeamTypes eTeam, MemoryTypes eMemory) const
 
 int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 {
+	return AI_startWarValWithCache(eTeam, NULL);
+}
+
+int CvTeamAI::AI_startWarValWithCache(TeamTypes eTeam, CvTeamAIWarMapCache* pCache) const
+{
 	PROFILE_FUNC();
 
 	int iValue;
@@ -804,7 +896,7 @@ int CvTeamAI::AI_startWarVal(TeamTypes eTeam) const
 		return 0;
 	}
 
-	iValue = AI_calculatePlotWarValue(eTeam);
+	iValue = pCache == NULL ? AI_calculatePlotWarValue(eTeam) : pCache->plotWarValue(eTeam);
 
 	iValue += (3 * AI_calculateCapitalProximity(eTeam)) / ((iValue > 0) ? 2 : 3);
 
@@ -2664,6 +2756,9 @@ void CvTeamAI::AI_doWar()
 	// if no war plans, consider starting one!
 	else if ((getAnyWarPlanCount() == 0) && (GC.getGame().getGameTurn() > 25))
 	{
+		CvTeamAIWarMapCache kWarMapCache(getID());
+		CvTeamAIWarMapCache* pWarMapCache = GC.getUSE_CAN_DECLARE_WAR_CALLBACK()
+			|| GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK() ? NULL : &kWarMapCache;
 		bool bAggressive = GC.getGameINLINE().isOption(GAMEOPTION_AGGRESSIVE_AI);
 
 	    // if random in this range is 0, we go to war of this type (so lower numbers are higher probablity)
@@ -2741,11 +2836,11 @@ void CvTeamAI::AI_doWar()
 
 												FAssertMsg(iI != getID(), "Expected not to be declaring war on self (DOH!)");
 
-												if ((iPass > 1) || (AI_isLandTarget((TeamTypes)iI) || AI_isAnyCapitalAreaAlone()))
+												if ((iPass > 1) || (AI_isLandTargetWithCache((TeamTypes)iI, pWarMapCache) || AI_isAnyCapitalAreaAlone()))
 												{
-													if ((iPass > 0) || (AI_calculateAdjacentLandPlots((TeamTypes)iI) >= ((getTotalLand() * AI_maxWarMinAdjacentLandPercent()) / 100)))
+													if ((iPass > 0) || ((pWarMapCache == NULL ? AI_calculateAdjacentLandPlots((TeamTypes)iI) : pWarMapCache->adjacentLandPlots((TeamTypes)iI)) >= ((getTotalLand() * AI_maxWarMinAdjacentLandPercent()) / 100)))
 													{
-														iValue = AI_startWarVal((TeamTypes)iI);
+														iValue = AI_startWarValWithCache((TeamTypes)iI, pWarMapCache);
 
 														if (iValue > iBestValue)
 														{
@@ -2789,11 +2884,11 @@ void CvTeamAI::AI_doWar()
 								{
 									if (iNoWarRoll >= AI_noWarAttitudeProb(AI_getAttitude((TeamTypes)iI)))
 									{
-										if (AI_isLandTarget((TeamTypes)iI) || (AI_isAnyCapitalAreaAlone() && GET_TEAM((TeamTypes)iI).AI_isAnyCapitalAreaAlone()))
+										if (AI_isLandTargetWithCache((TeamTypes)iI, pWarMapCache) || (AI_isAnyCapitalAreaAlone() && GET_TEAM((TeamTypes)iI).AI_isAnyCapitalAreaAlone()))
 										{
 											if (GET_TEAM((TeamTypes)iI).getDefensivePower() < ((iOurPower * AI_limitedWarPowerRatio()) / 100))
 											{
-												iValue = AI_startWarVal((TeamTypes)iI);
+												iValue = AI_startWarValWithCache((TeamTypes)iI, pWarMapCache);
 
 												if (iValue > iBestValue)
 												{
@@ -2837,7 +2932,7 @@ void CvTeamAI::AI_doWar()
 									{
 										if (GET_TEAM((TeamTypes)iI).getAtWarCount() > 0)
 										{
-											if (AI_isLandTarget((TeamTypes)iI))
+											if (AI_isLandTargetWithCache((TeamTypes)iI, pWarMapCache))
 											{
 												iDogpilePower = iOurPower;
 
@@ -2859,7 +2954,7 @@ void CvTeamAI::AI_doWar()
 
 												if (((GET_TEAM((TeamTypes)iI).getDefensivePower() * 3) / 2) < iDogpilePower)
 												{
-													iValue = AI_startWarVal((TeamTypes)iI);
+													iValue = AI_startWarValWithCache((TeamTypes)iI, pWarMapCache);
 
 													if (iValue > iBestValue)
 													{
@@ -3104,15 +3199,12 @@ void CvTeamAI::AI_doTactics()
 			CvPlot* pDirectionPlot = plotDirection(pPlot->getX_INLINE(), pPlot->getY_INLINE(), (DirectionTypes)iDirection);
 			if (pDirectionPlot != NULL)
 			{
-				bool bValid = false;
-				if ((pDirectionPlot->isWater() && pPlot->isWater() && pPlot->isAdjacentWaterPassable(pDirectionPlot))
-					|| (!pDirectionPlot->isWater() && !pPlot->isWater())
-						|| (pDirectionPlot->isWater() && pPlot->isCity()))
+				int iPlotNum = kMap.plotNumINLINE(pDirectionPlot->getX_INLINE(), pDirectionPlot->getY_INLINE());
+				if ((iDistance < m_aiEnemyCityDistance[iPlotNum]) || (m_aiEnemyCityDistance[iPlotNum] == -1))
 				{
-
-
-					int iPlotNum = kMap.plotNumINLINE(pDirectionPlot->getX_INLINE(), pDirectionPlot->getY_INLINE());
-					if ((iDistance < m_aiEnemyCityDistance[iPlotNum]) || (m_aiEnemyCityDistance[iPlotNum] == -1))
+					if ((pDirectionPlot->isWater() && pPlot->isWater() && pPlot->isAdjacentWaterPassable(pDirectionPlot))
+						|| (!pDirectionPlot->isWater() && !pPlot->isWater())
+							|| (pDirectionPlot->isWater() && pPlot->isCity()))
 					{
 						m_aiEnemyCityDistance[iPlotNum] = iDistance;
 						plotQueue.push_back(iPlotNum);
@@ -3155,13 +3247,12 @@ void CvTeamAI::AI_doTactics()
 			CvPlot* pDirectionPlot = plotDirection(pPlot->getX_INLINE(), pPlot->getY_INLINE(), (DirectionTypes)iDirection);
 			if (pDirectionPlot != NULL)
 			{
-				bool bValid = false;
-				if ((pDirectionPlot->isWater() && pPlot->isWater() && pPlot->isAdjacentWaterPassable(pDirectionPlot))
-					|| (!pDirectionPlot->isWater() && !pPlot->isWater())
-						|| (pDirectionPlot->isWater() && !pPlot->isWater()))
+				int iPlotNum = kMap.plotNumINLINE(pDirectionPlot->getX_INLINE(), pDirectionPlot->getY_INLINE());
+				if ((iDistance < m_aiEnemyUnitDistance[iPlotNum]) || (m_aiEnemyUnitDistance[iPlotNum] == -1))
 				{
-					int iPlotNum = kMap.plotNumINLINE(pDirectionPlot->getX_INLINE(), pDirectionPlot->getY_INLINE());
-					if ((iDistance < m_aiEnemyUnitDistance[iPlotNum]) || (m_aiEnemyUnitDistance[iPlotNum] == -1))
+					if ((pDirectionPlot->isWater() && pPlot->isWater() && pPlot->isAdjacentWaterPassable(pDirectionPlot))
+						|| (!pDirectionPlot->isWater() && !pPlot->isWater())
+							|| (pDirectionPlot->isWater() && !pPlot->isWater()))
 					{
 						m_aiEnemyUnitDistance[iPlotNum] = iDistance;
 						plotQueue.push_back(iPlotNum);

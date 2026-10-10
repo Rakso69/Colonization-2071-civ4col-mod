@@ -16,6 +16,7 @@ class CvDiplomacy:
 			print "Launching Diplomacy"
 
 		self.iLastResponseID = -1
+		self.commentIDs = {}
 
 		self.diploScreen = CyDiplomacy()
 
@@ -454,7 +455,11 @@ class CvDiplomacy:
 
 	def performHeadAction( self, eComment ):
 
-		if ( eComment == self.getCommentID("AI_DIPLOCOMMENT_NO_PEACE") or
+		#Kaszkaj - Show the Furious animation for both mandatory Progenitor Exarch announcements.
+		if ( self.isComment(eComment, "AI_DIPLOCOMMENT_TRANSCENDENCE_CRUSADE") or
+		     self.isComment(eComment, "AI_DIPLOCOMMENT_TRANSCENDENCE_OBLIGE") ):
+			self.diploScreen.performHeadAction( LeaderheadAction.LEADERANIM_FURIOUS )
+		elif ( eComment == self.getCommentID("AI_DIPLOCOMMENT_NO_PEACE") or
 		     eComment == self.getCommentID("AI_DIPLOCOMMENT_REJECT") or
 		     eComment == self.getCommentID("AI_DIPLOCOMMENT_NO_DEAL") or
 		     eComment == self.getCommentID("AI_DIPLOCOMMENT_CANCEL_DEAL") or
@@ -924,8 +929,12 @@ class CvDiplomacy:
 
 	def getCommentID(self, strComment):
 		'int - ID for DiploCommentType'
+		iComment = self.commentIDs.get(strComment, -1)
+		if iComment >= 0:
+			return iComment
 		for i in range(gc.getNumDiplomacyInfos()):
 			if ( gc.getDiplomacyInfo(i).getType() == strComment ):
+				self.commentIDs[strComment] = i
 				return i
 
 		print "Jason " + strComment

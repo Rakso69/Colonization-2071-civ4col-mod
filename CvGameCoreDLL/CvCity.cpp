@@ -4502,78 +4502,143 @@ void CvCity::changeYieldRushed(YieldTypes eYield, int iChange)
 void CvCity::calculateNetYields(int aiYields[NUM_YIELD_TYPES], int* aiProducedYields, int* aiConsumedYields, bool bPrintWarning) const
 {
 	PROFILE_FUNC();
-    ///TK Hydrocarbons
+
+	int aiConsumed[NUM_YIELD_TYPES];
+	int aiProduced[NUM_YIELD_TYPES];
+	if (aiProducedYields == NULL) aiProducedYields = aiProduced;
+	if (aiConsumedYields == NULL) aiConsumedYields = aiConsumed;
+
+	const int iPopulation = (int)m_aPopulationUnits.size();
+	const bool bOccupied = isOccupation();
+	const bool bNoResearch = canResearch() <= 0;
+	std::vector<int> aiProfessionOutput(bOccupied ? 0 : iPopulation, 0);
+	std::vector<int> aiProfessionInput(bOccupied ? 0 : iPopulation, 0);
+	int aiCityProduction[NUM_YIELD_TYPES];
+	int aiPlotProduction[NUM_YIELD_TYPES];
+	int aiBuildingProduction[NUM_YIELD_TYPES];
+	int aiStored[NUM_YIELD_TYPES];
+	int aiModifiers[NUM_YIELD_TYPES];
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		YieldTypes eYield = (YieldTypes)iYield;
+		aiConsumedYields[iYield] = 0;
+		aiCityProduction[iYield] = 0;
+		aiPlotProduction[iYield] = 0;
+		aiBuildingProduction[iYield] = 0;
+		aiStored[iYield] = getYieldStored(eYield);
+		aiModifiers[iYield] = getBaseYieldRateModifier(eYield);
+	}
+
+	if (!bOccupied)
+	{
+		aiConsumedYields[YIELD_FOOD] = iPopulation * GC.getFOOD_CONSUMPTION_PER_POPULATION();
+		for (int iUnitIndex = 0; iUnitIndex < iPopulation; ++iUnitIndex)
+		{
+			CvUnit* pUnit = m_aPopulationUnits[iUnitIndex];
+			if (pUnit == NULL || pUnit->getProfession() == NO_PROFESSION) continue;
+			ProfessionTypes eProfession = pUnit->getProfession();
+			CvProfessionInfo& kProfession = GC.getProfessionInfo(eProfession);
+			YieldTypes eYieldProduced = (YieldTypes)kProfession.getYieldsProduced(0);
+			int iOutput = eYieldProduced == NO_YIELD ? 0 : getProfessionOutput(eProfession, pUnit);
+			aiProfessionOutput[iUnitIndex] = iOutput;
+			if (eYieldProduced != NO_YIELD) aiCityProduction[eYieldProduced] += iOutput;
+			if (eYieldProduced == YIELD_IDEAS && bNoResearch) continue;
+			int iNumInputs = kProfession.getNumYieldsConsumed(getOwnerINLINE());
+			int iInput = iOutput;
+			for (int i = 0; i < iNumInputs; ++i)
+			{
+				if (kProfession.getYieldsConsumed(i, getOwnerINLINE()) == NO_YIELD)
+				{
+					iInput = 0;
+					break;
+				}
+			}
+			aiProfessionInput[iUnitIndex] = iInput;
+			if (iInput != 0)
+			{
+				for (int i = 0; i < iNumInputs; ++i)
+				{
+					YieldTypes eYieldConsumed = (YieldTypes)kProfession.getYieldsConsumed(i, getOwnerINLINE());
+					if (eYieldConsumed != NO_YIELD) aiConsumedYields[eYieldConsumed] += iInput;
+				}
+			}
+		}
+
+		for (int iPlot = 0; iPlot < NUM_CITY_PLOTS; ++iPlot)
+		{
+			CvPlot* pPlot = getCityIndexPlot(iPlot);
+			if (pPlot != NULL && isUnitWorkingPlot(iPlot))
+			{
+				for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+					aiPlotProduction[iYield] += pPlot->getYield((YieldTypes)iYield);
+			}
+		}
+
+		CvPlayer& kOwner = GET_PLAYER(getOwnerINLINE());
+		CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(getCivilizationType());
+		for (int iClass = 0; iClass < GC.getNumBuildingClassInfos(); ++iClass)
+		{
+			BuildingTypes eBuilding = (BuildingTypes)kCivilization.getCivilizationBuildings(iClass);
+			if (eBuilding != NO_BUILDING && isHasBuilding(eBuilding))
+			{
+				CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+				for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+				{
+					YieldTypes eYield = (YieldTypes)iYield;
+					aiBuildingProduction[iYield] += kBuilding.getYieldChange(eYield);
+					aiBuildingProduction[iYield] += getBuildingYieldChange((BuildingClassTypes)iClass, eYield);
+					aiBuildingProduction[iYield] += kOwner.getBuildingYieldChange((BuildingClassTypes)iClass, eYield);
+				}
+			}
+		}
+	}
 
 	int iExtra = 0;
 	if (isHasRealBuilding((BuildingTypes)GC.getDefineINT("BUILDING_OIL_REFINERY")))
 	{
-        int iConsumedHydrocarbons = getRawYieldConsumed(YIELD_HYDROCARBONS);
-        if (iConsumedHydrocarbons > 0)
-        {
-            int iHydrocarbonsSurplus = getYieldStored(YIELD_HYDROCARBONS) + getBaseRawYieldProduced(YIELD_HYDROCARBONS) * getBaseYieldRateModifier(YIELD_HYDROCARBONS) / 100 - iConsumedHydrocarbons;
-            int iOilRefineryProductionDivisor = std::max(1, GC.getDefineINT("TK_OIL_REFINERY_HYDROCARBONS_PER_PRODUCTION"));
-            if (iHydrocarbonsSurplus != -iConsumedHydrocarbons)
-            {
-                if (iHydrocarbonsSurplus > iConsumedHydrocarbons && iHydrocarbonsSurplus != 0)
-                {
-                    iExtra = iConsumedHydrocarbons / iOilRefineryProductionDivisor;
-                }
-                else if (iHydrocarbonsSurplus < iConsumedHydrocarbons)
-                {
-                    iExtra = (iConsumedHydrocarbons + iHydrocarbonsSurplus) / iOilRefineryProductionDivisor;
-                }
-                else if (iHydrocarbonsSurplus == 0)
-                {
-                    iExtra = iConsumedHydrocarbons / iOilRefineryProductionDivisor;
-                }
-            }
-        }
+		int iConsumedHydrocarbons = aiConsumedYields[YIELD_HYDROCARBONS];
+		if (iConsumedHydrocarbons > 0)
+		{
+			int iHydrocarbonsProduced = aiCityProduction[YIELD_HYDROCARBONS] + aiPlotProduction[YIELD_HYDROCARBONS] + aiBuildingProduction[YIELD_HYDROCARBONS];
+			int iHydrocarbonsSurplus = aiStored[YIELD_HYDROCARBONS] + iHydrocarbonsProduced * aiModifiers[YIELD_HYDROCARBONS] / 100 - iConsumedHydrocarbons;
+			int iDivisor = std::max(1, GC.getDefineINT("TK_OIL_REFINERY_HYDROCARBONS_PER_PRODUCTION"));
+			if (iHydrocarbonsSurplus != -iConsumedHydrocarbons)
+			{
+				if (iHydrocarbonsSurplus > iConsumedHydrocarbons && iHydrocarbonsSurplus != 0)
+					iExtra = iConsumedHydrocarbons / iDivisor;
+				else if (iHydrocarbonsSurplus < iConsumedHydrocarbons)
+					iExtra = (iConsumedHydrocarbons + iHydrocarbonsSurplus) / iDivisor;
+				else if (iHydrocarbonsSurplus == 0)
+					iExtra = iConsumedHydrocarbons / iDivisor;
+			}
+		}
 	}
-	///Tke
-	int aiConsumed[NUM_YIELD_TYPES];
-	int aiProduced[NUM_YIELD_TYPES];
-	if (aiProducedYields == NULL)
-	{
-		aiProducedYields = aiProduced;
-	}
-	if (aiConsumedYields == NULL)
-	{
-		aiConsumedYields = aiConsumed;
-	}
-    ///TKs Invention Core Mod v 1.0
-    bool bNoResearch = false;
+
+	bool bHasDeficit = false;
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
-
-        YieldTypes eYield = (YieldTypes) iYield;
-        if (eYield == YIELD_IDEAS)
-        {
-            if (canResearch() <= 0)
-            {
-                aiConsumedYields[iYield] = 0;
-                aiProducedYields[iYield] = 0;
-                aiYields[eYield] = getYieldStored(eYield) - aiConsumedYields[iYield] + aiProducedYields[iYield] * getBaseYieldRateModifier(eYield) / 100;
-                bNoResearch = true;
-                continue;
-
-            }
-
-
-        }
-
-
-		aiConsumedYields[iYield] = getRawYieldConsumed(eYield);
-		aiProducedYields[iYield] = getBaseRawYieldProduced(eYield);
-		aiYields[iYield] = getYieldStored(eYield) - aiConsumedYields[iYield] + aiProducedYields[iYield] * getBaseYieldRateModifier(eYield) / 100;
+		YieldTypes eYield = (YieldTypes)iYield;
+		if (eYield != YIELD_HYDROCARBONS && GC.getYieldInfo(eYield).getUnitClass() != NO_UNITCLASS)
+		{
+			if (aiCityProduction[iYield] > 0) aiCityProduction[iYield] += iExtra;
+			if (aiConsumedYields[iYield] > 0) aiConsumedYields[iYield] += iExtra;
+		}
+		aiProducedYields[iYield] = aiCityProduction[iYield] + aiPlotProduction[iYield] + aiBuildingProduction[iYield];
+		if (eYield == YIELD_IDEAS && bNoResearch)
+		{
+			aiConsumedYields[iYield] = 0;
+			aiProducedYields[iYield] = 0;
+		}
+		aiYields[iYield] = aiStored[iYield] - aiConsumedYields[iYield] + aiProducedYields[iYield] * aiModifiers[iYield] / 100;
+		if (aiYields[iYield] < 0) bHasDeficit = true;
 	}
 
 	std::set<ProfessionTypes> setUnsatisfiedProfessions;
 
 	//Kaszkaj fix: .\.\CvCity.cpp, Line:  4693, Expression:  (iYield == YIELD_FOOD) || (aiYields[iYield] >= 0).
 	// Recheck production chains after each shortage and reduce a worker's inputs and output together.
-	if (!isOccupation())
+	if (!bOccupied && bHasDeficit)
 	{
-		const int iPopulation = (int)m_aPopulationUnits.size();
 		std::vector<int> aiFullProduction(iPopulation, 0);
 		std::vector<int> aiProductionAvailable(iPopulation, 0);
 		std::vector< std::vector<int> > aaiInputs(iPopulation, std::vector<int>(NUM_YIELD_TYPES, 0));
@@ -4600,7 +4665,7 @@ void CvCity::calculateNetYields(int aiYields[NUM_YIELD_TYPES], int* aiProducedYi
 			{
 				continue;
 			}
-			int iInput = getProfessionInput(pUnit->getProfession(), pUnit);
+			int iInput = aiProfessionInput[iUnitIndex];
 			if (iInput <= 0)
 			{
 				continue;
@@ -4627,7 +4692,7 @@ void CvCity::calculateNetYields(int aiYields[NUM_YIELD_TYPES], int* aiProducedYi
 					aiExtraInput[iYield] = 0;
 				}
 			}
-			aiFullProduction[iUnitIndex] = getProfessionOutput(pUnit->getProfession(), pUnit) + aiExtraOutput[eYieldProduced];
+			aiFullProduction[iUnitIndex] = aiProfessionOutput[iUnitIndex] + aiExtraOutput[eYieldProduced];
 			aiExtraOutput[eYieldProduced] = 0;
 			aiProductionAvailable[iUnitIndex] = aiFullProduction[iUnitIndex];
 		}
@@ -4680,7 +4745,7 @@ void CvCity::calculateNetYields(int aiYields[NUM_YIELD_TYPES], int* aiProducedYi
 				for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 				{
 					YieldTypes eYield = (YieldTypes)iYield;
-					aiYields[iYield] = getYieldStored(eYield) - aiConsumedYields[iYield] + aiProducedYields[iYield] * getBaseYieldRateModifier(eYield) / 100;
+					aiYields[iYield] = aiStored[iYield] - aiConsumedYields[iYield] + aiProducedYields[iYield] * aiModifiers[iYield] / 100;
 				}
 				if (bPrintWarning)
 				{
@@ -4695,7 +4760,7 @@ void CvCity::calculateNetYields(int aiYields[NUM_YIELD_TYPES], int* aiProducedYi
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
 		FAssert((iYield == YIELD_FOOD) || (aiYields[iYield] >= 0));
-		aiYields[iYield] -= getYieldStored((YieldTypes) iYield);
+		aiYields[iYield] -= aiStored[iYield];
 	}
 
 	// Immigration

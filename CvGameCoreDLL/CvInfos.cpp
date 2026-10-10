@@ -24,14 +24,151 @@ void resetTranscendenceArtScale()
 	g_pTranscendenceArtScale = NULL;
 }
 
+struct CvUnitClassYieldCache
+{
+	int iUnitClassCount;
+	std::vector<YieldTypes> aeClassYields;
+	CvUnitClassYieldCache() : iUnitClassCount(-1) {}
+};
+
+static CvUnitClassYieldCache& unitClassYieldCache()
+{
+	static CvUnitClassYieldCache kCache;
+	return kCache;
+}
+
+static void clearUnitClassYieldCache()
+{
+	unitClassYieldCache().iUnitClassCount = -1;
+}
+
+YieldTypes getUnitClassYieldType(UnitClassTypes eUnitClass)
+{
+	CvUnitClassYieldCache& kCache = unitClassYieldCache();
+	const int iClassCount = GC.getNumUnitClassInfos();
+	if (eUnitClass < NO_UNITCLASS || eUnitClass >= iClassCount)
+	{
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			if (eUnitClass == GC.getYieldInfo((YieldTypes)iYield).getUnitClass()) return (YieldTypes)iYield;
+		}
+		return NO_YIELD;
+	}
+	if (kCache.iUnitClassCount != iClassCount)
+	{
+		kCache.aeClassYields.assign(iClassCount + 1, NO_YIELD);
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			const int iClass = GC.getYieldInfo((YieldTypes)iYield).getUnitClass();
+			if (iClass >= NO_UNITCLASS && iClass < iClassCount && kCache.aeClassYields[iClass + 1] == NO_YIELD)
+				kCache.aeClassYields[iClass + 1] = (YieldTypes)iYield;
+		}
+		kCache.iUnitClassCount = iClassCount;
+	}
+	return kCache.aeClassYields[eUnitClass + 1];
+}
+
+struct CvNatureYieldTechnologyCache
+{
+	int iCivicCount;
+	int iBonusCount;
+	int iCivicOption;
+	std::vector<CivicTypes> aeYieldRestrictions[NUM_YIELD_TYPES];
+	std::vector<bool> abBonusRestricted;
+	std::vector<CivicTypes> aeCityFoodBonuses;
+
+	CvNatureYieldTechnologyCache() : iCivicCount(-1), iBonusCount(-1), iCivicOption(-1) {}
+};
+
+static CvNatureYieldTechnologyCache& natureYieldTechnologyCache()
+{
+	static CvNatureYieldTechnologyCache kCache;
+	return kCache;
+}
+
+static void clearNatureYieldTechnologyCache()
+{
+	natureYieldTechnologyCache().iCivicCount = -1;
+}
+
+static const CvNatureYieldTechnologyCache& getNatureYieldTechnologyCache()
+{
+	CvNatureYieldTechnologyCache& kCache = natureYieldTechnologyCache();
+	const int iCivicCount = GC.getNumCivicInfos();
+	const int iBonusCount = GC.getNumBonusInfos();
+	const int iCivicOption = GC.getDefineINT("CIVICOPTION_INVENTIONS");
+	if (kCache.iCivicCount != iCivicCount || kCache.iBonusCount != iBonusCount || kCache.iCivicOption != iCivicOption)
+	{
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+		{
+			kCache.aeYieldRestrictions[iYield].clear();
+		}
+		kCache.abBonusRestricted.assign(iBonusCount, false);
+		kCache.aeCityFoodBonuses.clear();
+		for (int iCivic = 0; iCivic < iCivicCount; ++iCivic)
+		{
+			const CvCivicInfo& kCivic = GC.getCivicInfo((CivicTypes)iCivic);
+			if (kCivic.getCivicOptionType() == (CivicOptionTypes)iCivicOption)
+			{
+				for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+				{
+					if (kCivic.getAllowsYields(iYield) > 0)
+					{
+						kCache.aeYieldRestrictions[iYield].push_back((CivicTypes)iCivic);
+					}
+				}
+				for (int iBonus = 0; iBonus < iBonusCount; ++iBonus)
+				{
+					if (kCivic.getAllowsBonuses(iBonus) > 0)
+					{
+						kCache.abBonusRestricted[iBonus] = true;
+					}
+				}
+				if (kCivic.getCenterPlotFoodBonus() != 0)
+				{
+					kCache.aeCityFoodBonuses.push_back((CivicTypes)iCivic);
+				}
+			}
+		}
+		kCache.iCivicCount = iCivicCount;
+		kCache.iBonusCount = iBonusCount;
+		kCache.iCivicOption = iCivicOption;
+	}
+	return kCache;
+}
+
+const std::vector<CivicTypes>& getNatureYieldTechnologyRestrictions(YieldTypes eYield)
+{
+	return getNatureYieldTechnologyCache().aeYieldRestrictions[eYield];
+}
+
+bool isNatureBonusTechnologyRestricted(BonusTypes eBonus)
+{
+	return getNatureYieldTechnologyCache().abBonusRestricted[eBonus];
+}
+
+const std::vector<CivicTypes>& getCityFoodBonusTechnologies()
+{
+	return getNatureYieldTechnologyCache().aeCityFoodBonuses;
+}
+
 static void clearCivicInfoCaches()
 {
+	clearNatureYieldTechnologyCache();
 	for (int i = 0; i < GC.getNumCivicInfos(); ++i)
 	{
 		if (GC.getCivicInfo()[i] != NULL)
 		{
 			GC.getCivicInfo()[i]->clearTechnologyCache();
 		}
+	}
+	for (int i = 0; i < GC.getNumUnitInfos(); ++i)
+	{
+		GC.getUnitInfo((UnitTypes)i).clearTechnologyCache();
+	}
+	for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
+	{
+		GC.getPromotionInfo((PromotionTypes)i).clearTechnologyCache();
 	}
 	for (int i = 0; i < GC.getNumProfessionInfos(); ++i)
 	{
@@ -910,7 +1047,9 @@ m_aiUnitCombatModifierPercent(NULL),
 m_aiDomainModifierPercent(NULL),
 m_abTerrainDoubleMove(NULL),
 m_abFeatureDoubleMove(NULL),
-m_abUnitCombat(NULL)
+m_abUnitCombat(NULL),
+m_iCachedCivicCount(-1),
+m_iCachedCivicOption(-1)
 {
 }
 //------------------------------------------------------------------------------------------------------
@@ -1146,8 +1285,37 @@ bool CvPromotionInfo::getUnitCombat(int i) const
 	return m_abUnitCombat ? m_abUnitCombat[i] : false;
 }
 
+const std::vector<CivicTypes>& CvPromotionInfo::getTechnologyRestrictions() const
+{
+	int iCivicCount = GC.getNumCivicInfos();
+	int iCivicOption = GC.getDefineINT("CIVICOPTION_INVENTIONS");
+	if (m_iCachedCivicCount != iCivicCount || m_iCachedCivicOption != iCivicOption)
+	{
+		m_aeTechnologyRestrictions.clear();
+		PromotionTypes ePromotion = (PromotionTypes)GC.getInfoTypeForString(getType());
+		for (int i = 0; i < iCivicCount; ++i)
+		{
+			const CvCivicInfo& kCivic = GC.getCivicInfo((CivicTypes)i);
+			if (kCivic.getCivicOptionType() == iCivicOption && kCivic.getAllowsPromotions(ePromotion) > 0)
+			{
+				m_aeTechnologyRestrictions.push_back((CivicTypes)i);
+			}
+		}
+		m_iCachedCivicCount = iCivicCount;
+		m_iCachedCivicOption = iCivicOption;
+	}
+	return m_aeTechnologyRestrictions;
+}
+
+void CvPromotionInfo::clearTechnologyCache()
+{
+	m_iCachedCivicCount = -1;
+	m_aeTechnologyRestrictions.clear();
+}
+
 void CvPromotionInfo::read(FDataStreamBase* stream)
 {
+	clearTechnologyCache();
 	CvHotkeyInfo::read(stream);
 
 	uint uiFlag=0;
@@ -1275,6 +1443,7 @@ void CvPromotionInfo::write(FDataStreamBase* stream)
 }
 bool CvPromotionInfo::read(CvXMLLoadUtility* pXML)
 {
+	clearTechnologyCache();
 	CvString szTextVal;
 	if (!CvHotkeyInfo::read(pXML))
 	{
@@ -2680,7 +2849,9 @@ m_abPrereqOrBuilding(NULL),
 ///TK Viscos Mod
 m_abProfessionsNotAllowed(NULL),
 ///TK end
-m_paszUnitNames(NULL)
+m_paszUnitNames(NULL),
+m_iCachedCivicCount(-1),
+m_iCachedCivicOption(-1)
 {
 }
 //------------------------------------------------------------------------------------------------------
@@ -3263,8 +3434,34 @@ const CvUnitMeshGroups& CvUnitInfo::getProfessionMeshGroup(int iProfession) cons
 	}
 	return m_aProfessionGroups[0];
 }
+const std::vector<CivicTypes>& CvUnitInfo::getTechnologyRestrictions() const
+{
+	int iCivicCount = GC.getNumCivicInfos();
+	int iCivicOption = GC.getDefineINT("CIVICOPTION_INVENTIONS");
+	if (m_iCachedCivicCount != iCivicCount || m_iCachedCivicOption != iCivicOption)
+	{
+		m_aeTechnologyRestrictions.clear();
+		for (int i = 0; i < iCivicCount; ++i)
+		{
+			const CvCivicInfo& kCivic = GC.getCivicInfo((CivicTypes)i);
+			if (kCivic.getCivicOptionType() == iCivicOption && kCivic.getAllowsUnitClasses(getUnitClassType()) != 0)
+				m_aeTechnologyRestrictions.push_back((CivicTypes)i);
+		}
+		m_iCachedCivicCount = iCivicCount;
+		m_iCachedCivicOption = iCivicOption;
+	}
+	return m_aeTechnologyRestrictions;
+}
+
+void CvUnitInfo::clearTechnologyCache()
+{
+	m_iCachedCivicCount = -1;
+	m_aeTechnologyRestrictions.clear();
+}
+
 void CvUnitInfo::read(FDataStreamBase* stream)
 {
+	clearTechnologyCache();
 	CvHotkeyInfo::read(stream);
 	uint uiFlag=0;
 	stream->Read(&uiFlag);	// flags for expansion
@@ -3566,6 +3763,7 @@ void CvUnitInfo::write(FDataStreamBase* stream)
 //
 bool CvUnitInfo::read(CvXMLLoadUtility* pXML)
 {
+	clearTechnologyCache();
 	CvString szTextVal;
 	if (!CvHotkeyInfo::read(pXML))
 	{
@@ -9097,6 +9295,7 @@ bool CvYieldInfo::isCargo() const
 
 bool CvYieldInfo::read(CvXMLLoadUtility* pXML)
 {
+	clearUnitClassYieldCache();
 	CvString szTextVal;
 	if (!CvInfoBase::read(pXML))
 	{

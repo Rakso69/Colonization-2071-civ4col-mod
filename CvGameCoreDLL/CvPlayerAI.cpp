@@ -32,6 +32,27 @@
 #define GREATER_FOUND_RANGE			(5)
 #define CIVIC_CHANGE_DELAY			(25)
 
+namespace
+{
+	bool canCachePlayerPlanning()
+	{
+		return !GC.getUSE_CAN_DO_CIVIC_CALLBACK() && !GC.getUSE_CANNOT_DO_CIVIC_CALLBACK()
+			&& !GC.getUSE_GET_BUILDING_COST_MOD_CALLBACK() && !GC.getUSE_GET_UNIT_COST_MOD_CALLBACK()
+			&& !GC.getUSE_CAN_CONSTRUCT_CALLBACK() && !GC.getUSE_CANNOT_CONSTRUCT_CALLBACK()
+			&& !GC.getUSE_CAN_TRAIN_CALLBACK() && !GC.getUSE_CANNOT_TRAIN_CALLBACK()
+			&& !GC.getUSE_CAN_BUILD_CALLBACK() && !GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK()
+			&& !GC.getUSE_CAN_DECLARE_WAR_CALLBACK();
+	}
+
+	int earthUnitBuyPrice(const CvPlayer& kOwner, UnitTypes eUnit, int iClass, std::vector<int>& aiPrices)
+	{
+		if (aiPrices.empty()) return kOwner.getEuropeUnitBuyPrice(eUnit);
+		int& iPrice = aiPrices[iClass];
+		if (iPrice == MIN_INT) iPrice = kOwner.getEuropeUnitBuyPrice(eUnit);
+		return iPrice;
+	}
+}
+
 //Kaszkaj - Crusade copies use existing saved unit script data and never replace the original REF.
 bool isTranscendenceREFUnit(const CvUnit* pUnit)
 {
@@ -2964,6 +2985,12 @@ int CvPlayerAI::AI_getAttitudeVal(PlayerTypes ePlayer, bool bForced)
 		return 100;
 	}
 
+	//Kaszkaj - The recorded Progenitor Exarch is Furious during its pending Transcendence announcement.
+	if (isEurope() && GC.getGameINLINE().isTranscendenceNoticeContact(ePlayer, getID()))
+	{
+		return -100;
+	}
+
 	//Kaszkaj - Keep the State or Progenitor Exarch's attitude at -100 after displaying the final insult.
 	if (isEurope() && GET_PLAYER(ePlayer).isHuman() && GET_PLAYER(ePlayer).getParent() == getID()
 		&& GET_PLAYER(ePlayer).getTaxRate() > 100 && AI_getAttitudeExtra(ePlayer) == -100)
@@ -5805,6 +5832,7 @@ int CvPlayerAI::AI_buildPlanValue(UnitTypes eUnit, const CvPlot* pPlot, BuildTyp
 	{
 		YieldTypes eYield = (YieldTypes)i;
 		int iWeight = std::max(0, AI_yieldValue(eYield));
+		if (iWeight == 0) continue;
 		if (eFeature != NO_FEATURE && kBuild.isFeatureRemove(eFeature)) iValue += iWeight * std::max(0, kBuild.getFeatureYield(eFeature, eYield));
 		if (eImprovement != NO_IMPROVEMENT)
 		{
@@ -6913,6 +6941,11 @@ void CvPlayerAI::AI_doTradeRoutes()
 
 	//Best Yield Destinations
 	std::vector<CvCity*> yield_dests(NUM_YIELD_TYPES, NULL);
+	bool abFinalProducts[NUM_YIELD_TYPES] = {false};
+	bool abFinalProductsKnown[NUM_YIELD_TYPES] = {false};
+	const bool bCacheFinalProducts = canCachePlayerPlanning();
+	std::vector<ProfessionTypes> aeConsumers[NUM_YIELD_TYPES];
+	bool bConsumersKnown = false;
 
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
@@ -6920,7 +6953,9 @@ void CvPlayerAI::AI_doTradeRoutes()
 
 		if (GC.getYieldInfo(eLoopYield).isCargo() && (eLoopYield != YIELD_FOOD))
 		{
-			if (AI_isYieldFinalProduct(eLoopYield))
+			abFinalProducts[eLoopYield] = AI_isYieldFinalProduct(eLoopYield);
+			abFinalProductsKnown[eLoopYield] = true;
+			if (abFinalProducts[eLoopYield])
 			{
 				yield_dests[eLoopYield] = NULL;
 			}
@@ -6934,6 +6969,15 @@ void CvPlayerAI::AI_doTradeRoutes()
 			}
 			else
 			{
+				if (!bConsumersKnown)
+				{
+					for (int iProfession = 0; iProfession < GC.getNumProfessionInfos(); ++iProfession)
+					{
+						YieldTypes eInput = (YieldTypes)GC.getProfessionInfo((ProfessionTypes)iProfession).getYieldsConsumed(0, getID());
+						if (eInput >= 0 && eInput < NUM_YIELD_TYPES) aeConsumers[eInput].push_back((ProfessionTypes)iProfession);
+					}
+					bConsumersKnown = true;
+				}
 				CvCity* pBestYieldCity = NULL;
 				int iBestCityValue = 0;
 
@@ -6941,27 +6985,25 @@ void CvPlayerAI::AI_doTradeRoutes()
 				CvCity* pLoopCity;
 				for(pLoopCity = firstCity(&iLoop); pLoopCity != NULL; pLoopCity = nextCity(&iLoop))
 				{
-					for (int iProfession = 0; iProfession < GC.getNumProfessionInfos(); ++iProfession)
+					const std::vector<ProfessionTypes>& aeYieldConsumers = aeConsumers[eLoopYield];
+					for (int iProfession = 0; iProfession < (int)aeYieldConsumers.size(); ++iProfession)
 					{
-						CvProfessionInfo& kLoopProfession = GC.getProfessionInfo((ProfessionTypes)iProfession);
-						if (kLoopProfession.getYieldsConsumed(0, getID()) == eLoopYield)
+						int iValue = pLoopCity->getProfessionOutput(aeYieldConsumers[iProfession], NULL);
+						if (iValue > 0)
 						{
-							int iValue = pLoopCity->getProfessionOutput((ProfessionTypes)iProfession, NULL);
-							if (iValue > 0)
+							iValue *= 100;
+							iValue += pLoopCity->getPopulation();
+							if (iValue > iBestCityValue)
 							{
-								iValue *= 100;
-								iValue += pLoopCity->getPopulation();
-								if (iValue > iBestCityValue)
-								{
-									iBestCityValue = iValue;
-									pBestYieldCity = pLoopCity;
-								}
+								iBestCityValue = iValue;
+								pBestYieldCity = pLoopCity;
 							}
 						}
 					}
 				}
 				yield_dests[eLoopYield] = pBestYieldCity;
-				if (GC.getGameINLINE().getGameTurn() > 50)
+				//Kaszkaj - Leave the destination unset when no Colony can produce the consumed goods.
+				if (pBestYieldCity != NULL && GC.getGameINLINE().getGameTurn() > 50)
 				{
 					pBestYieldCity->setMaintainLevel(eLoopYield, pBestYieldCity->getMaxYieldCapacity() / 2);
 				}
@@ -6992,6 +7034,8 @@ void CvPlayerAI::AI_doTradeRoutes()
 
 					pLoopCity->setMaintainLevel(YIELD_FOOD, iThreshold);
 
+					bool bAvoidGrowth = aiYields[YIELD_FOOD] <= 0;
+					bool bGrowthChanged = pLoopCity->AI_isEmphasizeAvoidGrowth() != bAvoidGrowth;
 					if (aiYields[YIELD_FOOD] > 0)
 					{
 						bShouldExport = true;
@@ -7002,10 +7046,17 @@ void CvPlayerAI::AI_doTradeRoutes()
 						bShouldImport = true;
 						pLoopCity->AI_setAvoidGrowth(true);
 					}
+					// Changing growth emphasis immediately reallocates jobs and refreshes needed goods.
+					if (bGrowthChanged) std::fill(abFinalProductsKnown, abFinalProductsKnown + NUM_YIELD_TYPES, false);
 				}
 				else
 				{
-					if ((AI_isYieldFinalProduct(eLoopYield)) || AI_isYieldForSale(eLoopYield))
+					if (!bCacheFinalProducts || !abFinalProductsKnown[eLoopYield])
+					{
+						abFinalProducts[eLoopYield] = AI_isYieldFinalProduct(eLoopYield);
+						abFinalProductsKnown[eLoopYield] = true;
+					}
+					if (abFinalProducts[eLoopYield] || AI_isYieldForSale(eLoopYield))
 					{
 						if (pLoopCity->AI_isPort())
 						{
@@ -8481,12 +8532,19 @@ void CvPlayerAI::AI_doKingTechnologyTrade()
 	int iTaxIncrease = getKingTechnologyTaxIncrease();
 	int iTaxProductionValue = AI_taxRateProductionValue(iTaxIncrease, iPlanningTurns);
 	int iTradeIncome = 0;
+	int aiTotalYields[NUM_YIELD_TYPES];
+	bool bTotalYieldsKnown = false;
 	for (int i = 0; i < NUM_YIELD_TYPES; ++i)
 	{
 		YieldTypes eYield = (YieldTypes)i;
 		if (GC.getYieldInfo(eYield).isCargo() && eYield != YIELD_FOOD)
 		{
-			int iExport = std::max(0, calculateTotalYield(eYield));
+			if (!bTotalYieldsKnown)
+			{
+				calculateTotalYields(aiTotalYields);
+				bTotalYieldsKnown = true;
+			}
+			int iExport = std::max(0, aiTotalYields[eYield]);
 			iTradeIncome += iExport * std::max(0, kKing.getYieldBuyPrice(eYield));
 		}
 	}
@@ -9314,6 +9372,9 @@ void CvPlayerAI::AI_doEurope()
 	}
 
 	//arm any europe units that need it
+	int iNeededDefenders = 0;
+	bool bDefenderDemandKnown = false;
+	const bool bCacheDefenderDemand = canCachePlayerPlanning();
 	for (int i = 0; i < getNumEuropeUnits(); i++)
 	{
 		CvUnit *pUnit = getEuropeUnit(i);
@@ -9326,12 +9387,16 @@ void CvPlayerAI::AI_doEurope()
 				changeProfessionEurope(pUnit->getID(), eDefault);
 			}
 			pUnit->AI_setUnitAIType(UNITAI_COLONIST);
+			bDefenderDemandKnown = false;
 			continue;
 		}
 
-		int iUndefended = 0;
-		int iNeeded = AI_totalDefendersNeeded(&iUndefended);
-		if (iNeeded > 0 || AI_isStrategy(STRATEGY_REVOLUTION_PREPARING))
+		if (!bCacheDefenderDemand || !bDefenderDemandKnown)
+		{
+			iNeededDefenders = AI_totalDefendersNeeded(NULL);
+			bDefenderDemandKnown = true;
+		}
+		if (iNeededDefenders > 0 || AI_isStrategy(STRATEGY_REVOLUTION_PREPARING))
 		{
 			ProfessionTypes eBestProfession = NO_PROFESSION;
 			if (GC.getGameINLINE().getSorenRandNum(100, "") < 50)
@@ -9347,6 +9412,7 @@ void CvPlayerAI::AI_doEurope()
 				&& getGold() - pUnit->getEuropeProfessionChangeCost(eBestProfession) >= iGoldReserve)
 			{
 				changeProfessionEurope(pUnit->getID(), eBestProfession);
+				bDefenderDemandKnown = false;
 			}
 		}
 	}
@@ -15621,7 +15687,7 @@ void CvPlayerAI::AI_doEnemyUnitData()
 		if (aiUnitCounts[iI] > 0)
 		{
 			UnitTypes eLoopUnit = (UnitTypes)iI;
-			aiUnitCounts[iI] = 0;
+			//Kaszkaj - Retain observed enemy strength when updating the preferred unit classes.
 			FAssert(aiDomainSums[GC.getUnitInfo(eLoopUnit).getDomainType()] > 0);
 			m_aiUnitClassWeights[GC.getUnitInfo(eLoopUnit).getUnitClassType()] += (5000 * aiUnitCounts[iI]) / std::max(1, aiDomainSums[GC.getUnitInfo(eLoopUnit).getDomainType()]);
 		}
@@ -15637,7 +15703,10 @@ void CvPlayerAI::AI_doEnemyUnitData()
 		if (m_aiUnitClassWeights[iI] > 0)
 		{
 			UnitTypes eUnit = (UnitTypes)GC.getUnitClassInfo((UnitClassTypes)iI).getDefaultUnitIndex();
-			m_aiUnitCombatWeights[GC.getUnitInfo(eUnit).getUnitCombatType()] += m_aiUnitClassWeights[iI];
+			if (eUnit == NO_UNIT) continue;
+			UnitCombatTypes eCombat = (UnitCombatTypes)GC.getUnitInfo(eUnit).getUnitCombatType();
+			//Kaszkaj - Profession-based soldiers keep class weights without indexing a missing combat category.
+			if (eCombat != NO_UNITCOMBAT) m_aiUnitCombatWeights[eCombat] += m_aiUnitClassWeights[iI];
 
 		}
 	}
@@ -15837,6 +15906,7 @@ UnitTypes CvPlayerAI::AI_nextBuyProfessionUnit(ProfessionTypes* peProfession, Un
 void CvPlayerAI::AI_updateNextBuyUnit(int iEuropePassengers, int iTransportCapacity, int iSpendable)
 {
 	PROFILE_FUNC();
+	std::vector<int> aiPrices(canCachePlayerPlanning() ? GC.getNumUnitClassInfos() : 0, MIN_INT);
 	int iBestValue = 0;
 	UnitTypes eBestUnit = NO_UNIT;
 	UnitAITypes eBestUnitAI = NO_UNITAI;
@@ -15920,7 +15990,7 @@ void CvPlayerAI::AI_updateNextBuyUnit(int iEuropePassengers, int iTransportCapac
 						&& eLoopUnitAI != UNITAI_WORKER) continue;
 					if (kUnitInfo.getDefaultProfession() == NO_PROFESSION || kUnitInfo.getDefaultUnitAIType() == UNITAI_DEFENSIVE || kUnitInfo.getDefaultUnitAIType() == UNITAI_COUNTER)
 					{
-						int iPrice = getEuropeUnitBuyPrice(eLoopUnit);
+						int iPrice = earthUnitBuyPrice(*this, eLoopUnit, iI, aiPrices);
 						if (iPrice > 0 && (!bPassengerBacklog || iPrice <= iSpendable))
 						{
 							int iUnitMultiplier = iMultipler;
@@ -15972,6 +16042,7 @@ int CvPlayerAI::AI_highestNextBuyValue()
 void CvPlayerAI::AI_updateNextBuyProfession()
 {
 	PROFILE_FUNC();
+	std::vector<int> aiPrices(canCachePlayerPlanning() ? GC.getNumUnitClassInfos() : 0, MIN_INT);
 	int iBestValue = 0;
 	UnitTypes eBestProfessionUnit = NO_UNIT;
 	ProfessionTypes eBestProfession = NO_PROFESSION;
@@ -15984,7 +16055,7 @@ void CvPlayerAI::AI_updateNextBuyProfession()
 	{
 		UnitTypes eUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(i);
 		if (eUnit == NO_UNIT || GC.getUnitInfo(eUnit).getDefaultProfession() == NO_PROFESSION) continue;
-		int iPrice = getEuropeUnitBuyPrice(eUnit);
+		int iPrice = earthUnitBuyPrice(*this, eUnit, i, aiPrices);
 		if (iPrice <= 0) continue;
 		int iGain = 0;
 		if (AI_bestCityForUnit(eUnit, &iGain) == NULL || iGain <= 0) continue;
@@ -16022,7 +16093,7 @@ void CvPlayerAI::AI_updateNextBuyProfession()
 						{
 							CvUnitInfo& kUnitInfo = GC.getUnitInfo(eLoopUnit);
 
-							int iPrice = getEuropeUnitBuyPrice(eLoopUnit);
+							int iPrice = earthUnitBuyPrice(*this, eLoopUnit, iI, aiPrices);
 							if (iPrice > 0)
 							{
 

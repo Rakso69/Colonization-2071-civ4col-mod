@@ -125,9 +125,9 @@ bool CvSelectionGroup::sentryAlert() const
 				CvPlot* pPlot = ::plotXY(pHeadUnit->getX_INLINE(), pHeadUnit->getY_INLINE(), iX, iY);
 				if (NULL != pPlot)
 				{
-					if (pHeadUnit->plot()->canSeePlot(pPlot, pHeadUnit->getTeam(), iMaxRange - 1, NO_DIRECTION))
+					if (pPlot->isVisibleEnemyUnit(pHeadUnit))
 					{
-						if (pPlot->isVisibleEnemyUnit(pHeadUnit))
+						if (pHeadUnit->plot()->canSeePlot(pPlot, pHeadUnit->getTeam(), iMaxRange - 1, NO_DIRECTION))
 						{
 							return true;
 						}
@@ -1514,49 +1514,35 @@ bool CvSelectionGroup::isBusy()
 
 bool CvSelectionGroup::isCargoBusy()
 {
-	CLLNode<IDInfo>* pUnitNode1;
-	CLLNode<IDInfo>* pUnitNode2;
-	CvUnit* pLoopUnit1;
-	CvUnit* pLoopUnit2;
-	CvPlot* pPlot;
+	if (getNumUnits() == 0) return false;
 
-	if (getNumUnits() == 0)
+	bool bHasCargo = false;
+	CLLNode<IDInfo>* pUnitNode = headUnitNode();
+	while (pUnitNode != NULL)
 	{
-		return false;
-	}
-
-	pPlot = plot();
-
-	pUnitNode1 = headUnitNode();
-
-	while (pUnitNode1 != NULL)
-	{
-		pLoopUnit1 = ::getUnit(pUnitNode1->m_data);
-		pUnitNode1 = nextUnitNode(pUnitNode1);
-
-		if (pLoopUnit1 != NULL)
+		CvUnit* pUnit = ::getUnit(pUnitNode->m_data);
+		pUnitNode = nextUnitNode(pUnitNode);
+		if (pUnit != NULL && pUnit->getCargo() > 0)
 		{
-			if (pLoopUnit1->getCargo() > 0)
-			{
-				pUnitNode2 = pPlot->headUnitNode();
-
-				while (pUnitNode2 != NULL)
-				{
-					pLoopUnit2 = ::getUnit(pUnitNode2->m_data);
-					pUnitNode2 = pPlot->nextUnitNode(pUnitNode2);
-
-					if (pLoopUnit2->getTransportUnit() == pLoopUnit1)
-					{
-						if (pLoopUnit2->getGroup()->isBusy())
-						{
-							return true;
-						}
-					}
-				}
-			}
+			bHasCargo = true;
+			break;
 		}
 	}
+	if (!bHasCargo) return false;
 
+	CvPlot* pPlot = plot();
+	pUnitNode = pPlot->headUnitNode();
+	while (pUnitNode != NULL)
+	{
+		CvUnit* pCargoUnit = ::getUnit(pUnitNode->m_data);
+		pUnitNode = pPlot->nextUnitNode(pUnitNode);
+		CvUnit* pTransport = pCargoUnit->getTransportUnit();
+		if (pTransport != NULL && pTransport->getGroup() == this && pTransport->getCargo() > 0
+			&& pCargoUnit->getGroup()->isBusy())
+		{
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -1613,11 +1599,12 @@ bool CvSelectionGroup::isFull()
 
 	if (getNumUnits() > 0)
 	{
-		// do two passes, the first pass, we ignore units with special cargo
+		// Ordinary holds must be full; special holds matter only when all carriers are special.
 		int iSpecialCargoCount = 0;
 		int iCargoCount = 0;
+		bool bSpecialCargoNotFull = false;
 
-		// first pass, count but ignore special cargo units
+		// Count hold types and remember whether a special hold still has space.
 		pUnitNode = headUnitNode();
 
 		while (pUnitNode != NULL)
@@ -1633,6 +1620,7 @@ bool CvSelectionGroup::isFull()
 			if (pLoopUnit->specialCargo() != NO_SPECIALUNIT)
 			{
 				iSpecialCargoCount++;
+				if (!pLoopUnit->isFull()) bSpecialCargoNotFull = true;
 			}
 			else if (!(pLoopUnit->isFull()))
 			{
@@ -1640,21 +1628,7 @@ bool CvSelectionGroup::isFull()
 			}
 		}
 
-		// if every unit in the group has special cargo, then check those, otherwise, consider ourselves full
-		if (iSpecialCargoCount >= iCargoCount)
-		{
-			pUnitNode = headUnitNode();
-			while (pUnitNode != NULL)
-			{
-				pLoopUnit = ::getUnit(pUnitNode->m_data);
-				pUnitNode = nextUnitNode(pUnitNode);
-
-				if (!(pLoopUnit->isFull()))
-				{
-					return false;
-				}
-			}
-		}
+		if (iSpecialCargoCount >= iCargoCount && bSpecialCargoNotFull) return false;
 
 		return true;
 	}

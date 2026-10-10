@@ -45,6 +45,7 @@ class CvTechnologyAdvisor:
 			return
 
 		screen.setRenderInterfaceOnly(True);
+		screen.setRenderFrozenWorld(True)
 		screen.showScreen(PopupStates.POPUPSTATE_IMMEDIATE, False)
 	
 		# Set the background and exit button, and show the screen

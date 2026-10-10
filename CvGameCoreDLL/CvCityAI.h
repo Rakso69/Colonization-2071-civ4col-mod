@@ -9,6 +9,8 @@
 
 typedef std::vector<std::pair<UnitAITypes, int> > UnitTypeWeightArray;
 
+struct CvCityAIProfessionValueCache;
+
 class CvCityAI : public CvCity
 {
 
@@ -280,6 +282,7 @@ protected:
 	friend class CvGameTextMgr;
 
 private:
+	int AI_professionValueWithCache(ProfessionTypes eProfession, const CvUnit* pUnit, const CvPlot* pPlot, const CvUnit* pDisplaceUnit, CvCityAIProfessionValueCache* pCache) const;
 	CvUnit* AI_juggleColonistUncached(CvUnit* pUnit);
 };
 

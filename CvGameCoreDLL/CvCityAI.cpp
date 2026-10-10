@@ -39,6 +39,82 @@ namespace
 	}
 }
 
+
+struct CvCityAIProfessionValueCache
+{
+	int aiBaseProduced[NUM_YIELD_TYPES];
+	int aiConsumed[NUM_YIELD_TYPES];
+	int aiModifiers[NUM_YIELD_TYPES];
+	int aiTargets[NUM_YIELD_TYPES];
+	bool abBaseProduced[NUM_YIELD_TYPES];
+	bool abConsumed[NUM_YIELD_TYPES];
+	bool abModifiers[NUM_YIELD_TYPES];
+	bool abTargets[NUM_YIELD_TYPES];
+	const CvCity* pResearchCity;
+	bool bResearchCityKnown;
+
+	CvCityAIProfessionValueCache() : pResearchCity(NULL), bResearchCityKnown(false)
+	{
+		for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+			abBaseProduced[i] = abConsumed[i] = abModifiers[i] = abTargets[i] = false;
+	}
+
+	int baseProduced(const CvCityAI& kCity, YieldTypes eYield)
+	{
+		if (!abBaseProduced[eYield])
+		{
+			aiBaseProduced[eYield] = kCity.getBaseRawYieldProduced(eYield);
+			abBaseProduced[eYield] = true;
+		}
+		return aiBaseProduced[eYield];
+	}
+
+	int consumed(const CvCityAI& kCity, YieldTypes eYield)
+	{
+		if (!abConsumed[eYield])
+		{
+			aiConsumed[eYield] = kCity.getRawYieldConsumed(eYield);
+			abConsumed[eYield] = true;
+		}
+		return aiConsumed[eYield];
+	}
+
+	int modifier(const CvCityAI& kCity, YieldTypes eYield)
+	{
+		if (!abModifiers[eYield])
+		{
+			aiModifiers[eYield] = kCity.getBaseYieldRateModifier(eYield);
+			abModifiers[eYield] = true;
+		}
+		return aiModifiers[eYield];
+	}
+
+	int produced(const CvCityAI& kCity, YieldTypes eYield)
+	{
+		return baseProduced(kCity, eYield) * modifier(kCity, eYield) / 100;
+	}
+
+	int target(const CvPlayerAI& kOwner, const CvCityAI& kCity, YieldTypes eYield)
+	{
+		if (!abTargets[eYield])
+		{
+			aiTargets[eYield] = kOwner.AI_cityYieldTarget(&kCity, eYield);
+			abTargets[eYield] = true;
+		}
+		return aiTargets[eYield];
+	}
+
+	const CvCity* researchCity(const CvPlayerAI& kOwner)
+	{
+		if (!bResearchCityKnown)
+		{
+			pResearchCity = kOwner.AI_nativeResearchCity();
+			bResearchCityKnown = true;
+		}
+		return pResearchCity;
+	}
+};
+
 // Public Functions...
 
 CvCityAI::CvCityAI()
@@ -815,6 +891,9 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync) const
 	FAssertMsg(eUnitAI != NO_UNITAI, "UnitAI is not assigned a valid value");
 
 	iBestOriginalValue = 0;
+	bool bCacheUnitValues = cityBuildingValueCacheSize() != 0 && !GC.getUSE_CAN_BUILD_CALLBACK()
+		&& !GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK() && !GC.getUSE_CAN_DECLARE_WAR_CALLBACK();
+	std::vector<int> aiUnitValues(bCacheUnitValues ? GC.getNumUnitClassInfos() : 0, -1);
 
 	for (iI = 0; iI < GC.getNumUnitClassInfos(); iI++)
 	{
@@ -828,6 +907,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync) const
 				if (canTrain(eLoopUnit))
 				{
 					iOriginalValue = GET_PLAYER(getOwnerINLINE()).AI_unitValue(eLoopUnit, eUnitAI, area());
+					if (bCacheUnitValues) aiUnitValues[iI] = iOriginalValue;
 
 					if (iOriginalValue > iBestOriginalValue)
 					{
@@ -850,9 +930,10 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, bool bAsync) const
 			if (!isHuman() || (GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType() == eUnitAI))
 			{
 
-				if (canTrain(eLoopUnit))
+				if (bCacheUnitValues ? aiUnitValues[iI] >= 0 : canTrain(eLoopUnit))
 					{
-						iValue = GET_PLAYER(getOwnerINLINE()).AI_unitValue(eLoopUnit, eUnitAI, area());
+						iValue = bCacheUnitValues ? aiUnitValues[iI]
+							: GET_PLAYER(getOwnerINLINE()).AI_unitValue(eLoopUnit, eUnitAI, area());
 
 						if (iValue > ((iBestOriginalValue * 2) / 3))
 						{
@@ -3433,6 +3514,9 @@ CvUnit* CvCityAI::AI_assignToBestJob(CvUnit* pUnit, bool bIndoorOnly)
 	int iBestPlot = -1;
 	ProfessionTypes eBestProfession = NO_PROFESSION;
 	if (cityBuildingValueCacheSize() == 0) return AI_assignToBestJobUncached(pUnit, bIndoorOnly);
+	CvCityAIProfessionValueCache kYieldCache;
+	CvCityAIProfessionValueCache* pYieldCache = GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK()
+		|| GC.getUSE_CAN_DECLARE_WAR_CALLBACK() ? NULL : &kYieldCache;
 	int aiIncumbentValues[NUM_CITY_PLOTS];
 	bool abIncumbentValues[NUM_CITY_PLOTS] = {false};
 
@@ -3469,7 +3553,7 @@ CvUnit* CvCityAI::AI_assignToBestJob(CvUnit* pUnit, bool bIndoorOnly)
 						continue;
 					}
 				}
-				int iValue = AI_professionValue(eLoopProfession, pUnit, pLoopPlot, pWorkingUnit);
+				int iValue = AI_professionValueWithCache(eLoopProfession, pUnit, pLoopPlot, pWorkingUnit, pYieldCache);
 				int iCandidateValue = 0;
 				int iIncumbentValue = 0;
 				if (pWorkingUnit != NULL)
@@ -3512,7 +3596,7 @@ CvUnit* CvCityAI::AI_assignToBestJob(CvUnit* pUnit, bool bIndoorOnly)
 					continue;
 				}
 			}
-			int iValue = AI_professionValue(eLoopProfession, pUnit, NULL, pWorstUnit);
+			int iValue = AI_professionValueWithCache(eLoopProfession, pUnit, NULL, pWorstUnit, pYieldCache);
 			int iCandidateValue = 0;
 			int iIncumbentValue = 0;
 			if (pWorstUnit != NULL)
@@ -3751,6 +3835,9 @@ CvUnit* CvCityAI::AI_assignToBestJobUncached(CvUnit* pUnit, bool bIndoorOnly)
 CvUnit* CvCityAI::AI_juggleColonist(CvUnit* pUnit)
 {
 	if (cityBuildingValueCacheSize() == 0) return AI_juggleColonistUncached(pUnit);
+	CvCityAIProfessionValueCache kYieldCache;
+	CvCityAIProfessionValueCache* pYieldCache = GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK()
+		|| GC.getUSE_CAN_DECLARE_WAR_CALLBACK() ? NULL : &kYieldCache;
 	ProfessionTypes eProfession = pUnit->getProfession();
 	CvPlot* pPlot = getPlotWorkedByUnit(pUnit);
 
@@ -3772,8 +3859,8 @@ CvUnit* CvCityAI::AI_juggleColonist(CvUnit* pUnit)
 				if (pLoopUnit->canHaveProfession(eProfession, true, pPlot) && pUnit->canHaveProfession(eLoopProfession, true, pLoopPlot))
 				{
 					//Kaszkaj - Only make legal, useful swaps which improve the same workforce score; equal swaps cannot cycle.
-					if (AI_professionValue(eLoopProfession, pUnit, pLoopPlot, pLoopUnit) <= 0
-						|| AI_professionValue(eProfession, pLoopUnit, pPlot, pUnit) <= 0) continue;
+					if (AI_professionValueWithCache(eLoopProfession, pUnit, pLoopPlot, pLoopUnit, pYieldCache) <= 0
+						|| AI_professionValueWithCache(eProfession, pLoopUnit, pPlot, pUnit, pYieldCache) <= 0) continue;
 					//Kaszkaj - Swaps keep Alien job priorities unless a better human expert takes that job or the old job is no longer useful.
 					CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
 					int iCachedA2 = MIN_INT;
@@ -3795,11 +3882,11 @@ CvUnit* CvCityAI::AI_juggleColonist(CvUnit* pUnit)
 						if (std::strcmp(pUnit->getUnitInfo().getType(), "UNIT_NATIVE") != 0
 							&& !bBetterExpertB && kOwner.AI_nativeProfessionPriority(pUnit->getUnitType(), eLoopProfession, pLoopPlot, this)
 							< kOwner.AI_nativeProfessionPriority(pUnit->getUnitType(), eProfession, pPlot, this)
-							&& AI_professionValue(eProfession, pUnit, pPlot, NULL) > 0) continue;
+							&& AI_professionValueWithCache(eProfession, pUnit, pPlot, NULL, pYieldCache) > 0) continue;
 						if (std::strcmp(pLoopUnit->getUnitInfo().getType(), "UNIT_NATIVE") != 0
 							&& !bBetterExpertA && kOwner.AI_nativeProfessionPriority(pLoopUnit->getUnitType(), eProfession, pPlot, this)
 							< kOwner.AI_nativeProfessionPriority(pLoopUnit->getUnitType(), eLoopProfession, pLoopPlot, this)
-							&& AI_professionValue(eLoopProfession, pLoopUnit, pLoopPlot, NULL) > 0) continue;
+							&& AI_professionValueWithCache(eLoopProfession, pLoopUnit, pLoopPlot, NULL, pYieldCache) > 0) continue;
 					}
 					if (iCurrentValue == MIN_INT) iCurrentValue = AI_jobReplacementValue(eProfession, pUnit, pPlot);
 					int iValueA1 = iCurrentValue;
@@ -3968,6 +4055,11 @@ int CvCityAI::AI_directPlotYieldBonusPercent(ProfessionTypes eProfession, const 
 
 int CvCityAI::AI_professionValue(ProfessionTypes eProfession, const CvUnit* pUnit, const CvPlot* pPlot, const CvUnit* pDisplaceUnit) const
 {
+	return AI_professionValueWithCache(eProfession, pUnit, pPlot, pDisplaceUnit, NULL);
+}
+
+int CvCityAI::AI_professionValueWithCache(ProfessionTypes eProfession, const CvUnit* pUnit, const CvPlot* pPlot, const CvUnit* pDisplaceUnit, CvCityAIProfessionValueCache* pCache) const
+{
 	if (eProfession == NO_PROFESSION)
 	{
 		return 0;
@@ -4015,8 +4107,8 @@ int CvCityAI::AI_professionValue(ProfessionTypes eProfession, const CvUnit* pUni
 	int iNativeFoodNeeded = 0;
 	if (isNative() && !isHuman())
 	{
-		int iFoodBaseAvailable = getBaseRawYieldProduced(YIELD_FOOD);
-		iNativeFoodNeeded = getRawYieldConsumed(YIELD_FOOD)
+		int iFoodBaseAvailable = (pCache == NULL ? getBaseRawYieldProduced(YIELD_FOOD) : pCache->baseProduced(*this, YIELD_FOOD));
+		iNativeFoodNeeded = (pCache == NULL ? getRawYieldConsumed(YIELD_FOOD) : pCache->consumed(*this, YIELD_FOOD))
 			+ (pUnit->isOnMap() ? GC.getFOOD_CONSUMPTION_PER_POPULATION() : 0);
 		const CvUnit* apWorkers[2] = {pUnit, pDisplaceUnit};
 		for (int i = 0; i < 2; ++i)
@@ -4025,7 +4117,7 @@ int CvCityAI::AI_professionValue(ProfessionTypes eProfession, const CvUnit* pUni
 			CvPlot* pWorked = getPlotWorkedByUnit(apWorkers[i]);
 			if (pWorked != NULL) iFoodBaseAvailable -= pWorked->getYield(YIELD_FOOD);
 		}
-		iNativeFoodAvailable = iFoodBaseAvailable * getBaseYieldRateModifier(YIELD_FOOD) / 100;
+		iNativeFoodAvailable = iFoodBaseAvailable * (pCache == NULL ? getBaseYieldRateModifier(YIELD_FOOD) : pCache->modifier(*this, YIELD_FOOD)) / 100;
 	}
 	//Kaszkaj - Alien AI prioritises Convict students, but training time uses their real XML penalty.
 	if (isNative() && !isHuman() && std::strcmp(kUnit.getType(), "UNIT_CRIMINAL") == 0
@@ -4064,7 +4156,7 @@ int CvCityAI::AI_professionValue(ProfessionTypes eProfession, const CvUnit* pUni
 	if (isNative() && !isHuman() && eYieldProducedType == YIELD_IDEAS && !kProfessionInfo.isWorkPlot()
 		&& std::strcmp(kUnit.getType(), "UNIT_NATIVE") == 0)
 	{
-		if (this != kOwner.AI_nativeResearchCity()) return 0;
+		if (this != (pCache == NULL ? kOwner.AI_nativeResearchCity() : pCache->researchCity(kOwner))) return 0;
 		int iLoop;
 		for (CvCity* pCity = kOwner.firstCity(&iLoop); pCity != NULL; pCity = kOwner.nextCity(&iLoop))
 		{
@@ -4179,10 +4271,10 @@ int CvCityAI::AI_professionValue(ProfessionTypes eProfession, const CvUnit* pUni
 		return 0;
 	}
 
-	iYieldOutput *= getBaseYieldRateModifier(eYieldProducedType);
+	iYieldOutput *= (pCache == NULL ? getBaseYieldRateModifier(eYieldProducedType) : pCache->modifier(*this, eYieldProducedType));
 	iYieldOutput /= 100;
 
-	int iNetYield = getBaseRawYieldProduced(eYieldProducedType);
+	int iNetYield = (pCache == NULL ? getBaseRawYieldProduced(eYieldProducedType) : pCache->baseProduced(*this, eYieldProducedType));
 
 	CvUnit* pOldUnit = NULL;
 	if (GC.getProfessionInfo(eProfession).isWorkPlot())
@@ -4225,10 +4317,10 @@ int CvCityAI::AI_professionValue(ProfessionTypes eProfession, const CvUnit* pUni
 		}
 	}
 
-	iNetYield *= getBaseYieldRateModifier(eYieldProducedType);
+	iNetYield *= (pCache == NULL ? getBaseYieldRateModifier(eYieldProducedType) : pCache->modifier(*this, eYieldProducedType));
 	iNetYield /= 100;
 
-	iNetYield -= getRawYieldConsumed(eYieldProducedType);
+	iNetYield -= (pCache == NULL ? getRawYieldConsumed(eYieldProducedType) : pCache->consumed(*this, eYieldProducedType));
 
 	//Kaszkaj - Allow Alien and human experts to use productive jobs even when Alien AI assigns zero value to the produced yield.
 	int iOutputYieldValue = kOwner.AI_yieldValue(eYieldProducedType);
@@ -4243,8 +4335,8 @@ int CvCityAI::AI_professionValue(ProfessionTypes eProfession, const CvUnit* pUni
 
 	if (!kProfessionInfo.isWorkPlot() && (eYieldProducedType != YIELD_EDUCATION))
 	{
-		int iConsumedAlready = (eYieldConsumedType == NO_YIELD) ? 0 : getRawYieldConsumed(eYieldConsumedType);
-		int iRealInputAvailable = (eYieldConsumedType == NO_YIELD) ? 0 : getRawYieldProduced(eYieldConsumedType) - iConsumedAlready;
+		int iConsumedAlready = (eYieldConsumedType == NO_YIELD) ? 0 : (pCache == NULL ? getRawYieldConsumed(eYieldConsumedType) : pCache->consumed(*this, eYieldConsumedType));
+		int iRealInputAvailable = (eYieldConsumedType == NO_YIELD) ? 0 : (pCache == NULL ? getRawYieldProduced(eYieldConsumedType) : pCache->produced(*this, eYieldConsumedType)) - iConsumedAlready;
 
 		if (eYieldConsumedType != NO_YIELD)
 		{
@@ -4444,11 +4536,11 @@ int CvCityAI::AI_professionValue(ProfessionTypes eProfession, const CvUnit* pUni
 	if (!isHuman() && iYieldOutput > 0 && iOutputValue > 0
 		&& (eYieldProducedType == YIELD_HAMMERS || (eYieldProducedType != YIELD_FOOD && GC.getYieldInfo(eYieldProducedType).isCargo())))
 	{
-		int iTarget = kOwner.AI_cityYieldTarget(this, eYieldProducedType);
+		int iTarget = (pCache == NULL ? kOwner.AI_cityYieldTarget(this, eYieldProducedType) : pCache->target(kOwner, *this, eYieldProducedType));
 		int iAvailable = getYieldStored(eYieldProducedType);
 		if (eYieldProducedType == YIELD_HAMMERS)
 		{
-			iAvailable = getRawYieldProduced(YIELD_HAMMERS);
+			iAvailable = (pCache == NULL ? getRawYieldProduced(YIELD_HAMMERS) : pCache->produced(*this, YIELD_HAMMERS));
 			const CvUnit* apWorkers[2] = {pUnit, pDisplaceUnit};
 			for (int i = 0; i < 2; ++i)
 			{
@@ -4479,8 +4571,8 @@ int CvCityAI::AI_professionValue(ProfessionTypes eProfession, const CvUnit* pUni
 	int iWorkerFoodNeeded = iNativeFoodNeeded;
 	if (!isNative() && !isHuman() && (iDirectBonusPercent > 0 || iSupplyPriority > 0))
 	{
-		iWorkerFoodAvailable = getBaseRawYieldProduced(YIELD_FOOD);
-		iWorkerFoodNeeded = getRawYieldConsumed(YIELD_FOOD) + (pUnit->isOnMap() ? GC.getFOOD_CONSUMPTION_PER_POPULATION() : 0);
+		iWorkerFoodAvailable = (pCache == NULL ? getBaseRawYieldProduced(YIELD_FOOD) : pCache->baseProduced(*this, YIELD_FOOD));
+		iWorkerFoodNeeded = (pCache == NULL ? getRawYieldConsumed(YIELD_FOOD) : pCache->consumed(*this, YIELD_FOOD)) + (pUnit->isOnMap() ? GC.getFOOD_CONSUMPTION_PER_POPULATION() : 0);
 		const CvUnit* apWorkers[2] = {pUnit, pDisplaceUnit};
 		for (int i = 0; i < 2; ++i)
 		{
@@ -4488,7 +4580,7 @@ int CvCityAI::AI_professionValue(ProfessionTypes eProfession, const CvUnit* pUni
 			CvPlot* pWorked = getPlotWorkedByUnit(apWorkers[i]);
 			if (pWorked != NULL) iWorkerFoodAvailable -= pWorked->getYield(YIELD_FOOD);
 		}
-		iWorkerFoodAvailable = iWorkerFoodAvailable * getBaseYieldRateModifier(YIELD_FOOD) / 100;
+		iWorkerFoodAvailable = iWorkerFoodAvailable * (pCache == NULL ? getBaseYieldRateModifier(YIELD_FOOD) : pCache->modifier(*this, YIELD_FOOD)) / 100;
 	}
 	if (!isHuman() && iDirectBonusPercent > 0 && iWorkerFoodAvailable < iWorkerFoodNeeded) return 0;
 
@@ -4511,7 +4603,7 @@ int CvCityAI::AI_professionValue(ProfessionTypes eProfession, const CvUnit* pUni
 			//Kaszkaj - Alien recruitment also needs stored Food; use ordinary residents to meet the queued cost.
 			if (eYieldProducedType == YIELD_FOOD && iValue > 0
 				&& !kOwner.AI_isNativeCitySpecialist(pUnit->getUnitType())
-				&& getYieldStored(YIELD_FOOD) < kOwner.AI_cityYieldTarget(this, YIELD_FOOD))
+				&& getYieldStored(YIELD_FOOD) < (pCache == NULL ? kOwner.AI_cityYieldTarget(this, YIELD_FOOD) : pCache->target(kOwner, *this, YIELD_FOOD)))
 			{
 				return 18000 + std::min(999, iValue / 100 + 10 * iYieldOutput);
 			}
@@ -4549,7 +4641,7 @@ int CvCityAI::AI_professionValue(ProfessionTypes eProfession, const CvUnit* pUni
 	}
 	//Kaszkaj - Save the Food needed to finish a colonial unit, including a Colony Ship.
 	if (!isHuman() && eYieldProducedType == YIELD_FOOD && iOutputValue > 0
-		&& getYieldStored(YIELD_FOOD) < kOwner.AI_cityYieldTarget(this, YIELD_FOOD))
+		&& getYieldStored(YIELD_FOOD) < (pCache == NULL ? kOwner.AI_cityYieldTarget(this, YIELD_FOOD) : pCache->target(kOwner, *this, YIELD_FOOD)))
 	{
 		return 18000 + std::min(999, iOutputValue / 50 + 40 * iYieldOutput);
 	}
@@ -5377,6 +5469,10 @@ void CvCityAI::AI_updateNeededYields()
 		m_aiNeededYield[i] = 0;
 	}
 
+	const bool bCacheExperts = cityBuildingValueCacheSize() != 0 && !GC.getUSE_CAN_BUILD_CALLBACK()
+		&& !GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK() && !GC.getUSE_CAN_DECLARE_WAR_CALLBACK();
+	std::map<UnitTypes, std::vector<ProfessionTypes> > aeExpertsByUnit;
+
 	for (uint i = 0; i < m_aPopulationUnits.size(); ++i)
 	{
 		CvUnit* pLoopUnit = m_aPopulationUnits[i];
@@ -5396,10 +5492,28 @@ void CvCityAI::AI_updateNeededYields()
 			else
 			{
 				int aiExpertInputs[NUM_YIELD_TYPES] = {0};
-				for (int iProfession = 0; iProfession < GC.getNumProfessionInfos(); ++iProfession)
+				const std::vector<ProfessionTypes>* pExperts = NULL;
+				if (bCacheExperts)
 				{
-					ProfessionTypes eProfession = (ProfessionTypes)iProfession;
-					if (GET_PLAYER(getOwnerINLINE()).AI_isProfessionExpert(pLoopUnit->getUnitType(), eProfession)
+					UnitTypes eUnit = pLoopUnit->getUnitType();
+					std::map<UnitTypes, std::vector<ProfessionTypes> >::iterator it = aeExpertsByUnit.find(eUnit);
+					if (it == aeExpertsByUnit.end())
+					{
+						std::vector<ProfessionTypes>& aeExperts = aeExpertsByUnit[eUnit];
+						for (int iProfession = 0; iProfession < GC.getNumProfessionInfos(); ++iProfession)
+						{
+							ProfessionTypes eProfession = (ProfessionTypes)iProfession;
+							if (GET_PLAYER(getOwnerINLINE()).AI_isProfessionExpert(eUnit, eProfession)) aeExperts.push_back(eProfession);
+						}
+						pExperts = &aeExperts;
+					}
+					else pExperts = &it->second;
+				}
+				int iProfessionCount = pExperts != NULL ? (int)pExperts->size() : GC.getNumProfessionInfos();
+				for (int iProfession = 0; iProfession < iProfessionCount; ++iProfession)
+				{
+					ProfessionTypes eProfession = pExperts != NULL ? (*pExperts)[iProfession] : (ProfessionTypes)iProfession;
+					if ((pExperts != NULL || GET_PLAYER(getOwnerINLINE()).AI_isProfessionExpert(pLoopUnit->getUnitType(), eProfession))
 						&& pLoopUnit->canHaveProfession(eProfession, true, NULL))
 					{
 						YieldTypes eConsumedYield = (YieldTypes)GC.getProfessionInfo(eProfession).getYieldsConsumed(0, getOwnerINLINE());

@@ -6808,9 +6808,9 @@ bool CvUnitAI::AI_shouldRun()
 			CvPlot* pLoopPlot = plotXY(getX_INLINE(), getY_INLINE(), iX, iY);
 			if (pLoopPlot != NULL && pLoopPlot->isVisible(getTeam(), false))
 			{
-				for (int i = 0; i < pLoopPlot->getNumUnits(); ++i)
+				for (CLLNode<IDInfo>* pUnitNode = pLoopPlot->headUnitNode(); pUnitNode != NULL; pUnitNode = pLoopPlot->nextUnitNode(pUnitNode))
 				{
-					CvUnit* pLoopUnit = pLoopPlot->getUnitByIndex(i);
+					CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
 					if (isEnemy(pLoopUnit->getTeam()))
 					{
 						if (pLoopUnit->canAttack() && pLoopUnit->getDomainType() == getDomainType())
@@ -8084,6 +8084,64 @@ bool CvUnitAI::AI_load(UnitAITypes eUnitAI, MissionAITypes eMissionAI, UnitAITyp
 }
 
 
+class CvUnitAIMissionTargets
+{
+public:
+	explicit CvUnitAIMissionTargets(MissionAITypes eMission) :
+		m_eMission(eMission), m_bReady(false), m_iCacheMode(0) {}
+
+	int count(CvPlayerAI& kOwner, CvSelectionGroup* pSkipGroup, CvPlot* pPlot, int iRange = 0)
+	{
+		if (m_iCacheMode == 0)
+		{
+			m_iCacheMode = (!GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK() && !GC.getUSE_CAN_DECLARE_WAR_CALLBACK()
+			&& !GC.getUSE_CAN_DO_CIVIC_CALLBACK() && !GC.getUSE_CANNOT_DO_CIVIC_CALLBACK()
+			&& !GC.getUSE_CAN_BUILD_CALLBACK() && !GC.getUSE_CAN_FOUND_CITIES_ON_WATER_CALLBACK()
+			&& !GC.getUSE_GET_CITY_FOUND_VALUE_CALLBACK() && !GC.getUSE_CAN_TRAIN_CALLBACK()
+			&& !GC.getUSE_CANNOT_TRAIN_CALLBACK() && !GC.getUSE_GET_UNIT_COST_MOD_CALLBACK()
+			&& !GC.getUSE_CAN_CONSTRUCT_CALLBACK() && !GC.getUSE_CANNOT_CONSTRUCT_CALLBACK()
+			&& !GC.getUSE_GET_BUILDING_COST_MOD_CALLBACK()) ? 1 : 2;
+		}
+		if (m_iCacheMode == 2) return kOwner.AI_plotTargetMissionAIs(pPlot, m_eMission, pSkipGroup, iRange);
+		if (!m_bReady)
+		{
+			CvSelectionGroup* pTransportGroup = NULL;
+			CvUnit* pHead = pSkipGroup == NULL ? NULL : pSkipGroup->getHeadUnit();
+			if (pHead != NULL && pHead->getTransportUnit() != NULL)
+				pTransportGroup = pHead->getTransportUnit()->getGroup();
+			int iLoop;
+			for (CvSelectionGroup* pGroup = kOwner.firstSelectionGroup(&iLoop); pGroup != NULL; pGroup = kOwner.nextSelectionGroup(&iLoop))
+			{
+				if (pGroup == pSkipGroup || pGroup == pTransportGroup || pGroup->AI_getMissionAIType() != m_eMission) continue;
+				CvPlot* pMissionPlot = pGroup->AI_getMissionAIPlot();
+				if (pMissionPlot != NULL && pGroup->getNumUnits() > 0)
+				{
+					Target kTarget;
+					kTarget.pPlot = pMissionPlot;
+					kTarget.iUnits = pGroup->getNumUnits();
+					m_aTargets.push_back(kTarget);
+				}
+			}
+			m_bReady = true;
+		}
+		int iCount = 0;
+		for (size_t i = 0; i < m_aTargets.size(); ++i)
+		{
+			const Target& kTarget = m_aTargets[i];
+			if (stepDistance(pPlot->getX_INLINE(), pPlot->getY_INLINE(), kTarget.pPlot->getX_INLINE(), kTarget.pPlot->getY_INLINE()) <= iRange)
+				iCount += kTarget.iUnits;
+		}
+		return iCount;
+	}
+
+private:
+	struct Target { CvPlot* pPlot; int iUnits; };
+	MissionAITypes m_eMission;
+	bool m_bReady;
+	int m_iCacheMode;
+	std::vector<Target> m_aTargets;
+};
+
 // Returns true if a mission was pushed...
 bool CvUnitAI::AI_guardCityBestDefender()
 {
@@ -8111,6 +8169,8 @@ bool CvUnitAI::AI_guardCityBestDefender()
 // Returns true if a mission was pushed...
 bool CvUnitAI::AI_guardCity(bool bAll, int iMaxPath)
 {
+	CvUnitAIMissionTargets kMissionTargets(MISSIONAI_GUARD_CITY);
+
 	PROFILE_FUNC();
 
 	bool bIncludePotential = !GET_PLAYER(getOwnerINLINE()).isNative();
@@ -8161,7 +8221,7 @@ bool CvUnitAI::AI_guardCity(bool bAll, int iMaxPath)
 			{
 				iExtra -= 1;
 			}
-			int iIncoming = GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_GUARD_CITY, getGroup());
+			int iIncoming = kMissionTargets.count(GET_PLAYER(getOwnerINLINE()), getGroup(), pLoopPlot);
 
 			int iNeededDefenders = pLoopCity->AI_neededDefenders();
 			int iDefenders = std::max(0, pLoopCity->AI_numDefenders(true, bIncludePotential) + iExtra + iIncoming);
@@ -8230,6 +8290,8 @@ bool CvUnitAI::AI_guardCity(bool bAll, int iMaxPath)
 
 bool CvUnitAI::AI_guardCityMinDefender()
 {
+	CvUnitAIMissionTargets kMissionTargets(MISSIONAI_GUARD_CITY);
+
 	bool bIncludePotential = !GET_PLAYER(getOwnerINLINE()).isNative();
 	if (bIncludePotential && area()->getAreaAIType(getTeam()) != AREAAI_NEUTRAL)
 	{
@@ -8259,7 +8321,7 @@ bool CvUnitAI::AI_guardCityMinDefender()
 
 			if (iDefenders == 0)
 			{
-				int iIncoming = GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_GUARD_CITY, getGroup());
+				int iIncoming = kMissionTargets.count(GET_PLAYER(getOwnerINLINE()), getGroup(), pLoopPlot);
 
 				if (iIncoming == 0)
 				{
@@ -9366,6 +9428,36 @@ bool CvUnitAI::AI_hide()
 
 
 // Returns true if a mission was pushed...
+// Exploration reservations belong to one decision; external rule callbacks keep live mission queries.
+static bool AI_hasExploreMissionTarget(CvPlayerAI& kOwner, CvSelectionGroup* pSkipGroup, CvPlot* pPlot,
+	int iRange, bool bCacheTargets, bool& bTargetsReady, std::vector<CvPlot*>& apTargets)
+{
+	if (!bCacheTargets) return kOwner.AI_plotTargetMissionAIs(pPlot, MISSIONAI_EXPLORE, pSkipGroup, iRange) > 0;
+	if (!bTargetsReady)
+	{
+		CvSelectionGroup* pTransportGroup = NULL;
+		CvUnit* pHead = pSkipGroup == NULL ? NULL : pSkipGroup->getHeadUnit();
+		if (pHead != NULL && pHead->getTransportUnit() != NULL)
+			pTransportGroup = pHead->getTransportUnit()->getGroup();
+		int iLoop;
+		for (CvSelectionGroup* pGroup = kOwner.firstSelectionGroup(&iLoop); pGroup != NULL; pGroup = kOwner.nextSelectionGroup(&iLoop))
+		{
+			if (pGroup == pSkipGroup || pGroup == pTransportGroup || pGroup->getNumUnits() <= 0
+				|| pGroup->AI_getMissionAIType() != MISSIONAI_EXPLORE) continue;
+			CvPlot* pMissionPlot = pGroup->AI_getMissionAIPlot();
+			if (pMissionPlot != NULL) apTargets.push_back(pMissionPlot);
+		}
+		bTargetsReady = true;
+	}
+	for (int i = 0; i < (int)apTargets.size(); ++i)
+	{
+		CvPlot* pTarget = apTargets[i];
+		if (stepDistance(pPlot->getX_INLINE(), pPlot->getY_INLINE(), pTarget->getX_INLINE(), pTarget->getY_INLINE()) <= iRange)
+			return true;
+	}
+	return false;
+}
+
 bool CvUnitAI::AI_goody()
 {
 	PROFILE_FUNC();
@@ -9374,6 +9466,13 @@ bool CvUnitAI::AI_goody()
 	CvPlot* pBestPlot = NULL;
 	CvPlot* pBestExplorePlot = NULL;
 	bool bLandScout = GET_PLAYER(getOwnerINLINE()).AI_isColonialScout(getUnitType());
+
+	CvPlayerAI& kExploreOwner = GET_PLAYER(getOwnerINLINE());
+	bool bCacheExploreTargets = !GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK()
+		&& !GC.getUSE_CAN_DECLARE_WAR_CALLBACK() && !GC.getUSE_CAN_DO_CIVIC_CALLBACK()
+		&& !GC.getUSE_CANNOT_DO_CIVIC_CALLBACK();
+	bool bExploreTargetsReady = false;
+	std::vector<CvPlot*> apExploreTargets;
 
 	for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 	{
@@ -9406,7 +9505,7 @@ bool CvUnitAI::AI_goody()
 			{
 				if (!(pLoopPlot->isVisibleEnemyUnit(this)))
 				{
-					if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_EXPLORE, getGroup(), 3) == 0)
+					if (!AI_hasExploreMissionTarget(kExploreOwner, getGroup(), pLoopPlot, 3, bCacheExploreTargets, bExploreTargetsReady, apExploreTargets))
 					{
 						int iPathTurns = 0;
 						if (!atPlot(pLoopPlot) && generatePath(pLoopPlot, MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
@@ -9447,6 +9546,13 @@ bool CvUnitAI::AI_goodyRange(int iRange)
 	CvPlot* pBestPlot = NULL;
 	CvPlot* pBestExplorePlot = NULL;
 
+	CvPlayerAI& kExploreOwner = GET_PLAYER(getOwnerINLINE());
+	bool bCacheExploreTargets = !GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK()
+		&& !GC.getUSE_CAN_DECLARE_WAR_CALLBACK() && !GC.getUSE_CAN_DO_CIVIC_CALLBACK()
+		&& !GC.getUSE_CANNOT_DO_CIVIC_CALLBACK();
+	bool bExploreTargetsReady = false;
+	std::vector<CvPlot*> apExploreTargets;
+
 	for (int iX = -iRange; iX <= iRange; iX++)
 	{
 		for (int iY = -iRange; iY <= iRange; iY++)
@@ -9477,7 +9583,7 @@ bool CvUnitAI::AI_goodyRange(int iRange)
 				{
 					if (!(pLoopPlot->isVisibleEnemyUnit(this)))
 					{
-						if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_EXPLORE, getGroup(), 1) == 0)
+						if (!AI_hasExploreMissionTarget(kExploreOwner, getGroup(), pLoopPlot, 1, bCacheExploreTargets, bExploreTargetsReady, apExploreTargets))
 						{
 							int iPathTurns = 0;
 							if (!atPlot(pLoopPlot) && generatePath(pLoopPlot, MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
@@ -9621,6 +9727,13 @@ bool CvUnitAI::AI_explore(bool bFavorOpenBorders)
 
 	bool bNoContact = (GC.getGameINLINE().countCivTeamsAlive() > GET_TEAM(getTeam()).getHasMetCivCount());
 
+	CvPlayerAI& kExploreOwner = GET_PLAYER(getOwnerINLINE());
+	bool bCacheExploreTargets = !GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK()
+		&& !GC.getUSE_CAN_DECLARE_WAR_CALLBACK() && !GC.getUSE_CAN_DO_CIVIC_CALLBACK()
+		&& !GC.getUSE_CANNOT_DO_CIVIC_CALLBACK();
+	bool bExploreTargetsReady = false;
+	std::vector<CvPlot*> apExploreTargets;
+
 	for (iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 	{
 		PROFILE("AI_explore 1");
@@ -9635,7 +9748,7 @@ bool CvUnitAI::AI_explore(bool bFavorOpenBorders)
 			{
 				if (!(pLoopPlot->isVisibleEnemyUnit(this)))
 				{
-					if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_EXPLORE, getGroup(), 3) == 0)
+					if (!AI_hasExploreMissionTarget(kExploreOwner, getGroup(), pLoopPlot, 3, bCacheExploreTargets, bExploreTargetsReady, apExploreTargets))
 					{
 						if (!atPlot(pLoopPlot) && generatePath(pLoopPlot, MOVE_NO_ENEMY_TERRITORY, true, &iPathTurns))
 						{
@@ -9696,6 +9809,13 @@ bool CvUnitAI::AI_exploreRange(int iRange)
 	CvPlot* pBestExplorePlot = NULL;
 
 
+	CvPlayerAI& kExploreOwner = GET_PLAYER(getOwnerINLINE());
+	bool bCacheExploreTargets = !GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK()
+		&& !GC.getUSE_CAN_DECLARE_WAR_CALLBACK() && !GC.getUSE_CAN_DO_CIVIC_CALLBACK()
+		&& !GC.getUSE_CANNOT_DO_CIVIC_CALLBACK();
+	bool bExploreTargetsReady = false;
+	std::vector<CvPlot*> apExploreTargets;
+
 	for (int iX = -iRange; iX <= iRange; iX++)
 	{
 		for (int iY = -iRange; iY <= iRange; iY++)
@@ -9709,7 +9829,7 @@ bool CvUnitAI::AI_exploreRange(int iRange)
 
 					if (iValue > 0)
 					{
-						if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_EXPLORE, getGroup(), 3) == 0)
+						if (!AI_hasExploreMissionTarget(kExploreOwner, getGroup(), pLoopPlot, 3, bCacheExploreTargets, bExploreTargetsReady, apExploreTargets))
 						{
 							if (generatePath(pLoopPlot, MOVE_BUST_FOG, true))
 							{
@@ -9760,6 +9880,13 @@ bool CvUnitAI::AI_exploreFromShip(int iMaxPath)
 
 	int iRange = iMaxPath * pTransportUnit->baseMoves();
 	bool bTransportPath = false;
+	CvPlayerAI& kExploreOwner = GET_PLAYER(getOwnerINLINE());
+	bool bCacheExploreTargets = !GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK()
+		&& !GC.getUSE_CAN_DECLARE_WAR_CALLBACK() && !GC.getUSE_CAN_DO_CIVIC_CALLBACK()
+		&& !GC.getUSE_CANNOT_DO_CIVIC_CALLBACK();
+	bool bExploreTargetsReady = false;
+	std::vector<CvPlot*> apExploreTargets;
+
 	for (int iX = -iRange; iX <= iRange; iX++)
 	{
 		for (int iY = -iRange; iY <= iRange; iY++)
@@ -9780,7 +9907,7 @@ bool CvUnitAI::AI_exploreFromShip(int iMaxPath)
 
 					if (iValue > 0)
 					{
-						if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_EXPLORE, getGroup(), 3) == 0)
+						if (!AI_hasExploreMissionTarget(kExploreOwner, getGroup(), pLoopPlot, 3, bCacheExploreTargets, bExploreTargetsReady, apExploreTargets))
 						{
 							bool bTransport = (plotDistance(getX_INLINE(), getY_INLINE(), pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE()) > 1);
 							int iPathTurns = 0;
@@ -10038,6 +10165,13 @@ bool CvUnitAI::AI_exploreDeep()
 	CvPlot* pBestPlot = NULL;
 	CvPlot* pBestExplorePlot = NULL;
 
+	CvPlayerAI& kExploreOwner = GET_PLAYER(getOwnerINLINE());
+	bool bCacheExploreTargets = !GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK()
+		&& !GC.getUSE_CAN_DECLARE_WAR_CALLBACK() && !GC.getUSE_CAN_DO_CIVIC_CALLBACK()
+		&& !GC.getUSE_CANNOT_DO_CIVIC_CALLBACK();
+	bool bExploreTargetsReady = false;
+	std::vector<CvPlot*> apExploreTargets;
+
 	for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 	{
 		CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
@@ -10099,7 +10233,7 @@ bool CvUnitAI::AI_exploreDeep()
 				{
 					if (!(pLoopPlot->isVisibleEnemyUnit(this)))
 					{
-						if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_EXPLORE, getGroup(), 3) == 0)
+						if (!AI_hasExploreMissionTarget(kExploreOwner, getGroup(), pLoopPlot, 3, bCacheExploreTargets, bExploreTargetsReady, apExploreTargets))
 						{
 							int iPathTurns;
 							if (generatePath(pLoopPlot, MOVE_BUST_FOG, true, &iPathTurns))
@@ -11137,6 +11271,8 @@ bool CvUnitAI::AI_blockade(int iRange)
 // Returns true if a mission was pushed...
 bool CvUnitAI::AI_pillage()
 {
+	CvUnitAIMissionTargets kMissionTargets(MISSIONAI_PILLAGE);
+
 	PROFILE_FUNC();
 
 	if (canPillage(plot()) && AI_canPillage(*plot()))
@@ -11167,7 +11303,7 @@ bool CvUnitAI::AI_pillage()
                     {
                         if (!(pLoopPlot->isVisibleEnemyUnit(this)))
                         {
-                            if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_PILLAGE, getGroup(), 1) == 0)
+                            if (kMissionTargets.count(GET_PLAYER(getOwnerINLINE()), getGroup(), pLoopPlot, 1) == 0)
                             {
                                 if (generatePath(pLoopPlot, 0, true, &iPathTurns))
                                 {
@@ -11249,6 +11385,8 @@ bool CvUnitAI::AI_canPillage(CvPlot& kPlot) const
 // Returns true if a mission was pushed...
 bool CvUnitAI::AI_pillageRange(int iRange, bool bSafe)
 {
+	CvUnitAIMissionTargets kMissionTargets(MISSIONAI_PILLAGE);
+
 	PROFILE_FUNC();
 
 	CvPlot* pLoopPlot;
@@ -11292,7 +11430,7 @@ bool CvUnitAI::AI_pillageRange(int iRange, bool bSafe)
                             {
                                 if (!(pLoopPlot->isVisibleEnemyUnit(this)))
                                 {
-                                    if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_PILLAGE, getGroup()) == 0)
+                                    if (kMissionTargets.count(GET_PLAYER(getOwnerINLINE()), getGroup(), pLoopPlot) == 0)
                                     {
                                         if (generatePath(pLoopPlot, 0, true, &iPathTurns))
                                         {
@@ -11543,9 +11681,11 @@ bool CvUnitAI::AI_wanderAroundAimlessly()
 	CvPlot* pMissionPlot = getGroup()->AI_getMissionAIPlot();
 
 	CvMap& kMap = GC.getMap();
+	//Kaszkaj - Sample the full rectangular map and avoid an impossible target search on a single-plot map.
+	if (kMap.numPlotsINLINE() <= 1) return false;
 	while ((pMissionPlot == NULL) || atPlot(pMissionPlot))
 	{
-		pMissionPlot = kMap.plot(GC.getGameINLINE().getSorenRandNum(kMap.getGridWidthINLINE(), "AI wander X"), GC.getGameINLINE().getSorenRandNum(kMap.getGridWidthINLINE(), "AI wander Y"));
+		pMissionPlot = kMap.plot(GC.getGameINLINE().getSorenRandNum(kMap.getGridWidthINLINE(), "AI wander X"), GC.getGameINLINE().getSorenRandNum(kMap.getGridHeightINLINE(), "AI wander Y"));
 	}
 
 	int iCurrentDistance = plotDistance(getX_INLINE(), getY_INLINE(), pMissionPlot->getX_INLINE(), pMissionPlot->getY_INLINE());
@@ -11566,9 +11706,10 @@ bool CvUnitAI::AI_wanderAroundAimlessly()
 					{
 						int iValue = GC.getGameINLINE().getSorenRandNum(100, "AI wander aimlessly");
 
+						//Kaszkaj - Score each neighbouring plot once when choosing the imperial fleet's fallback direction.
 						for (int j = 0; j < NUM_DIRECTION_TYPES; ++j)
 						{
-							CvPlot* pDirectionPlot = plotDirection(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), (DirectionTypes)i);
+							CvPlot* pDirectionPlot = plotDirection(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), (DirectionTypes)j);
 							if (pDirectionPlot != NULL)
 							{
 								if (!pDirectionPlot->isVisible(getTeam(), false))
@@ -11675,6 +11816,8 @@ int CvUnitAI::AI_foundValue(CvPlot* pPlot)
 // Returns true if a mission was pushed...
 bool CvUnitAI::AI_found(int iMinValue)
 {
+	CvUnitAIMissionTargets kMissionTargets(MISSIONAI_FOUND);
+
 	PROFILE_FUNC();
 
 	if (!canFound(NULL))
@@ -11705,7 +11848,7 @@ bool CvUnitAI::AI_found(int iMinValue)
 				{
 					if (!(pLoopPlot->isVisibleEnemyUnit(this)))
 					{
-						if (kOwner.AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_FOUND, getGroup(), 0) == 0)
+						if (kMissionTargets.count(kOwner, getGroup(), pLoopPlot) == 0)
 						{
 							int iPathTurns = 0;
 							bool bValid = atPlot(pLoopPlot);
@@ -11781,6 +11924,8 @@ bool CvUnitAI::AI_found(int iMinValue)
 // Returns true if a mission was pushed...
 bool CvUnitAI::AI_foundRange(int iRange, bool bFollow)
 {
+	CvUnitAIMissionTargets kMissionTargets(MISSIONAI_FOUND);
+
 	PROFILE_FUNC();
 
 	CvPlot* pLoopPlot;
@@ -11815,7 +11960,7 @@ bool CvUnitAI::AI_foundRange(int iRange, bool bFollow)
 						{
 							if (!(pLoopPlot->isVisibleEnemyUnit(this)))
 							{
-								if (GET_PLAYER(getOwnerINLINE()).AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_FOUND, getGroup(), 3) == 0)
+								if (kMissionTargets.count(GET_PLAYER(getOwnerINLINE()), getGroup(), pLoopPlot, 3) == 0)
 								{
 									if (generatePath(pLoopPlot, MOVE_SAFE_TERRITORY, true, &iPathTurns))
 									{

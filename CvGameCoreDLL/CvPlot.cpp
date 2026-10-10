@@ -1974,6 +1974,11 @@ int CvPlot::AI_sumStrength(PlayerTypes eOwner, PlayerTypes eAttackingPlayer, Dom
 		pLoopUnit = ::getUnit(pUnitNode->m_data);
 		pUnitNode = nextUnitNode(pUnitNode);
 
+		if (eDomainType != NO_DOMAIN && pLoopUnit->getDomainType() != eDomainType)
+		{
+			continue;
+		}
+
 		if ((eOwner == NO_PLAYER) || (pLoopUnit->getOwnerINLINE() == eOwner))
 		{
 			if ((eAttackingPlayer == NO_PLAYER) || !(pLoopUnit->isInvisible(GET_PLAYER(eAttackingPlayer).getTeam(), false)))
@@ -4664,40 +4669,37 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, TeamTypes eTeam, bool bIgnor
 
 	///TKs Invention Core Mod v 1.0
 	bool bZeroBonus = false;
-	if (eTeam != NO_TEAM)
-    {
-		if (GET_TEAM(eTeam).isHuman())
+	if (eTeam != NO_TEAM && GET_TEAM(eTeam).isHuman())
+	{
+		const CvPlayer& kLeader = GET_PLAYER(GET_TEAM(eTeam).getLeaderID());
+		if (eYield != NO_YIELD)
 		{
-			BonusTypes eBonus = getBonusType();
-			for (int iCivic = 0; iCivic < GC.getNumCivicInfos(); ++iCivic)
+			const std::vector<CivicTypes>& aeRestrictions = getNatureYieldTechnologyRestrictions(eYield);
+			for (size_t i = 0; i < aeRestrictions.size(); ++i)
 			{
-				if (GC.getCivicInfo((CivicTypes) iCivic).getCivicOptionType() == (CivicOptionTypes)GC.getDefineINT("CIVICOPTION_INVENTIONS"))
+				if (kLeader.getIdeasResearched(aeRestrictions[i]) == 0)
 				{
-					CvCivicInfo& kCivicInfo = GC.getCivicInfo((CivicTypes) iCivic);
-					if (GET_TEAM(eTeam).isHuman())
-					{
-						if (eYield != NO_YIELD && kCivicInfo.getAllowsYields(eYield) > 0)
-						{
-							if (GET_PLAYER(GET_TEAM(eTeam).getLeaderID()).getIdeasResearched((CivicTypes) iCivic) == 0)
-							{
-								return 0;
-							}
-						}
-					}
-
-					if (eBonus != NO_BONUS && kCivicInfo.getAllowsBonuses(eBonus) > 0)
-					{
-						bZeroBonus = true;
-					}
-
-					if (isCity() && eYield == YIELD_FOOD && GET_PLAYER(GET_TEAM(eTeam).getLeaderID()).getIdeasResearched((CivicTypes) iCivic) > 0)
-					{
-						iYield += kCivicInfo.getCenterPlotFoodBonus();
-					}
+					return 0;
 				}
 			}
 		}
-    }
+		const BonusTypes eBonus = getBonusType();
+		if (eBonus != NO_BONUS)
+		{
+			bZeroBonus = isNatureBonusTechnologyRestricted(eBonus);
+		}
+		if (isCity() && eYield == YIELD_FOOD)
+		{
+			const std::vector<CivicTypes>& aeFoodBonuses = getCityFoodBonusTechnologies();
+			for (size_t i = 0; i < aeFoodBonuses.size(); ++i)
+			{
+				if (kLeader.getIdeasResearched(aeFoodBonuses[i]) > 0)
+				{
+					iYield += GC.getCivicInfo(aeFoodBonuses[i]).getCenterPlotFoodBonus();
+				}
+			}
+		}
+	}
 	///Tke
 
 	FAssertMsg(getTerrainType() != NO_TERRAIN, "TerrainType is not assigned a valid value");

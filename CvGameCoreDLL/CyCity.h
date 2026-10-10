@@ -195,6 +195,7 @@ public:
 	int calculateNetYield(int /*YieldTypes*/ eYield);
 	int calculateActualYieldProduced(int /*YieldTypes*/ eYield) const;
 	int calculateActualYieldConsumed(int /*YieldTypes*/ eYield) const;
+	python::tuple calculateYieldTotals() const;
 
 	bool isEverOwned(int /*PlayerTypes*/ eIndex);
 

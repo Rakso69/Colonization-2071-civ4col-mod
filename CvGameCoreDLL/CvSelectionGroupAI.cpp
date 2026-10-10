@@ -459,12 +459,19 @@ int CvSelectionGroupAI::AI_sumStrength(const CvPlot* pAttackedPlot, DomainTypes 
 	CvUnit* pLoopUnit;
 	int	strSum = 0;
 
+	const bool bFilterDomainFirst = !bCheckCanMove || pAttackedPlot == NULL ||
+		(!GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK() && !GC.getUSE_CAN_DECLARE_WAR_CALLBACK());
 	pUnitNode = headUnitNode();
 
 	while (pUnitNode != NULL)
 	{
 		pLoopUnit = ::getUnit(pUnitNode->m_data);
 		pUnitNode = nextUnitNode(pUnitNode);
+
+		if (bFilterDomainFirst && eDomainType != NO_DOMAIN && pLoopUnit->getDomainType() != eDomainType)
+		{
+			continue;
+		}
 
 		if (!pLoopUnit->isDead())
 		{
@@ -640,11 +647,12 @@ bool CvSelectionGroupAI::AI_isFull()
 	if (getNumUnits() > 0)
 	{
 		UnitAITypes eUnitAI = getHeadUnitAI();
-		// do two passes, the first pass, we ignore units with speical cargo
+		// Ordinary holds must be full; special holds matter only when all carriers are special.
 		int iSpecialCargoCount = 0;
 		int iCargoCount = 0;
+		bool bSpecialCargoNotFull = false;
 
-		// first pass, count but ignore special cargo units
+		// Count hold types and remember whether a special hold still has space.
 		pUnitNode = headUnitNode();
 
 		while (pUnitNode != NULL)
@@ -661,6 +669,7 @@ bool CvSelectionGroupAI::AI_isFull()
 				if (pLoopUnit->specialCargo() != NO_SPECIALUNIT)
 				{
 					iSpecialCargoCount++;
+					if (!pLoopUnit->isFull()) bSpecialCargoNotFull = true;
 				}
 				else if (!(pLoopUnit->isFull()))
 				{
@@ -669,24 +678,7 @@ bool CvSelectionGroupAI::AI_isFull()
 			}
 		}
 
-		// if every unit in the group has special cargo, then check those, otherwise, consider ourselves full
-		if (iSpecialCargoCount >= iCargoCount)
-		{
-			pUnitNode = headUnitNode();
-			while (pUnitNode != NULL)
-			{
-				pLoopUnit = ::getUnit(pUnitNode->m_data);
-				pUnitNode = nextUnitNode(pUnitNode);
-
-				if (pLoopUnit->AI_getUnitAIType() == eUnitAI)
-				{
-					if (!(pLoopUnit->isFull()))
-					{
-						return false;
-					}
-				}
-			}
-		}
+		if (iSpecialCargoCount >= iCargoCount && bSpecialCargoNotFull) return false;
 
 		return true;
 	}
@@ -797,39 +789,34 @@ int CvSelectionGroupAI::AI_getYieldsLoaded(short* piYields)
 {
 	if (piYields != NULL)
 	{
-		for (int i = 0; i < NUM_YIELD_TYPES; ++i)
-		{
-			piYields[i] = 0;
-		}
+		for (int i = 0; i < NUM_YIELD_TYPES; ++i) piYields[i] = 0;
 	}
+	if (getNumUnits() == 0 || (getNumUnits() == 1 && !getHeadUnit()->hasCargo())) return 0;
+	CvPlot* pPlot = plot();
+	if (pPlot == NULL) return 0;
+
 	int iAmount = 0;
-
-	CLinkList<IDInfo> unitList;
-	buildCargoUnitList(unitList);
-
-	CLLNode<IDInfo>* pUnitNode = unitList.head();
+	CLLNode<IDInfo>* pUnitNode = pPlot->headUnitNode();
 	while (pUnitNode != NULL)
 	{
-		CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
-		pUnitNode = unitList.next(pUnitNode);
-
-		if (pLoopUnit->getYieldStored() > 0)
+		CvUnit* pUnit = ::getUnit(pUnitNode->m_data);
+		pUnitNode = pPlot->nextUnitNode(pUnitNode);
+		CvUnit* pTransport = pUnit->getTransportUnit();
+		if (pTransport != NULL && pTransport->getGroup() == this && pUnit->getYieldStored() > 0)
 		{
-			if (pLoopUnit->getUnitInfo().isTreasure())
+			if (pUnit->getUnitInfo().isTreasure())
 			{
-				iAmount += pLoopUnit->getYieldStored();
+				iAmount += pUnit->getYieldStored();
 			}
-			else if (pLoopUnit->getYield() != NO_YIELD)
+			else if (piYields != NULL && pUnit->getYield() != NO_YIELD)
 			{
-				if (piYields != NULL)
-				{
-					piYields[pLoopUnit->getYield()] += pLoopUnit->getYieldStored();
-				}
+				piYields[pUnit->getYield()] += pUnit->getYieldStored();
 			}
 		}
 	}
 	return iAmount;
 }
+
 
 bool CvSelectionGroupAI::AI_tradeRoutes()
 {

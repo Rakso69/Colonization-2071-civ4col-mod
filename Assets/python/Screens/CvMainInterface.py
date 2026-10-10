@@ -1868,6 +1868,15 @@ class CvMainInterface:
 
 		return 0
 	# Will update the citizen buttons
+	def _getCityBuildingsBySpecial(self, city):
+		buildings = {}
+		for iBuilding in range(gc.getNumBuildingInfos()):
+			if city.isHasBuilding(iBuilding):
+				iSpecial = gc.getBuildingInfo(iBuilding).getSpecialBuildingType()
+				if iSpecial not in buildings:
+					buildings[iSpecial] = iBuilding
+		return buildings
+
 	def updateCitizenButtons( self ):
 
 		screen = CyGInterfaceScreen("MainInterface", CvScreenEnums.MAIN_INTERFACE )
@@ -1925,27 +1934,29 @@ class CvMainInterface:
 					CitizenProfessionIndexArray[pCitizen.getProfession()].append(pCitizen)
 					CitizenBarCount += 1
 #MultipleYieldsProduced Start
+				CityBuildingsBySpecial = self._getCityBuildingsBySpecial(pHeadSelectedCity)
+				ActualProducedYields = None
+				CivilizationInfo = gc.getCivilizationInfo(pHeadSelectedCity.getCivilizationType())
 				for iProfession in range(gc.getNumProfessionInfos()):
-					if (not gc.getProfessionInfo(iProfession).isWorkPlot() and gc.getProfessionInfo(iProfession).isCitizen()):
-						if gc.getCivilizationInfo(pHeadSelectedCity.getCivilizationType()).isValidProfession(iProfession):
-							iSpecialBuildingType = gc.getProfessionInfo(iProfession).getSpecialBuilding()
-							iYield = gc.getProfessionInfo(iProfession).getYieldsProduced(0)
-							CityBuilding = -1
+					ProfessionInfo = gc.getProfessionInfo(iProfession)
+					if (not ProfessionInfo.isWorkPlot() and ProfessionInfo.isCitizen()):
+						if CivilizationInfo.isValidProfession(iProfession):
+							iSpecialBuildingType = ProfessionInfo.getSpecialBuilding()
+							iYield = ProfessionInfo.getYieldsProduced(0)
+							CityBuilding = CityBuildingsBySpecial.get(iSpecialBuildingType, -1)
 #MultipleYieldsProduced End
-							for iBuilding in range(gc.getNumBuildingInfos()):
-								if (gc.getBuildingInfo(iBuilding).getSpecialBuildingType() == iSpecialBuildingType):
-									if (pHeadSelectedCity.isHasBuilding(iBuilding)):
-										CityBuilding = iBuilding
-										break
 										
 							if CityBuilding != -1:
 								ButtonSize = LARGE_BUTTON_SIZE * 5 / 2
 								ProducedYield = pHeadSelectedCity.getBaseRawYieldProduced(iYield)
-								UnproducedYield = ProducedYield - pHeadSelectedCity.calculateActualYieldProduced(iYield)
-								bHasYield = (pHeadSelectedCity.getBaseRawYieldProduced(iYield) != 0 or pHeadSelectedCity.getRawYieldConsumed(iYield) != 0)
+								if ActualProducedYields is None:
+									ActualProducedYields = pHeadSelectedCity.calculateYieldTotals()[1]
+								UnproducedYield = ProducedYield - ActualProducedYields[iYield]
+								bHasYield = (ProducedYield != 0 or pHeadSelectedCity.getRawYieldConsumed(iYield) != 0)
+								MaxWorkers = gc.getBuildingInfo(CityBuilding).getMaxWorkers()
 	
-								if (gc.getBuildingInfo(CityBuilding).getMaxWorkers() > 0):
-									CitizenSpacing = BUILDING_GRID[iSpecialBuildingType][3] / gc.getBuildingInfo(iBuilding).getMaxWorkers()
+								if (MaxWorkers > 0):
+									CitizenSpacing = BUILDING_GRID[iSpecialBuildingType][3] / MaxWorkers
 								else:
 									CitizenSpacing = ButtonSize / 2
 								#TK Coal
@@ -1972,7 +1983,7 @@ class CvMainInterface:
 									screen.addDragableButton(szName, pCitizen.getFullLengthIcon(), "", BUILDING_GRID[iSpecialBuildingType][0] + (CitizenSpacing * GroupIndex) + (CitizenSpacing/ 2), BUILDING_GRID[iSpecialBuildingType][1] + BUILDING_GRID[iSpecialBuildingType][2] - (ButtonSize), ButtonSize / 2, ButtonSize, WidgetTypes.WIDGET_CITIZEN, pCitizen.getID(), -1, ButtonStyles.BUTTON_STYLE_IMAGE)							
 									CitizenHideList.append(szName)
 								
-								for iSlot in range (gc.getBuildingInfo(CityBuilding).getMaxWorkers() - ProfessionCount):
+								for iSlot in range (MaxWorkers - ProfessionCount):
 									szName = "CitizenSlot" + str(iProfession) + "-" + str(iSlot)
 									screen.addDDSGFC(szName, ArtFileMgr.getInterfaceArtInfo("INTERFACE_CITIZEN_SLOT").getPath(), BUILDING_GRID[iSpecialBuildingType][0] + (CitizenSpacing * (iSlot + ProfessionCount)) + (CitizenSpacing/ 2), BUILDING_GRID[iSpecialBuildingType][1] + BUILDING_GRID[iSpecialBuildingType][2] - ButtonSize, ButtonSize / 2, ButtonSize, WidgetTypes.WIDGET_CITY_UNIT_ASSIGN_PROFESSION, -1, iProfession)
 									CitizenHideList.append(szName)
@@ -2016,20 +2027,30 @@ class CvMainInterface:
 	def updateGarrisonAndTransports( self ):
 	
 		screen = CyGInterfaceScreen("MainInterface", CvScreenEnums.MAIN_INTERFACE )
-		pHeadSelectedCity = CyInterface().getHeadSelectedCity()
+		interface = CyInterface()
+		pHeadSelectedCity = interface.getHeadSelectedCity()
 
 	# TRANSPORT MANAGMENT
 		TransportButtonSize = LARGE_BUTTON_SIZE * 4 / 3
 		CargoButtonSize = MEDIUM_BUTTON_SIZE
 		yLocation = STACK_BAR_HEIGHT	* 3 / 2
 		PanelHeight = TransportButtonSize * 6 / 5
-		CyInterface().cacheInterfacePlotUnits(pHeadSelectedCity.plot())		
+		interface.cacheInterfacePlotUnits(pHeadSelectedCity.plot())
+		PlotUnits = []
+		CargoByTransport = None
+		for i in range(interface.getNumCachedInterfacePlotUnits()):
+			PlotUnits.append((i, interface.getCachedInterfacePlotUnit(i)))
 		screen.addScrollPanel("CityTransportPanel", u"", xResolution - TRANSPORT_AREA_WIDTH + MAP_EDGE_MARGIN_WIDTH, yResolution - BOTTOM_CENTER_HUD_HEIGHT - TRANSPORT_AREA_HEIGHT, TRANSPORT_AREA_WIDTH, TRANSPORT_AREA_HEIGHT - STACK_BAR_HEIGHT, PanelStyles.PANEL_STYLE_MAIN, false, WidgetTypes.WIDGET_RECEIVE_MOVE_CARGO_TO_CITY, -1, -1 )
 		screen.setLabelAt("TransportPanelLabel", "CityTransportPanel", "    " + self.setFontSize((localText.getColorText("TXT_KEY_TRANSPORT_PANEL", (), gc.getInfoTypeForString("COLOR_FONT_CREAM"))).upper(), 0), CvUtil.FONT_LEFT_JUSTIFY, 0, STACK_BAR_HEIGHT / 2, -1.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_RECEIVE_MOVE_CARGO_TO_CITY, -1, -1 )
-		for i in range(CyInterface().getNumCachedInterfacePlotUnits()):
-			pLoopUnit = CyInterface().getCachedInterfacePlotUnit(i)
+		for i, pLoopUnit in PlotUnits:
 			if (pLoopUnit and pLoopUnit.getOwner() == pHeadSelectedCity.getOwner()):
 				if (pLoopUnit.cargoSpace() > 0 and not pLoopUnit.isCargo()):
+					if CargoByTransport is None:
+						CargoByTransport = {}
+						for j, CargoUnit in PlotUnits:
+							transportUnit = CargoUnit.getTransportUnit()
+							if not transportUnit.isNone():
+								CargoByTransport.setdefault(transportUnit.getID(), []).append((j, CargoUnit))
 					szName = "VisitingShip" + str(i)
 					xPosition = 10
 					screen.addDDSGFCAt("VisitingShipPanel" + str(i), "CityTransportPanel", ArtFileMgr.getInterfaceArtInfo("INTERFACE_EUROPE_IN_PORT_BOX").getPath(), xPosition, yLocation, TransportButtonSize + pLoopUnit.cargoSpace() * (CargoButtonSize * 11 / 10), PanelHeight, WidgetTypes.WIDGET_RECEIVE_MOVE_CARGO_TO_TRANSPORT, pLoopUnit.getID(), -1, False)
@@ -2044,16 +2065,12 @@ class CvMainInterface:
 					for j in range(pLoopUnit.cargoSpace()):
 						screen.addDDSGFCAt("CargoCell" + str(i) + "-" + str(j), "CityTransportPanel", ArtFileMgr.getInterfaceArtInfo("INTERFACE_EUROPE_BOX_CARGO").getPath(), xPosition + (j * (CargoButtonSize * 11 / 10)), yLocation - (CargoButtonSize / 4), CargoButtonSize, CargoButtonSize, WidgetTypes.WIDGET_RECEIVE_MOVE_CARGO_TO_TRANSPORT, pLoopUnit.getID(), -1, False)
 
-					for j in range(CyInterface().getNumCachedInterfacePlotUnits()):
-						CargoUnit = CyInterface().getCachedInterfacePlotUnit(j)
-						transportUnit = CargoUnit.getTransportUnit()
-						if (not transportUnit.isNone() and transportUnit.getID() == pLoopUnit.getID()):
-							iYield = CargoUnit.getYield()
-							screen.addDragableButtonAt("CityTransportPanel", "CargoUnit" + str(j), CargoUnit.getButton(), "", xPosition, yLocation - (CargoButtonSize / 4), CargoButtonSize, CargoButtonSize, WidgetTypes.WIDGET_MOVE_CARGO_TO_CITY, pLoopUnit.getID(), CargoUnit.getID(), ButtonStyles.BUTTON_STYLE_LABEL)
-							if CargoUnit.isGoods():
-								szText = u"<font=3>%s</font>" % CargoUnit.getYieldStored()
-								screen.setLabelAt("CargoCount" + str(j), "CityTransportPanel", szText, CvUtil.FONT_CENTER_JUSTIFY, xPosition + (CargoButtonSize / 2), yLocation + (TransportButtonSize * 4 / 6), -0.1, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-							xPosition += (CargoButtonSize * 11 / 10)
+					for j, CargoUnit in CargoByTransport.get(pLoopUnit.getID(), []):
+						screen.addDragableButtonAt("CityTransportPanel", "CargoUnit" + str(j), CargoUnit.getButton(), "", xPosition, yLocation - (CargoButtonSize / 4), CargoButtonSize, CargoButtonSize, WidgetTypes.WIDGET_MOVE_CARGO_TO_CITY, pLoopUnit.getID(), CargoUnit.getID(), ButtonStyles.BUTTON_STYLE_LABEL)
+						if CargoUnit.isGoods():
+							szText = u"<font=3>%s</font>" % CargoUnit.getYieldStored()
+							screen.setLabelAt("CargoCount" + str(j), "CityTransportPanel", szText, CvUtil.FONT_CENTER_JUSTIFY, xPosition + (CargoButtonSize / 2), yLocation + (TransportButtonSize * 4 / 6), -0.1, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+						xPosition += (CargoButtonSize * 11 / 10)
 					yLocation += (PanelHeight / 2) + (CargoButtonSize / 2) + (CargoButtonSize / 10)
 
 	# GARISSON MANAGMENT PANEL
@@ -2061,13 +2078,11 @@ class CvMainInterface:
 		self.PLOT_LIST_ICON_SIZE = 12
 		self.PLOT_LIST_HEALTH_BAR_HEIGHT = 11
 		self.PLOT_LIST_HEALTH_BAR_SHORTENING_CORRECTION = 6
-		CyInterface().cacheInterfacePlotUnits(pHeadSelectedCity.plot())		
 		screen.addScrollPanel("CityGarrisonPanel", u"", CITIZEN_BAR_WIDTH, yResolution - BOTTOM_CENTER_HUD_HEIGHT - TRANSPORT_AREA_HEIGHT, xResolution - CITIZEN_BAR_WIDTH - TRANSPORT_AREA_WIDTH + STACK_BAR_HEIGHT - 4, TRANSPORT_AREA_HEIGHT - STACK_BAR_HEIGHT, PanelStyles.PANEL_STYLE_MAIN, false, WidgetTypes.WIDGET_EJECT_CITIZEN, -1, -1 )	
 		screen.setLabelAt("CityGarrisonLabel", "CityGarrisonPanel", self.setFontSize((localText.getColorText("TXT_KEY_GARRISON_PANEL", (), gc.getInfoTypeForString("COLOR_FONT_CREAM"))).upper(), 0), CvUtil.FONT_LEFT_JUSTIFY, 0, STACK_BAR_HEIGHT / 2, -1.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_EJECT_CITIZEN, -1, -1 )
 		xPosition = 0
 		yPosition = 0
-		for i in range(CyInterface().getNumCachedInterfacePlotUnits()):
-			pLoopUnit = CyInterface().getCachedInterfacePlotUnit(i)
+		for i, pLoopUnit in PlotUnits:
 			if (pLoopUnit):
 				if (pLoopUnit.getOwner() == pHeadSelectedCity.getOwner() and pLoopUnit.cargoSpace() == 0):
 					if (pLoopUnit.getYield() == YieldTypes.NO_YIELD ):
@@ -2289,17 +2304,13 @@ class CvMainInterface:
 				screen.setLabelAt("ProductionText", "CityProductionBar", szBuffer, CvUtil.FONT_CENTER_JUSTIFY, (xResolution - CITIZEN_BAR_WIDTH - (MAP_EDGE_MARGIN_WIDTH * 2)) / 2, STACK_BAR_HEIGHT / 2, -1.3, FontTypes.GAME_FONT, WidgetTypes.WIDGET_HELP_SELECTED, 0, -1 )
 
 			# 3 D BUILDINGS
+				CityBuildingsBySpecial = self._getCityBuildingsBySpecial(pHeadSelectedCity)
 				for iSpecial in range(gc.getNumSpecialBuildingInfos()):
-					BuildingPresent = False
-					for iBuilding in range(gc.getNumBuildingInfos()):
-						if (pHeadSelectedCity.isHasBuilding(iBuilding)):
-							if(gc.getBuildingInfo(iBuilding).getSpecialBuildingType() == iSpecial):
-								BuildingPresent = True
-								break
+					iBuilding = CityBuildingsBySpecial.get(iSpecial, -1)
 
-					if (BuildingPresent):
+					if (iBuilding != -1):
 						Texture = gc.getBuildingInfo(iBuilding).getArtInfo().getCityTexture()
-						screen.changeImageButton("CityBuildingGraphic" + str(iSpecial), gc.getBuildingInfo(iBuilding).getArtInfo().getCityTexture())
+						screen.changeImageButton("CityBuildingGraphic" + str(iSpecial), Texture)
 						screen.show("CityBuildingGraphic" + str(iSpecial))
 					else:
 						screen.hide("CityBuildingGraphic" + str(iSpecial))
@@ -2321,17 +2332,18 @@ class CvMainInterface:
 				screen.setLabel("HammerText", "Background", szBuffer, CvUtil.FONT_CENTER_JUSTIFY, xResolution * 25 / 100, CITY_TITLE_BAR_HEIGHT / 12, -0.3, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_PRODUCTION_MOD_HELP, -1, -1 )
 
 			# CITY LIBERTYBELL PRODUCTION
-				iLiberty = pHeadSelectedCity.calculateNetYield(YieldTypes.YIELD_BELLS)
+				NetYields = pHeadSelectedCity.calculateYieldTotals()[0]
+				iLiberty = NetYields[YieldTypes.YIELD_BELLS]
 				szBuffer = u"<font=4>" + u"%i%c" % (iLiberty, gc.getYieldInfo(YieldTypes.YIELD_BELLS).getChar()) + u"</font>"
 				screen.setLabel("LibertyText", "Background", szBuffer, CvUtil.FONT_CENTER_JUSTIFY, xResolution * 30 / 100, CITY_TITLE_BAR_HEIGHT / 12, -0.3, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_HELP_YIELD, YieldTypes.YIELD_BELLS, -1 )
 
 			# CITY CROSS PRODUCTION
-				iCrosses = pHeadSelectedCity.calculateNetYield(YieldTypes.YIELD_CROSSES)
+				iCrosses = NetYields[YieldTypes.YIELD_CROSSES]
 				szBuffer = u"<font=4>" + u"%i%c" % (iCrosses, gc.getYieldInfo(YieldTypes.YIELD_CROSSES).getChar()) + u"</font>"
 				screen.setLabel("CrossesText", "Background", szBuffer, CvUtil.FONT_CENTER_JUSTIFY, xResolution * 70 / 100, CITY_TITLE_BAR_HEIGHT / 12, -0.3, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_HELP_YIELD, YieldTypes.YIELD_CROSSES, -1 )
 
 			# CITY EDUCATION PRODUCTION
-				iBooks = pHeadSelectedCity.calculateNetYield(YieldTypes.YIELD_EDUCATION)
+				iBooks = NetYields[YieldTypes.YIELD_EDUCATION]
 				szBuffer = u"<font=4>" + u"%i%c" % (iBooks, gc.getYieldInfo(YieldTypes.YIELD_EDUCATION).getChar()) + u"</font>"
 				screen.setLabel("EducationText", "Background", szBuffer, CvUtil.FONT_CENTER_JUSTIFY, xResolution * 75 / 100, CITY_TITLE_BAR_HEIGHT / 12, -0.3, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_HELP_YIELD, YieldTypes.YIELD_EDUCATION, -1 )
 
@@ -2395,10 +2407,13 @@ class CvMainInterface:
 
 		pCity = CyInterface().getHeadSelectedCity()
 		if pCity != None:
+			NetYields = None
 			for index in range(len(TableYields)):
 				i = TableYields[index]
 				iStored = pCity.getYieldStored(i)
-				iRate = pCity.calculateNetYield(i)
+				if NetYields is None:
+					NetYields = pCity.calculateYieldTotals()[0]
+				iRate = NetYields[i]
 
 				if (iStored > pCity.getMaxYieldCapacity() and i != int(YieldTypes.YIELD_FOOD)):
 					szStored = u"<color=255,0,0>%d</color>" %(iStored)
@@ -2688,6 +2703,7 @@ class CvMainInterface:
 
 	# Will update the scores
 	def updateScoreStrings( self ):
+		game = gc.getGame()
 		screen = CyGInterfaceScreen("MainInterface", CvScreenEnums.MAIN_INTERFACE )
 
 		xResolution = screen.getXResolution()
@@ -2712,71 +2728,75 @@ class CvMainInterface:
 
 		if ((CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_HIDE_ALL and CyInterface().getShowInterface() != InterfaceVisibility.INTERFACE_MINIMAP_ONLY)):
 			if (CyInterface().isScoresVisible() and not CyInterface().isCityScreenUp() and not CyEngine().isGlobeviewUp() ):
+				playersByTeam = None
 				i = gc.getMAX_CIV_TEAMS() - 1
 				while (i > -1):
-					eTeam = gc.getGame().getRankTeam(i)
-					if (gc.getTeam(gc.getGame().getActiveTeam()).isHasMet(eTeam) or gc.getTeam(eTeam).isHuman() or gc.getGame().isDebugMode()):
-						j = gc.getMAX_CIV_PLAYERS() - 1
-						while (j > -1):
-							ePlayer = gc.getGame().getRankPlayer(j)
+					eTeam = game.getRankTeam(i)
+					if (gc.getTeam(game.getActiveTeam()).isHasMet(eTeam) or gc.getTeam(eTeam).isHuman() or game.isDebugMode()):
+						if playersByTeam is None:
+							playersByTeam = {}
+							for j in range(gc.getMAX_CIV_PLAYERS() - 1, -1, -1):
+								ePlayer = game.getRankPlayer(j)
+								pPlayer = gc.getPlayer(ePlayer)
+								if pPlayer.isAlive():
+									playersByTeam.setdefault(pPlayer.getTeam(), []).append((ePlayer, pPlayer))
+						for ePlayer, pPlayer in playersByTeam.get(eTeam, ()):
 							#Kaszkaj - Show the Outer Gods Pantheon on the scoreboard only after contact, including in debug mode.
-							if (gc.getPlayer(ePlayer).isAlive() and
-								(gc.getPlayer(ePlayer).getCivilizationType() != gc.getDefineINT("BARBARIAN_CIVILIZATION") or
-								gc.getTeam(gc.getGame().getActiveTeam()).isHasMet(eTeam))):
-								if (gc.getPlayer(ePlayer).getTeam() == eTeam):
-									szBuffer = u"<font=2>"
+							if (pPlayer.getCivilizationType() != gc.getDefineINT("BARBARIAN_CIVILIZATION") or
+								gc.getTeam(game.getActiveTeam()).isHasMet(eTeam)):
+								szBuffer = u"<font=2>"
 
-									if (gc.getGame().isGameMultiPlayer()):
-										if (not (gc.getPlayer(ePlayer).isTurnActive())):
-											szBuffer = szBuffer + "*"
+								if (game.isGameMultiPlayer()):
+									if (not (pPlayer.isTurnActive())):
+										szBuffer = szBuffer + "*"
 
-									if gc.getGame().getPlayerScore(ePlayer) > 0:
-										szBuffer += u"%d: " % gc.getGame().getPlayerScore(ePlayer)
+								if game.getPlayerScore(ePlayer) > 0:
+									szBuffer += u"%d: " % game.getPlayerScore(ePlayer)
 
-									if (not CyInterface().isFlashingPlayer(ePlayer) or CyInterface().shouldFlash(ePlayer)):
-										if (ePlayer == gc.getGame().getActivePlayer()):
-											szTempBuffer = u"[<color=%d,%d,%d,%d>%s</color>]" %(gc.getPlayer(ePlayer).getPlayerTextColorR(), gc.getPlayer(ePlayer).getPlayerTextColorG(), gc.getPlayer(ePlayer).getPlayerTextColorB(), gc.getPlayer(ePlayer).getPlayerTextColorA(), gc.getPlayer(ePlayer).getName())
-										else:
-											szTempBuffer = u"<color=%d,%d,%d,%d>%s</color>" %(gc.getPlayer(ePlayer).getPlayerTextColorR(), gc.getPlayer(ePlayer).getPlayerTextColorG(), gc.getPlayer(ePlayer).getPlayerTextColorB(), gc.getPlayer(ePlayer).getPlayerTextColorA(), gc.getPlayer(ePlayer).getName())
+								if (not CyInterface().isFlashingPlayer(ePlayer) or CyInterface().shouldFlash(ePlayer)):
+									if (ePlayer == game.getActivePlayer()):
+										szTempBuffer = u"[<color=%d,%d,%d,%d>%s</color>]" %(pPlayer.getPlayerTextColorR(), pPlayer.getPlayerTextColorG(), pPlayer.getPlayerTextColorB(), pPlayer.getPlayerTextColorA(), pPlayer.getName())
 									else:
-										szTempBuffer = u"%s" %(gc.getPlayer(ePlayer).getName())
-									szBuffer = szBuffer + szTempBuffer
+										szTempBuffer = u"<color=%d,%d,%d,%d>%s</color>" %(pPlayer.getPlayerTextColorR(), pPlayer.getPlayerTextColorG(), pPlayer.getPlayerTextColorB(), pPlayer.getPlayerTextColorA(), pPlayer.getName())
+								else:
+									szTempBuffer = u"%s" %(pPlayer.getName())
+								szBuffer = szBuffer + szTempBuffer
 
-									if (gc.getTeam(eTeam).isAlive()):
-										if ( not (gc.getTeam(gc.getGame().getActiveTeam()).isHasMet(eTeam)) ):
-											szBuffer = szBuffer + (" ?")
-										if (gc.getTeam(eTeam).isAtWar(gc.getGame().getActiveTeam())):
-											szBuffer = szBuffer + "("  + localText.getColorText("TXT_KEY_WAR", (), gc.getInfoTypeForString("COLOR_RED")).upper() + ")"
-										if (gc.getTeam(eTeam).isOpenBorders(gc.getGame().getActiveTeam())):
-											szTempBuffer = u"%c" %(CyGame().getSymbolID(FontSymbols.OPEN_BORDERS_CHAR))
-											szBuffer = szBuffer + szTempBuffer
-										if (gc.getTeam(eTeam).isDefensivePact(gc.getGame().getActiveTeam())):
-											szTempBuffer = u"%c" %(CyGame().getSymbolID(FontSymbols.DEFENSIVE_PACT_CHAR))
-											szBuffer = szBuffer + szTempBuffer
-
-									if (CyGame().isNetworkMultiPlayer()):
-										szBuffer = szBuffer + CyGameTextMgr().getNetStats(ePlayer)
-
-									if (gc.getPlayer(ePlayer).isHuman() and CyInterface().isOOSVisible()):
-										szTempBuffer = u" <color=255,0,0>* %s *</color>" %(CyGameTextMgr().getOOSSeeds(ePlayer))
+								if (gc.getTeam(eTeam).isAlive()):
+									if ( not (gc.getTeam(game.getActiveTeam()).isHasMet(eTeam)) ):
+										szBuffer = szBuffer + (" ?")
+									if (gc.getTeam(eTeam).isAtWar(game.getActiveTeam())):
+										szBuffer = szBuffer + "("  + localText.getColorText("TXT_KEY_WAR", (), gc.getInfoTypeForString("COLOR_RED")).upper() + ")"
+									if (gc.getTeam(eTeam).isOpenBorders(game.getActiveTeam())):
+										szTempBuffer = u"%c" %(CyGame().getSymbolID(FontSymbols.OPEN_BORDERS_CHAR))
+										szBuffer = szBuffer + szTempBuffer
+									if (gc.getTeam(eTeam).isDefensivePact(game.getActiveTeam())):
+										szTempBuffer = u"%c" %(CyGame().getSymbolID(FontSymbols.DEFENSIVE_PACT_CHAR))
 										szBuffer = szBuffer + szTempBuffer
 
-									szBuffer = szBuffer + "</font>"
+								if (CyGame().isNetworkMultiPlayer()):
+									szBuffer = szBuffer + CyGameTextMgr().getNetStats(ePlayer)
 
-									if ( CyInterface().determineWidth( szBuffer ) > iWidth ):
-										iWidth = CyInterface().determineWidth( szBuffer )
+								if (pPlayer.isHuman() and CyInterface().isOOSVisible()):
+									szTempBuffer = u" <color=255,0,0>* %s *</color>" %(CyGameTextMgr().getOOSSeeds(ePlayer))
+									szBuffer = szBuffer + szTempBuffer
 
-									szName = "ScoreText" + str(ePlayer)
-									if ( CyInterface().getShowInterface() == InterfaceVisibility.INTERFACE_SHOW or CyInterface().isInAdvancedStart() or pHeadSelectedCity != None):
-										yCoord = yResolution - SADDLE_HEIGHT - self.SCORE_TEXT_BOTTOM_MARGIN_LARGE
-									else:
-										yCoord = yResolution - SADDLE_HEIGHT - self.SCORE_TEXT_BOTTOM_MARGIN_SMALL
-									screen.setText( szName, "Background", szBuffer, CvUtil.FONT_RIGHT_JUSTIFY, xResolution - 12, yCoord - (iCount * iBtnHeight) - 31, -0.3, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_CONTACT_CIV, ePlayer, -1 )
-									screen.show( szName )
-									CyInterface().checkFlashReset(ePlayer)
+								szBuffer = szBuffer + "</font>"
 
-									iCount += 1
-							j = j - 1
+								iTextWidth = CyInterface().determineWidth(szBuffer)
+								if iTextWidth > iWidth:
+									iWidth = iTextWidth
+
+								szName = "ScoreText" + str(ePlayer)
+								if ( CyInterface().getShowInterface() == InterfaceVisibility.INTERFACE_SHOW or CyInterface().isInAdvancedStart() or pHeadSelectedCity != None):
+									yCoord = yResolution - SADDLE_HEIGHT - self.SCORE_TEXT_BOTTOM_MARGIN_LARGE
+								else:
+									yCoord = yResolution - SADDLE_HEIGHT - self.SCORE_TEXT_BOTTOM_MARGIN_SMALL
+								screen.setText( szName, "Background", szBuffer, CvUtil.FONT_RIGHT_JUSTIFY, xResolution - 12, yCoord - (iCount * iBtnHeight) - 31, -0.3, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_CONTACT_CIV, ePlayer, -1 )
+								screen.show( szName )
+								CyInterface().checkFlashReset(ePlayer)
+
+								iCount += 1
 					i = i - 1
 				
 				if ( CyInterface().getShowInterface() == InterfaceVisibility.INTERFACE_SHOW or CyInterface().isInAdvancedStart() or pHeadSelectedCity != None):

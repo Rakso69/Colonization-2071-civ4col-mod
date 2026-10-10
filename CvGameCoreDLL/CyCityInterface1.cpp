@@ -188,6 +188,7 @@ void CyCityPythonInterface1(python::class_<CyCity>& x)
 		.def("calculateNetYield", &CyCity::calculateNetYield, "int (int /*YieldTypes*/)")
 		.def("calculateActualYieldProduced", &CyCity::calculateActualYieldProduced, "int (int /*YieldTypes*/)")
 		.def("calculateActualYieldConsumed", &CyCity::calculateActualYieldConsumed, "int (int /*YieldTypes*/)")
+		.def("calculateYieldTotals", &CyCity::calculateYieldTotals, "tuple () - current net, produced and consumed yield lists")
 
 		.def("isEverOwned", &CyCity::isEverOwned, "bool ()")
 

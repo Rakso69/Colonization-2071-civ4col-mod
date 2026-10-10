@@ -176,6 +176,7 @@ class CvRevolutionAdvisor:
 		RoyalText = localText.changeTextColor(RoyalText, gc.getInfoTypeForString("COLOR_FONT_GOLD"))
 		screen.setLabel( "Royal Troops", "Background", u"<font=4>" + RoyalText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, self.X_ROYAL_UNITS, self.Y_UNITS_LISTS + (YMultiplier * 0), 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 	
+		professionTypes, unitTypes, veteranTypes = {}, {}, {}
 		Troops, Dragoons, Cannons, Ships = 0, 0, 0, 0
 		
 		for iLoopPlayer in range(gc.getMAX_PLAYERS()):
@@ -184,13 +185,15 @@ class CvRevolutionAdvisor:
 				for iUnit in range(loopPlayer.getNumRevolutionEuropeUnits()):
 					Profession = loopPlayer.getRevolutionEuropeProfession(iUnit)
 					UnitType = loopPlayer.getRevolutionEuropeUnit(iUnit)			
-					if isSoldier(Profession):
+					Soldier, Dragoon = _getTroopProfessionFlags(Profession, professionTypes)
+					Cannon, Warship = _getTroopUnitFlags(UnitType, unitTypes)
+					if Soldier:
 						Troops += 1
-					if isDragoon(Profession):
+					if Dragoon:
 						Dragoons += 1
-					if isCannon(UnitType):
+					if Cannon:
 						Cannons += 1
-					if isWarship(UnitType):
+					if Warship:
 						Ships += 1
 					
 		for iLoopParent in range(gc.getMAX_PLAYERS()):
@@ -202,26 +205,30 @@ class CvRevolutionAdvisor:
 					unit = loopParent.getEuropeUnit(i)
 					Profession = unit.getProfession()
 					UnitType = unit.getUnitType()
-					if isSoldier(Profession):
+					Soldier, Dragoon = _getTroopProfessionFlags(Profession, professionTypes)
+					Cannon, Warship = _getTroopUnitFlags(UnitType, unitTypes)
+					if Soldier:
 						Troops += 1
-					if isDragoon(Profession):
+					if Dragoon:
 						Dragoons += 1
-					if isCannon(UnitType):
+					if Cannon:
 						Cannons += 1
-					if isWarship(UnitType):
+					if Warship:
 						Ships += 1				
 
 				(unit, iter) = loopParent.firstUnit()
 				while(unit):
 					Profession = unit.getProfession()
 					UnitType = unit.getUnitType()
-					if isSoldier(Profession):
+					Soldier, Dragoon = _getTroopProfessionFlags(Profession, professionTypes)
+					Cannon, Warship = _getTroopUnitFlags(UnitType, unitTypes)
+					if Soldier:
 						Troops += 1
-					if isDragoon(Profession):
+					if Dragoon:
 						Dragoons += 1
-					if isCannon(UnitType):
+					if Cannon:
 						Cannons += 1
-					if isWarship(UnitType):
+					if Warship:
 						Ships += 1				
 					(unit, iter) = loopParent.nextUnit(iter)
 	
@@ -256,6 +263,7 @@ class CvRevolutionAdvisor:
 		RebelText = localText.changeTextColor(RebelText, gc.getInfoTypeForString("COLOR_FONT_GOLD"))
 		screen.setLabel( "Colonial Troops", "Background", u"<font=4>" + RebelText + "</font>", CvUtil.FONT_LEFT_JUSTIFY, self.X_COLONIAL_UNITS, self.Y_UNITS_LISTS + (YMultiplier * 0), 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 	
+		professionTypes, unitTypes, veteranTypes = {}, {}, {}
 		Troops, VeteranTroops, Dragoons, VeteranDragoons, Cannons, Ships = 0, 0, 0, 0, 0, 0
 		
 		for iLoopPlayer in range(gc.getMAX_PLAYERS()):
@@ -266,17 +274,19 @@ class CvRevolutionAdvisor:
 				while(unit):
 					Profession = unit.getProfession()
 					UnitType = unit.getUnitType()
-					if isSoldier(Profession):
+					Soldier, Dragoon = _getTroopProfessionFlags(Profession, professionTypes)
+					Cannon, Warship = _getTroopUnitFlags(UnitType, unitTypes)
+					if Soldier:
 						Troops += 1
-						if isVeteran(UnitType):
+						if _getTroopVeteranFlag(UnitType, veteranTypes):
 							VeteranTroops += 1
-					if isDragoon(Profession):
+					if Dragoon:
 						Dragoons += 1
-						if isVeteran(UnitType):
+						if _getTroopVeteranFlag(UnitType, veteranTypes):
 							VeteranDragoons += 1
-					if isCannon(UnitType):
+					if Cannon:
 						Cannons += 1
-					if isWarship(UnitType):
+					if Warship:
 						Ships += 1				
 					(unit, iter) = loopPlayer.nextUnit(iter)
 
@@ -284,17 +294,19 @@ class CvRevolutionAdvisor:
 					unit = loopPlayer.getEuropeUnit(i)
 					Profession = unit.getProfession()
 					UnitType = unit.getUnitType()
-					if isSoldier(Profession):
+					Soldier, Dragoon = _getTroopProfessionFlags(Profession, professionTypes)
+					Cannon, Warship = _getTroopUnitFlags(UnitType, unitTypes)
+					if Soldier:
 						Troops += 1
-						if isVeteran(UnitType):
+						if _getTroopVeteranFlag(UnitType, veteranTypes):
 							VeteranTroops += 1
-					if isDragoon(Profession):
+					if Dragoon:
 						Dragoons += 1
-						if isVeteran(UnitType):
+						if _getTroopVeteranFlag(UnitType, veteranTypes):
 							VeteranDragoons += 1
-					if isCannon(UnitType):
+					if Cannon:
 						Cannons += 1
-					if isWarship(UnitType):
+					if Warship:
 						Ships += 1				
 
 		if VeteranTroops > 0:
@@ -377,6 +389,31 @@ class CvRevolutionAdvisor:
 			self.drawCivics()
 
 
+def _getTroopProfessionFlags(eProfession, cache):
+	if eProfession not in cache:
+		flags = (false, false)
+		if eProfession != ProfessionTypes.NO_PROFESSION:
+			profession = gc.getProfessionInfo(eProfession)
+			if profession.getCombatChange() != 0 and not profession.isUnarmed():
+				iRequired = getProfessionYieldsRequired(eProfession)
+				flags = (iRequired == 1, iRequired > 1)
+		cache[eProfession] = flags
+	return cache[eProfession]
+
+def _getTroopUnitFlags(eUnit, cache):
+	if eUnit not in cache:
+		unit = gc.getUnitInfo(eUnit)
+		domain = unit.getDomainType()
+		combat = unit.getCombat()
+		cache[eUnit] = (domain == DomainTypes.DOMAIN_LAND and combat != 0,
+			domain == DomainTypes.DOMAIN_SEA and combat != 0 and not unit.isOnlyDefensive())
+	return cache[eUnit]
+
+def _getTroopVeteranFlag(eUnit, cache):
+	if eUnit not in cache:
+		cache[eUnit] = isVeteran(eUnit)
+	return cache[eUnit]
+
 def isSoldier(eProfession):
 	if eProfession == ProfessionTypes.NO_PROFESSION:
 		return false
@@ -415,8 +452,9 @@ def isWarship(eUnit):
 
 def getProfessionYieldsRequired(eProfession):
 	iNumYieldsRequired = 0
+	profession = gc.getProfessionInfo(eProfession)
 	for iYield in range(YieldTypes.NUM_YIELD_TYPES):
-		if (gc.getProfessionInfo(eProfession).getYieldEquipmentAmount(iYield) > 0):
+		if (profession.getYieldEquipmentAmount(iYield) > 0):
 			iNumYieldsRequired += 1
 	return iNumYieldsRequired
 

@@ -7,6 +7,9 @@
 
 #include "CvTeam.h"
 
+struct CvTeamAIWarMapCache;
+struct CvTeamAIAreaDangerCache;
+
 class CvTeamAI : public CvTeam
 {
 
@@ -194,6 +197,10 @@ protected:
 	int AI_dogpileWarRand() const;
 	int AI_makePeaceRand() const;
 	int AI_noWarAttitudeProb(AttitudeTypes eAttitude) const;
+
+	AreaAITypes AI_calculateAreaAITypeWithCache(CvArea* pArea, bool bPreparingTotal, CvTeamAIAreaDangerCache* pCache) const;
+	bool AI_isLandTargetWithCache(TeamTypes eTeam, CvTeamAIWarMapCache* pCache) const;
+	int AI_startWarValWithCache(TeamTypes eTeam, CvTeamAIWarMapCache* pCache) const;
 
 	void AI_doCounter();
 	void AI_doWar();
