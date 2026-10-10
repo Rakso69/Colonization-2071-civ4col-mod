@@ -4230,11 +4230,12 @@ void CvUnitAI::AI_transportSeaMove()
 	}
 
 	CvArea* pArea = area();
-	if (!pArea->isWater())
+	if (pArea != NULL && !pArea->isWater())
 	{
 		pArea = plot()->waterArea();
 	}
-	FAssert(pArea != NULL);
+	//Kaszkaj - An all-terrain spacecraft can be inland without an adjacent space area.
+	FAssert(pArea != NULL || getUnitInfo().isCanMoveAllTerrain());
 	if (pArea != NULL && pArea->getNumTiles() - pArea->getNumRevealedTiles(getTeam()) > 0)
 	{
 		if (AI_exploreCoast(2))
@@ -14350,7 +14351,8 @@ bool CvUnitAI::AI_transcendenceSeaAssault()
 			CvUnit* pCargo = GET_PLAYER(getOwnerINLINE()).getUnit(aiCargo[i]);
 			if (pCargo != NULL && pCargo->getTransportUnit() != NULL && pCargo->getTransportUnit()->getGroup() == getGroup()
 				&& pCargo->getDomainType() == DOMAIN_LAND && pCargo->canAttack() && pCargo->canMove()
-				&& pCargo->canMoveInto(pBestLanding, true, false, true))
+				//Kaszkaj - Empty landing tiles require ordinary movement; defenders still require a legal amphibious attack.
+				&& (pCargo->canMoveInto(pBestLanding, false, false, true) || pCargo->canMoveInto(pBestLanding, true, false, true)))
 				pCargo->getGroup()->pushMission(MISSION_MOVE_TO, pBestLanding->getX_INLINE(), pBestLanding->getY_INLINE(), MOVE_THROUGH_ENEMY, false, false, MISSIONAI_ASSAULT, pEye->plot());
 			// Capturing the colony can delete its city and eliminate its former owner during the mission.
 			if (GC.getGameINLINE().getTranscendenceCity() != pEye) return true;

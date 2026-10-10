@@ -13645,6 +13645,8 @@ PlayerTypes CvPlayer::pickConqueredCityOwner(const CvCity& kCity) const
 
 void CvPlayer::forcePeace(PlayerTypes ePlayer)
 {
+	//Kaszkaj - Trait, research and help bonuses cannot create a peace treaty with the Transcendence builder during the crusade.
+	if (GC.getGameINLINE().isTranscendenceWar(getTeam(), GET_PLAYER(ePlayer).getTeam())) return;
 	FAssert(GET_TEAM(getTeam()).canChangeWarPeace(GET_PLAYER(ePlayer).getTeam()));
 
 	CLinkList<TradeData> playerList;

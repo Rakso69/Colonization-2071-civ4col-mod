@@ -334,7 +334,7 @@
 <!-- Progenitor Exarch-->
 	<TEXT>
 		<Tag>AI_DIPLO_CRUSADE_PROGENITOR_TARGET_PLAYER_TRANSCENDS</Tag>
-		<English>Curiosity killed the cat... DO YOU NOT KNOW DEATH WHEN YOU SEE IT, [CT_NAME]? [BOLD][COLOR_WARNING_TEXT]THERE IS NO LIFE... IN THE WARP... ONLY... DEATH.[COLOR_REVERT][\BOLD]</English>
+		<English>Curiosity killed the cat... DO YOU NOT KNOW DEATH WHEN YOU SEE IT, [CT_NAME]? [BOLD][COLOR_WARNING_TEXT]THERE IS NO LIFE... IN THE VOID... ONLY... DEATH.[COLOR_REVERT][\BOLD]</English>
 		<French></French>
 		<German></German>
 		<Italian></Italian>
