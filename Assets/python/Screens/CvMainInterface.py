@@ -465,6 +465,7 @@ class CvMainInterface:
 		#Kaszkaj - Requeue an unacknowledged Transcendence notice after loading or rebuilding the interface.
 		self._transcendenceNoticeRequested = None
 		self._transcendenceNoticeSlice = -1
+		self._transcendenceNoticeRetry = 0.0
 		if (CyGame().isPitbossHost()):
 			return
 
@@ -3000,22 +3001,28 @@ class CvMainInterface:
 	
 	# Updates the Screen
 	def update( self, fDelta ):
-		#Kaszkaj - Queue a mandatory Transcendence notice after the player leaves the colony screen.
+		#Kaszkaj - Retry an unacknowledged notice after leaving the colony screen, using an existing synced action.
 		game = gc.getGame()
 		iSlice = game.getTurnSlice()
 		if iSlice < getattr(self, "_transcendenceNoticeSlice", -1):
 			self._transcendenceNoticeRequested = None
+			self._transcendenceNoticeRetry = 0.0
 		self._transcendenceNoticeSlice = iSlice
 		iPlayer = game.getActivePlayer()
 		if iPlayer < 0 or not game.isTranscendenceDiplomacyPending(iPlayer):
 			self._transcendenceNoticeRequested = None
+			self._transcendenceNoticeRetry = 0.0
 			return
 		if CyInterface().isCityScreenUp():
 			return
 		key = (iPlayer, game.getTranscendencePlayer(), game.getTranscendenceCityID())
 		if getattr(self, "_transcendenceNoticeRequested", None) != key:
 			self._transcendenceNoticeRequested = key
-			CyMessageControl().sendPlayerAction(iPlayer, PlayerActionTypes.PLAYER_ACTION_TRANSCENDENCE_NOTICE, -1, -1, -1)
+			self._transcendenceNoticeRetry = 0.0
+		self._transcendenceNoticeRetry = getattr(self, "_transcendenceNoticeRetry", 0.0) - max(0.0, fDelta)
+		if self._transcendenceNoticeRetry <= 0.0:
+			self._transcendenceNoticeRetry = 2.0
+			CyMessageControl().sendPlayerAction(iPlayer, PlayerActionTypes.PLAYER_ACTION_FEAT, -207110, key[1], key[2])
 		return
 
 	# Adds Mouse Over Help to General Widgets

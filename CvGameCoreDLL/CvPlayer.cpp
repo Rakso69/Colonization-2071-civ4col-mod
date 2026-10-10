@@ -2714,7 +2714,7 @@ int CvPlayer::countNumBuildings(BuildingTypes eBuilding) const
 
 bool CvPlayer::canContact(PlayerTypes ePlayer) const
 {
-	if (ePlayer == getID())
+	if (ePlayer < 0 || ePlayer >= MAX_PLAYERS || ePlayer == getID())
 	{
 		return false;
 	}
@@ -2722,6 +2722,13 @@ bool CvPlayer::canContact(PlayerTypes ePlayer) const
 	if (!isAlive() || !(GET_PLAYER(ePlayer).isAlive()))
 	{
 		return false;
+	}
+
+	//Kaszkaj - A pending mandatory Transcendence notice can reach its recorded Exarch even before ordinary contact is available.
+	if (GC.getGameINLINE().isTranscendenceNoticeContact(getID(), ePlayer)
+		|| GC.getGameINLINE().isTranscendenceNoticeContact(ePlayer, getID()))
+	{
+		return true;
 	}
 
 	if (getTeam() != GET_PLAYER(ePlayer).getTeam())
@@ -2790,10 +2797,24 @@ void CvPlayer::contact(PlayerTypes ePlayer)
 {
 	CvDiploParameters* pDiplo;
 
-	if (!canContact(ePlayer) || isTurnDone())
+	if (!canContact(ePlayer))
 	{
 		return;
 	}
+
+	//Kaszkaj - Contact with the recorded Exarch opens the mandatory notice instead of an ordinary trade dialogue.
+	CvGame& kGame = GC.getGameINLINE();
+	if (kGame.isTranscendenceNoticeContact(getID(), ePlayer))
+	{
+		kGame.requestTranscendenceDiplomacy(getID());
+		return;
+	}
+	if (kGame.isTranscendenceNoticeContact(ePlayer, getID()))
+	{
+		kGame.requestTranscendenceDiplomacy(ePlayer);
+		return;
+	}
+	if (isTurnDone()) return;
 
 	if (GET_PLAYER(ePlayer).isHuman())
 	{
@@ -2857,14 +2878,16 @@ void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer
 
 	switch (eDiploEvent)
 	{
-	//Kaszkaj - Only an acknowledgement to a Progenitor Exarch resolves a pending Transcendence notice.
+	//Kaszkaj - Only the recorded Exarch and the matching notice target can resolve a pending Transcendence announcement.
 	case DIPLOEVENT_TRANSCENDENCE_CRUSADE:
 	case DIPLOEVENT_TRANSCENDENCE_OBLIGE:
 		{
-			CivilizationTypes eDerivative = (CivilizationTypes)GC.getCivilizationInfo(getCivilizationType()).getDerivativeCiv();
-			if (isEurope() && eDerivative != NO_CIVILIZATION && GC.getCivilizationInfo(eDerivative).isNative()
-				&& GC.getGameINLINE().isTranscendenceDiplomacyPending(ePlayer))
-				GC.getGameINLINE().acknowledgeTranscendence(ePlayer);
+			CvGame& kGame = GC.getGameINLINE();
+			bool bBuilder = ePlayer == kGame.getTranscendencePlayer();
+			if (iData1 == kGame.getTranscendencePlayer()
+				&& (eDiploEvent == DIPLOEVENT_TRANSCENDENCE_CRUSADE) == bBuilder
+				&& kGame.isTranscendenceNoticeContact(ePlayer, getID()))
+				kGame.acknowledgeTranscendence(ePlayer);
 		}
 		break;
 	case DIPLOEVENT_CONTACT:
@@ -2873,6 +2896,16 @@ void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer
 		break;
 
 	case DIPLOEVENT_AI_CONTACT:
+		//Kaszkaj - Acknowledge mandatory notices through an existing engine event; other AI contacts keep their ordinary behavior.
+		if (iData2 == -207111 || iData2 == -207112)
+		{
+			CvGame& kGame = GC.getGameINLINE();
+			bool bBuilder = ePlayer == kGame.getTranscendencePlayer();
+			if (iData1 == kGame.getTranscendencePlayer()
+				&& (iData2 == -207111) == bBuilder
+				&& kGame.isTranscendenceNoticeContact(ePlayer, getID()))
+				kGame.acknowledgeTranscendence(ePlayer);
+		}
 		break;
 
 	case DIPLOEVENT_FAILED_CONTACT:
@@ -14392,6 +14425,15 @@ void CvPlayer::doAction(PlayerActionTypes eAction, int iData1, int iData2, int i
 		changeProfessionEurope(iData1, (ProfessionTypes) iData2);
 		break;
 	case PLAYER_ACTION_FEAT:
+		//Kaszkaj - Route mandatory Transcendence notices through the engine's existing synchronised action without changing normal feats.
+		if (iData1 == -207110)
+		{
+			CvGame& kGame = GC.getGameINLINE();
+			if (isHuman() && kGame.isTranscendenceDiplomacyPending(getID())
+				&& iData2 == kGame.getTranscendencePlayer() && iData3 == kGame.getTranscendenceCityID())
+				kGame.requestTranscendenceDiplomacy(getID());
+			break;
+		}
 		setFeatAccomplished((FeatTypes) iData1, iData2 != 0);
 		break;
 	default:

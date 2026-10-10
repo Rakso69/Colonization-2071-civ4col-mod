@@ -11185,8 +11185,11 @@ bool CvUnitAI::AI_pillage()
 
                                     if (iValue > iBestValue)
                                     {
+                                        //Kaszkaj - Ignore pillage routes that cannot leave the current plot this turn.
+                                        CvPlot* pEndTurnPlot = getPathEndTurnPlot();
+                                        if (pEndTurnPlot == NULL || (!atPlot(pLoopPlot) && atPlot(pEndTurnPlot))) continue;
                                         iBestValue = iValue;
-                                        pBestPlot = getPathEndTurnPlot();
+                                        pBestPlot = pEndTurnPlot;
                                         pBestPillagePlot = pLoopPlot;
                                     }
                                 }
@@ -11324,8 +11327,11 @@ bool CvUnitAI::AI_pillageRange(int iRange, bool bSafe)
 
                                                 if (iValue > iBestValue)
                                                 {
+                                                    //Kaszkaj - Ignore pillage routes that cannot leave the current plot this turn.
+                                                    CvPlot* pEndTurnPlot = getPathEndTurnPlot();
+                                                    if (pEndTurnPlot == NULL || (!atPlot(pLoopPlot) && atPlot(pEndTurnPlot))) continue;
                                                     iBestValue = iValue;
-                                                    pBestPlot = getPathEndTurnPlot();
+                                                    pBestPlot = pEndTurnPlot;
                                                     pBestPillagePlot = pLoopPlot;
                                                 }
                                             }

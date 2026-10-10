@@ -465,7 +465,6 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 	{
 		m_abTranscendenceAcknowledged[i] = false;
 		m_abTranscendenceREFDeployed[i] = false;
-		m_abTranscendenceDiplomacyQueued[i] = false;
 		m_aeTranscendenceSpeaker[i] = NO_PLAYER;
 		m_aiTranscendenceResearchState[i] = -1;
 	}
@@ -1072,6 +1071,8 @@ void CvGame::update()
 		//Kaszkaj - Adopt compatible older project queues only after the whole saved world is loaded.
 		restoreTranscendenceConstruction();
 		updateTranscendenceRetreat();
+		//Kaszkaj - Show the recorded Exarch notice on the first idle slice after the colony screen closes, within the current turn.
+		showTranscendenceDiplomacy(getActivePlayer());
 
 		sendPlayerOptions();
 
@@ -3681,7 +3682,10 @@ bool CvGame::startTranscendence(CvCity* pCity)
 	GET_PLAYER(m_eTranscendencePlayer).setCapitalCity(pCity);
 	pCity->setLayoutDirty(true);
 	gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
-	if (!GET_PLAYER(m_eTranscendencePlayer).isHuman()) acknowledgeTranscendence(m_eTranscendencePlayer);
+	//Kaszkaj - Select the human builder's Exarch in the synced construction action, before local UI presentation.
+	if (GET_PLAYER(m_eTranscendencePlayer).isHuman())
+		m_aeTranscendenceSpeaker[m_eTranscendencePlayer] = chooseTranscendenceSpeaker(m_eTranscendencePlayer);
+	else acknowledgeTranscendence(m_eTranscendencePlayer);
 	return true;
 }
 
@@ -3738,14 +3742,14 @@ void CvGame::doTranscendenceProduction(PlayerTypes ePlayer)
 	pTarget->setBuildingProduction(getTranscendenceBuilding(), (int)std::min((__int64)MAX_INT, iTotal));
 	++m_iTranscendenceBuildTurns;
 	pTarget->setLayoutDirty(true);
-	if (pTarget->getBuildingProduction(getTranscendenceBuilding()) >= pTarget->getYieldProductionNeeded(getTranscendenceBuilding(), YIELD_HAMMERS))
+	if (m_iTranscendencePhase == 2 && pTarget->getBuildingProduction(getTranscendenceBuilding()) >= pTarget->getYieldProductionNeeded(getTranscendenceBuilding(), YIELD_HAMMERS))
 		pTarget->popOrder(0, true, false);
 }
 
 //Kaszkaj - Check the complete empire-wide goods pool before consuming any of it, without free production.
 bool CvGame::processTranscendenceYields(CvCity* pCity)
 {
-	if (!isTranscendenceCity(pCity)) return false;
+	if (!isTranscendenceCity(pCity) || m_iTranscendencePhase != 2) return false;
 	BuildingTypes eBuilding = getTranscendenceBuilding();
 	if (pCity->getBuildingProduction(eBuilding) < pCity->getYieldProductionNeeded(eBuilding, YIELD_HAMMERS)) return false;
 	__int64 aiStored[NUM_YIELD_TYPES];
@@ -3774,7 +3778,7 @@ bool CvGame::processTranscendenceYields(CvCity* pCity)
 //Kaszkaj - Finishing the locked construction wins Transcendence; preserve its final visual size.
 void CvGame::completeTranscendence(CvCity* pCity)
 {
-	if (!isTranscendenceCity(pCity) || !pCity->isHasRealBuilding(getTranscendenceBuilding())) return;
+	if (!isTranscendenceCity(pCity) || m_iTranscendencePhase != 2 || !pCity->isHasRealBuilding(getTranscendenceBuilding())) return;
 	m_iTranscendencePhase = 3;
 	m_bTranscendenceCollectIndustry = false;
 	if (m_eTranscendenceVictory == NO_VICTORY)
@@ -3839,7 +3843,6 @@ void CvGame::onTranscendenceCityLost(CvCity* pCity)
 	{
 		m_abTranscendenceAcknowledged[i] = false;
 		m_abTranscendenceREFDeployed[i] = false;
-		m_abTranscendenceDiplomacyQueued[i] = false;
 		m_aeTranscendenceSpeaker[i] = NO_PLAYER;
 	}
 }
@@ -3968,28 +3971,56 @@ PlayerTypes CvGame::chooseTranscendenceSpeaker(PlayerTypes eRecipient)
 //Kaszkaj - Human consequences wait for the sole dialogue exit; AI recipients acknowledge without GUI.
 bool CvGame::isTranscendenceDiplomacyPending(PlayerTypes ePlayer) const
 {
-	if (!isTranscendenceActive() || ePlayer < 0 || ePlayer >= MAX_PLAYERS || m_abTranscendenceAcknowledged[ePlayer]) return false;
+	if (!isTranscendenceActive() || ePlayer < 0 || ePlayer >= MAX_PLAYERS
+		|| !GET_PLAYER(ePlayer).isAlive() || m_abTranscendenceAcknowledged[ePlayer]) return false;
 	if (ePlayer == m_eTranscendencePlayer) return m_iTranscendencePhase == 1;
 	return m_iTranscendencePhase == 2 && isTranscendenceEnemy(ePlayer) && !GET_PLAYER(ePlayer).isEurope();
 }
 
+//Kaszkaj - Only the pending notice's recorded Exarch may bypass normal discovery, parent and war contact restrictions.
+bool CvGame::isTranscendenceNoticeContact(PlayerTypes eRecipient, PlayerTypes eSpeaker) const
+{
+	if (!isTranscendenceDiplomacyPending(eRecipient) || eSpeaker < 0 || eSpeaker >= MAX_PLAYERS
+		|| m_aeTranscendenceSpeaker[eRecipient] != eSpeaker || eRecipient == eSpeaker) return false;
+	const CvPlayer& kSpeaker = GET_PLAYER(eSpeaker);
+	if (!kSpeaker.isAlive() || !kSpeaker.isEurope()
+		|| kSpeaker.getTeam() == GET_PLAYER(eRecipient).getTeam()) return false;
+	CivilizationTypes eChild = (CivilizationTypes)GC.getCivilizationInfo(kSpeaker.getCivilizationType()).getDerivativeCiv();
+	return eChild != NO_CIVILIZATION && GC.getCivilizationInfo(eChild).isNative();
+}
+
+//Kaszkaj - Synced requests recover missing notice speakers; local presentation never changes game state.
 void CvGame::requestTranscendenceDiplomacy(PlayerTypes ePlayer)
 {
-	if (!isTranscendenceDiplomacyPending(ePlayer) || m_abTranscendenceDiplomacyQueued[ePlayer]) return;
+	if (!isTranscendenceDiplomacyPending(ePlayer)) return;
 	if (!GET_PLAYER(ePlayer).isHuman()) { acknowledgeTranscendence(ePlayer); return; }
-	if (m_aeTranscendenceSpeaker[ePlayer] == NO_PLAYER || !GET_PLAYER(m_aeTranscendenceSpeaker[ePlayer]).isAlive())
+	if (!isTranscendenceNoticeContact(ePlayer, m_aeTranscendenceSpeaker[ePlayer]))
 		m_aeTranscendenceSpeaker[ePlayer] = chooseTranscendenceSpeaker(ePlayer);
+	if (m_aeTranscendenceSpeaker[ePlayer] == NO_PLAYER) { acknowledgeTranscendence(ePlayer); return; }
+	const char* szType = ePlayer == m_eTranscendencePlayer
+		? "AI_DIPLOCOMMENT_TRANSCENDENCE_CRUSADE"
+		: "AI_DIPLOCOMMENT_TRANSCENDENCE_OBLIGE";
+	if (GC.getInfoTypeForString(szType, true) == NO_DIPLOCOMMENT) { acknowledgeTranscendence(ePlayer); return; }
+	showTranscendenceDiplomacy(ePlayer);
+}
+
+//Kaszkaj - Present the mandatory notice like a direct contact, without waiting for queued AI diplomacy or the next turn.
+void CvGame::showTranscendenceDiplomacy(PlayerTypes ePlayer)
+{
+	if (!isTranscendenceDiplomacyPending(ePlayer) || getActivePlayer() != ePlayer
+		|| !GET_PLAYER(ePlayer).isHuman()) return;
 	PlayerTypes eSpeaker = m_aeTranscendenceSpeaker[ePlayer];
-	if (eSpeaker == NO_PLAYER) { acknowledgeTranscendence(ePlayer); return; }
+	if (!isTranscendenceNoticeContact(ePlayer, eSpeaker)
+		|| gDLL->getInterfaceIFace()->isCityScreenUp() || gDLL->isDiplomacy()
+		|| gDLL->isMPDiplomacyScreenUp() || gDLL->getInterfaceIFace()->isPopupUp()) return;
 	const char* szType = ePlayer == m_eTranscendencePlayer
 		? "AI_DIPLOCOMMENT_TRANSCENDENCE_CRUSADE"
 		: "AI_DIPLOCOMMENT_TRANSCENDENCE_OBLIGE";
 	DiploCommentTypes eComment = (DiploCommentTypes)GC.getInfoTypeForString(szType, true);
-	if (eComment == NO_DIPLOCOMMENT) { acknowledgeTranscendence(ePlayer); return; }
-	m_abTranscendenceDiplomacyQueued[ePlayer] = true;
+	if (eComment == NO_DIPLOCOMMENT) return;
 	CvDiploParameters* pDiplo = new CvDiploParameters(eSpeaker);
 	pDiplo->setDiploComment(eComment);
-	pDiplo->setAIContact(true);
+	pDiplo->setAIContact(false);
 	pDiplo->setData(m_eTranscendencePlayer);
 	gDLL->beginDiplomacy(pDiplo, ePlayer);
 }
@@ -3998,7 +4029,6 @@ void CvGame::acknowledgeTranscendence(PlayerTypes ePlayer)
 {
 	if (!isTranscendenceDiplomacyPending(ePlayer)) return;
 	m_abTranscendenceAcknowledged[ePlayer] = true;
-	m_abTranscendenceDiplomacyQueued[ePlayer] = false;
 	if (ePlayer == m_eTranscendencePlayer) activateTranscendenceCrusade();
 	else
 	{
@@ -4036,6 +4066,8 @@ void CvGame::activateTranscendenceCrusade()
 			if (!GET_PLAYER(ePlayer).isHuman()) GET_PLAYER(ePlayer).AI_doTranscendenceAssault(true);
 		}
 		else if (!GET_PLAYER(ePlayer).isHuman()) acknowledgeTranscendence(ePlayer);
+		//Kaszkaj - Record human opponents' notice speakers during the synced crusade activation.
+		else m_aeTranscendenceSpeaker[ePlayer] = chooseTranscendenceSpeaker(ePlayer);
 	}
 }
 

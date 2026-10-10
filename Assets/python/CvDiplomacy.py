@@ -612,12 +612,14 @@ class CvDiplomacy:
 
 		diploScreen = CyDiplomacy()
 
-		#Kaszkaj - Apply the crusade only after the mandatory message is acknowledged.
+		#Kaszkaj - Apply only the current mandatory notice; stale responses cannot acknowledge a different Transcendence attempt.
 		if self.isComment(eComment, "USER_DIPLOCOMMENT_EXIT") and iData2 in (-1071, -1072):
-			if iData2 == -1071:
-				diploScreen.diploEvent(DiploEventTypes.DIPLOEVENT_TRANSCENDENCE_CRUSADE, iData1, -1)
-			else:
-				diploScreen.diploEvent(DiploEventTypes.DIPLOEVENT_TRANSCENDENCE_OBLIGE, iData1, -1)
+			game = gc.getGame()
+			if iData1 == game.getTranscendencePlayer() and diploScreen.getData() == iData1 and ((iData2 == -1071) == (game.getActivePlayer() == iData1)):
+				if iData2 == -1071:
+					diploScreen.diploEvent(DiploEventTypes.DIPLOEVENT_AI_CONTACT, iData1, -207111)
+				else:
+					diploScreen.diploEvent(DiploEventTypes.DIPLOEVENT_AI_CONTACT, iData1, -207112)
 			diploScreen.closeScreen()
 			return
 

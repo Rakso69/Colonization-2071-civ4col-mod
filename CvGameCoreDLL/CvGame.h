@@ -156,7 +156,9 @@ public:
 	void beginTranscendenceCityAcquisition();
 	void endTranscendenceCityAcquisition();
 	void requestTranscendenceDiplomacy(PlayerTypes ePlayer);
+	void showTranscendenceDiplomacy(PlayerTypes ePlayer);
 	bool isTranscendenceDiplomacyPending(PlayerTypes ePlayer) const;
+	bool isTranscendenceNoticeContact(PlayerTypes eRecipient, PlayerTypes eSpeaker) const;
 	void acknowledgeTranscendence(PlayerTypes ePlayer);
 	void activateTranscendenceCrusade();
 	///Tke
@@ -481,7 +483,6 @@ protected:
 	mutable int m_aiTranscendenceResearchState[MAX_PLAYERS];
 	mutable std::vector<CivicTypes> m_aeTranscendenceRequiredResearch;
 	bool m_bTranscendenceCollectIndustry;
-	bool m_abTranscendenceDiplomacyQueued[MAX_PLAYERS];
 	bool m_bTranscendenceRestorePending;
 	int m_iTranscendenceAcquisitionDepth;
 	bool m_bTranscendenceEliminating;
