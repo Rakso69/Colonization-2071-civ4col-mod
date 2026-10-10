@@ -31,6 +31,16 @@ class CvDiplomacy:
 		# Eliminate previous comments
 		self.diploScreen.clearUserComments()
 
+		#Kaszkaj - Transcendence announcements allow only the acknowledgement that triggers the crusade.
+		if self.isComment(eComment, "AI_DIPLOCOMMENT_TRANSCENDENCE_CRUSADE"):
+			self.addUserComment("USER_DIPLOCOMMENT_EXIT", gc.getGame().getTranscendencePlayer(), -1071)
+			self.diploScreen.endTrade()
+			return
+		if self.isComment(eComment, "AI_DIPLOCOMMENT_TRANSCENDENCE_OBLIGE"):
+			self.addUserComment("USER_DIPLOCOMMENT_EXIT", gc.getGame().getTranscendencePlayer(), -1072)
+			self.diploScreen.endTrade()
+			return
+
 		#Kaszkaj - Allow only acknowledgement of the confiscation notice from the State or Progenitor Exarch.
 		if self.isComment(eComment, "AI_DIPLOCOMMENT_KING_ULTIMATE_INSULT"):
 			self.addUserComment("USER_DIPLOCOMMENT_EXIT", -1, -1)
@@ -415,12 +425,21 @@ class CvDiplomacy:
 		" Handles the determining the AI comments"
 		#Kaszkaj - Show the confiscation response from the State or Progenitor Exarch when the player's tax rate exceeds 100 percent.
 		player = gc.getPlayer(gc.getGame().getActivePlayer())
-		if player.getTaxRate() > 100 and player.getParent() == self.diploScreen.getWhoTradingWith():
+		if player.getTaxRate() > 100 and player.getParent() == self.diploScreen.getWhoTradingWith() and not (self.isComment(eComment, "AI_DIPLOCOMMENT_TRANSCENDENCE_CRUSADE") or self.isComment(eComment, "AI_DIPLOCOMMENT_TRANSCENDENCE_OBLIGE")):
 			eComment = self.getCommentID("AI_DIPLOCOMMENT_KING_ULTIMATE_INSULT")
 			#Kaszkaj - Set the State or Progenitor Exarch's extra attitude towards the player to -100 when displaying the confiscation notice.
 			gc.getPlayer(self.diploScreen.getWhoTradingWith()).AI_setAttitudeExtra(gc.getGame().getActivePlayer(), -100)
 			args = ()
 		AIString = self.getDiplomacyComment(eComment)
+		#Kaszkaj - Name the civilization and colony currently constructing the Eye of Terror.
+		if self.isComment(eComment, "AI_DIPLOCOMMENT_TRANSCENDENCE_OBLIGE"):
+			iBuilder = gc.getGame().getTranscendencePlayer()
+			if iBuilder >= 0:
+				builder = gc.getPlayer(iBuilder)
+				city = builder.getCity(gc.getGame().getTranscendenceCityID())
+				AIString = AIString.replace(u"[CIV_TRANSCENDENCE]", builder.getCivilizationShortDescription(0))
+				if not city.isNone():
+					AIString = AIString.replace(u"[CITY_NAME_TRANSCENDENCE]", city.getName())
 
 		if DebugLogging:
 			print "CvDiplomacy.setAIComment: %s" %(eComment,)
@@ -592,6 +611,15 @@ class CvDiplomacy:
 			print "CvDiplomacy.handleUserResponse: %s" %(eComment,)
 
 		diploScreen = CyDiplomacy()
+
+		#Kaszkaj - Apply the crusade only after the mandatory message is acknowledged.
+		if self.isComment(eComment, "USER_DIPLOCOMMENT_EXIT") and iData2 in (-1071, -1072):
+			if iData2 == -1071:
+				diploScreen.diploEvent(DiploEventTypes.DIPLOEVENT_TRANSCENDENCE_CRUSADE, iData1, -1)
+			else:
+				diploScreen.diploEvent(DiploEventTypes.DIPLOEVENT_TRANSCENDENCE_OBLIGE, iData1, -1)
+			diploScreen.closeScreen()
+			return
 
 		#Kaszkaj - End the player's game only after they acknowledge the confiscation notice.
 		player = gc.getPlayer(gc.getGame().getActivePlayer())

@@ -124,7 +124,14 @@ void CyGamePythonInterface()
 		.def("getBuildingClassCreatedCount", &CyGame::getBuildingClassCreatedCount, "int (BuildingClassType) - building Class count")
 		.def("isVictoryValid", &CyGame::isVictoryValid)
 		///TKs Invention Core Mod v 1.0
-		.def("isIndustrialVictoryAll", &CyGame::isIndustrialVictoryAll)
+		// Kaszkaj: The Eye project replaces the former industrial victory counters.
+		.def("getTranscendencePlayer", &CyGame::getTranscendencePlayer)
+		.def("getTranscendenceCityID", &CyGame::getTranscendenceCityID)
+		.def("getTranscendenceTurns", &CyGame::getTranscendenceTurns)
+		.def("isTranscendenceActive", &CyGame::isTranscendenceActive)
+		.def("isTranscendenceDiplomacyPending", &CyGame::isTranscendenceDiplomacyPending)
+		.def("getTranscendenceProductionRate", &CyGame::getTranscendenceProductionRate)
+		.def("getTranscendenceYieldStored", &CyGame::getTranscendenceYieldStored)
 		///TKe
 		.def("isSpecialUnitValid", &CyGame::isSpecialUnitValid)
 		.def("makeSpecialUnitValid", &CyGame::makeSpecialUnitValid)

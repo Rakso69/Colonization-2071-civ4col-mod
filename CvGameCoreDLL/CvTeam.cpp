@@ -582,6 +582,8 @@ void CvTeam::updateYield()
 
 bool CvTeam::canChangeWarPeace(TeamTypes eTeam) const
 {
+	//Kaszkaj - A Transcendence crusade cannot be ended through diplomacy while the Eye is under construction.
+	if (GC.getGameINLINE().isTranscendenceWar(getID(), eTeam)) return false;
 	if (GC.getGameINLINE().isOption(GAMEOPTION_NO_CHANGING_WAR_PEACE))
 	{
 		return false;
@@ -603,6 +605,8 @@ bool CvTeam::canChangeWarPeace(TeamTypes eTeam) const
 
 bool CvTeam::canDeclareWar(TeamTypes eTeam) const
 {
+	//Kaszkaj - Allied Progenitor Exarchs never attack one another during a crusade or its withdrawal.
+	if (GC.getGameINLINE().isTranscendenceAlly(getID(), eTeam)) return false;
 	if (eTeam == getID())
 	{
 		return false;
@@ -684,8 +688,24 @@ bool CvTeam::canDeclareWar(TeamTypes eTeam) const
 	return true;
 }
 
+//Kaszkaj - Only an eligible crusader may invoke the direct Eye war path.
+void CvTeam::declareTranscendenceWar(TeamTypes eTeam)
+{
+	PlayerTypes eBuilder = GC.getGameINLINE().getTranscendencePlayer();
+	if (!GC.getGameINLINE().isTranscendenceActive() || eBuilder == NO_PLAYER || eTeam == getID()
+		|| eTeam != GET_PLAYER(eBuilder).getTeam()) return;
+	for (int i = 0; i < MAX_PLAYERS; ++i)
+		if (GET_PLAYER((PlayerTypes)i).getTeam() == getID() && GC.getGameINLINE().isTranscendenceEnemy((PlayerTypes)i))
+		{
+			declareWarNoRevolution(eTeam, false, WARPLAN_TOTAL, false);
+			return;
+		}
+}
+
 void CvTeam::declareWarNoRevolution(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan, bool bPlaySound)
 {
+	//Kaszkaj - Allied Progenitor Exarchs never attack one another during a crusade or its withdrawal.
+	if (GC.getGameINLINE().isTranscendenceAlly(getID(), eTeam)) return ;
 	PROFILE_FUNC();
 
 	CLLNode<TradeData>* pNode;
@@ -937,7 +957,8 @@ void CvTeam::declareWarNoRevolution(TeamTypes eTeam, bool bNewDiplo, WarPlanType
 		{
 			if (GET_TEAM((TeamTypes)iI).isAlive())
 			{
-				if (GET_TEAM((TeamTypes)iI).isDefensivePact(eTeam))
+				//Kaszkaj - Mandatory crusade declarations must not pull excluded States into unrelated defensive-pact wars.
+				if (GET_TEAM((TeamTypes)iI).isDefensivePact(eTeam) && !GC.getGameINLINE().isTranscendenceWar(getID(), eTeam))
 				{
 					GET_TEAM((TeamTypes)iI).declareWar(getID(), bNewDiplo, WARPLAN_DOGPILE);
 				}
@@ -950,6 +971,8 @@ void CvTeam::declareWarNoRevolution(TeamTypes eTeam, bool bNewDiplo, WarPlanType
 
 void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan)
 {
+	//Kaszkaj - Allied Progenitor Exarchs never attack one another during a crusade or its withdrawal.
+	if (GC.getGameINLINE().isTranscendenceAlly(getID(), eTeam)) return ;
 	CvTeam& kOtherTeam = GET_TEAM(eTeam);
 
 	if (kOtherTeam.isParentOf(getID()) || isParentOf(eTeam))
@@ -964,6 +987,8 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan)
 
 void CvTeam::makePeace(TeamTypes eTeam, bool bBumpUnits)
 {
+	//Kaszkaj - The Transcendence crusade remains at war even through direct peace calls.
+	if (GC.getGameINLINE().isTranscendenceWar(getID(), eTeam)) return;
 	FAssertMsg(eTeam != NO_TEAM, "eTeam is not assigned a valid value");
 	FAssertMsg(eTeam != getID(), "eTeam is not expected to be equal with getID()");
 

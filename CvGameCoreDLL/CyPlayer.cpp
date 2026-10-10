@@ -283,10 +283,6 @@ int CyPlayer::getIdeasResearched(int /*CivicTypes*/ eCivic)
    return m_pPlayer ? m_pPlayer->getIdeasResearched((CivicTypes)eCivic) : -1;
 }
 
-int CyPlayer::getVictoryYieldCount(int /*YieldTypes*/ eYield)
-{
-   return m_pPlayer ? m_pPlayer->getVictoryYieldCount((YieldTypes)eYield) : -1;
-}
 
 int CyPlayer::inventorThreshold() const
 {

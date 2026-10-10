@@ -77,7 +77,6 @@ void CyPlayerPythonInterface1(python::class_<CyPlayer>& x)
 		.def("isCivic", &CyPlayer::isCivic, "bool (int (CivicTypes) eCivic)")
 		///TKs Invention Core Mod v 1.0
 		.def("getIdeasResearched", &CyPlayer::getIdeasResearched, "int (int (CivicTypes) eCivic)")
-		.def("getVictoryYieldCount", &CyPlayer::getVictoryYieldCount, "int (int (YieldTypes) eYield)")
 		.def("getCurrentResearchProgress", &CyPlayer::getCurrentResearchProgress, "int (bool bGetTurns, int (CivicTypes) eCivic)")
 		.def("inventorThreshold", &CyPlayer::inventorThreshold, "int ()")
 		.def("getIdeasExperience", &CyPlayer::getIdeasExperience, "int ()")

@@ -341,13 +341,9 @@ bool CvXMLLoadUtility::SetPostGlobalsGlobalDefines()
 		idx = FindInInfoClass(szVal);
 		GC.getDefinesVarSystem()->SetValue("PROFESSION_INVENTOR", idx);
 
-		SetGlobalDefine("VICTORY_INDUSTRIALISATION", szVal);
+		SetGlobalDefine("VICTORY_TRANSCENDENCE", szVal);
 		idx = FindInInfoClass(szVal);
-		GC.getDefinesVarSystem()->SetValue("VICTORY_INDUSTRIALISATION", idx);
-
-		SetGlobalDefine("INDUSTRIAL_VICTORY_SINGLE_YIELD", szVal);
-		idx = FindInInfoClass(szVal);
-		GC.getDefinesVarSystem()->SetValue("INDUSTRIAL_VICTORY_SINGLE_YIELD", idx);
+		GC.getDefinesVarSystem()->SetValue("VICTORY_TRANSCENDENCE", idx);
 
 		SetGlobalDefine("NATIVE_TECH", szVal);
 		idx = FindInInfoClass(szVal);

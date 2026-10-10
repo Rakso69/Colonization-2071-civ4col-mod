@@ -1,3 +1,72 @@
+### 10.10.2026 Colonization 2071 v2.2.4 Patch Notes:<br>
+---
+☑️Removed the repeated scan through every profession formerly used to add a direct-production supply tier; direct-job recognition now uses the evaluated profession and local plot data.<br>
+☑️Reused the current Improvement's already calculated yield change. Candidate Improvement checks run only when the old filter would discard a weak positive yield.<br>
+☑️Domestic demand and overflow-sale calculations are skipped when projected stock cannot exceed storage capacity. No additional map searches or persistent save data were added.<br>
+☑️Domestic demand is calculated once per stocked cargo yield before domestic sales, and empty stocks skip the demand scan. Resident demand metadata is read once per unit; consumption, Credits, warehouse decay and overflow sales retain their existing results.<br>
+☑️The Technology Advisor groups technologies by category once per redraw, preserving technology order, current research checks, widgets and prerequisite arrows.<br>
+☑️Combat metadata used only by the log is read after logging is enabled; Progenitor AI rewards, Credits and random draws retain their existing behaviour.<br>
+☑️Polished some images (icons).<br>
+<br>
+🌀Reworked Transcendence Victory:<br>
+☑️New building: 🌀Eye of Pandora.<br>
+☑️Transcendence is achieved by completing the Eye of Pandora; the previous Progenitor Tech export requirement has been removed.<br>
+☑️Construction requires every technology to be researched, excluding branch headings. Only one Eye of Pandora can be under construction worldwide at a time.<br>
+☑️The constructing Colony becomes the Capital immediately and retains this status throughout construction. Losing this Colony eliminates the entire civilisation.<br>
+☑️All owned Colonies contribute their Industry and share the required goods from their warehouses. Their ordinary construction projects remain paused, with their queues and existing progress preserved.<br>
+☑️Once started, construction cannot be cancelled, reordered or hurried. The hurry button is hidden during construction.<br>
+☑️The Eye of Pandora appears in its Colony from the start of construction. Its model increases in scale by 0.1 with each turn of construction. (It will cover the game world in "Warp darkness.")<br>
+☑️After the constructing player leaves the Colony screen and acknowledges a Progenitor Exarch's warning, ordinary civilisations and all Progenitor Exarchs begin a crusade to capture the constructing Colony. States and the Outer Gods Pantheon are excluded.<br>
+☑️Each Progenitor Exarch deploys a separate copy of its current Progenitor Expeditionary Force. These forces follow normal invasion rules with the constructing Colony as their highest-priority target; the original REF remains available for Revolution.<br>
+☑️Other eligible human players acknowledge a separate Exarch announcement before joining the war. The announcement identifies the constructing civilisation and Colony.<br>
+☑️The 11×11 area centred on the constructing Colony remains visible to the ordinary civilisations joining the crusade until that Colony is lost. Peace with the constructing civilisation is blocked during construction; relations among ordinary civilisations continue normally.<br>
+☑️Progenitor Exarchs form an alliance for the active crusade, ending any wars among themselves and preventing new ones until the constructing Colony is lost. The alliance then ends immediately; normal diplomatic relations resume without automatically restarting previous wars.<br>
+☑️Progenitor Exarchs always raze Colonies captured during the crusade, leaving no Colony ruins. After the constructing Colony is lost, the crusade's REF copies withdraw through Sail to Earth departure points and disappear with their cargo; the original REF is preserved.<br>
+☑️During withdrawal, transports collect their own land troops and disappear with them at Sail to Earth departure points. Remaining warships withdraw only after all their own withdrawing land troops, including embarked troops, have departed through Sail to Earth; the original REF remains untouched.<br>
+☑️A new Transcendence construction starts a fresh crusade with new REF copies. Forces still withdrawing from an earlier crusade do not rejoin its attack.<br>
+☑️Computer opponents wait for military readiness before committing to construction, comparing their armed forces, fleet and target Colony's garrison with the expected crusade forces.<br>
+☑️Computer opponents pay three times the required goods by default, excluding Industry.<br>
+☑️AI construction discounts and AI era cost modifiers do not apply to the Eye of Pandora.<br>
+☑️The Victory screen shows research eligibility, the constructing Colony, pooled Industry and required goods. Special Abilities identifies the building as the Transcendence Victory Condition.<br>
+<br>
+💻Computer Opponents (Both):<br>
+☑️Reduced repeated calculations when evaluating technologies, selecting Colonies for specialists and choosing new settlement locations.<br>
+☑️Production buildings of the same category reuse their supply and expert evaluations during a single building choice.<br>
+☑️Work assignment reuses the current worker evaluation while preserving profession choices and replacement decisions.<br>
+☑️Skipped the default empty Python AI hooks; custom Python overrides can be enabled through GlobalDefinesAlt.xml.<br>
+☑️Preserved AI priorities, candidate order, random draws and save format; later decisions use the current Colony and unit state.<br>
+☑️AI now values passive building production independently of indoor jobs, so buildings without job slots no longer lose their economic benefits in the assessment.<br>
+☑️Mass Driver is valued for additional protection against bombardment, with greater priority during war or immediate danger and no added value beyond full protection.<br>
+☑️Hydroelectric Plant is valued for Industry and river production from usable local jobs; mutually exclusive jobs are not added together, and the Colony plot retains its single natural cargo yield.<br>
+☑️Interstellar Bank is valued for Platinum and Earth Goods production, including its sea bonus through usable local jobs.<br>
+☑️Space Elevator is valued for additional Credits from actual warehouse overflow after existing AI assistance, domestic consumption, decay, Earth tax and trade modifiers are taken into account.<br>
+☑️AI gives a proportional preference to useful input-free Research, Industry, Tools, Weapons, Progenitor Tech, Biotech, Narcotics, Fusion Cores and Earth Goods produced directly by a Bonus or Improvement. This changes job evaluation only; actual output and consumption are unchanged.<br>
+☑️Small positive direct production remains a useful job when the Colony can feed its workers. Jobs still compete by their evaluated benefit, including consumed goods and available inputs.<br>
+☑️When supplying construction and equipment, Colonists and ordinary Aliens compare positive net production benefit. Input-free work no longer automatically outranks a much more productive factory through an extra fixed priority tier.<br>
+☑️Improvement evaluation retains small positive yields contributed by the Improvement itself, including the projected upgrades already considered by the worker AI.<br>
+☑️Routine job evaluation counts the additional warehouse loss caused by a worker and the additional overflow-sale Credits after domestic demand, Earth tax and trade modifiers. Existing stocks' losses are not charged entirely to the new worker; refunded goods are not counted twice.<br>
+☑️AI worker bonuses cannot make a land profession productive on water or a water profession productive on land. Research jobs still require available research and Colonist professions retain their existing unlock requirements.<br>
+☑️Profession eligibility uses the existing list of related technologies while retaining the same profession restrictions, research checks and equipment requirements.<br>
+☑️Worker exchanges reuse unchanged job scores within a single decision. The original evaluation path remains available when external rule callbacks are enabled.<br>
+☑️Job evaluation skips a plot-production calculation whose result would immediately be replaced by the existing AI worker calculation; production and profession choices retain their existing results.<br>
+☑️Industrial planning and market valuation reuse profession output already returned by the input calculation, reducing repeated production-building scans.<br>
+☑️Space builders and excavation workers collect existing construction reservations once per decision. External building, movement, war and research callbacks retain live mission queries.<br>
+☑️Empty ships skip port-unit scans when checking their own passengers or cargo. Available ships still process Explorer pickup requests.<br>
+☑️These optimisations retain existing gameplay rules, building bonuses, candidate order, random draws and saved-game data, with no new persistent world-state caches.<br>
+☑️Research and technology purchase decisions value the path to Freighter or Carrier production, including the required Dock and Dry Dock. Transport benefits account for cargo capacity, the current fleet, waiting Earth passengers and potential Credits from compatible Progenitor Treasures; already available production, owned ships and queued ships reduce redundant priorities.<br>
+☑️Colonist AI and Alien AI prioritise the infrastructure needed to produce Freighters and Carriers, including the earlier required Dock. Ship production follows transport demand and queued capacity, adding more ships when capacity is insufficient without forcing an extra ship when the fleet already covers demand.<br>
+☑️Technology purchases from the AI's own State or Progenitor Exarch use half of the current XML technology contact delay. Other technology contacts retain the full XML delay; the asking price, technology effects and payment rules remain unchanged.<br>
+<br>
+🧑‍🚀💻Colonist AI:<br>
+☑️Intrepid Explorers check compatible ships once per pickup decision and reuse exploration targets and incoming missions for each landing area.<br>
+☑️Ships reject impossible Earth trips before scanning the map for a departure route.<br>
+☑️Power Plant and Oil Refinery jobs are assessed against local Industry production, allowing useful construction outside major Colonies while accounting for Hydrocarbons availability.<br>
+☑️Oil Refinery's additional indoor cargo production is valued together with extra input goods and Food consumption; unsupported or unprofitable extra production adds no value.<br>
+☑️Food forecasts remove the production of both the moving and displaced workers before giving priority to direct production or construction supplies, using the Colony's Food production modifier.<br>
+<br>
+👽💻Alien AI:<br>
+☑️Ordinary Aliens compare routine jobs and useful worker swaps on the shared economic scale. Existing priorities for preventing starvation, recruitment Food, independence preparations, growing improvements and specialist roles remain in place.<br>
+☑️Larger surpluses of Credits reduce the estimated opportunity cost of spending Credits on technology, while the full asking price is still paid.<br>
 ### 08.10.2026 Colonization 2071 v2.2.3 Patch Notes:<br>
 ---
 ☑️Optimised building lookups and Colony production calculations.<br>
@@ -27,7 +96,7 @@
 ☑️Computer opponents select valid research projects, exclude technology branch headings and stop assigning Research workers when no research is available. Colony jobs are reassessed when research ends or becomes available again.<br>
 ☑️Technology purchases from the State or Progenitor Exarch account for practical benefits, export income and tax-linked production bonuses. AI compares payments in Credits with tax increases, using tax purchases for urgent or exceptionally useful research.<br>
 ☑️Technology purchases for Credits preserve an economic reserve.<br>
-☑️Computer opponents attack visible feral units units when the odds are favourable. Progenitor AI units receive greater target priority because of their rewards, without lowering the required chance of victory.<br>
+☑️Computer opponents attack visible feral units when the odds are favourable. Progenitor AI units receive greater target priority because of their rewards, without lowering the required chance of victory.<br>
 ☑️Computer opponents prioritise work on Lunar Outposts and Lunar Settlements so these Improvements can develop.<br>
 ☑️Each computer opponent is limited to one Janus Device, including queued construction, unfinished work and upgraded stages. It favours useful defensive locations, and the limit persists in saved games and after the device is lost.<br>
 ☑️Production choices compare buildings, specialists and ships according to current needs, while retaining emergency defence and valuing useful workplace upgrades.<br>
@@ -89,10 +158,10 @@
 🤖🔳Royal Expeditionary Force (Earth):<br>
 ☑️Expeditionary Forces stage sufficient transport capacity and load ships according to their compatible cargo limits.<br>
 ☑️Expeditionary Forces use configurable landing waves and valid Deep Space entry plots. Only empty ships needed for reinforcements return to Earth; spare ships support the war.<br>
+<br>
 👾🔳Royal Expeditionary Force (Progenitor):<br>
 ☑️Expeditionary Forces stage sufficient transport capacity and load ships according to their compatible cargo limits.<br>
 ☑️Expeditionary Forces use configurable landing waves and valid Deep Space entry plots. Only empty ships needed for reinforcements return to Earth; spare ships support the war.<br>
-<br>
 ### 06.10.2026 Colonization 2071 v2.2.2 Patch Notes:<br>
 ---
 ☑️Fixed further assertion failures and crashes involving professions, production yields and unit movement.<br>
@@ -169,11 +238,11 @@
 ☑️🐍Improved the quality of Reptilian flag banners and symbols.<br>
 <br>
 🤖🔳Royal Expeditionary Force (Earth):<br>
-☑️The State knows all technologies from turn 1 and receives their effects and bonuses. Colonial leaders with Cautious or better relations can purchase technologies from the State through the normal trade window, paying in Credits or accepting a higher tax rate. This also provides a technology trading partner in solo games.<br>
+☑️The State knows all technologies from turn 1 and receives their effects and bonuses. Colonial leaders with Annoyed or better relations can purchase technologies from the State through the normal trade window, paying in Credits or accepting a higher tax rate. This also provides a technology trading partner in solo games.<br>
 ☑️Technology purchases require peace with the player's own State and all prerequisite technologies to be known before the deal. Buying a prerequisite in the same offer does not unlock its successor. Valid tax offers are accepted regardless of their Credit value.<br>
 <br>
 👾🔳Royal Expeditionary Force (Progenitor):<br>
-☑️The Progenitor Exarch knows all technologies from turn 1 and receives their effects and bonuses. Alien leaders with Cautious or better relations can purchase technologies from him through the normal trade window, paying in Credits or accepting a higher tax rate. This also provides a technology trading partner in solo games.<br>
+☑️The Progenitor Exarch knows all technologies from turn 1 and receives their effects and bonuses. Alien leaders with Annoyed or better relations can purchase technologies from him through the normal trade window, paying in Credits or accepting a higher tax rate. This also provides a technology trading partner in solo games.<br>
 ☑️Technology purchases require peace with the player's own Progenitor Exarch and all prerequisite technologies to be known before the deal. Buying a prerequisite in the same offer does not unlock its successor. Valid tax offers are accepted regardless of their Credit value.<br>
 ☑️Updated the visual model of the artillery unit.<br>
 <br>

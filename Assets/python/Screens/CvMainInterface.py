@@ -255,6 +255,11 @@ class CvMainInterface:
 						List = (T * NUM_HIDE_LEVELS) +  L
 						screen.showList(List)
 
+		#Kaszkaj - Hide lists must not restore Hurry while all colonies aid the Eye.
+		pSelectedCity = CyInterface().getHeadSelectedCity()
+		if Type == HIDE_TYPE_CITY and pSelectedCity and gc.getGame().isTranscendenceActive() and pSelectedCity.getOwner() == gc.getGame().getTranscendencePlayer():
+			screen.hide("HurryGold")
+
 	def SetHideLists( self, screen ):
 		for T in range(NUM_HIDE_TYPES):
 			for L in range(NUM_HIDE_TYPES):
@@ -457,6 +462,9 @@ class CvMainInterface:
 
 	# Will Initialize the majority of Background panels and Widgets
 	def interfaceScreen ( self ):
+		#Kaszkaj - Requeue an unacknowledged Transcendence notice after loading or rebuilding the interface.
+		self._transcendenceNoticeRequested = None
+		self._transcendenceNoticeSlice = -1
 		if (CyGame().isPitbossHost()):
 			return
 
@@ -1622,7 +1630,13 @@ class CvMainInterface:
 
 			self.updateGarrisonAndTransports()
 			g_pSelectedUnit = 0
-			screen.enable("HurryGold", pHeadSelectedCity.canHurry(0, False))
+			#Kaszkaj - The Eye colony aid pauses every colony queue and removes its Hurry button.
+			if gc.getGame().isTranscendenceActive() and pHeadSelectedCity.getOwner() == gc.getGame().getTranscendencePlayer():
+				screen.hide("HurryGold")
+			else:
+				screen.enable("HurryGold", pHeadSelectedCity.canHurry(0, False))
+				if CyInterface().getShowInterface() == InterfaceVisibility.INTERFACE_SHOW:
+					screen.show("HurryGold")
 
 		# BUILDING SELECTION BUTTONS
 			iCount = 0
@@ -2986,6 +3000,22 @@ class CvMainInterface:
 	
 	# Updates the Screen
 	def update( self, fDelta ):
+		#Kaszkaj - Queue a mandatory Transcendence notice after the player leaves the colony screen.
+		game = gc.getGame()
+		iSlice = game.getTurnSlice()
+		if iSlice < getattr(self, "_transcendenceNoticeSlice", -1):
+			self._transcendenceNoticeRequested = None
+		self._transcendenceNoticeSlice = iSlice
+		iPlayer = game.getActivePlayer()
+		if iPlayer < 0 or not game.isTranscendenceDiplomacyPending(iPlayer):
+			self._transcendenceNoticeRequested = None
+			return
+		if CyInterface().isCityScreenUp():
+			return
+		key = (iPlayer, game.getTranscendencePlayer(), game.getTranscendenceCityID())
+		if getattr(self, "_transcendenceNoticeRequested", None) != key:
+			self._transcendenceNoticeRequested = key
+			CyMessageControl().sendPlayerAction(iPlayer, PlayerActionTypes.PLAYER_ACTION_TRANSCENDENCE_NOTICE, -1, -1, -1)
 		return
 
 	# Adds Mouse Over Help to General Widgets

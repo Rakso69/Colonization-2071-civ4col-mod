@@ -32,6 +32,20 @@
 #define GREATER_FOUND_RANGE			(5)
 #define CIVIC_CHANGE_DELAY			(25)
 
+//Kaszkaj - Crusade copies use existing saved unit script data and never replace the original REF.
+bool isTranscendenceREFUnit(const CvUnit* pUnit)
+{
+	if (pUnit == NULL) return false;
+	std::string szTag = pUnit->getScriptData();
+	return szTag == "COL2071_TRANSCENDENCE_REF" || szTag == "COL2071_TRANSCENDENCE_REF_RETREAT";
+}
+
+//Kaszkaj - Only active REF copies are dispatched against the Eye.
+bool isActiveTranscendenceREFUnit(const CvUnit* pUnit)
+{
+	return pUnit != NULL && pUnit->getScriptData() == "COL2071_TRANSCENDENCE_REF";
+}
+
 // statics
 
 CvPlayerAI* CvPlayerAI::m_aPlayers = NULL;
@@ -398,6 +412,8 @@ void CvPlayerAI::AI_doTurnUnitsPre()
 	if (!isHuman())
 	{
 		AI_doMilitaryStrategy();
+		//Kaszkaj - Ordinary civilizations sustain the assault on the Transcendence colony.
+		if (!isEurope() && GC.getGameINLINE().isTranscendenceEnemy(getID())) AI_doTranscendenceAssault();
 		AI_doSuppressRevolution();
 	}
 
@@ -677,6 +693,7 @@ void CvPlayerAI::AI_updateFoundValues(bool bStartingLoc)
 	}
 	else
 	{
+		FoundValueContext kContext;
 		for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 		{
 			CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iI);
@@ -685,7 +702,8 @@ void CvPlayerAI::AI_updateFoundValues(bool bStartingLoc)
 			if (pLoopPlot->isRevealed(getTeam(), false))
 			{
 				long lResult=-1;
-				if(GC.getUSE_GET_CITY_FOUND_VALUE_CALLBACK())
+				bool bFoundCallback = GC.getUSE_GET_CITY_FOUND_VALUE_CALLBACK();
+				if(bFoundCallback)
 				{
 					CyArgsList argsList;
 					argsList.add((int)getID());
@@ -696,11 +714,23 @@ void CvPlayerAI::AI_updateFoundValues(bool bStartingLoc)
 
 				if (lResult == -1)
 				{
-					iValue = AI_foundValue(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
+					if (!bFoundCallback && !GC.getUSE_GET_CITY_FOUND_VALUE_CALLBACK() && !GC.getUSE_CAN_FOUND_CITIES_ON_WATER_CALLBACK()
+						&& !GC.getUSE_CAN_DO_CIVIC_CALLBACK() && !GC.getUSE_CANNOT_DO_CIVIC_CALLBACK())
+					{
+						iValue = AI_foundValue(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE(), -1, false, kContext);
+					}
+					else
+					{
+						iValue = AI_foundValue(pLoopPlot->getX_INLINE(), pLoopPlot->getY_INLINE());
+						kContext.bBestYieldsReady = false;
+						kContext.bPlotProfessionsReady = false;
+					}
 				}
 				else
 				{
 					iValue = lResult;
+					kContext.bBestYieldsReady = false;
+					kContext.bPlotProfessionsReady = false;
 				}
 			}
 
@@ -725,6 +755,13 @@ void CvPlayerAI::AI_updateAreaTargets()
 	{
 		if (!(pLoopArea->isWater()))
 		{
+			//Kaszkaj - Keep the crusade target assigned every turn without random target clearing.
+			CvCity* pEye = GC.getGameINLINE().getTranscendenceCity();
+			if (!isEurope() && pEye != NULL && pEye->area() == pLoopArea && GC.getGameINLINE().isTranscendenceEnemy(getID()))
+			{
+				pLoopArea->setTargetCity(getID(), pEye);
+				continue;
+			}
 			if (GC.getGameINLINE().getSorenRandNum(3, "AI Target City") == 0)
 			{
 				pLoopArea->setTargetCity(getID(), NULL);
@@ -1379,6 +1416,12 @@ int CvPlayerAI::AI_estimatedColonistIncome(CvPlot* pPlot, CvUnit* pColonist)
 
 int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStartingLoc)
 {
+	FoundValueContext kContext;
+	return AI_foundValue(iX, iY, iMinRivalRange, bStartingLoc, kContext);
+}
+
+int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStartingLoc, FoundValueContext& kContext)
+{
 	PROFILE_FUNC();
 	CvPlot* pPlot = GC.getMapINLINE().plotINLINE(iX, iY);
 
@@ -1554,30 +1597,33 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 	}
 
 
-	int aiBestWorkedYield[NUM_YIELD_TYPES];
-	int aiBestUnworkedYield[NUM_YIELD_TYPES];
-
-	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	int* aiBestWorkedYield = kContext.aiBestWorkedYield;
+	int* aiBestUnworkedYield = kContext.aiBestUnworkedYield;
+	if (!kContext.bBestYieldsReady)
 	{
-		CvPlot* pWorkedPlot = AI_getBestWorkedYieldPlot((YieldTypes)iYield);
-		if (pWorkedPlot == NULL)
+		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 		{
-			aiBestWorkedYield[iYield] = 0;
+			CvPlot* pWorkedPlot = AI_getBestWorkedYieldPlot((YieldTypes)iYield);
+			if (pWorkedPlot == NULL)
+			{
+				aiBestWorkedYield[iYield] = 0;
+			}
+			else
+			{
+				aiBestWorkedYield[iYield] = pWorkedPlot->calculateBestNatureYield((YieldTypes)iYield, getTeam());
+			}
+	
+			CvPlot* pUnworkedPlot = AI_getBestUnworkedYieldPlot((YieldTypes)iYield);
+			if (pUnworkedPlot == NULL)
+			{
+				aiBestUnworkedYield[iYield] = 0;
+			}
+			else
+			{
+				aiBestUnworkedYield[iYield] = pUnworkedPlot->calculateBestNatureYield((YieldTypes)iYield, getTeam());
+			}
 		}
-		else
-		{
-			aiBestWorkedYield[iYield] = pWorkedPlot->calculateBestNatureYield((YieldTypes)iYield, getTeam());
-		}
-
-		CvPlot* pUnworkedPlot = AI_getBestUnworkedYieldPlot((YieldTypes)iYield);
-		if (pUnworkedPlot == NULL)
-		{
-			aiBestUnworkedYield[iYield] = 0;
-		}
-		else
-		{
-			aiBestUnworkedYield[iYield] = pUnworkedPlot->calculateBestNatureYield((YieldTypes)iYield, getTeam());
-		}
+		kContext.bBestYieldsReady = true;
 	}
 
 	int iTakenTiles = 0;
@@ -1586,17 +1632,26 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 	int iBestPlotValue = 0;
 	//Kaszkaj - Existing improvements count towards new settlements when an available plot profession can use them.
-	bool abPlotYieldAvailable[NUM_YIELD_TYPES][2] = {{false}};
-	for (int i = 0; i < GC.getNumProfessionInfos(); ++i)
+	bool (*abPlotYieldAvailable)[2] = kContext.abPlotYieldAvailable;
+	if (!kContext.bPlotProfessionsReady)
 	{
-		ProfessionTypes eProfession = (ProfessionTypes)i;
-		const CvProfessionInfo& kProfession = GC.getProfessionInfo(eProfession);
-		if (!kProfession.isCitizen() || !kProfession.isWorkPlot() || !isProfessionValid(eProfession, NO_UNIT)) continue;
-		for (int j = 0; j < kProfession.getNumYieldsProduced(); ++j)
+		for (int i = 0; i < NUM_YIELD_TYPES; ++i)
 		{
-			YieldTypes eYield = (YieldTypes)kProfession.getYieldsProduced(j);
-			if (eYield >= 0 && eYield < NUM_YIELD_TYPES) abPlotYieldAvailable[eYield][kProfession.isWater() ? 1 : 0] = true;
+			abPlotYieldAvailable[i][0] = false;
+			abPlotYieldAvailable[i][1] = false;
 		}
+		for (int i = 0; i < GC.getNumProfessionInfos(); ++i)
+		{
+			ProfessionTypes eProfession = (ProfessionTypes)i;
+			const CvProfessionInfo& kProfession = GC.getProfessionInfo(eProfession);
+			if (!kProfession.isCitizen() || !kProfession.isWorkPlot() || !isProfessionValid(eProfession, NO_UNIT)) continue;
+			for (int j = 0; j < kProfession.getNumYieldsProduced(); ++j)
+			{
+				YieldTypes eYield = (YieldTypes)kProfession.getYieldsProduced(j);
+				if (eYield >= 0 && eYield < NUM_YIELD_TYPES) abPlotYieldAvailable[eYield][kProfession.isWater() ? 1 : 0] = true;
+			}
+		}
+		kContext.bPlotProfessionsReady = true;
 	}
 	for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
 	{
@@ -2266,6 +2321,8 @@ int CvPlayerAI::AI_militaryWeight(CvArea* pArea)
 int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreAttackers)
 {
 	PROFILE_FUNC();
+	//Kaszkaj - The Eye of Terror takes precedence over every ordinary colony target.
+	if (!isEurope() && GC.getGameINLINE().isTranscendenceEnemy(getID()) && GC.getGameINLINE().isTranscendenceCity(pCity)) return 100000;
 
 	CvCity* pNearestCity;
 	CvPlot* pLoopPlot;
@@ -2338,6 +2395,9 @@ int CvPlayerAI::AI_targetCityValue(CvCity* pCity, bool bRandomize, bool bIgnoreA
 
 CvCity* CvPlayerAI::AI_findTargetCity(CvArea* pArea)
 {
+	//Kaszkaj - Select the Transcendence colony directly instead of competing ordinary city scores.
+	CvCity* pEye = GC.getGameINLINE().getTranscendenceCity();
+	if (!isEurope() && pEye != NULL && pEye->area() == pArea && GC.getGameINLINE().isTranscendenceEnemy(getID())) return pEye;
 	CvCity* pLoopCity;
 	CvCity* pBestCity;
 	int iValue;
@@ -5609,7 +5669,7 @@ int CvPlayerAI::AI_calculateCityYieldTarget(const CvCity* pCity, YieldTypes eYie
 				if (!bUsesYield || !isProfessionValid(eProfession, NO_UNIT)
 					|| pCity->getNumProfessionBuildingSlots(eProfession) <= 0) continue;
 				int iInput = pCity->getProfessionInput(eProfession, NULL);
-				int iOutput = pCity->getProfessionOutput(eProfession, NULL);
+				int iOutput = iInput;
 				if (iInput <= 0 || iOutput <= 0) continue;
 				for (int j = 0; j < kProfession.getNumYieldsProduced(); ++j)
 				{
@@ -8141,6 +8201,115 @@ void CvPlayerAI::AI_updateResearch()
 	setCurrentResearch(eBest);
 }
 
+//Kaszkaj - Value the research path to Freighter or Carrier production, trade capacity and Progenitor Treasure sales.
+static int AI_freighterTechnologyValue(CvPlayerAI& kPlayer, const CvCivicInfo& kCivic)
+{
+	if (kPlayer.isEurope() || kPlayer.isBarbarian()) return 0;
+	UnitClassTypes eClass = (UnitClassTypes)GC.getInfoTypeForString("UNITCLASS_GALLEON", true);
+	if (eClass == NO_UNITCLASS) return 0;
+	const CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(kPlayer.getCivilizationType());
+	UnitTypes eUnit = (UnitTypes)kCivilization.getCivilizationUnits(eClass);
+	if (eUnit == NO_UNIT) return 0;
+	const CvUnitInfo& kShip = GC.getUnitInfo(eUnit);
+	if (kShip.getDomainType() != DOMAIN_SEA || !kShip.getUnitAIType(UNITAI_TRANSPORT_SEA)
+		|| kShip.getCargoSpace() <= 0 || kPlayer.AI_isDedicatedWorker(eUnit)
+		|| (kPlayer.isNative() ? kShip.isNativesInvalid() : kShip.isColonialInvalid())) return 0;
+	// Alien unit-class inventions do not restrict training; their production building is the real research gate.
+	bool bUnitUnlock = !kPlayer.isNative() && kCivic.getAllowsUnitClasses(eClass) > 0;
+	BuildingTypes eRequiredBuilding = NO_BUILDING;
+	BuildingTypes eUnlockedBuilding = NO_BUILDING;
+	int iBuildingSteps = 0;
+	BuildingClassTypes ePrereq = (BuildingClassTypes)kShip.getPrereqBuilding();
+	if (ePrereq != NO_BUILDINGCLASS)
+	{
+		BuildingTypes eBuilding = (BuildingTypes)kCivilization.getCivilizationBuildings(ePrereq);
+		eRequiredBuilding = eBuilding;
+		if (eBuilding != NO_BUILDING)
+		{
+			if (kCivic.getAllowsBuildingTypes(eBuilding) > 0) eUnlockedBuilding = eBuilding;
+			else if (!bUnitUnlock)
+			{
+				const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+				for (int i = 0; i < GC.getNumBuildingClassInfos(); ++i)
+				{
+					if (!kBuilding.isBuildingClassNeededInCity(i)) continue;
+					BuildingTypes eEarlier = (BuildingTypes)kCivilization.getCivilizationBuildings(i);
+					if (eEarlier != NO_BUILDING && kCivic.getAllowsBuildingTypes(eEarlier) > 0)
+					{
+						eUnlockedBuilding = eEarlier;
+						iBuildingSteps = 1;
+						break;
+					}
+				}
+			}
+		}
+	}
+	if (!bUnitUnlock && eUnlockedBuilding == NO_BUILDING) return 0;
+	if (!bUnitUnlock)
+	{
+		SpecialBuildingTypes eSpecial = (SpecialBuildingTypes)GC.getBuildingInfo(eRequiredBuilding).getSpecialBuildingType();
+		if (eSpecial != NO_SPECIALBUILDING && kPlayer.isSpecialBuildingNotRequired(eSpecial)) return 0;
+	}
+	int iCoastalCities = 0;
+	int iCapacity = 0;
+	int iBestCargo = 0;
+	int iTreasureCapacity = 0;
+	bool bUsefulGate = bUnitUnlock;
+	int iLoop;
+	for (CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+	{
+		if (pCity->isCoastal(kShip.getMinAreaSize()))
+		{
+			++iCoastalCities;
+			if (pCity->canTrain(eUnit, false, true, true, true)) return 0;
+			if (eUnlockedBuilding != NO_BUILDING && !pCity->isHasConceptualBuilding(eRequiredBuilding)
+				&& !pCity->isHasConceptualBuilding(eUnlockedBuilding)) bUsefulGate = true;
+		}
+		for (CLLNode<OrderData>* pNode = pCity->headOrderQueueNode(); pNode != NULL; pNode = pCity->nextOrderQueueNode(pNode))
+		{
+			if (pNode->m_data.eOrderType != ORDER_TRAIN) continue;
+			const CvUnitInfo& kQueued = GC.getUnitInfo((UnitTypes)pNode->m_data.iData1);
+			if (kQueued.getUnitClassType() == eClass) iTreasureCapacity = std::max(iTreasureCapacity, kQueued.getCargoSpace());
+			if (pNode->m_data.iData2 != UNITAI_TRANSPORT_SEA || kQueued.getDomainType() != DOMAIN_SEA
+				|| kPlayer.AI_isDedicatedWorker((UnitTypes)pNode->m_data.iData1)) continue;
+			iCapacity += kQueued.getCargoSpace();
+			iBestCargo = std::max(iBestCargo, kQueued.getCargoSpace());
+		}
+	}
+	if (iCoastalCities == 0 || !bUsefulGate) return 0;
+	int iTreasureProfit = 0;
+	int iTreasureSize = 0;
+	bool bTrade = kPlayer.canTradeWithEurope();
+	int iNetPercent = std::max(0, 100 - kPlayer.getTaxRate());
+	for (CvUnit* pUnit = kPlayer.firstUnit(&iLoop); pUnit != NULL; pUnit = kPlayer.nextUnit(&iLoop))
+	{
+		if (pUnit->isDelayedDeath()) continue;
+		const CvUnitInfo& kUnit = pUnit->getUnitInfo();
+		if (pUnit->getDomainType() == DOMAIN_SEA && pUnit->AI_getUnitAIType() == UNITAI_TRANSPORT_SEA
+			&& !kPlayer.AI_isDedicatedWorker(pUnit->getUnitType()))
+		{
+			iCapacity += pUnit->cargoSpace();
+			iBestCargo = std::max(iBestCargo, pUnit->cargoSpace());
+		}
+		if (kUnit.getUnitClassType() == eClass) iTreasureCapacity = std::max(iTreasureCapacity, pUnit->cargoSpace());
+		if (!bTrade || !kUnit.isTreasure() || kUnit.getMoves() <= 0 || pUnit->isCargo() || pUnit->getYieldStored() <= 0
+			|| kUnit.getRequiredTransportSize() > kShip.getCargoSpace()
+			|| (kShip.getDomainCargo() != NO_DOMAIN && kShip.getDomainCargo() != kUnit.getDomainType())
+			|| (kShip.getSpecialCargo() != NO_SPECIALUNIT && kShip.getSpecialCargo() != kUnit.getSpecialUnitType())) continue;
+		iTreasureSize = std::max(iTreasureSize, kUnit.getRequiredTransportSize());
+		iTreasureProfit += (int)std::min((__int64)(2000 - iTreasureProfit), (__int64)pUnit->getYieldStored() * iNetPercent / 100);
+	}
+	int iCargo = kShip.getCargoSpace();
+	int iNeeded = std::max(3, iCoastalCities + kPlayer.getTotalPopulation() / 12);
+	if (bTrade) iNeeded = std::max(iNeeded, kPlayer.AI_europePassengerCount());
+	int iValue = 200 + 100 * iCargo + 50 * std::max(0, iCargo - iBestCargo);
+	iValue += 100 * std::min(iCargo, std::max(0, iNeeded - iCapacity));
+	if (kPlayer.getUnitClassCountPlusMaking(eClass) > 0) iValue /= 4;
+	else iValue += 300;
+	if (iTreasureProfit > 0 && iTreasureCapacity < iTreasureSize) iValue += 500 + iTreasureProfit;
+	return iValue / (1 + iBuildingSteps);
+}
+
 //Kaszkaj - Value technologies by their usable economic and military benefits, not just XML AIWeight.
 int CvPlayerAI::AI_technologyValue(CivicTypes eCivic)
 {
@@ -8159,9 +8328,12 @@ int CvPlayerAI::AI_technologyValue(CivicTypes eCivic)
 	{
 		if (pCity->isOccupation()) continue;
 		iPerTurn += kCivic.getCenterPlotFoodBonus() * std::max(1, AI_yieldValue(YIELD_FOOD));
+		bool bSkipZeroYields = !GC.getUSE_CAN_DO_CIVIC_CALLBACK() && !GC.getUSE_CANNOT_DO_CIVIC_CALLBACK();
 		for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 		{
 			YieldTypes eYield = (YieldTypes)iYield;
+			if (bSkipZeroYields && kCivic.getYieldModifier(eYield) + (pCity->isCapital() ? kCivic.getCapitalYieldModifier(eYield) : 0) == 0
+				&& kCivic.getAllowsYields(eYield) <= 0) continue;
 			int iOutput = pCity->getRawYieldProduced(eYield);
 			int iWeight = std::max(1, AI_yieldValue(eYield));
 			int iModifier = kCivic.getYieldModifier(eYield) + (pCity->isCapital() ? kCivic.getCapitalYieldModifier(eYield) : 0);
@@ -8183,7 +8355,9 @@ int CvPlayerAI::AI_technologyValue(CivicTypes eCivic)
 			if (pPlot == NULL || pPlot->getWorkingCity() != pCity || pPlot->getImprovementType() == NO_IMPROVEMENT) continue;
 			for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 			{
-				iPerTurn += kCivic.getImprovementYieldChanges(pPlot->getImprovementType(), iYield)
+				int iChange = kCivic.getImprovementYieldChanges(pPlot->getImprovementType(), iYield);
+				if (bSkipZeroYields && iChange == 0) continue;
+				iPerTurn += iChange
 					* std::max(1, AI_yieldValue((YieldTypes)iYield)) / (pPlot->isBeingWorked() ? 1 : 4);
 			}
 		}
@@ -8252,6 +8426,7 @@ int CvPlayerAI::AI_technologyValue(CivicTypes eCivic)
 	iValue += std::max(0, kCivic.getWorkerSpeedModifier()) * AI_totalUnitAIs(UNITAI_WORKER) * 8;
 	iValue += std::max(0, kCivic.getImprovementUpgradeRateModifier()) * getNumCities() * 2;
 	iValue += std::max(0, kCivic.getMilitaryProductionModifier() + kCivic.getFreeExperience()) * (bWar ? 20 : 5) * getNumCities();
+	iValue += AI_freighterTechnologyValue(*this, kCivic);
 	for (int i = 0; i < GC.getNumUnitClassInfos(); ++i)
 	{
 		UnitTypes eUnit = (UnitTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationUnits(i);
@@ -8332,7 +8507,14 @@ void CvPlayerAI::AI_doKingTechnologyTrade()
 		if (getGold() - iGoldReserve >= iPrice)
 		{
 			int iRequiredPercent = std::max(100, GC.getDefineINT("AI_KING_TECHNOLOGY_GOLD_VALUE_PERCENT"));
-			int iValue = iBenefit - iPrice * iRequiredPercent / 100;
+			int iValue;
+			//Kaszkaj - Surplus Alien Credits lower the estimated opportunity cost; the full asking price is still paid.
+			if (isNative())
+			{
+				__int64 iEffectiveCost = std::max((__int64)1, (__int64)iPrice * iPrice / (getGold() - iGoldReserve));
+				iValue = iBenefit - (int)std::min((__int64)MAX_INT, iEffectiveCost * iRequiredPercent / 100);
+			}
+			else iValue = iBenefit - iPrice * iRequiredPercent / 100;
 			if (iValue > iBestValue) { iBestValue = iValue; eBestTech = eCivic; bBestTax = false; }
 		}
 		if (iTaxIncrease > 0 && getTaxRate() <= 100 - iTaxIncrease)
@@ -8361,8 +8543,9 @@ void CvPlayerAI::AI_doKingTechnologyTrade()
 	if (kKing.getKingTechnologyDeal(getID(), &technologies, &payments, iGold, iTax))
 	{
 		GC.getGameINLINE().implementDeal(kKing.getID(), getID(), &technologies, &payments);
+		//Kaszkaj - Both AI groups use half the XML technology contact delay for purchases from the State or Progenitor Exarch.
 		AI_changeContactTimer(getParent(), CONTACT_TRADE_IDEAS,
-			std::max(1, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_TRADE_IDEAS)));
+			std::max(0, GC.getLeaderHeadInfo(getPersonalityType()).getContactDelay(CONTACT_TRADE_IDEAS)) / 2);
 	}
 }
 
@@ -9844,7 +10027,7 @@ void CvPlayerAI::AI_updateYieldValues()
 						FAssert(kProfession.getYieldsProduced(0) != NO_YIELD);//damn welfware cheats.
 
 						int iInput = pLoopCity->getProfessionInput(eProfession, pLoopUnit);
-						int iOutput = pLoopCity->getProfessionOutput(eProfession, pLoopUnit);
+						int iOutput = iInput;
 
 						if (iInput <= 0 || iOutput <= 0) continue;
 						int iProfit = (m_aiYieldValuesTimes100[kProfession.getYieldsProduced(0)] * iOutput);
@@ -10405,7 +10588,7 @@ bool CvPlayerAI::AI_isKing()
 	return isEurope();
 }
 
-CvPlot* CvPlayerAI::AI_getImperialShipSpawnPlot(const CvUnit* pShip)
+CvPlot* CvPlayerAI::AI_getImperialShipSpawnPlot(const CvUnit* pShip, bool bTranscendence)
 {
 	CvPlot* pBestPlot = NULL;
 	int iBestValue = 0;
@@ -10415,7 +10598,7 @@ CvPlot* CvPlayerAI::AI_getImperialShipSpawnPlot(const CvUnit* pShip)
 	for (int iI = 0; iI < MAX_PLAYERS; ++iI)
 	{
 		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iI);
-		if (kPlayer.isAlive() && (kPlayer.getParent() == getID()))
+		if (!bTranscendence && kPlayer.isAlive() && (kPlayer.getParent() == getID()))
 		{
 			if (kPlayer.getStartingPlot() != NULL)
 			{
@@ -10432,7 +10615,12 @@ CvPlot* CvPlayerAI::AI_getImperialShipSpawnPlot(const CvUnit* pShip)
 
 	CvPlot* pTargetPlot = NULL;
 
-	if (AI_isStrategy(STRATEGY_CONCENTRATED_ATTACK))
+	//Kaszkaj - Choose the crusade entry independently from the original REF strategy.
+	if (bTranscendence && GC.getGameINLINE().getTranscendenceCity() != NULL)
+	{
+		pTargetPlot = GC.getGameINLINE().getTranscendenceCity()->plot();
+	}
+	else if (AI_isStrategy(STRATEGY_CONCENTRATED_ATTACK))
 	{
 		int iTarget = AI_getStrategyData(STRATEGY_CONCENTRATED_ATTACK);
 		if (iTarget >= 0 && iTarget < GC.getMapINLINE().numPlotsINLINE()) pTargetPlot = GC.getMapINLINE().plotByIndexINLINE(iTarget);
@@ -10466,9 +10654,9 @@ CvPlot* CvPlayerAI::AI_getImperialShipSpawnPlot(const CvUnit* pShip)
 					break;
 				}
 
-				if (AI_isStrategy(STRATEGY_DISTRIBUTED_ATTACK))
+				if (!bTranscendence && AI_isStrategy(STRATEGY_DISTRIBUTED_ATTACK))
 				{
-					iValue /= 1 + AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_ASSAULT, NULL, 1);
+					if (!bTranscendence) iValue /= 1 + AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_ASSAULT, NULL, 1);
 
 					int iModifier = 2 * std::abs(iLocation - 50);
 
@@ -10489,9 +10677,9 @@ CvPlot* CvPlayerAI::AI_getImperialShipSpawnPlot(const CvUnit* pShip)
 					iValue *= iModifier;
 					iValue /= 100;
 				}
-				if (AI_isStrategy(STRATEGY_CONCENTRATED_ATTACK))
+				if (bTranscendence || AI_isStrategy(STRATEGY_CONCENTRATED_ATTACK))
 				{
-					iValue /= 1 + AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_ASSAULT, NULL, 1);
+					if (!bTranscendence) iValue /= 1 + AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_ASSAULT, NULL, 1);
 
 					if (pTargetPlot == NULL)
 					{
@@ -10713,20 +10901,41 @@ CvCity* CvPlayerAI::AI_bestCityForUnit(UnitTypes eUnit, int* piValue)
 	int iBestValue = 0;
 	if (piValue != NULL) *piValue = 0;
 	if (eUnit == NO_UNIT || AI_isDedicatedWorker(eUnit)) return NULL;
-	int iLoop;
-	for (CvCity* pCity = firstCity(&iLoop); pCity != NULL; pCity = nextCity(&iLoop))
+	bool bCachePendingCities = !GC.getUSE_CAN_DO_CIVIC_CALLBACK() && !GC.getUSE_CANNOT_DO_CIVIC_CALLBACK()
+		&& !GC.getUSE_GET_UNIT_COST_MOD_CALLBACK() && !GC.getUSE_GET_BUILDING_COST_MOD_CALLBACK();
+	std::set<CvCity*> apPendingCities;
+	if (bCachePendingCities)
 	{
-		if (pCity->isOccupation() || pCity->AI_isDanger()) continue;
-		bool bPending = false;
 		for (int i = 0; i < getNumEuropeUnits(); ++i)
 		{
 			CvUnit* pUnit = getEuropeUnit(i);
-			if (pUnit != NULL && pUnit->getUnitType() == eUnit && pUnit->getHomeCity() == pCity) bPending = true;
+			if (pUnit != NULL && pUnit->getUnitType() == eUnit) apPendingCities.insert(pUnit->getHomeCity());
 		}
 		int iUnitLoop;
 		for (CvUnit* pUnit = firstUnit(&iUnitLoop); pUnit != NULL; pUnit = nextUnit(&iUnitLoop))
 		{
-			if (pUnit->getUnitType() == eUnit && pUnit->getHomeCity() == pCity && !pUnit->atPlot(pCity->plot()) && !pUnit->isDelayedDeath()) bPending = true;
+			if (pUnit->getUnitType() != eUnit) continue;
+			CvCity* pHomeCity = pUnit->getHomeCity();
+			if (pHomeCity != NULL && !pUnit->atPlot(pHomeCity->plot()) && !pUnit->isDelayedDeath()) apPendingCities.insert(pHomeCity);
+		}
+	}
+	int iLoop;
+	for (CvCity* pCity = firstCity(&iLoop); pCity != NULL; pCity = nextCity(&iLoop))
+	{
+		if (pCity->isOccupation() || pCity->AI_isDanger()) continue;
+		bool bPending = apPendingCities.find(pCity) != apPendingCities.end();
+		if (!bCachePendingCities)
+		{
+			for (int i = 0; i < getNumEuropeUnits(); ++i)
+			{
+				CvUnit* pUnit = getEuropeUnit(i);
+				if (pUnit != NULL && pUnit->getUnitType() == eUnit && pUnit->getHomeCity() == pCity) bPending = true;
+			}
+			int iUnitLoop;
+			for (CvUnit* pUnit = firstUnit(&iUnitLoop); pUnit != NULL; pUnit = nextUnit(&iUnitLoop))
+			{
+				if (pUnit->getUnitType() == eUnit && pUnit->getHomeCity() == pCity && !pUnit->atPlot(pCity->plot()) && !pUnit->isDelayedDeath()) bPending = true;
+			}
 		}
 		if (bPending) continue;
 		for (int i = 0; i < GC.getNumProfessionInfos(); ++i)
@@ -13209,11 +13418,14 @@ bool CvPlayerAI::AI_shouldReturnImperialShip(const CvUnit* pShip) const
 {
 	if (pShip == NULL || pShip->plot() == NULL || pShip->cargoSpace() <= 0 || pShip->getCargo() > 0
 		|| pShip->getUnitTravelState() != NO_UNIT_TRAVEL_STATE || pShip->isCargo()) return false;
+	//Kaszkaj - Reserve transport capacity separately for original and duplicated REF.
+	bool bCrusade = isTranscendenceREFUnit(pShip);
+	std::string szForce = pShip->getScriptData();
 	std::vector<CvUnit*> apSoldiers;
 	for (int i = 0; i < getNumEuropeUnits(); ++i)
 	{
 		CvUnit* pUnit = getEuropeUnit(i);
-		if (pUnit != NULL && !pUnit->isDelayedDeath() && pUnit->getDomainType() == DOMAIN_LAND && imperialCargoFits(pShip, pUnit)) apSoldiers.push_back(pUnit);
+		if (pUnit != NULL && isTranscendenceREFUnit(pUnit) == bCrusade && (!bCrusade || pUnit->getScriptData() == szForce) && !pUnit->isDelayedDeath() && pUnit->getDomainType() == DOMAIN_LAND && imperialCargoFits(pShip, pUnit)) apSoldiers.push_back(pUnit);
 	}
 	if (apSoldiers.empty()) return false;
 	int iReserved = 0;
@@ -13222,7 +13434,7 @@ bool CvPlayerAI::AI_shouldReturnImperialShip(const CvUnit* pShip) const
 	int iLoop;
 	for (CvUnit* pOther = firstUnit(&iLoop); pOther != NULL; pOther = nextUnit(&iLoop))
 	{
-		if (pOther == pShip || pOther->isDelayedDeath() || pOther->isCargo() || pOther->cargoSpace() <= 0) continue;
+		if (isTranscendenceREFUnit(pOther) != bCrusade || (bCrusade && pOther->getScriptData() != szForce) || pOther == pShip || pOther->isDelayedDeath() || pOther->isCargo() || pOther->cargoSpace() <= 0) continue;
 		bool bCompatible = true;
 		for (uint i = 0; i < apSoldiers.size(); ++i)
 		{
@@ -13247,8 +13459,167 @@ bool CvPlayerAI::AI_shouldReturnImperialShip(const CvUnit* pShip) const
 	return iCloser < iNeeded;
 }
 
+
+//Kaszkaj - Concentrate the Transcendence crusade on its colony and dispatch available REF without a wave delay.
+//Kaszkaj - Assess the whole crusade once before starting the Eye, using unit lists and cached combat statistics.
+bool CvPlayerAI::AI_isReadyForTranscendence(const CvCity* pCity) const
+{
+	if (pCity == NULL || pCity->getOwnerINLINE() != getID() || isEurope() || isBarbarian() || pCity->isDisorder()) return false;
+	int iOwnLand = 0, iOwnSea = 0, iOwnLandUnits = 0, iOwnCombatShips = 0;
+	int iGarrison = 0, iGarrisonStrength = 0, iGarrisonBase = 0;
+	int iLoop;
+	for (CvUnit* pUnit = firstUnit(&iLoop); pUnit != NULL; pUnit = nextUnit(&iLoop))
+	{
+		if (pUnit->isDelayedDeath() || pUnit->getUnitTravelState() != NO_UNIT_TRAVEL_STATE || pUnit->baseCombatStr() <= 0) continue;
+		int iStrength = pUnit->currCombatStr(NULL, NULL);
+		if (pUnit->getDomainType() == DOMAIN_LAND && pUnit->canDefend())
+		{
+			// Troops on another landmass need transport before they can protect the Eye.
+			if (pUnit->area() != pCity->area() || pUnit->isCargo()) iStrength /= 2;
+			iOwnLand += iStrength;
+			++iOwnLandUnits;
+			if (!pUnit->isCargo() && pUnit->atPlot(pCity->plot()))
+			{
+				++iGarrison;
+				iGarrisonBase += iStrength;
+				iGarrisonStrength += pUnit->currCombatStr(pCity->plot(), NULL);
+			}
+		}
+		else if (pUnit->getDomainType() == DOMAIN_SEA && pUnit->canAttack() && !pUnit->isCargo())
+		{
+			iOwnSea += iStrength;
+			++iOwnCombatShips;
+		}
+	}
+	int iRequiredGarrison = std::max(4, std::min(10, pCity->AI_neededDefenders() + 2));
+	if (iGarrison < iRequiredGarrison || iOwnLandUnits < std::max(12, getNumCities() * 2 + iRequiredGarrison)) return false;
+	int iEnemyLand = 0, iEnemySea = 0, iLargestLand = 0, iLargestSea = 0;
+	bool bExpeditionaryArmy = false;
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+	{
+		const CvPlayer& kEnemy = GET_PLAYER((PlayerTypes)iPlayer);
+		if (!kEnemy.isAlive() || kEnemy.isBarbarian() || kEnemy.getTeam() == getTeam()) continue;
+		if (kEnemy.isEurope())
+		{
+			CivilizationTypes eDerivative = (CivilizationTypes)GC.getCivilizationInfo(kEnemy.getCivilizationType()).getDerivativeCiv();
+			if (eDerivative == NO_CIVILIZATION || !GC.getCivilizationInfo(eDerivative).isNative()) continue;
+		}
+		int iLand = 0, iSea = 0;
+		for (CvUnit* pUnit = kEnemy.firstUnit(&iLoop); pUnit != NULL; pUnit = kEnemy.nextUnit(&iLoop))
+		{
+			if (pUnit->isDelayedDeath() || isTranscendenceREFUnit(pUnit) || pUnit->baseCombatStr() <= 0) continue;
+			// New REF copies are healthy; existing promoted originals provide a conservative estimate.
+			int iStrength = kEnemy.isEurope() ? pUnit->maxCombatStr(NULL, NULL) : pUnit->currCombatStr(NULL, NULL);
+			if (pUnit->getDomainType() == DOMAIN_LAND && pUnit->canDefend()) iLand += iStrength;
+			else if (pUnit->getDomainType() == DOMAIN_SEA && pUnit->canAttack()) iSea += iStrength;
+		}
+		if (kEnemy.isEurope())
+		{
+			for (int i = 0; i < kEnemy.getNumEuropeUnits(); ++i)
+			{
+				CvUnit* pUnit = kEnemy.getEuropeUnit(i);
+				if (pUnit == NULL || pUnit->isDelayedDeath() || isTranscendenceREFUnit(pUnit) || pUnit->baseCombatStr() <= 0) continue;
+				if (pUnit->getDomainType() == DOMAIN_LAND) iLand += pUnit->maxCombatStr(NULL, NULL);
+				else if (pUnit->getDomainType() == DOMAIN_SEA) iSea += pUnit->maxCombatStr(NULL, NULL);
+			}
+			for (int iChild = 0; iChild < MAX_PLAYERS; ++iChild)
+			{
+				const CvPlayer& kChild = GET_PLAYER((PlayerTypes)iChild);
+				if (!kChild.isAlive() || kChild.getParent() != kEnemy.getID()) continue;
+				for (int i = 0; i < kChild.getNumRevolutionEuropeUnits(); ++i)
+				{
+					UnitTypes eUnit = kChild.getRevolutionEuropeUnit(i);
+					if (eUnit == NO_UNIT) continue;
+					const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+					ProfessionTypes eProfession = kChild.getRevolutionEuropeProfession(i);
+					int iStrength = kUnit.getCombat();
+					if (eProfession != NO_PROFESSION) iStrength += GC.getProfessionInfo(eProfession).getCombatChange() + kEnemy.getProfessionCombatChange(eProfession);
+					iStrength = std::max(0, iStrength) * 100;
+					if (kUnit.getDomainType() == DOMAIN_LAND) iLand += iStrength;
+					else if (kUnit.getDomainType() == DOMAIN_SEA) iSea += iStrength;
+				}
+			}
+			if (iLand > 0) bExpeditionaryArmy = true;
+		}
+		iEnemyLand += iLand;
+		iEnemySea += iSea;
+		iLargestLand = std::max(iLargestLand, iLand);
+		iLargestSea = std::max(iLargestSea, iSea);
+	}
+	//Kaszkaj - Defences offset simultaneous land threats, but do not replace an armed garrison or a fleet.
+	int iDefensiveLand = iOwnLand + std::max(0, iGarrisonStrength - iGarrisonBase);
+	if (iDefensiveLand < std::max(iLargestLand, iEnemyLand * 3 / 5) || iGarrisonStrength < iLargestLand / 10) return false;
+	if ((bExpeditionaryArmy || iEnemySea > 0) && (iOwnCombatShips < 2 || iOwnSea < std::max(iLargestSea / 2, iEnemySea / 4))) return false;
+	return true;
+}
+
+//Kaszkaj - Concentrate the Transcendence crusade on its colony and dispatch available REF without a wave delay.
+void CvPlayerAI::AI_doTranscendenceAssault(bool bNewCrusade)
+{
+	CvCity* pEye = GC.getGameINLINE().getTranscendenceCity();
+	if (isHuman() || pEye == NULL || !GC.getGameINLINE().isTranscendenceEnemy(getID())) return;
+	//Kaszkaj - Exarch copies target the Eye per unit while the original REF retains its strategy.
+	if (!isEurope())
+	{
+		AI_clearStrategy(STRATEGY_DISTRIBUTED_ATTACK);
+		AI_clearStrategy(STRATEGY_BUILDUP);
+		AI_setStrategy(STRATEGY_CONCENTRATED_ATTACK, GC.getMapINLINE().plotNum(pEye->getX_INLINE(), pEye->getY_INLINE()));
+		pEye->area()->setTargetCity(getID(), pEye);
+	}
+	if (bNewCrusade)
+	{
+		int iLoop;
+		for (CvSelectionGroup* pGroup = firstSelectionGroup(&iLoop); pGroup != NULL; pGroup = nextSelectionGroup(&iLoop))
+		{
+			CvUnit* pHead = pGroup->getHeadUnit();
+			if ((isEurope() && !isActiveTranscendenceREFUnit(pHead)) || pHead == NULL || pHead->isCargo() || !pHead->canAttack()) continue;
+			UnitAITypes eAI = pHead->AI_getUnitAIType();
+			if (eAI != UNITAI_DEFENSIVE && eAI != UNITAI_OFFENSIVE && eAI != UNITAI_COUNTER
+				&& eAI != UNITAI_COMBAT_SEA && eAI != UNITAI_ASSAULT_SEA) continue;
+			pGroup->clearMissionQueue();
+			pGroup->setActivityType(ACTIVITY_AWAKE);
+		}
+	}
+	if (!isEurope()) return;
+	std::vector<CvUnit*> apSoldiers;
+	std::vector<CvUnit*> apTransports;
+	std::vector<CvUnit*> apEscorts;
+	for (int i = 0; i < getNumEuropeUnits(); ++i)
+	{
+		CvUnit* pUnit = getEuropeUnit(i);
+			if (isActiveTranscendenceREFUnit(pUnit) && !pUnit->isDelayedDeath() && pUnit->getDomainType() == DOMAIN_LAND) apSoldiers.push_back(pUnit);
+	}
+	int iLoop;
+	for (CvUnit* pShip = firstUnit(&iLoop); pShip != NULL; pShip = nextUnit(&iLoop))
+	{
+		if (!isActiveTranscendenceREFUnit(pShip) || pShip->isDelayedDeath() || pShip->isCargo() || pShip->getDomainType() != DOMAIN_SEA
+			|| pShip->getUnitTravelState() != UNIT_TRAVEL_STATE_IN_EUROPE) continue;
+		if (pShip->cargoSpace() > 0) apTransports.push_back(pShip);
+		else apEscorts.push_back(pShip);
+	}
+	std::stable_sort(apTransports.begin(), apTransports.end(), ImperialTransportOrder());
+	std::stable_sort(apSoldiers.begin(), apSoldiers.end(), ImperialSoldierOrder());
+	std::map<UnitTypes, CvPlot*> mapEntries;
+	for (int iPass = 0; iPass < 2; ++iPass)
+	{
+		std::vector<CvUnit*>& apShips = iPass == 0 ? apTransports : apEscorts;
+		for (uint i = 0; i < apShips.size(); ++i)
+		{
+			CvUnit* pShip = apShips[i];
+			std::map<UnitTypes, CvPlot*>::iterator it = mapEntries.find(pShip->getUnitType());
+			if (it == mapEntries.end()) it = mapEntries.insert(std::make_pair(pShip->getUnitType(), AI_getImperialShipSpawnPlot(pShip, true))).first;
+			dispatchImperialTransport(*this, pShip, it->second, apSoldiers, false);
+		}
+	}
+}
+
 void CvPlayerAI::AI_doSuppressRevolution()
 {
+	//Kaszkaj - Progenitor Exarchs attack the Eye even when its owner is not their own subject.
+	if (isEurope() && GC.getGameINLINE().isTranscendenceEnemy(getID()))
+	{
+		AI_doTranscendenceAssault();
+	}
 	bool bContinue = false;
 	PlayerTypes eColony = NO_PLAYER;
 	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
@@ -13258,6 +13629,8 @@ void CvPlayerAI::AI_doSuppressRevolution()
 		{
 			if (GET_TEAM(getTeam()).isParentOf(kLoopPlayer.getTeam()))
 			{
+				//Kaszkaj - A crusade war must not dispatch an unactivated original REF against its subject.
+				if (GC.getGameINLINE().getTranscendencePlayer() == kLoopPlayer.getID() && kLoopPlayer.getNumRevolutionEuropeUnits() > 0) continue;
 				if (atWar(getTeam(), kLoopPlayer.getTeam()))
 				{
 					eColony = (PlayerTypes)iPlayer;
@@ -13350,7 +13723,7 @@ void CvPlayerAI::AI_doSuppressRevolution()
 	int iLoop;
 	for (CvUnit* pShip = firstUnit(&iLoop); pShip != NULL; pShip = nextUnit(&iLoop))
 	{
-		if (pShip->getDomainType() != DOMAIN_SEA || pShip->isCargo() || pShip->isDelayedDeath()) continue;
+		if (isTranscendenceREFUnit(pShip) || pShip->getDomainType() != DOMAIN_SEA || pShip->isCargo() || pShip->isDelayedDeath()) continue;
 		if (pShip->cargoSpace() > 0 && (pShip->domainCargo() == NO_DOMAIN || pShip->domainCargo() == DOMAIN_LAND)) ++iTotalTransports;
 		if (pShip->getUnitTravelState() != UNIT_TRAVEL_STATE_IN_EUROPE) continue;
 		if (pShip->cargoSpace() > 0) apTransports.push_back(pShip);
@@ -13359,7 +13732,7 @@ void CvPlayerAI::AI_doSuppressRevolution()
 	for (int i = 0; i < getNumEuropeUnits(); ++i)
 	{
 		CvUnit* pUnit = getEuropeUnit(i);
-		if (pUnit != NULL && !pUnit->isDelayedDeath() && pUnit->getDomainType() == DOMAIN_LAND) apSoldiers.push_back(pUnit);
+		if (pUnit != NULL && !isTranscendenceREFUnit(pUnit) && !pUnit->isDelayedDeath() && pUnit->getDomainType() == DOMAIN_LAND) apSoldiers.push_back(pUnit);
 	}
 	std::stable_sort(apTransports.begin(), apTransports.end(), ImperialTransportOrder());
 	std::stable_sort(apSoldiers.begin(), apSoldiers.end(), ImperialSoldierOrder());

@@ -132,7 +132,14 @@ public:
 	int getBuildingClassCreatedCount(int /*BuildingClassTypes*/ eIndex);
 	bool isVictoryValid(int /*VictoryTypes*/ eIndex);
 	///TKs Invention Core Mod v 1.0
-	bool isIndustrialVictoryAll();
+	// Kaszkaj: Project state shared by the victory screen and diplomacy text.
+	int getTranscendencePlayer();
+	int getTranscendenceCityID();
+	int getTranscendenceTurns();
+	bool isTranscendenceActive();
+	bool isTranscendenceDiplomacyPending(int /*PlayerTypes*/ ePlayer);
+	int getTranscendenceProductionRate();
+	int getTranscendenceYieldStored(int /*YieldTypes*/ eYield);
 	///TKe
 	bool isSpecialUnitValid(int /*SpecialUnitTypes*/ eSpecialUnitType);
 	void makeSpecialUnitValid(int /*SpecialUnitTypes*/ eSpecialUnitType);

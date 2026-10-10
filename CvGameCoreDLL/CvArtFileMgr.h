@@ -27,6 +27,9 @@
 //		*	Add INIT_GLOBAL_XML_LOAD item to SetGlobalArtDefines in 'CvXMLLoadUtilitySet'
 //		*	Add <new> to 'XML\Art\CIV4ArtDefines.xml' and update the 'CIV4ArtDefinesSchema'
 
+// Kaszkaj: Discard the Eye art pointer before art definitions are deleted or reloaded.
+void resetTranscendenceArtScale();
+
 class CvArtInfoAsset;
 class CvArtInfoMisc;
 class CvArtInfoUnit;

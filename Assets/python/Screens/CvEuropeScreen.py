@@ -153,15 +153,7 @@ class CvEuropeScreen:
 			szText = localText.changeTextColor(localText.getText("TXT_KEY_HIRE", ()), gc.getInfoTypeForString("COLOR_FONT_CREAM"))
 			screen.setText("HireButtonText", "Background", u"<font=4>" + szText + u"</font>", CvUtil.FONT_LEFT_JUSTIFY, (self.XResolution * 8 / 10) + (self.CARGO_ICON_SIZE * 3 / 2), 40 + (self.CARGO_ICON_SIZE * 1 / 2), 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, self.BUY_UNIT_BUTTON_ID, -1)
 		#TKs
-		#self.TOTAL_CLOTH = 0
-		#iVictoryYield = gc.getDefineINT("INDUSTRIAL_VICTORY_SINGLE_YIELD")
-		#self.TOTAL_CLOTH = gc.getPlayer(gc.getGame().getActivePlayer()).getVictoryYieldCount(iVictoryYield);
-		#if (gc.getGame().isIndustrialVictoryAll()):
-		#	
-		#	iVictoryYieldCount = gc.getPlayer(gc.getGame().getActivePlayer()).getVictoryYieldCount(iVictoryYield)
-		#	szText = localText.getText("TXT_KEY_VICTORY_SCREEN_DISCOVER_TEC_YIELD", (gc.getYieldInfo(iVictoryYield).getChar(), ))
-		#	szText = localText.changeTextColor(localText.getText("TXT_KEY_EUROPE_INDUSTRIAL_HELP", (iVictoryYieldCount,)), gc.getInfoTypeForString("COLOR_FONT_CREAM")) + szText
-		#	screen.setText("Industrial", "Background", u"<font=4>" + szText + u"</font>", CvUtil.FONT_RIGHT_JUSTIFY, (self.XResolution / 4) * 3 + (self.XResolution / 6), self.Y_TITLE, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
 		#Tke
 
 		# draw the contents
@@ -435,14 +427,7 @@ class CvEuropeScreen:
 			CyInterface().setDirty(InterfaceDirtyBits.EuropeScreen_DIRTY_BIT, False)
 			self.drawContents()
 		
-		if (gc.getGame().isIndustrialVictoryAll()):
-			iVictoryYieldCount = gc.getPlayer(gc.getGame().getActivePlayer()).getVictoryYieldCount(gc.getDefineINT("INDUSTRIAL_VICTORY_SINGLE_YIELD"))
-			if (self.TOTAL_CLOTH != iVictoryYieldCount):
-				self.TOTAL_CLOTH = iVictoryYieldCount
-				szText = localText.getText("TXT_KEY_VICTORY_SCREEN_DISCOVER_TEC_YIELD", (gc.getYieldInfo(gc.getDefineINT("INDUSTRIAL_VICTORY_SINGLE_YIELD")).getChar(), ))
-				szText = localText.changeTextColor(localText.getText("TXT_KEY_EUROPE_INDUSTRIAL_HELP", (iVictoryYieldCount,)), gc.getInfoTypeForString("COLOR_FONT_CREAM")) + szText
-				screen = self.getScreen()
-				screen.setText("Industrial", "Background", u"<font=4>" + szText + u"</font>", CvUtil.FONT_RIGHT_JUSTIFY, (self.XResolution / 4) * 3 + (self.XResolution / 6), self.Y_TITLE, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+
 		#Tke
 
 	def getWidgetHelp(self, argsList):

@@ -100,6 +100,7 @@ public:
 
 	ProfessionTypes AI_bestPlotProfession(const CvUnit* pUnit, const CvPlot* pPlot) const;
 	int AI_bestProfessionPlot(ProfessionTypes eProfession, const CvUnit* pUnit) const;
+	int AI_directPlotYieldBonusPercent(ProfessionTypes eProfession, const CvPlot* pPlot) const;
 	int AI_professionValue(ProfessionTypes eProfession, const CvUnit* pUnit, const CvPlot* pPlot, const CvUnit* pDisplaceUnit) const;
 	//Kaszkaj - Compare replacements using production which does not depend on the current workforce.
 	int AI_jobReplacementValue(ProfessionTypes eProfession, const CvUnit* pUnit, const CvPlot* pPlot) const;
@@ -175,6 +176,15 @@ public:
 	DllExport void write(FDataStreamBase* pStream);
 
 protected:
+
+	CvUnit* AI_assignToBestJobUncached(CvUnit* pUnit, bool bIndoorOnly);
+	int AI_buildingValueWithCache(BuildingTypes eBuilding, int iFocusFlags, std::vector<int>& aiExpertValues, std::vector<int>& aiProductionValues) const;
+	int AI_cachedExpertBuildingValue(BuildingTypes eBuilding, std::vector<int>& aiValues) const;
+	int AI_cachedProductionBuildingValue(BuildingTypes eBuilding, std::vector<int>& aiValues) const;
+	int AI_buildingPlotYieldValue(BuildingTypes eBuilding) const;
+	int AI_buildingBombardValue(BuildingTypes eBuilding) const;
+	int AI_buildingOverflowValue(BuildingTypes eBuilding) const;
+	int AI_buildingRefineryValue(BuildingTypes eBuilding) const;
 
 	int m_iGiftTimer;
 
@@ -268,6 +278,9 @@ protected:
 
 	// added so under cheat mode we can call protected functions for testing
 	friend class CvGameTextMgr;
+
+private:
+	CvUnit* AI_juggleColonistUncached(CvUnit* pUnit);
 };
 
 #endif

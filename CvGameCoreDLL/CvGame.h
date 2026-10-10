@@ -131,8 +131,34 @@ public:
 	void incrementElapsedGameTurns();
 	bool isMaxTurnsExtended() const;
 	///TKs Invention Core Mod v 1.0
-	bool isIndustrialVictoryAll() const;
-	void setIndustrialVictoryAll(bool bExtended);
+	//Kaszkaj - One persistent Eye of Terror project controls Transcendence, shared production and the crusade.
+	BuildingTypes getTranscendenceBuilding() const;
+	PlayerTypes getTranscendencePlayer() const;
+	CvCity* getTranscendenceCity() const;
+	int getTranscendenceCityID() const;
+	int getTranscendenceTurns() const;
+	int getTranscendenceProductionRate(bool bOverflow = true) const;
+	int getTranscendenceYieldStored(YieldTypes eYield) const;
+	bool isTranscendenceActive() const;
+	bool isTranscendenceCity(const CvCity* pCity) const;
+	bool canStartTranscendence(PlayerTypes ePlayer, const CvCity* pCity = NULL) const;
+	bool isTranscendenceEnemy(PlayerTypes ePlayer) const;
+	bool isTranscendenceWar(TeamTypes eFirst, TeamTypes eSecond) const;
+	bool isTranscendenceAlly(TeamTypes eFirst, TeamTypes eSecond) const;
+	bool startTranscendence(CvCity* pCity);
+	void invalidateTranscendenceResearch(PlayerTypes ePlayer);
+	void beginTranscendencePlayerTurn(PlayerTypes ePlayer);
+	void doTranscendenceProduction(PlayerTypes ePlayer);
+	bool processTranscendenceYields(CvCity* pCity);
+	void completeTranscendence(CvCity* pCity);
+	void onTranscendenceCityLost(CvCity* pCity);
+	void finishTranscendenceCityLoss();
+	void beginTranscendenceCityAcquisition();
+	void endTranscendenceCityAcquisition();
+	void requestTranscendenceDiplomacy(PlayerTypes ePlayer);
+	bool isTranscendenceDiplomacyPending(PlayerTypes ePlayer) const;
+	void acknowledgeTranscendence(PlayerTypes ePlayer);
+	void activateTranscendenceCrusade();
 	///Tke
 	void setMaxTurnsExtended(bool bExtended);
 	DllExport int getMaxTurns() const;
@@ -388,7 +414,7 @@ protected:
 	bool m_bPlayerOptionsSent;
 	bool m_bMaxTurnsExtended;
 	///TKs Invention Core Mod v 1.0
-	bool m_bIndustrialVictoryAll;
+	bool m_bUnusedGameSaveBool;
 	///TKe
 
 	HandicapTypes m_eHandicap;
@@ -436,6 +462,39 @@ protected:
 	// CACHE: cache frequently used values
 	int		m_iNumCultureVictoryCities;
 	int		m_eCultureVictoryCultureLevel;
+
+	//Kaszkaj - Saved project state is separate from transient lookup, UI and acquisition guards.
+	PlayerTypes m_eTranscendencePlayer;
+	int m_iTranscendenceCityID;
+	int m_iTranscendencePlot;
+	int m_iTranscendenceStartTurn;
+	int m_iTranscendenceBuildTurns;
+	int m_iTranscendenceLastProductionTurn;
+	int m_iTranscendencePhase;
+	PlayerTypes m_eTranscendencePendingLoss;
+	bool m_abTranscendenceAcknowledged[MAX_PLAYERS];
+	bool m_abTranscendenceREFDeployed[MAX_PLAYERS];
+	bool m_abTranscendenceSight[MAX_TEAMS];
+	PlayerTypes m_aeTranscendenceSpeaker[MAX_PLAYERS];
+	mutable BuildingTypes m_eTranscendenceBuilding;
+	mutable VictoryTypes m_eTranscendenceVictory;
+	mutable int m_aiTranscendenceResearchState[MAX_PLAYERS];
+	mutable std::vector<CivicTypes> m_aeTranscendenceRequiredResearch;
+	bool m_bTranscendenceCollectIndustry;
+	bool m_abTranscendenceDiplomacyQueued[MAX_PLAYERS];
+	bool m_bTranscendenceRestorePending;
+	int m_iTranscendenceAcquisitionDepth;
+	bool m_bTranscendenceEliminating;
+	bool m_bTranscendenceExarchAlliance;
+	bool m_bTranscendenceRetreatRunning;
+	bool m_bTranscendenceRetreatPending;
+	int m_iTranscendenceAllianceCheckTurn;
+	bool isTranscendenceExarchTeam(TeamTypes eTeam) const;
+	void updateTranscendenceRetreat();
+	void changeTranscendenceSight(TeamTypes eTeam, bool bAdd);
+	void declareTranscendenceWar(PlayerTypes ePlayer);
+	PlayerTypes chooseTranscendenceSpeaker(PlayerTypes eRecipient);
+	void restoreTranscendenceConstruction();
 
 	void doTurn();
 	void doDeals();

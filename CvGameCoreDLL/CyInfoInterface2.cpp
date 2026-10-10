@@ -77,7 +77,7 @@ void CyInfoPythonInterface2()
 		.def("isConquest", &CvVictoryInfo::isConquest, "bool ()")
 		.def("isPermanent", &CvVictoryInfo::isPermanent, "bool ()")
 		///TKs Invention Core Mod v 1.0
-		.def("isIndustrialization", &CvVictoryInfo::isIndustrialization, "bool ()")
+		.def("isTranscendence", &CvVictoryInfo::isTranscendence, "bool ()")
 		///Tke
 		.def("isRevolution", &CvVictoryInfo::isRevolution, "bool ()")
 		.def("getMovie", &CvVictoryInfo::getMovie, "string ()")

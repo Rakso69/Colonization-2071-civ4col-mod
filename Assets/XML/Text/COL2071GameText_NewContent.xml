@@ -338,6 +338,14 @@
 		<Italian></Italian>
 		<Spanish></Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_EYE_OF_TERROR</Tag>
+		<English>[BOLD][COLOR_MAGENTA]Eye of Pandora[COLOR_REVERT][\BOLD]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
 <!-- XML/Buildings/CIV4BuildingInfos.xml-->
 	<TEXT>
 		<Tag>TXT_KEY_BUILDING_POWER_PLANT_PEDIA</Tag>
@@ -478,6 +486,14 @@
 	<TEXT>
 		<Tag>TXT_KEY_BUILDING_HABITAT_PEDIA</Tag>
 		<English>Desperate for the mysterious knowledge of the Earthlings, some alien species would erect a so-called Human Quarter in their settlements modeled after their idea of life on Earth. Although life in these offworld ghettos was seldom as idyllic as planned, they did attract a steady trickle of Earth emigrants, from fringe UFO cultists to those so ruthlessly oppressed that no human colony would accept them.</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_EYE_OF_TERROR_PEDIA</Tag>
+		<English>[COLOR_MAGENTA]Project 42 - Codename: "Catharsis". A direct link to the astral world, or something vastly more incomprehensible?[COLOR_REVERT]</English>
 		<French></French>
 		<German></German>
 		<Italian></Italian>
@@ -628,6 +644,14 @@
 		<Italian></Italian>
 		<Spanish></Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_EYE_OF_TERROR_STRATEGY</Tag>
+		<English>[COLOR_WARNING_TEXT]The horror! What have we unearthed?[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
 <!-- XML/Buildings/CIV4SpecialBuildingInfos.xml-->
 	<TEXT>
 		<Tag>TXT_KEY_SPECIALBUILDING_IDEAS</Tag>
@@ -648,6 +672,14 @@
 	<TEXT>
 		<Tag>TXT_KEY_SPECIALBUILDING_HYDROCARBONS</Tag>
 		<English>Power Plant</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_SPECIALBUILDING_TRANSCENDENCE</Tag>
+		<English>[BOLD][COLOR_MAGENTA]Eye of Pandora[COLOR_REVERT][\BOLD]</English>
 		<French></French>
 		<German></German>
 		<Italian></Italian>
@@ -2677,10 +2709,42 @@
 		<Italian></Italian>
 		<Spanish></Spanish>
 	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_TRANSCENDENCE_VICTORY_CONDITION</Tag>
+		<English>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Transcendence Victory Condition[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_TRANSCENDENCE_COLONIES_AID</Tag>
+		<English>[ICON_BULLET][COLOR_GREEN]All owned Colonies aid construction[COLOR_REVERT]</English>
+		<French></French>
+		<German></German>
+		<Italian></Italian>
+		<Spanish></Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_NO_HURRY</Tag>
+		<English>[ICON_BULLET][COLOR_WARNING_TEXT]Cannot be rushed[COLOR_REVERT]</English>
+		<French/>
+		<German/>
+		<Italian/>
+		<Spanish/>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRANSCENDENCE_REQUIRES_ALL_TECHNOLOGIES</Tag>
+		<English>[ICON_BULLET][COLOR_YELLOW]Requires every technology to begin the Project 42 - Codename: "Catharsis"[COLOR_REVERT]</English>
+		<French/>
+		<German/>
+		<Italian/>
+		<Spanish/>
+	</TEXT>
 <!-- XML/GameInfo/CIV4VictoryInfo.xml-->
 	<TEXT>
 		<Tag>TXT_KEY_VICTORY_TRANSCENDENCE_PEDIA</Tag>
-		<English>Why exactly the Progenitors abandoned the New Worlds eons ago is a heavily debated topic. Some conspiracy theorists believe that they ascended to a higher plane of existence and that it is the destiny of all intelligent life to follow in the Progenitors' footsteps. In order to achieve a Transcendence victory, you must research all technologies and then sell a large amount of Progenitor Technology on Earth.</English>
+		<English>Why exactly the Progenitors abandoned the New Worlds eons ago? Some conspiracy theorists believe that they ascended to a higher plane of existence and that it is the destiny of all intelligent life to follow in the Progenitors' footsteps. To achieve a Transcendence victory, research every technology and complete the Eye of Pandora. Your Colonies contribute Industry and advanced goods to the project; it cannot be rushed.</English>
 		<French></French>
 		<German></German>
 		<Italian></Italian>

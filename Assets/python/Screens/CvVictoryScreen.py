@@ -327,19 +327,11 @@ class CvVictoryScreen:
 		ourRebel = activeTeam.getRebelPercent()
 		#TKs
 		iBestRebelTeam = -1
-		iBestIndustrialPlayer = -1
-		bestIndustry = 0
 		bestRebel = 0
-		iVictoryYield = gc.getDefineINT("INDUSTRIAL_VICTORY_SINGLE_YIELD")
 		for iLoopTeam in range(gc.getMAX_CIV_TEAMS()):
 			if (gc.getTeam(iLoopTeam).isAlive()):
 				if (iLoopTeam != iActiveTeam and (activeTeam.isHasMet(iLoopTeam) or gc.getGame().isDebugMode())):
 					teamRebel = gc.getTeam(iLoopTeam).getRebelPercent()
-					loopPlayer = gc.getTeam(iLoopTeam).getLeaderID()
-					loopPlayer = gc.getPlayer(loopPlayer)
-					if (loopPlayer.getVictoryYieldCount(iVictoryYield) > bestIndustry):
-						bestIndustry = loopPlayer.getVictoryYieldCount(iVictoryYield)
-						iBestIndustrialPlayer = loopPlayer
 					if (teamRebel > bestRebel):
 						bestRebel = teamRebel
 						iBestRebelTeam = iLoopTeam
@@ -365,7 +357,7 @@ class CvVictoryScreen:
 		
 		for iLoopVC in range(gc.getNumVictoryInfos()):
 			victory = gc.getVictoryInfo(iLoopVC)
-			if gc.getGame().isVictoryValid(iLoopVC) or victory.isIndustrialization():
+			if gc.getGame().isVictoryValid(iLoopVC):
 			#TKe
 				iNumRows = screen.getTableNumRows(szTable)
 				szVictoryType = u"<font=4b>" + victory.getDescription().upper() + u"</font>"
@@ -525,29 +517,55 @@ class CvVictoryScreen:
 							screen.setTableText(szTable, 5, iRow, unicode(bestRebel) + u"%", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
 						bEntriesFound = True
 				#TKs
-				if (victory.isIndustrialization()):
-					if activePlayer.getParent() != -1:
-						iRow = screen.appendTableRow(szTable)
-						#iVictoryYield = gc.getDefineINT("INDUSTRIAL_VICTORY_SINGLE_YIELD")
-						if (gc.getGame().isIndustrialVictoryAll()):
-							Research = localText.getText("TXT_KEY_VICTORY_SCREEN_DISCOVER_TEC_STARTED", ())
-						else:
-							Research = localText.getText("TXT_KEY_VICTORY_SCREEN_DISCOVER_TEC", ())
-							
-						screen.setTableText(szTable, 0, iRow, Research, "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-						
-						localText.getText("TXT_KEY_VICTORY_SCREEN_DISCOVER_TEC_YIELD", (gc.getYieldInfo(iVictoryYield).getChar(), ))
-						iVictoryYieldCount = activePlayer.getVictoryYieldCount(iVictoryYield)
-						screen.setTableText(szTable, 2, iRow, activeTeam.getName() + ":", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-						screen.setTableText(szTable, 3, iRow, str(iVictoryYieldCount) + localText.getText("TXT_KEY_VICTORY_SCREEN_DISCOVER_TEC_YIELD", (gc.getYieldInfo(iVictoryYield).getChar(), )), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-						
-		
-						if (iBestIndustrialPlayer != -1):
-							#iBestIndustrialPlayer = gc.getPlayer(iBestIndustrialPlayer)
-							screen.setTableText(szTable, 4, iRow, iBestIndustrialPlayer.getName() + ":", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-							iVictoryYieldCount = iBestIndustrialPlayer.getVictoryYieldCount(iVictoryYield)
-							screen.setTableText(szTable, 5, iRow, str(iVictoryYieldCount) + localText.getText("TXT_KEY_VICTORY_SCREEN_DISCOVER_TEC_YIELD", (gc.getYieldInfo(iVictoryYield).getChar(), )), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
-						bEntriesFound = True
+				# Kaszkaj: Count real technologies only; BRANCH_ entries are research headings.
+				if victory.isTranscendence():
+					iInventionOption = gc.getDefineINT("CIVICOPTION_INVENTIONS")
+					iTechnologyCount = 0
+					iResearchedCount = 0
+					for iCivic in range(gc.getNumCivicInfos()):
+						kCivic = gc.getCivicInfo(iCivic)
+						if kCivic.getCivicOptionType() == iInventionOption and not kCivic.getType().startswith("BRANCH_"):
+							iTechnologyCount += 1
+							if activePlayer.getIdeasResearched(iCivic) > 0:
+								iResearchedCount += 1
+					iRow = screen.appendTableRow(szTable)
+					screen.setTableText(szTable, 0, iRow, localText.getText("TXT_KEY_TRANSCENDENCE_TECHNOLOGIES", ()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+					screen.setTableText(szTable, 2, iRow, activePlayer.getName() + ":", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+					screen.setTableText(szTable, 3, iRow, u"%d / %d" % (iResearchedCount, iTechnologyCount), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+					iProjectPlayer = gc.getGame().getTranscendencePlayer()
+					iEye = gc.getInfoTypeForString("BUILDING_EYE_OF_TERROR")
+					if iProjectPlayer != -1 and iEye != -1:
+						pProjectPlayer = gc.getPlayer(iProjectPlayer)
+						if pProjectPlayer.getTeam() == iActiveTeam or activeTeam.isHasMet(pProjectPlayer.getTeam()) or gc.getGame().isDebugMode():
+							pProjectCity = pProjectPlayer.getCity(gc.getGame().getTranscendenceCityID())
+							if not pProjectCity.isNone():
+								iRow = screen.appendTableRow(szTable)
+								screen.setTableText(szTable, 0, iRow, gc.getBuildingInfo(iEye).getDescription(), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+								screen.setTableText(szTable, 2, iRow, pProjectPlayer.getName() + ":", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+								screen.setTableText(szTable, 3, iRow, pProjectCity.getName(), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+								if gc.getGame().isTranscendenceActive():
+									screen.setTableText(szTable, 4, iRow, localText.getText("TXT_KEY_TRANSCENDENCE_PROJECT_TURNS", ()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+									screen.setTableText(szTable, 5, iRow, unicode(gc.getGame().getTranscendenceTurns()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+									if pProjectCity.getProductionBuilding() == iEye:
+										# Kaszkaj: Project counters pool colony output; Python never scans plots or factories.
+										for iYield in range(YieldTypes.NUM_YIELD_TYPES):
+											if gc.getBuildingInfo(iEye).getYieldCost(iYield) <= 0:
+												continue
+											if iYield == YieldTypes.YIELD_HAMMERS:
+												iStored = pProjectCity.getProduction()
+											else:
+												iStored = gc.getGame().getTranscendenceYieldStored(iYield)
+											iNeeded = pProjectCity.getProductionNeeded(iYield)
+											iRow = screen.appendTableRow(szTable)
+											screen.setTableText(szTable, 0, iRow, gc.getYieldInfo(iYield).getDescription(), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+											screen.setTableText(szTable, 2, iRow, pProjectPlayer.getName() + ":", "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+											screen.setTableText(szTable, 3, iRow, u"%d / %d" % (iStored, iNeeded), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+											if iYield == YieldTypes.YIELD_HAMMERS:
+												screen.setTableText(szTable, 4, iRow, localText.getText("TXT_KEY_TRANSCENDENCE_PRODUCTION_RATE", ()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+												screen.setTableText(szTable, 5, iRow, unicode(gc.getGame().getTranscendenceProductionRate()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+								else:
+									screen.setTableText(szTable, 4, iRow, localText.getText("TXT_KEY_TRANSCENDENCE_PROJECT_COMPLETE", ()), "", WidgetTypes.WIDGET_GENERAL, -1, -1, CvUtil.FONT_LEFT_JUSTIFY)
+					bEntriesFound = True
 				#TKe
 						
 				if (bEntriesFound):

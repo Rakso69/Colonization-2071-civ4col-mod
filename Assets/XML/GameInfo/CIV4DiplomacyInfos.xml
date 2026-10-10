@@ -5614,5 +5614,31 @@
 				</Response>
 			</Responses>
 		</DiplomacyInfo>
+		<!-- Kaszkaj - Mandatory Progenitor Exarch notice for the Transcendence crusade. -->
+		<DiplomacyInfo>
+			<Type>AI_DIPLOCOMMENT_TRANSCENDENCE_CRUSADE</Type>
+			<Responses>
+				<Response>
+					<Civilizations/>
+					<Leaders/>
+					<Attitudes/>
+					<DiplomacyPowers/>
+					<DiplomacyText><Text>AI_DIPLO_CRUSADE_PROGENITOR_TARGET_PLAYER_TRANSCENDS</Text></DiplomacyText>
+				</Response>
+			</Responses>
+		</DiplomacyInfo>
+		<!-- Kaszkaj - Mandatory Progenitor Exarch notice for the Transcendence crusade. -->
+		<DiplomacyInfo>
+			<Type>AI_DIPLOCOMMENT_TRANSCENDENCE_OBLIGE</Type>
+			<Responses>
+				<Response>
+					<Civilizations/>
+					<Leaders/>
+					<Attitudes/>
+					<DiplomacyPowers/>
+					<DiplomacyText><Text>AI_DIPLO_OBLIGE_PROGENITOR_WHEN_PLAYER_TRANSCENDS</Text></DiplomacyText>
+				</Response>
+			</Responses>
+		</DiplomacyInfo>
 	</DiplomacyInfos>
 </Civ4DiplomacyInfos>

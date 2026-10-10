@@ -182,6 +182,16 @@ class CvTechnologyAdvisor:
 					
 																									
 	
+	def _getCivicsByCategory(self):
+		CivicsByCategory = {}
+		for iCivic in range(gc.getNumCivicInfos()):
+			civic = gc.getCivicInfo(iCivic)
+			if civic.getCivicOptionType() == 5:
+				iCategory = civic.getInventionCategory()
+				if iCategory != -1:
+					CivicsByCategory.setdefault(iCategory, []).append(iCivic)
+		return CivicsByCategory
+
 	def drawCivics(self):
 		screen = self.getScreen()
 		player = gc.getPlayer(gc.getGame().getActivePlayer())
@@ -215,6 +225,7 @@ class CvTechnologyAdvisor:
 		LineReturn = 0
 		LocalBack = 0
 		bTest = False
+		CivicsByCategory = self._getCivicsByCategory()
 		for iCivic in range(gc.getNumCivicInfos()):
 			if (gc.getCivicInfo(iCivic).getCivicOptionType() == 5):
 				if gc.getCivicInfo(iCivic).getInventionCategory() == -1:
@@ -223,7 +234,7 @@ class CvTechnologyAdvisor:
 					localy = self.YCATEGORY + (BonusRow * LocalBack)
 					BonusRow += 1
 					LocalBack = self.BUTTON_SPACE
-					for iListCivic in range(gc.getNumCivicInfos()):
+					for iListCivic in CivicsByCategory.get(iCivic, []):
 						if (gc.getCivicInfo(iListCivic).getCivicOptionType() == 5):
 							
 							iCategory = gc.getCivicInfo(iListCivic).getInventionCategory()
@@ -327,6 +338,7 @@ class CvTechnologyAdvisor:
 		#unLearned Techs
 		
 		bTest = False
+		CivicsByCategory = self._getCivicsByCategory()
 		DisAllowedTech = []
 		for iCivic in range(gc.getNumCivicInfos()):
 			DisAllowedTech.append(iCivic)
@@ -342,7 +354,7 @@ class CvTechnologyAdvisor:
 					
 
 					
-					for iListCivic in range(gc.getNumCivicInfos()):
+					for iListCivic in CivicsByCategory.get(iCivic, []):
 						if (gc.getCivicInfo(iListCivic).getCivicOptionType() == 5):
 							
 							iCategory = gc.getCivicInfo(iListCivic).getInventionCategory()

@@ -56,7 +56,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_NEWERA_ALIENS</Tag>
-		<English>From across the Great Sea they came, in their ships of fiery metal. It is told that others of our race once journeyed to their star, watched them in secret from our sleek saucers. But now it is we who are watched. Lost on these forgotten planets, we have grown weak and backward, the secrets of the ancients lost to us. Sleeping among the sweet fungus, our people heed not the words of their elders as the Earthlings settle on our home, perhaps to drain it as they drained their own. What will it portend, the arrival of these thin-skinned creatures?[NEWLINE][NEWLINE][BOLD]For rules and strategy about playing an alien species, consult [LINK=CONCEPT_ALIENS]Alien Civilizations[\LINK] under the Game Concepts section in the Civilopedia.[\BOLD][NEWLINE][NEWLINE]Place the settlements of your race. Living in a state of pastoral anarchy, your people must build a Ziggurat in each of your settlements to enable further development and trade.[NEWLINE][NEWLINE][BOLD]Hegemony Victory:[\BOLD] Ensure the survival and dominance of your species. Expel the Earthling invaders and subjugate or destroy other alien races. Your Empire must dominate the New Worlds before any other human or alien power reaches independence.[NEWLINE][NEWLINE][BOLD]Revolution Victory:[\BOLD] Declare your independence from the Progenitor overlords after attaining a 50%% Rebel Sentiment in all your settlements. Before time runs out, defend your fledgling species from the Progenitors' wrath by wiping out all their ground forces. You must complete your revolution before any other Earth Colony or Alien Empire.[NEWLINE][NEWLINE][BOLD]Transcendence Victory:[\BOLD] Research the Transcendence tech, then be the first to sell 1000 units of Progenitor Tech to Earth, using the lost secrets of the Progenitors to reshape the destiny of mankind.</English>
+		<English>From across the Great Sea they came, in their ships of fiery metal. It is told that others of our race once journeyed to their star, watched them in secret from our sleek saucers. But now it is we who are watched. Lost on these forgotten planets, we have grown weak and backward, the secrets of the ancients lost to us. Sleeping among the sweet fungus, our people heed not the words of their elders as the Earthlings settle on our home, perhaps to drain it as they drained their own. What will it portend, the arrival of these thin-skinned creatures?[NEWLINE][NEWLINE][BOLD]For rules and strategy about playing an alien species, consult [LINK=CONCEPT_ALIENS]Alien Civilizations[\LINK] under the Game Concepts section in the Civilopedia.[\BOLD][NEWLINE][NEWLINE]Place the settlements of your race. Living in a state of pastoral anarchy, your people must build a Ziggurat in each of your settlements to enable further development and trade.[NEWLINE][NEWLINE][BOLD]Hegemony Victory:[\BOLD] Ensure the survival and dominance of your species. Expel the Earthling invaders and subjugate or destroy other alien races. Your Empire must dominate the New Worlds before any other human or alien power reaches independence.[NEWLINE][NEWLINE][BOLD]Revolution Victory:[\BOLD] Declare your independence from the Progenitor overlords after attaining a 50%% Rebel Sentiment in all your settlements. Before time runs out, defend your fledgling species from the Progenitors' wrath by wiping out all their ground forces. You must complete your revolution before any other Earth Colony or Alien Empire.[NEWLINE][NEWLINE][BOLD]Transcendence Victory:[\BOLD] Research every technology, then complete the Eye of Pandora using Industry and advanced goods from your Colonies to achieve Transcendence.</English>
 		<French>En l'an %s1_year, sa Majest&#233; le roi des %s2_civ vous accorde une charte coloniale.[NEWLINE][NEWLINE]Pour la plus grande gloire de la nation, %s3_leader, le roi vous nomme vice-roi du Nouveau Monde. Explorez cette terre, colonisez-la et apportez richesse et gloire &#224; notre grande nation et &#224; vous-m&#234;me ! [NEWLINE][NEWLINE][BOLD]Pour parvenir &#224; la victoire :[\BOLD][PARAGRAPH:1]Fondez votre colonie.[PARAGRAPH:1]Atteignez un sentiment de r&#233;volte de 50%% dans toutes vos colonies pour pouvoir d&#233;clarer votre ind&#233;pendance.[PARAGRAPH:1]D&#233;fendez votre nation naissante contre la col&#232;re de votre m&#232;re patrie en &#233;crasant toutes leurs forces terrestres avant la fin du temps imparti.[PARAGRAPH:1]Vous devez &#234;tre la premi&#232;re colonie europ&#233;enne &#224; terminer sa r&#233;volution !</French>
 		<German>Im Jahre %s1_year &#252;bergibt Euch seine K&#246;nigliche Hoheit, der K&#246;nig der Nation %s2_civ, eine Kolonialcharta. [NEWLINE][NEWLINE]Zum Ruhme der Nation ernennt der K&#246;nig Euch, %s3_leader, zum stellvertretenden Oberhaupt der Neuen Welt. Erforscht das neue Land, besiedelt es und bringt Euch und unserer gro&#223;artigen Nation Ruhm und Reichtum.  [NEWLINE][NEWLINE][BOLD]Um den Sieg zu erringen:[\BOLD][PARAGRAPH:1]Gr&#252;ndet Eure Kolonie.[PARAGRAPH:1]Erkl&#228;rt Eure Unabh&#228;ngigkeit von Eurem Mutterland, sobald mindestens 50%% Rebellische Stimmung in all Euren Siedlungen herrscht.[PARAGRAPH:1]Verteidigt Euer junges Land gegen den Zorn Eures Mutterlandes vor Ablauf der Zeit, indem Ihr all seine Bodeneinheiten ausl&#246;scht. [PARAGRAPH:1]Schlie&#223;t Eure Revolution vor allen anderen europ&#228;ischen Kolonien ab.</German>
 		<Italian>Nell'anno %s1_year, sua maest&#224; reale il re di %s2_civ ti conferisce uno statuto coloniale. [NEWLINE][NEWLINE]Per la maggiore gloria della nazione il re nomina te, %s3_leader, vicer&#233; del Nuovo Mondo. Esplora queste nuove terre, colonizzale e procura ricchezze e gloria a te stesso e alla nostra grande nazione.  [NEWLINE][NEWLINE][BOLD]Per ottenere una vittoria:[\BOLD][PARAGRAPH:1]Fonda la tua colonia.[PARAGRAPH:1]Dichiara l'indipendenza dalla madrepatria dopo aver ottenuto il 50%% di sentimento di ribellione in ogni insediamento.[PARAGRAPH:1]Difendi il giovane stato dall'ira della madrepatria annientandone le forze terrestri prima che scada il tempo. [PARAGRAPH:1]Devi completare la rivoluzione prima di qualsiasi altra colonia europea.</Italian>
@@ -306,14 +306,6 @@
 		<Spanish></Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_EUROPE_INDUSTRIAL_HELP</Tag>
-		<English>Industrial Revolution: %d1_amount</English>
-		<French></French>
-		<German></German>
-		<Italian></Italian>
-		<Spanish></Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_EXPLORER_PEDIA</Tag>
 		<English>Explorers represent the many Europeans who set out to discovery new Trade routes or to Map the New World. Such famouse names as, Sir Francis Drake, Ferdinand Magellan, and Henry Hundson come to mind when we think of the great Explorers.</English>
 		<French></French>
@@ -386,48 +378,8 @@
 		<Spanish></Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_VICTORY_SCREEN_DISCOVER_TEC</Tag>
-		<English>Research Transcendence to begin.</English>
-		<French></French>
-		<German></German>
-		<Italian></Italian>
-		<Spanish></Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_VICTORY_SCREEN_DISCOVER_TEC_STARTED</Tag>
-		<English>Transcendence has begun!</English>
-		<French></French>
-		<German></German>
-		<Italian></Italian>
-		<Spanish></Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_VICTORY_SCREEN_DISCOVER_TEC_YIELD</Tag>
-		<English>%F1_symbol</English>
-		<French></French>
-		<German></German>
-		<Italian></Italian>
-		<Spanish></Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_VICTORY_INDUSTRIAL</Tag>
-		<English>Transcendence</English>
-		<French></French>
-		<German></German>
-		<Italian></Italian>
-		<Spanish></Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_TECH_INDUSTRIAL_VICTORY</Tag>
-		<English>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]Transcendence Victory[COLOR_REVERT] can be attempted by all Colonies. You must be the first to sell [COLOR_HIGHLIGHT_TEXT]%d1_units[COLOR_REVERT] units of %F2 on Earth.[NEWLINE][COLOR_WARNING_TEXT]Tech can no longer be purchased on Earth[COLOR_REVERT]</English>
-		<French></French>
-		<German></German>
-		<Italian></Italian>
-		<Spanish></Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_BUILDING_COTTON_MILL_STRATEGY</Tag>
-		<English>[COLOR_BUILDING_TEXT]Cottons Mills[COLOR_REVERT] are the ultimate sources of cloth, useing the power of steam they transform six [COLOR_HIGHLIGHT_TEXT]Cotton[COLOR_REVERT] into twelve [COLOR_HIGHLIGHT_TEXT]Cloth[COLOR_REVERT] (when worked by a [COLOR_UNIT_TEXT]Free Colonist[COLOR_REVERT]). By assigning a [COLOR_UNIT_TEXT]Master Weaver[COLOR_REVERT] to work in your [COLOR_BUILDING_TEXT]Textile Mill[COLOR_REVERT], that number can be increased even further! You must construct a [COLOR_BUILDING_TEXT]Oil Refinery[COLOR_REVERT] before you can construct this building. If you are attempting an [COLOR_HIGHLIGHT_TEXT]Industrial Victory[COLOR_REVERT] then these buildings are your key to winning.</English>
+		<English>[COLOR_BUILDING_TEXT]Cottons Mills[COLOR_REVERT] are the ultimate sources of cloth, useing the power of steam they transform six [COLOR_HIGHLIGHT_TEXT]Cotton[COLOR_REVERT] into twelve [COLOR_HIGHLIGHT_TEXT]Cloth[COLOR_REVERT] (when worked by a [COLOR_UNIT_TEXT]Free Colonist[COLOR_REVERT]). By assigning a [COLOR_UNIT_TEXT]Master Weaver[COLOR_REVERT] to work in your [COLOR_BUILDING_TEXT]Textile Mill[COLOR_REVERT], that number can be increased even further! You must construct a [COLOR_BUILDING_TEXT]Oil Refinery[COLOR_REVERT] before you can construct this building.</English>
 		<French>Les [COLOR_BUILDING_TEXT]Usines textiles[COLOR_REVERT] sont les plus importants sites de production de tissu, capables de transformer six unit&#233;s de  [COLOR_HIGHLIGHT_TEXT]Coton[COLOR_REVERT] en neuf unit&#233;s de [COLOR_HIGHLIGHT_TEXT]Tissu[COLOR_REVERT] (lorsqu'un [COLOR_UNIT_TEXT]Colon libre[COLOR_REVERT] y est assign&#233;). En employant un [COLOR_UNIT_TEXT]Ma&#238;tre tisserand[COLOR_REVERT] dans votre [COLOR_BUILDING_TEXT]Usine textile[COLOR_REVERT], votre capacit&#233; de production sera encore augment&#233;e ! Vous devez d'abord faire b&#226;tir une [COLOR_BUILDING_TEXT]scierie[COLOR_REVERT] avant de pouvoir ordonner la construction de ce b&#226;timent.</French>
 		<German>[COLOR_BUILDING_TEXT]Textilfabriken[COLOR_REVERT] sind die besten Produktionsst&#228;tten f&#252;r [COLOR_HIGHLIGHT_TEXT]Stoff[COLOR_REVERT]. Sie verarbeiten sechs Einheiten [COLOR_HIGHLIGHT_TEXT]Baumwolle[COLOR_REVERT] zu neun Einheiten [COLOR_HIGHLIGHT_TEXT]Stoff[COLOR_REVERT], wenn dort ein [COLOR_UNIT_TEXT]Freier Kolonist[COLOR_REVERT] arbeitet. Indem Sie einen [COLOR_UNIT_TEXT]Meisterweber[COLOR_REVERT] anweisen, in Ihrer [COLOR_BUILDING_TEXT]Textilfabrik[COLOR_REVERT] zu arbeiten, steigern Sie die Menge zus&#228;tzlich! Sie m&#252;ssen ein [COLOR_BUILDING_TEXT]S&#228;gewerk[COLOR_REVERT] bauen, bevor Sie dieses Geb&#228;ude errichten k&#246;nnen.</German>
 		<Italian>Le [COLOR_BUILDING_TEXT]fabbriche tessili[COLOR_REVERT] sono la fonte definitiva di tessuto, in grado di trasformare sei unit&#224; di [COLOR_HIGHLIGHT_TEXT]cotone[COLOR_REVERT] in nove di [COLOR_HIGHLIGHT_TEXT]tessuto[COLOR_REVERT] (quando ci lavora un [COLOR_UNIT_TEXT]libero colono[COLOR_REVERT]). Mandando un [COLOR_UNIT_TEXT]mastro tessitore[COLOR_REVERT] a lavorare in una [COLOR_BUILDING_TEXT]fabbrica tessile[COLOR_REVERT], puoi ulteriormente aumentare la produzione! Prima di poter costruire questo edificio devi costruire una [COLOR_BUILDING_TEXT]segheria[COLOR_REVERT].</Italian>
@@ -600,14 +552,6 @@
 		<German></German>
 		<Italian></Italian>
 		<Spanish></Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_INDUSTRILIZATION_HAS_BEGAN</Tag>
-		<English>Transcendence has been initiated by the [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</English>
-		<French>Industrialization has just began by the [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]!</French>
-		<German>Industrialization has just began by the [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]</German>
-		<Italian>Industrialization has just began by the [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]</Italian>
-		<Spanish>Industrialization has just began by the [COLOR_HIGHLIGHT_TEXT]%s1_CvcName[COLOR_REVERT]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_NATIVE_TECH2_DESCRIPTION</Tag>
@@ -1242,5 +1186,37 @@
 		<German>[TAB]In der Geschichte der Menschheit trugen meist diejenigen den Sieg davon, die &#252;ber die besten Metalle verf&#252;gten. Seit dem Bronzezeitalter waren Metallwerkzeuge, Waffen und Legierungen ein grundlegender Faktor f&#252;r den Aufstieg der Zivilisation und haben Eroberungen und das Bauwesen der weltweit gr&#246;&#223;ten Imperien vorangetrieben. W&#228;hrend der Metallabbau schon eine eindrucksvolle Geschichte hinter sich hat, gewann der industrielle Bergbau erst im 19. Jahrhundert an Bedeutung.[PARAGRAPH:1]F&#252;r den pl&#246;tzlichen Aufschwung des Bergbaus gibt es zwei Gr&#252;nde. Der erste Grund waren die fast allt&#228;glichen Neuerungen in der Produktion von Werkzeugen und Konsumgegenst&#228;nden, f&#252;r die der unaufh&#246;rliche Nachschub an Metall erforderlich war. Der zweite Grund lag darin, dass der Treibstoff f&#252;r die industrielle Revolution die Kohle war, die nur tief in der Erde vorkam. Heutzutage erm&#246;glichen es riesige Abbaumaschinen wie der Schaufelradbagger, in nur einem Tag ein 90 Meter langes und 30 Meter tiefes Loch zu graben - eine Meisterleistung, zu der fr&#252;her nur ganze Nationen mit vereinten Kr&#228;ften in der Lage gewesen w&#228;ren.</German>
 		<Italian>[TAB]Per gran parte della storia dell'umanit&#224; la vittoria &#232; andata a coloro che avevano accesso ai metalli migliori. Dall'et&#224; del Bronzo in poi, strumenti e armi in metallo e lega sono stati parte importante dell'ascesa di una civilt&#224;, favorendo le conquiste e la creazione dei pi&#249; grandi imperi al mondo. E mentre l'estrazione dei metalli ha una lunga e grande storia, fu solo nel diciannovesimo secolo che cominci&#242; a prendere piede l'estrazione industriale.[PARAGRAPH:1]Due ragioni spiegano l'improvvisa intensificazione delle operazioni minerarie. La prima &#232; la rivoluzione quasi quotidiana nella produzione di strumenti e oggetti di consumo, che richiedeva un costante afflusso di metallo. La seconda &#232; che il carburante della Rivoluzione Industriale era il carbone, annidato nelle profondit&#224; della terra. Al giorno d'oggi enormi escavatrici come la Bagger 288 permettono di scavare un buco lungo cento metri e profondo 30 in un solo giorno; un'impresa che, in passato, avrebbe richiesto la mobilitazione di un'intera nazione.</Italian>
 		<Spanish>[TAB]Durante buena parte de la historia del hombre, la victoria ha sido para el bando que ten&#237;a acceso a los mejores metales. Desde la Edad de Bronce en adelante, las herramientas, armas y aleaciones de metal han sido una parte inherente del ascenso de las civilizaciones y han permitido grandes conquistas y la construcci&#243;n de enormes imperios. Y, aunque la miner&#237;a del metal tiene una historia muy antigua, hasta el siglo XIX no empez&#243; a desarrollarse industrialmente.[PARAGRAPH:1]Dos razones explican esta repentina intensificaci&#243;n de las operaciones mineras. La primera fue una revoluci&#243;n casi diaria en la producci&#243;n de bienes de consumo y herramientas, que requer&#237;a un suministro continuo de metal. La segunda fue que el combustible que alimentaba la Revoluci&#243;n Industrial era el carb&#243;n, profundamente enterrado en las entra&#241;as de la Tierra. En nuestros d&#237;as, las grandes excavadoras, como la Bagger 288, poseen la capacidad de excavar fosos de cien metros de longitud y treinta metros de profundidad en un solo d&#237;a, una proeza que en el pasado habr&#237;a requerido la movilizaci&#243;n de naciones enteras.</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRANSCENDENCE_TECHNOLOGIES</Tag>
+		<English>Technologies researched</English>
+		<French/>
+		<German/>
+		<Italian/>
+		<Spanish/>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRANSCENDENCE_PROJECT_TURNS</Tag>
+		<English>Construction turns:</English>
+		<French/>
+		<German/>
+		<Italian/>
+		<Spanish/>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRANSCENDENCE_PRODUCTION_RATE</Tag>
+		<English>Industry per turn:</English>
+		<French/>
+		<German/>
+		<Italian/>
+		<Spanish/>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRANSCENDENCE_PROJECT_COMPLETE</Tag>
+		<English>[COLOR_MAGENTA]Completed[COLOR_REVERT]</English>
+		<French/>
+		<German/>
+		<Italian/>
+		<Spanish/>
 	</TEXT>
 </Civ4GameText>

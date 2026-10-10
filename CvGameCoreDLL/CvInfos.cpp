@@ -16,6 +16,14 @@
 #include "CvGameTextMgr.h"
 #include "CvGameCoreUtils.h"
 
+// Kaszkaj: Keep the exact scalable subobject; ordinary art lookups remain constant time.
+static const CvScalableInfo* g_pTranscendenceArtScale = NULL;
+
+void resetTranscendenceArtScale()
+{
+	g_pTranscendenceArtScale = NULL;
+}
+
 static void clearCivicInfoCaches()
 {
 	for (int i = 0; i < GC.getNumCivicInfos(); ++i)
@@ -274,6 +282,11 @@ bool CvScalableInfo::read(CvXMLLoadUtility* pXML)
 
 float CvScalableInfo::getScale() const
 {
+	// Kaszkaj: The Eye grows each project turn and retains its final size after completion.
+	if (this == g_pTranscendenceArtScale && GC.getGameINLINE().getTranscendencePlayer() != NO_PLAYER)
+	{
+		return m_fScale + 0.1f * GC.getGameINLINE().getTranscendenceTurns();
+	}
 	return m_fScale;
 }
 
@@ -3967,7 +3980,6 @@ m_aiAllowsUnitClasses(NULL),
 m_aiAllowsProfessions(NULL),
 m_aiAllowsBuildTypes(NULL),
 m_aiAllowsBuildTypesTerrain(NULL),
-m_aiIndustrializationVictory(NULL),
 
 ///TKe
 m_iDomesticGreatGeneralRateModifier(0),
@@ -4012,7 +4024,6 @@ CvCivicInfo::~CvCivicInfo()
     SAFE_DELETE_ARRAY(m_aiAllowsProfessions);
     SAFE_DELETE_ARRAY(m_aiAllowsBuildTypes);
     SAFE_DELETE_ARRAY(m_aiAllowsBuildTypesTerrain);
-    SAFE_DELETE_ARRAY(m_aiIndustrializationVictory);
     ///TKe
 	SAFE_DELETE_ARRAY(m_aiYieldModifier);
 	SAFE_DELETE_ARRAY(m_aiCapitalYieldModifier);
@@ -4135,10 +4146,6 @@ int CvCivicInfo::getAllowsBuildTypesTerrain(int i) const
 	return m_aiAllowsBuildTypesTerrain ? m_aiAllowsBuildTypesTerrain[i] : 0;
 }
 
-int CvCivicInfo::getIndustrializationVictory(int i) const
-{
-	return m_aiIndustrializationVictory ? m_aiIndustrializationVictory[i] : 0;
-}
 
 
 int CvCivicInfo::getAllowsPromotions(int i) const
@@ -4486,9 +4493,9 @@ void CvCivicInfo::read(FDataStreamBase* stream)
 	stream->Read(GC.getNumTerrainInfos(), m_aiAllowsBuildTypesTerrain);
 	SAFE_DELETE_ARRAY(m_aiAllowsBuildTypesTerrain);
 
-	m_aiIndustrializationVictory  = new int[NUM_YIELD_TYPES];
-	stream->Read(NUM_YIELD_TYPES, m_aiIndustrializationVictory);
-	SAFE_DELETE_ARRAY(m_aiIndustrializationVictory);
+	// Preserve the discarded legacy victory cache slot.
+	int aiLegacyVictoryYields[NUM_YIELD_TYPES];
+	stream->Read(NUM_YIELD_TYPES, aiLegacyVictoryYields);
 
 	m_aiAllowsPromotions  = new int[GC.getNumPromotionInfos()];
 	stream->Read(GC.getNumPromotionInfos(), m_aiAllowsPromotions);
@@ -4600,7 +4607,9 @@ void CvCivicInfo::write(FDataStreamBase* stream)
 	stream->Write(GC.getNumUnitClassInfos(), m_aiAllowsUnitClasses );
 	stream->Write(GC.getNumImprovementInfos(), m_aiAllowsBuildTypes);
 	stream->Write(GC.getNumTerrainInfos(), m_aiAllowsBuildTypesTerrain );
-	stream->Write(NUM_YIELD_TYPES, m_aiIndustrializationVictory );
+	// Preserve the legacy cache layout without retaining an active victory counter.
+	const int aiLegacyVictoryYields[NUM_YIELD_TYPES] = {0};
+	stream->Write(NUM_YIELD_TYPES, aiLegacyVictoryYields);
 	stream->Write(GC.getNumPromotionInfos(), m_aiAllowsPromotions );
 	stream->Write(GC.getNumBonusInfos(), m_aiAllowsBonuses );
 
@@ -4697,7 +4706,6 @@ bool CvCivicInfo::read(CvXMLLoadUtility* pXML)
     pXML->SetVariableListTagPair(&m_aiAllowsBonuses, "AllowsBonuses", GC.getNumBonusInfos(), 0);
     pXML->SetVariableListTagPair(&m_aiAllowsBuildTypes, "AllowsBuildTypes", GC.getNumImprovementInfos(), 0);
 
-    pXML->SetVariableListTagPair(&m_aiIndustrializationVictory, "IndustrializationVictory", NUM_YIELD_TYPES, 0);
     pXML->SetVariableListTagPair(&m_aiAllowsBuildTypesTerrain, "AllowsBuildTypesTerrain", GC.getNumTerrainInfos(), 0);
     pXML->SetVariableListTagPair(&m_aiAllowsProfessions, "AllowsProfessions", GC.getNumProfessionInfos(), 0);
 
@@ -5051,7 +5059,8 @@ m_aiDomainFreeExperience(NULL),
 m_aiDomainProductionModifier(NULL),
 m_aiPrereqNumOfBuildingClass(NULL),
 m_aiYieldCost(NULL),
-m_abBuildingClassNeededInCity(NULL)
+m_abBuildingClassNeededInCity(NULL),
+m_bHurryAllowed(true)
 {
 }
 //------------------------------------------------------------------------------------------------------
@@ -5105,6 +5114,10 @@ int CvBuildingInfo::getAIWeight() const
 int CvBuildingInfo::getHurryCostModifier() const
 {
 	return m_iHurryCostModifier;
+}
+bool CvBuildingInfo::isHurryAllowed() const
+{
+	return m_bHurryAllowed;
 }
 int CvBuildingInfo::getAdvancedStartCost() const
 {
@@ -5488,6 +5501,12 @@ void CvBuildingInfo::read(FDataStreamBase* stream)
 	SAFE_DELETE_ARRAY(m_abBuildingClassNeededInCity);
 	m_abBuildingClassNeededInCity = new bool[GC.getNumBuildingClassInfos()];
 	stream->Read(GC.getNumBuildingClassInfos(), m_abBuildingClassNeededInCity);
+	// Kaszkaj: Old info caches retain the original hurry behavior.
+	m_bHurryAllowed = true;
+	if ((uiFlag & 1u) != 0)
+	{
+		stream->Read(&m_bHurryAllowed);
+	}
 }
 //
 // serialization
@@ -5495,7 +5514,7 @@ void CvBuildingInfo::read(FDataStreamBase* stream)
 void CvBuildingInfo::write(FDataStreamBase* stream)
 {
 	CvHotkeyInfo::write(stream);
-	uint uiFlag=0;
+	uint uiFlag=1u;
 	stream->Write(uiFlag);		// flag for expansion
 	stream->Write(m_iBuildingClassType);
 	stream->Write(m_iVictoryPrereq);
@@ -5553,6 +5572,7 @@ void CvBuildingInfo::write(FDataStreamBase* stream)
 	stream->Write(GC.getNumBuildingClassInfos(), m_aiPrereqNumOfBuildingClass);
 	stream->Write(NUM_YIELD_TYPES, m_aiYieldCost);
 	stream->Write(GC.getNumBuildingClassInfos(), m_abBuildingClassNeededInCity);
+	stream->Write(m_bHurryAllowed);
 }
 //
 // read from XML
@@ -5592,7 +5612,18 @@ bool CvBuildingInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bNeverCapture, "bNeverCapture");
 	pXML->GetChildXmlValByName(&m_bCenterInCity, "bCenterInCity");
 	pXML->GetChildXmlValByName(&m_iAIWeight, "iAIWeight");
-	pXML->GetChildXmlValByName(&m_iHurryCostModifier, "iHurryCostModifier");
+	// Kaszkaj: Empty forbids hurry; explicit numeric zero and negative modifiers stay valid.
+	m_iHurryCostModifier = 0;
+	m_bHurryAllowed = true;
+	CvString szHurryModifier;
+	if (pXML->GetChildXmlValByName(szHurryModifier, "iHurryCostModifier"))
+	{
+		m_bHurryAllowed = szHurryModifier.find_first_not_of(" \t\r\n") != CvString::npos;
+		if (m_bHurryAllowed)
+		{
+			m_iHurryCostModifier = atoi(szHurryModifier.c_str());
+		}
+	}
 	pXML->GetChildXmlValByName(&m_iAdvancedStartCost, "iAdvancedStartCost");
 	pXML->GetChildXmlValByName(&m_iAdvancedStartCostIncrease, "iAdvancedStartCostIncrease");
 	pXML->GetChildXmlValByName(&m_iProfessionOutput, "iProfessionOutput");
@@ -6636,7 +6667,7 @@ m_bEndScore(false),
 m_bConquest(false),
 m_bPermanent(false),
 ///TKs Invention Core Mod v 1.0
-m_bIndustrialization(false),
+m_bTranscendence(false),
 ///TKe
 m_bRevolution(false)
 
@@ -6705,9 +6736,9 @@ bool CvVictoryInfo::isRevolution() const
 	return m_bRevolution;
 }
 ///TKs Invention Core Mod v 1.0
-bool CvVictoryInfo::isIndustrialization() const
+bool CvVictoryInfo::isTranscendence() const
 {
-	return m_bIndustrialization;
+	return m_bTranscendence;
 }
 ///TKe
 const char* CvVictoryInfo::getMovie() const
@@ -6733,7 +6764,7 @@ bool CvVictoryInfo::read(CvXMLLoadUtility* pXML)
 	pXML->GetChildXmlValByName(&m_bPermanent, "bPermanent");
 	pXML->GetChildXmlValByName(&m_bRevolution, "bRevolution");
 	///TKs Invention Core Mod v 1.0
-	pXML->GetChildXmlValByName(&m_bIndustrialization, "bIndustrialization");
+	pXML->GetChildXmlValByName(&m_bTranscendence, "bTranscendence");
 	///TKe
 	pXML->GetChildXmlValByName(&m_iPopulationPercentLead, "iPopulationPercentLead");
 	pXML->GetChildXmlValByName(&m_iLandPercent, "iLandPercent");
@@ -11606,6 +11637,10 @@ m_bAnimated(false)
 }
 CvArtInfoBuilding::~CvArtInfoBuilding()
 {
+	if (g_pTranscendenceArtScale == static_cast<const CvScalableInfo*>(this))
+	{
+		resetTranscendenceArtScale();
+	}
 }
 bool CvArtInfoBuilding::isAnimated() const
 {
@@ -11629,6 +11664,11 @@ bool CvArtInfoBuilding::read(CvXMLLoadUtility* pXML)
 	if (!CvArtInfoScalableAsset::read(pXML))
 	{
 		return false;
+	}
+	// Kaszkaj: Register only the Eye building art, including the multiple-inheritance offset.
+	if (strcmp(getType(), "ART_DEF_BUILDING_EYE_OF_TERROR") == 0)
+	{
+		g_pTranscendenceArtScale = static_cast<const CvScalableInfo*>(this);
 	}
 	pXML->GetChildXmlValByName(m_cityTexture, "CityTexture");
 	pXML->GetChildXmlValByName(m_citySelectedTexture, "CitySelectedTexture");

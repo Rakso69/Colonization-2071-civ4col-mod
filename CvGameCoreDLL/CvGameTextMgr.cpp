@@ -4015,19 +4015,6 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
         return;
     }
     //TK end Update
-    YieldTypes eVictoryYield = (YieldTypes) GC.getDefineINT("INDUSTRIAL_VICTORY_SINGLE_YIELD");
-    if (kCivicInfo.getIndustrializationVictory(eVictoryYield) > 0)
-	{
-	    iCost = kCivicInfo.getIndustrializationVictory(eVictoryYield);
-	    if (GC.getGameINLINE().getActivePlayer() != NO_PLAYER)
-        {
-            iCost *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getFatherPercent();
-            iCost /= 100;
-        }
-
-        szHelpText.append(NEWLINE);
-        szHelpText.append(gDLL->getText("TXT_KEY_TECH_INDUSTRIAL_VICTORY", iCost, GC.getYieldInfo(eVictoryYield).getChar()));
-	}
 	if (kCivicInfo.getAllowsTrait() != NO_TRAIT)
 	{
 	    CvWStringBuffer szHelpString;
@@ -5621,6 +5608,21 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, BuildingTypes eBu
 		szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_FREE_PROMOTION", GC.getPromotionInfo((PromotionTypes)(kBuilding.getFreePromotion())).getTextKeyWide()));
 	}
 
+	// Kaszkaj: Explain project eligibility and empty-tag hurry restrictions in building help.
+	if (eBuilding == GC.getGameINLINE().getTranscendenceBuilding())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_TRANSCENDENCE_VICTORY_CONDITION"));
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_TRANSCENDENCE_REQUIRES_ALL_TECHNOLOGIES"));
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_TRANSCENDENCE_COLONIES_AID"));
+	}
+	if (!kBuilding.isHurryAllowed())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_BUILDING_NO_HURRY"));
+	}
 	if (kBuilding.isCapital())
 	{
 		szBuffer.append(NEWLINE);

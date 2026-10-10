@@ -31,6 +31,150 @@
 #define MOVE_PRIORITY_LOW			500
 #define MOVE_PRIORITY_MIN			1
 
+
+namespace
+{
+	struct TranscendenceRetreatCache
+	{
+		int iTurn;
+		std::vector<CvPlot*> apExits;
+		std::vector<CvPlot*> apCoasts;
+		int aiRescueTurn[MAX_PLAYERS];
+		TranscendenceRetreatCache() : iTurn(-1)
+		{
+			for (int i = 0; i < MAX_PLAYERS; ++i) aiRescueTurn[i] = -1;
+		}
+	};
+
+	TranscendenceRetreatCache& transcendenceRetreatCache()
+	{
+		static TranscendenceRetreatCache kCache;
+		return kCache;
+	}
+
+	bool isTranscendenceRetreatUnit(const CvUnit* pUnit)
+	{
+		return pUnit != NULL && pUnit->getScriptData() == "COL2071_TRANSCENDENCE_REF_RETREAT";
+	}
+
+	bool sameTranscendenceREFForce(const CvUnit* pFirst, const CvUnit* pSecond)
+	{
+		if (isTranscendenceREFUnit(pFirst) != isTranscendenceREFUnit(pSecond)) return false;
+		return !isTranscendenceREFUnit(pFirst) || pFirst->getScriptData() == pSecond->getScriptData();
+	}
+
+	bool retreatTransportFits(const CvUnit* pShip, const CvUnit* pSoldier)
+	{
+		return pShip != NULL && pSoldier != NULL && isTranscendenceRetreatUnit(pShip)
+			&& pShip->getOwnerINLINE() == pSoldier->getOwnerINLINE() && !pShip->isDelayedDeath() && !pShip->isCargo()
+			&& pShip->getDomainType() == DOMAIN_SEA && pShip->cargoSpace() >= pSoldier->getUnitInfo().getRequiredTransportSize()
+			&& pShip->cargoSpace() > 0 && (pShip->domainCargo() == NO_DOMAIN || pShip->domainCargo() == pSoldier->getDomainType())
+			&& (pShip->specialCargo() == NO_SPECIALUNIT || pShip->specialCargo() == pSoldier->getSpecialUnitType());
+	}
+
+	TranscendenceRetreatCache& getTranscendenceRetreatPlots()
+	{
+		TranscendenceRetreatCache& kCache = transcendenceRetreatCache();
+		int iTurn = GC.getGameINLINE().getGameTurn();
+		if (kCache.iTurn == iTurn) return kCache;
+		kCache.iTurn = iTurn;
+		kCache.apExits.clear();
+		kCache.apCoasts.clear();
+		std::vector<int> aiOceanAreas;
+		for (int i = 0; i < GC.getMapINLINE().numPlotsINLINE(); ++i)
+		{
+			CvPlot* pPlot = GC.getMapINLINE().plotByIndexINLINE(i);
+			if (pPlot->isWater() && pPlot->isEurope() && !pPlot->isImpassable())
+			{
+				kCache.apExits.push_back(pPlot);
+				int iArea = pPlot->area()->getID();
+				if (std::find(aiOceanAreas.begin(), aiOceanAreas.end(), iArea) == aiOceanAreas.end()) aiOceanAreas.push_back(iArea);
+			}
+		}
+		for (int i = 0; i < GC.getMapINLINE().numPlotsINLINE(); ++i)
+		{
+			CvPlot* pPlot = GC.getMapINLINE().plotByIndexINLINE(i);
+			if (pPlot->isWater() || pPlot->isImpassable() || !pPlot->isCoastalLand()) continue;
+			for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; ++iDirection)
+			{
+				CvPlot* pWater = plotDirection(pPlot->getX_INLINE(), pPlot->getY_INLINE(), (DirectionTypes)iDirection);
+				if (pWater != NULL && pWater->isWater() && !pWater->isImpassable()
+					&& std::find(aiOceanAreas.begin(), aiOceanAreas.end(), pWater->area()->getID()) != aiOceanAreas.end())
+				{
+					kCache.apCoasts.push_back(pPlot);
+					break;
+				}
+			}
+		}
+		return kCache;
+	}
+
+	//Kaszkaj - A lost retreat fleet is replaced only by a tagged rescue transport, leaving original REF intact.
+	CvUnit* createTranscendenceRescue(CvUnit* pSoldier, CvPlot* pCoast)
+	{
+		TranscendenceRetreatCache& kCache = getTranscendenceRetreatPlots();
+		CvPlayerAI& kOwner = GET_PLAYER(pSoldier->getOwnerINLINE());
+		if (pCoast == NULL || kCache.aiRescueTurn[kOwner.getID()] == kCache.iTurn) return NULL;
+		kCache.aiRescueTurn[kOwner.getID()] = kCache.iTurn;
+		const CvCivilizationInfo& kCiv = GC.getCivilizationInfo(kOwner.getCivilizationType());
+		UnitTypes eTransport = NO_UNIT;
+		ProfessionTypes eProfession = NO_PROFESSION;
+		int iBestCapacity = MAX_INT;
+		for (int i = 0; i < kCiv.getNumCivilizationFreeUnits(); ++i)
+		{
+			UnitTypes eUnit = (UnitTypes)kCiv.getCivilizationUnits(kCiv.getCivilizationFreeUnitsClass(i));
+			if (eUnit == NO_UNIT) continue;
+			const CvUnitInfo& kInfo = GC.getUnitInfo(eUnit);
+			if (kInfo.getDomainType() != DOMAIN_SEA || kInfo.getCargoSpace() <= 0
+				|| kInfo.getCargoSpace() < pSoldier->getUnitInfo().getRequiredTransportSize()
+				|| (kInfo.getDomainCargo() != NO_DOMAIN && kInfo.getDomainCargo() != pSoldier->getDomainType())
+				|| (kInfo.getSpecialCargo() != NO_SPECIALUNIT && kInfo.getSpecialCargo() != pSoldier->getSpecialUnitType())) continue;
+			if (kInfo.getCargoSpace() < iBestCapacity)
+			{
+				iBestCapacity = kInfo.getCargoSpace();
+				eTransport = eUnit;
+				eProfession = (ProfessionTypes)kCiv.getCivilizationFreeUnitsProfession(i);
+			}
+		}
+		if (eTransport == NO_UNIT) return NULL;
+		const CvUnitInfo& kTransport = GC.getUnitInfo(eTransport);
+		CvPlot* pEntry = NULL;
+		int iBestDistance = MAX_INT;
+		for (uint i = 0; i < kCache.apExits.size(); ++i)
+		{
+			CvPlot* pExit = kCache.apExits[i];
+			if (pExit->isVisibleEnemyUnit(pSoldier) || kTransport.getTerrainImpassable(pExit->getTerrainType())
+				|| (pExit->getFeatureType() != NO_FEATURE && kTransport.getFeatureImpassable(pExit->getFeatureType()))) continue;
+			bool bSameOcean = false;
+			for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; ++iDirection)
+			{
+				CvPlot* pWater = plotDirection(pCoast->getX_INLINE(), pCoast->getY_INLINE(), (DirectionTypes)iDirection);
+				if (pWater != NULL && pWater->isWater() && pWater->area() == pExit->area()) bSameOcean = true;
+			}
+			if (!bSameOcean) continue;
+			int iDistance = stepDistance(pExit->getX_INLINE(), pExit->getY_INLINE(), pCoast->getX_INLINE(), pCoast->getY_INLINE());
+			if (iDistance < iBestDistance) { iBestDistance = iDistance; pEntry = pExit; }
+		}
+		if (pEntry == NULL) return NULL;
+		CvUnit* pShip = kOwner.initUnit(eTransport, eProfession, pEntry->getX_INLINE(), pEntry->getY_INLINE(), UNITAI_ASSAULT_SEA);
+		if (pShip != NULL)
+		{
+			pShip->setScriptData("COL2071_TRANSCENDENCE_REF_RETREAT");
+			pShip->AI_setMovePriority(MOVE_PRIORITY_HIGH);
+		}
+		return pShip;
+	}
+}
+
+void resetTranscendenceRetreatCache()
+{
+	TranscendenceRetreatCache& kCache = transcendenceRetreatCache();
+	kCache.iTurn = -1;
+	kCache.apExits.clear();
+	kCache.apCoasts.clear();
+	for (int i = 0; i < MAX_PLAYERS; ++i) kCache.aiRescueTurn[i] = -1;
+}
+
 // Public Functions...
 
 CvUnitAI::CvUnitAI() :
@@ -89,16 +233,22 @@ bool CvUnitAI::AI_update()
 
 	getGroup()->resetPath();
 
+	//Kaszkaj - Retreating REF copies leave by real transport before any ordinary or active crusade orders.
+	if (isTranscendenceRetreatUnit(this) && AI_transcendenceRetreat()) return false;
+
 	// allow python to handle it
-	CyUnit* pyUnit = new CyUnit(this);
-	CyArgsList argsList;
-	argsList.add(gDLL->getPythonIFace()->makePythonObject(pyUnit));	// pass in unit class
-	long lResult=0;
-	gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_unitUpdate", argsList.makeFunctionArgs(), &lResult);
-	delete pyUnit;	// python fxn must not hold on to this pointer
-	if (lResult == 1)
+	if (GC.getUSE_AI_UNIT_UPDATE_CALLBACK())
 	{
-		return false;
+		CyUnit* pyUnit = new CyUnit(this);
+		CyArgsList argsList;
+		argsList.add(gDLL->getPythonIFace()->makePythonObject(pyUnit));	// pass in unit class
+		long lResult=0;
+		gDLL->getPythonIFace()->callFunction(PYGameModule, "AI_unitUpdate", argsList.makeFunctionArgs(), &lResult);
+		delete pyUnit;	// python fxn must not hold on to this pointer
+		if (lResult == 1)
+		{
+			return false;
+		}
 	}
 
 	if (getUnitTravelState() != NO_UNIT_TRAVEL_STATE)
@@ -110,6 +260,8 @@ bool CvUnitAI::AI_update()
 	int iOldMovePriority = AI_getMovePriority();
 
 	CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+	//Kaszkaj - Military units pursue the Eye before routine jobs or attacks on other colonies.
+	if (!isHuman() && (!kOwner.isEurope() || isActiveTranscendenceREFUnit(this)) && GC.getGameINLINE().isTranscendenceEnemy(getOwnerINLINE()) && AI_transcendenceMove()) return false;
 	if (!AI_afterAttack())
 	{
 		if (getGroup()->isAutomated() && (getGroup()->getAutomateType() != AUTOMATE_FULL))
@@ -1102,6 +1254,7 @@ void CvUnitAI::AI_nativeScoutMove()
 //Kaszkaj - Deliver settlers and specialists before sending the transport back to Earth.
 bool CvUnitAI::AI_hasPassengers() const
 {
+	if (!hasCargo()) return false;
 	CLLNode<IDInfo>* pNode = plot()->headUnitNode();
 	while (pNode != NULL)
 	{
@@ -1221,6 +1374,7 @@ bool CvUnitAI::AI_nativeTransportMove()
 //Kaszkaj - Unload goods without a usable trade route at an owned Colony to free cargo space.
 bool CvUnitAI::AI_returnGoodsToCity()
 {
+	if (!hasCargo()) return false;
 	std::vector<CvUnit*> apGoods;
 	CLLNode<IDInfo>* pNode = plot()->headUnitNode();
 	while (pNode != NULL)
@@ -2147,10 +2301,14 @@ CvPlot* CvUnitAI::AI_scoutSeaDestination(CvPlot** ppMissionPlot)
 	}
 	CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
 	//Kaszkaj - Bring unequipped Intrepid Explorers home for their first outfit; equipped Intrepid Explorers continue exploring.
-	bool bExplore = kOwner.AI_scoutTargetCount() > 0 &&
+	int iScoutTargets = kOwner.AI_scoutTargetCount();
+	bool bExplore = iScoutTargets > 0 &&
 		getProfession() == (ProfessionTypes)GC.getInfoTypeForString("PROFESSION_SCOUT", true);
 	ProfessionTypes eEquipment = (ProfessionTypes)GC.getInfoTypeForString(bExplore ? "PROFESSION_SCOUT" :
-		(kOwner.AI_scoutTargetCount() > 0 ? "PROFESSION_SCOUT" : "PROFESSION_DRAGOON"), true);
+		(iScoutTargets > 0 ? "PROFESSION_SCOUT" : "PROFESSION_DRAGOON"), true);
+	bool bCacheAreaValues = !GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK() && !GC.getUSE_CAN_DECLARE_WAR_CALLBACK();
+	std::map<CvArea*, int> aiScoutTargetsByArea;
+	std::map<CvArea*, int> aiIncomingByArea;
 	CvPlot* pBestPlot = NULL;
 	CvPlot* pBestLanding = NULL;
 	int iBestValue = 0;
@@ -2163,7 +2321,20 @@ CvPlot* CvUnitAI::AI_scoutSeaDestination(CvPlot** ppMissionPlot)
 			continue;
 		}
 		CvArea* pArea = pLand->area();
-		int iTargets = bExplore ? kOwner.AI_scoutTargetCount(pArea) : pArea->getCitiesPerPlayer(getOwnerINLINE());
+		int iTargets = pArea->getCitiesPerPlayer(getOwnerINLINE());
+		if (bExplore)
+		{
+			std::map<CvArea*, int>::const_iterator it = bCacheAreaValues ? aiScoutTargetsByArea.find(pArea) : aiScoutTargetsByArea.end();
+			if (it == aiScoutTargetsByArea.end())
+			{
+				iTargets = kOwner.AI_scoutTargetCount(pArea);
+				if (bCacheAreaValues) aiScoutTargetsByArea[pArea] = iTargets;
+			}
+			else
+			{
+				iTargets = it->second;
+			}
+		}
 		if (iTargets == 0)
 		{
 			continue;
@@ -2172,11 +2343,21 @@ CvPlot* CvUnitAI::AI_scoutSeaDestination(CvPlot** ppMissionPlot)
 		if (bExplore)
 		{
 			iValue += AI_explorePlotValue(pLand, false);
-			int iIncoming = kOwner.AI_areaMissionAIs(pArea, MISSIONAI_EXPLORE, pTransport->getGroup());
-			CvPlot* pOldMission = getGroup()->AI_getMissionAIPlot();
-			if (getGroup()->AI_getMissionAIType() == MISSIONAI_EXPLORE && pOldMission != NULL && pOldMission->area() == pArea)
+			int iIncoming;
+			std::map<CvArea*, int>::const_iterator it = bCacheAreaValues ? aiIncomingByArea.find(pArea) : aiIncomingByArea.end();
+			if (it == aiIncomingByArea.end())
 			{
-				iIncoming = std::max(0, iIncoming - getGroup()->getNumUnits());
+				iIncoming = kOwner.AI_areaMissionAIs(pArea, MISSIONAI_EXPLORE, pTransport->getGroup());
+				CvPlot* pOldMission = getGroup()->AI_getMissionAIPlot();
+				if (getGroup()->AI_getMissionAIType() == MISSIONAI_EXPLORE && pOldMission != NULL && pOldMission->area() == pArea)
+				{
+					iIncoming = std::max(0, iIncoming - getGroup()->getNumUnits());
+				}
+				if (bCacheAreaValues) aiIncomingByArea[pArea] = iIncoming;
+			}
+			else
+			{
+				iIncoming = it->second;
 			}
 			iValue /= 1 + pArea->getNumAIUnits(getOwnerINLINE(), UNITAI_SCOUT) + iIncoming;
 		}
@@ -2253,7 +2434,7 @@ bool CvUnitAI::AI_ferryScout(bool bAllowPickup, bool bPriorityOnly)
 	}
 
 	CvUnit* pScout = NULL;
-	CLLNode<IDInfo>* pNode = plot()->headUnitNode();
+	CLLNode<IDInfo>* pNode = hasCargo() ? plot()->headUnitNode() : NULL;
 	while (pNode != NULL)
 	{
 		CvUnit* pUnit = ::getUnit(pNode->m_data);
@@ -4784,7 +4965,9 @@ bool CvUnitAI::AI_europe()
 	std::deque<CvUnit*> aUnits;
 	for (int i = 0; i < kOwner.getNumEuropeUnits(); ++i)
 	{
-		aUnits.push_back(kOwner.getEuropeUnit(i));
+		//Kaszkaj - Keep the duplicated and original REF cargo separate on Earth.
+		CvUnit* pUnit = kOwner.getEuropeUnit(i);
+		if (!kOwner.isEurope() || sameTranscendenceREFForce(this, pUnit)) aUnits.push_back(pUnit);
 	}
 
 	while (!bSeaWorker && !aUnits.empty() && !isFull())
@@ -4896,21 +5079,19 @@ bool CvUnitAI::AI_europeAssaultSea()
 		kOwner.sellYieldUnitToEurope(apUnits[i], apUnits[i]->getYieldStored(), 0);
 	}
 
-	//Pick up units from Europe (FIFO)
-	while (kOwner.getNumEuropeUnits() > 0)
+	//Kaszkaj - Load only the same REF force and never let a mismatched Earth unit block pickup.
+	std::vector<CvUnit*> apPassengers;
+	for (int i = 0; i < kOwner.getNumEuropeUnits(); ++i)
 	{
-		if (isFull())
-		{
-			break;
-		}
-
-		CvUnit* pUnit = kOwner.getEuropeUnit(0);
+		CvUnit* pUnit = kOwner.getEuropeUnit(i);
+		if (!kOwner.isEurope() || sameTranscendenceREFForce(this, pUnit)) apPassengers.push_back(pUnit);
+	}
+	for (uint i = 0; i < apPassengers.size() && !isFull(); ++i)
+	{
+		CvUnit* pUnit = apPassengers[i];
+		if (!pUnit->canLoadUnit(this, plot(), false)) continue;
 		kOwner.loadUnitFromEurope(pUnit, this);
-		if (getGroup()->getAutomateType() == AUTOMATE_FULL)
-		{
-			FAssert(pUnit->getGroup() != NULL);
-			pUnit->getGroup()->setAutomateType(AUTOMATE_FULL);
-		}
+		if (getGroup()->getAutomateType() == AUTOMATE_FULL) pUnit->getGroup()->setAutomateType(AUTOMATE_FULL);
 	}
 
 	FAssert(plot()->isEurope());
@@ -4942,6 +5123,11 @@ bool CvUnitAI::AI_sailToEurope(bool bMove)
 	}
 
 	if (!bMove)
+	{
+		return false;
+	}
+	if (isCargo() || (getUnitTravelState() == NO_UNIT_TRAVEL_STATE
+		&& (!canMove() || !GET_PLAYER(getOwnerINLINE()).canTradeWithEurope())))
 	{
 		return false;
 	}
@@ -5245,6 +5431,8 @@ bool CvUnitAI::AI_loadUnits(UnitAITypes eUnitAI, MissionAITypes eMissionAI)
 		CvUnit* pLoopUnit = ::getUnit(pUnitNode->m_data);
 		pUnitNode = pPlot->nextUnitNode(pUnitNode);
 
+		//Kaszkaj - Do not mix crusade copies with original REF cargo.
+		if (GET_PLAYER(getOwnerINLINE()).isEurope() && !sameTranscendenceREFForce(this, pLoopUnit)) continue;
 		if (!pLoopUnit->isCargo())
 		{
 			if ((eUnitAI == NO_UNITAI) || (pLoopUnit->AI_getUnitAIType() == eUnitAI))
@@ -7112,6 +7300,10 @@ bool CvUnitAI::AI_requestPickup(int iMaxPath)
 
 	MissionAITypes paMissionAIs[] = {MISSIONAI_PICKUP, MISSIONAI_AWAIT_PICKUP};
 	int iMissionAICount = 2;
+	bool bCacheScoutTransports = !GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK() && !GC.getUSE_CAN_DECLARE_WAR_CALLBACK();
+	bool bScoutTransportsChecked = false;
+	bool bAllTerrainScoutTransport = false;
+	std::map<CvArea*, bool> abScoutTransportAreas;
 
 	for (int iI = 0; iI < GC.getMapINLINE().numPlotsINLINE(); iI++)
 	{
@@ -7125,16 +7317,39 @@ bool CvUnitAI::AI_requestPickup(int iMaxPath)
 			if (bScout && pWaterArea != NULL)
 			{
 				//Kaszkaj - Count any compatible ship, including combat ships and amphibious transports in ports.
-				bTransport = false;
-				int iLoop;
-				for (CvUnit* pShip = kOwner.firstUnit(&iLoop); pShip != NULL; pShip = kOwner.nextUnit(&iLoop))
+				if (!bCacheScoutTransports)
 				{
-					if (pShip->getDomainType() == DOMAIN_SEA && canLoadUnit(pShip, pShip->plot(), false) &&
-						(pShip->getUnitInfo().isCanMoveAllTerrain() || pShip->plot()->waterArea() == pWaterArea))
+					bTransport = false;
+					int iLoop;
+					for (CvUnit* pShip = kOwner.firstUnit(&iLoop); pShip != NULL; pShip = kOwner.nextUnit(&iLoop))
 					{
-						bTransport = true;
-						break;
+						if (pShip->getDomainType() == DOMAIN_SEA && canLoadUnit(pShip, pShip->plot(), false) &&
+							(pShip->getUnitInfo().isCanMoveAllTerrain() || pShip->plot()->waterArea() == pWaterArea))
+						{
+							bTransport = true;
+							break;
+						}
 					}
+				}
+				else
+				{
+					if (!bScoutTransportsChecked)
+					{
+						int iLoop;
+						for (CvUnit* pShip = kOwner.firstUnit(&iLoop); pShip != NULL; pShip = kOwner.nextUnit(&iLoop))
+						{
+							if (pShip->getDomainType() != DOMAIN_SEA || !canLoadUnit(pShip, pShip->plot(), false)) continue;
+							if (pShip->getUnitInfo().isCanMoveAllTerrain())
+							{
+								bAllTerrainScoutTransport = true;
+								break;
+							}
+							CvArea* pShipArea = pShip->plot()->waterArea();
+							if (pShipArea != NULL) abScoutTransportAreas[pShipArea] = true;
+						}
+						bScoutTransportsChecked = true;
+					}
+					bTransport = bAllTerrainScoutTransport || abScoutTransportAreas.find(pWaterArea) != abScoutTransportAreas.end();
 				}
 			}
 			if (bTransport)
@@ -7778,6 +7993,8 @@ bool CvUnitAI::AI_load(UnitAITypes eUnitAI, MissionAITypes eMissionAI, UnitAITyp
 
 	for(pLoopUnit = GET_PLAYER(getOwnerINLINE()).firstUnit(&iLoop); pLoopUnit != NULL; pLoopUnit = GET_PLAYER(getOwnerINLINE()).nextUnit(&iLoop))
 	{
+		//Kaszkaj - Original and duplicated REF use separate transports.
+		if (GET_PLAYER(getOwnerINLINE()).isEurope() && !sameTranscendenceREFForce(this, pLoopUnit)) continue;
 		if (pLoopUnit != this)
 		{
 			if (AI_plotValid(pLoopUnit->plot()))
@@ -10025,7 +10242,9 @@ bool CvUnitAI::AI_targetCity(int iFlags)
 	iBestValue = 0;
 	pBestCity = NULL;
 
-	pTargetCity = area()->getTargetCity(getOwnerINLINE());
+	//Kaszkaj - A crusade keeps the Eye as its first target even between area-target updates.
+	pTargetCity = (!GET_PLAYER(getOwnerINLINE()).isEurope() || isActiveTranscendenceREFUnit(this)) && GC.getGameINLINE().isTranscendenceEnemy(getOwnerINLINE()) ? GC.getGameINLINE().getTranscendenceCity() : NULL;
+	if (pTargetCity == NULL || pTargetCity->area() != area()) pTargetCity = area()->getTargetCity(getOwnerINLINE());
 
 	if (pTargetCity != NULL)
 	{
@@ -10169,7 +10388,9 @@ bool CvUnitAI::AI_targetCityNative(int iFlags)
 	iBestValue = 0;
 	pBestCity = NULL;
 
-	pTargetCity = area()->getTargetCity(getOwnerINLINE());
+	//Kaszkaj - A crusade keeps the Eye as its first target even between area-target updates.
+	pTargetCity = (!GET_PLAYER(getOwnerINLINE()).isEurope() || isActiveTranscendenceREFUnit(this)) && GC.getGameINLINE().isTranscendenceEnemy(getOwnerINLINE()) ? GC.getGameINLINE().getTranscendenceCity() : NULL;
+	if (pTargetCity == NULL || pTargetCity->area() != area()) pTargetCity = area()->getTargetCity(getOwnerINLINE());
 
 	if (pTargetCity != NULL)
 	{
@@ -12430,6 +12651,30 @@ bool CvUnitAI::AI_connectPlot(CvPlot* pPlot, int iRange)
 
 // Returns true if a mission was pushed...
 
+// Keep construction reservations local to one decision; Python overrides retain the original live queries.
+static bool AI_hasBuildMissionTarget(CvPlayerAI& kOwner, CvSelectionGroup* pSkipGroup, CvPlot* pPlot,
+    bool bCacheTargets, bool& bTargetsReady, std::set<CvPlot*>& apTargets)
+{
+    if (!bCacheTargets) return kOwner.AI_plotTargetMissionAIs(pPlot, MISSIONAI_BUILD, pSkipGroup) > 0;
+    if (!bTargetsReady)
+    {
+        CvSelectionGroup* pTransportGroup = NULL;
+        CvUnit* pHead = pSkipGroup == NULL ? NULL : pSkipGroup->getHeadUnit();
+        if (pHead != NULL && pHead->getTransportUnit() != NULL)
+            pTransportGroup = pHead->getTransportUnit()->getGroup();
+        int iLoop;
+        for (CvSelectionGroup* pGroup = kOwner.firstSelectionGroup(&iLoop); pGroup != NULL; pGroup = kOwner.nextSelectionGroup(&iLoop))
+        {
+            if (pGroup == pSkipGroup || pGroup == pTransportGroup || pGroup->getNumUnits() <= 0
+                || pGroup->AI_getMissionAIType() != MISSIONAI_BUILD) continue;
+            CvPlot* pMissionPlot = pGroup->AI_getMissionAIPlot();
+            if (pMissionPlot != NULL) apTargets.insert(pMissionPlot);
+        }
+        bTargetsReady = true;
+    }
+    return apTargets.find(pPlot) != apTargets.end();
+}
+
 //Kaszkaj - Colonial workers excavate revealed Ancient Mounds using normal build costs and ownership rules.
 bool CvUnitAI::AI_excavate()
 {
@@ -12439,12 +12684,17 @@ bool CvUnitAI::AI_excavate()
 	CvPlot* pBestPlot = NULL;
 	int iBestValue = 0;
 	int iWorkRate = std::max(1, workRate(true));
+	bool bCacheBuildTargets = !GC.getUSE_CAN_BUILD_CALLBACK() && !GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK()
+		&& !GC.getUSE_CAN_DECLARE_WAR_CALLBACK() && !GC.getUSE_CAN_DO_CIVIC_CALLBACK()
+		&& !GC.getUSE_CANNOT_DO_CIVIC_CALLBACK();
+	bool bBuildTargetsReady = false;
+	std::set<CvPlot*> apBuildTargets;
 	for (int i = 0; i < GC.getMapINLINE().numPlotsINLINE(); ++i)
 	{
 		CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(i);
 		if (pLoopPlot->getArea() != getArea() || !pLoopPlot->isRevealed(getTeam(), false)
 			|| pLoopPlot->isVisibleEnemyDefender(this) || !canBuild(pLoopPlot, eBuild)
-			|| kOwner.AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_BUILD, getGroup()) > 0) continue;
+			|| AI_hasBuildMissionTarget(kOwner, getGroup(), pLoopPlot, bCacheBuildTargets, bBuildTargetsReady, apBuildTargets)) continue;
 		int iValue = kOwner.AI_buildPlanValue(getUnitType(), pLoopPlot, eBuild);
 		if (iValue <= 0) continue;
 		int iWorkTurns = (std::max(0, pLoopPlot->getBuildTime(eBuild) - pLoopPlot->getBuildProgress(eBuild))
@@ -12489,6 +12739,11 @@ bool CvUnitAI::AI_improveSeaPlot()
 	BuildTypes eBestBuild = NO_BUILD;
 	int iBestValue = 0;
 	int iWorkRate = std::max(1, workRate(true));
+	bool bCacheBuildTargets = !GC.getUSE_CAN_BUILD_CALLBACK() && !GC.getUSE_UNIT_CANNOT_MOVE_INTO_CALLBACK()
+		&& !GC.getUSE_CAN_DECLARE_WAR_CALLBACK() && !GC.getUSE_CAN_DO_CIVIC_CALLBACK()
+		&& !GC.getUSE_CANNOT_DO_CIVIC_CALLBACK();
+	bool bBuildTargetsReady = false;
+	std::set<CvPlot*> apBuildTargets;
 	for (int iPlot = 0; iPlot < GC.getMapINLINE().numPlotsINLINE(); ++iPlot)
 	{
 		CvPlot* pLoopPlot = GC.getMapINLINE().plotByIndexINLINE(iPlot);
@@ -12498,7 +12753,7 @@ bool CvUnitAI::AI_improveSeaPlot()
 		{
 			continue;
 		}
-		if (kOwner.AI_plotTargetMissionAIs(pLoopPlot, MISSIONAI_BUILD, getGroup()) > 0)
+		if (AI_hasBuildMissionTarget(kOwner, getGroup(), pLoopPlot, bCacheBuildTargets, bBuildTargetsReady, apBuildTargets))
 		{
 			continue;
 		}
@@ -13788,8 +14043,323 @@ bool CvUnitAI::AI_disembark(bool bEnemyCity)
 	return false;
 }
 
+
+//Kaszkaj - Pursue the Eye of Terror directly while retaining legal movement, transport and bombardment rules.
+bool CvUnitAI::AI_transcendenceMove()
+{
+	CvCity* pEye = GC.getGameINLINE().getTranscendenceCity();
+	if (pEye == NULL || plot() == NULL || !canMove() || isCargo() || getUnitTravelState() != NO_UNIT_TRAVEL_STATE) return false;
+	UnitAITypes eAI = AI_getUnitAIType();
+	if (getDomainType() == DOMAIN_SEA)
+	{
+		if (eAI == UNITAI_COMBAT_SEA || eAI == UNITAI_ASSAULT_SEA || eAI == UNITAI_TRANSPORT_SEA)
+			return AI_transcendenceSeaAssault();
+		return false;
+	}
+	if (getDomainType() != DOMAIN_LAND || !canAttack() || area() != pEye->area()
+		|| (eAI != UNITAI_DEFENSIVE && eAI != UNITAI_OFFENSIVE && eAI != UNITAI_COUNTER)) return false;
+	if (stepDistance(getX_INLINE(), getY_INLINE(), pEye->getX_INLINE(), pEye->getY_INLINE()) == 1 && canBombard(plot()))
+	{
+		getGroup()->pushMission(MISSION_BOMBARD, -1, -1, 0, false, false, MISSIONAI_ASSAULT, pEye->plot());
+		return true;
+	}
+	if (atPlot(pEye->plot()) || !generatePath(pEye->plot(), MOVE_THROUGH_ENEMY, true)) return false;
+	CvPlot* pNext = getPathEndTurnPlot();
+	if (pNext == NULL || atPlot(pNext)) return false;
+	AI_setUnitAIState(UNITAI_STATE_CHARGING);
+	getGroup()->pushMission(MISSION_MOVE_TO, pNext->getX_INLINE(), pNext->getY_INLINE(), MOVE_THROUGH_ENEMY, false, false, MISSIONAI_ASSAULT, pEye->plot());
+	return true;
+}
+
+
+//Kaszkaj - Withdraw crusade copies to Sail to Earth points, collecting only their own retreating soldiers.
+bool CvUnitAI::AI_transcendenceRetreat()
+{
+	if (!isTranscendenceRetreatUnit(this)) return false;
+	if (plot() == NULL || getUnitTravelState() != NO_UNIT_TRAVEL_STATE || isCargo() || !canMove())
+	{
+		finishMoves();
+		return true;
+	}
+	// Independent ships and soldiers can fill transports without stranding a larger movement group.
+	if (getGroup()->getNumUnits() > 1) joinGroup(NULL);
+	CvPlayerAI& kOwner = GET_PLAYER(getOwnerINLINE());
+	const int iFlags = MOVE_IGNORE_DANGER;
+	if (getDomainType() == DOMAIN_LAND)
+	{
+		CvPlot* pCoast = NULL;
+		CvPlot* pMission = getGroup()->AI_getMissionAIPlot();
+		if (getGroup()->AI_getMissionAIType() == MISSIONAI_AWAIT_PICKUP && pMission != NULL
+			&& pMission->isCoastalLand() && pMission->area() == area()
+			&& (atPlot(pMission) || generatePath(pMission, iFlags, true))) pCoast = pMission;
+		if (pCoast == NULL)
+		{
+			TranscendenceRetreatCache& kCache = getTranscendenceRetreatPlots();
+			int iBestDistance = MAX_INT, iBestCost = MAX_INT;
+			for (uint i = 0; i < kCache.apCoasts.size(); ++i)
+			{
+				CvPlot* pLoop = kCache.apCoasts[i];
+				if (pLoop->area() != area() || pLoop->isVisibleEnemyDefender(this)) continue;
+				int iDistance = stepDistance(getX_INLINE(), getY_INLINE(), pLoop->getX_INLINE(), pLoop->getY_INLINE());
+				if (iDistance > iBestDistance || (!atPlot(pLoop) && !generatePath(pLoop, iFlags, true))) continue;
+				int iCost = atPlot(pLoop) ? 0 : getPathCost();
+				if (iDistance < iBestDistance || iCost < iBestCost)
+				{
+					iBestDistance = iDistance;
+					iBestCost = iCost;
+					pCoast = pLoop;
+				}
+			}
+		}
+		CvUnit* pBestShip = NULL;
+		int iBestDistance = MAX_INT, iLoop;
+		bool bFleetExists = false;
+		for (CvUnit* pShip = kOwner.firstUnit(&iLoop); pShip != NULL; pShip = kOwner.nextUnit(&iLoop))
+		{
+			if (!retreatTransportFits(pShip, this)) continue;
+			bool bSameOcean = pCoast == NULL;
+			if (pCoast != NULL && pShip->plot() != NULL)
+				for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; ++iDirection)
+				{
+					CvPlot* pWater = plotDirection(pCoast->getX_INLINE(), pCoast->getY_INLINE(), (DirectionTypes)iDirection);
+					if (pWater != NULL && pWater->isWater() && pWater->area() == pShip->area()) bSameOcean = true;
+				}
+			if (!bSameOcean) continue;
+			bFleetExists = true;
+			if (pShip->plot() == NULL || pShip->getUnitTravelState() != NO_UNIT_TRAVEL_STATE
+				|| !canLoadUnit(pShip, pShip->plot(), false)) continue;
+			int iDistance = stepDistance(getX_INLINE(), getY_INLINE(), pShip->getX_INLINE(), pShip->getY_INLINE());
+			if (iDistance < iBestDistance && (atPlot(pShip->plot())
+				|| (iDistance == 1 && canMoveInto(pShip->plot(), false, false))))
+			{
+				iBestDistance = iDistance;
+				pBestShip = pShip;
+			}
+		}
+		if (pBestShip != NULL)
+		{
+			if (atPlot(pBestShip->plot())) setTransportUnit(pBestShip);
+			else getGroup()->pushMission(MISSION_MOVE_TO, pBestShip->getX_INLINE(), pBestShip->getY_INLINE(), iFlags, false, false, MISSIONAI_LOAD_ASSAULT, NULL, pBestShip);
+			return true;
+		}
+		if (!bFleetExists) createTranscendenceRescue(this, pCoast);
+		if (pCoast != NULL)
+		{
+			if (atPlot(pCoast)) getGroup()->pushMission(MISSION_SKIP, -1, -1, 0, false, false, MISSIONAI_AWAIT_PICKUP, pCoast);
+			else getGroup()->pushMission(MISSION_MOVE_TO, pCoast->getX_INLINE(), pCoast->getY_INLINE(), iFlags, false, false, MISSIONAI_AWAIT_PICKUP, pCoast);
+		}
+		else getGroup()->pushMission(MISSION_SKIP);
+		return true;
+	}
+	if (getDomainType() == DOMAIN_SEA)
+	{
+		CvPlot* pBestWater = NULL;
+		CvPlot* pBestCoast = NULL;
+		bool bWaitingSoldiers = false;
+		int iBestDistance = MAX_INT, iBestCost = MAX_INT, iLoop;
+		if (cargoSpace() > 0 && !isFull())
+		{
+			for (CvUnit* pSoldier = kOwner.firstUnit(&iLoop); pSoldier != NULL; pSoldier = kOwner.nextUnit(&iLoop))
+			{
+				if (!isTranscendenceRetreatUnit(pSoldier) || pSoldier->isDelayedDeath() || pSoldier->isCargo()
+					|| pSoldier->plot() == NULL || pSoldier->getDomainType() != DOMAIN_LAND
+					|| !pSoldier->canLoadUnit(this, plot(), false)) continue;
+				if (pSoldier->atPlot(plot()))
+				{
+					pSoldier->setTransportUnit(this);
+					if (isFull()) break;
+					continue;
+				}
+				CvPlot* pCoast = pSoldier->getGroup()->AI_getMissionAIType() == MISSIONAI_AWAIT_PICKUP
+					? pSoldier->getGroup()->AI_getMissionAIPlot() : pSoldier->plot();
+				if (pCoast == NULL || !pCoast->isCoastalLand())
+				{
+					// An inland soldier has not selected a shore yet; wait only for shores on this ocean.
+					TranscendenceRetreatCache& kPlots = getTranscendenceRetreatPlots();
+					for (uint iCoast = 0; iCoast < kPlots.apCoasts.size() && !bWaitingSoldiers; ++iCoast)
+					{
+						CvPlot* pPossibleCoast = kPlots.apCoasts[iCoast];
+						if (pPossibleCoast->area() != pSoldier->area()) continue;
+						for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; ++iDirection)
+						{
+							CvPlot* pWater = plotDirection(pPossibleCoast->getX_INLINE(), pPossibleCoast->getY_INLINE(), (DirectionTypes)iDirection);
+							if (pWater != NULL && pWater->isWater() && pWater->area() == area()) bWaitingSoldiers = true;
+						}
+					}
+					continue;
+				}
+				for (int iDirection = 0; iDirection < NUM_DIRECTION_TYPES; ++iDirection)
+				{
+					CvPlot* pWater = plotDirection(pCoast->getX_INLINE(), pCoast->getY_INLINE(), (DirectionTypes)iDirection);
+					if (pWater == NULL || !pWater->isWater() || pWater->area() != area() || pWater->isVisibleEnemyDefender(this) || !AI_plotValid(pWater)) continue;
+					int iDistance = stepDistance(getX_INLINE(), getY_INLINE(), pWater->getX_INLINE(), pWater->getY_INLINE());
+					if (iDistance > iBestDistance || (!atPlot(pWater) && !generatePath(pWater, iFlags, true))) continue;
+					int iCost = atPlot(pWater) ? 0 : getPathCost();
+					if (iDistance < iBestDistance || iCost < iBestCost)
+					{
+						iBestDistance = iDistance;
+						iBestCost = iCost;
+						pBestWater = pWater;
+						pBestCoast = pCoast;
+					}
+				}
+			}
+		}
+		if (!isFull() && pBestWater != NULL)
+		{
+			if (atPlot(pBestWater))
+			{
+				std::vector<int> aiSoldiers;
+				for (CvUnit* pSoldier = kOwner.firstUnit(&iLoop); pSoldier != NULL; pSoldier = kOwner.nextUnit(&iLoop))
+					if (isTranscendenceRetreatUnit(pSoldier) && !pSoldier->isCargo() && pSoldier->canMove()
+						&& pSoldier->atPlot(pBestCoast) && pSoldier->canLoadUnit(this, plot(), false)) aiSoldiers.push_back(pSoldier->getID());
+				for (uint i = 0; i < aiSoldiers.size() && !isFull(); ++i)
+				{
+					CvUnit* pSoldier = kOwner.getUnit(aiSoldiers[i]);
+					if (pSoldier != NULL && pSoldier->canMoveInto(plot(), false, false))
+						pSoldier->getGroup()->pushMission(MISSION_MOVE_TO, getX_INLINE(), getY_INLINE(), iFlags, false, false, MISSIONAI_LOAD_ASSAULT, NULL, this);
+				}
+				getGroup()->pushMission(MISSION_SKIP, -1, -1, 0, false, false, MISSIONAI_PICKUP, pBestCoast);
+			}
+			else getGroup()->pushMission(MISSION_MOVE_TO, pBestWater->getX_INLINE(), pBestWater->getY_INLINE(), iFlags, false, false, MISSIONAI_PICKUP, pBestCoast);
+			return true;
+		}
+		// Wait for inland soldiers to establish a reachable shore before an empty rescue ship departs.
+		if (!isFull() && bWaitingSoldiers && pBestWater == NULL)
+		{
+			getGroup()->pushMission(MISSION_SKIP);
+			return true;
+		}
+		//Kaszkaj - Escorts leave last, after retreating soldiers and their transports have vanished at legal exits.
+		if (cargoSpace() <= 0)
+		{
+			for (CvUnit* pSoldier = kOwner.firstUnit(&iLoop); pSoldier != NULL; pSoldier = kOwner.nextUnit(&iLoop))
+				if (isTranscendenceRetreatUnit(pSoldier) && !pSoldier->isDelayedDeath()
+					&& pSoldier->plot() != NULL && pSoldier->getDomainType() == DOMAIN_LAND)
+				{
+					getGroup()->pushMission(MISSION_SKIP);
+					return true;
+				}
+		}
+		// A ship may vanish only at a legal exit and must never delete an original or active REF passenger.
+		if (canCrossOcean(plot(), UNIT_TRAVEL_STATE_TO_EUROPE))
+		{
+			for (CLLNode<IDInfo>* pNode = plot()->headUnitNode(); pNode != NULL; pNode = plot()->nextUnitNode(pNode))
+			{
+				CvUnit* pCargo = ::getUnit(pNode->m_data);
+				if (pCargo != NULL && pCargo->getTransportUnit() == this && !isTranscendenceRetreatUnit(pCargo))
+				{
+					getGroup()->pushMission(MISSION_SKIP);
+					return true;
+				}
+			}
+			kill(false);
+			return true;
+		}
+		TranscendenceRetreatCache& kCache = getTranscendenceRetreatPlots();
+		CvPlot* pExit = NULL;
+		CvPlot* pMission = getGroup()->AI_getMissionAIPlot();
+		if (getGroup()->AI_getMissionAIType() == MISSIONAI_SAIL_TO_EUROPE && pMission != NULL
+			&& canCrossOcean(pMission, UNIT_TRAVEL_STATE_TO_EUROPE) && generatePath(pMission, iFlags, true)) pExit = pMission;
+		if (pExit == NULL)
+		{
+			iBestDistance = MAX_INT;
+			iBestCost = MAX_INT;
+			for (uint i = 0; i < kCache.apExits.size(); ++i)
+			{
+				CvPlot* pLoop = kCache.apExits[i];
+				if (!AI_plotValid(pLoop) || pLoop->isVisibleEnemyDefender(this) || !canCrossOcean(pLoop, UNIT_TRAVEL_STATE_TO_EUROPE)) continue;
+				int iDistance = stepDistance(getX_INLINE(), getY_INLINE(), pLoop->getX_INLINE(), pLoop->getY_INLINE());
+				if (iDistance > iBestDistance || !generatePath(pLoop, iFlags, true)) continue;
+				int iCost = getPathCost();
+				if (iDistance < iBestDistance || iCost < iBestCost)
+				{
+					iBestDistance = iDistance;
+					iBestCost = iCost;
+					pExit = pLoop;
+				}
+			}
+		}
+		if (pExit != NULL) getGroup()->pushMission(MISSION_MOVE_TO, pExit->getX_INLINE(), pExit->getY_INLINE(), iFlags, false, false, MISSIONAI_SAIL_TO_EUROPE, pExit);
+		else getGroup()->pushMission(MISSION_SKIP);
+		return true;
+	}
+	getGroup()->pushMission(MISSION_SKIP);
+	return true;
+}
+
+//Kaszkaj - Land military cargo near the Eye without scanning every map tile for each ship.
+bool CvUnitAI::AI_transcendenceSeaAssault()
+{
+	CvCity* pEye = GC.getGameINLINE().getTranscendenceCity();
+	if (pEye == NULL || plot() == NULL || getDomainType() != DOMAIN_SEA || !canMove()
+		|| getUnitTravelState() != NO_UNIT_TRAVEL_STATE || !getGroup()->hasCargo()) return false;
+	bool bMilitaryCargo = false;
+	for (CLLNode<IDInfo>* pNode = plot()->headUnitNode(); pNode != NULL; pNode = plot()->nextUnitNode(pNode))
+	{
+		CvUnit* pCargo = ::getUnit(pNode->m_data);
+		if (pCargo != NULL && pCargo->getTransportUnit() != NULL && pCargo->getTransportUnit()->getGroup() == getGroup()
+			&& pCargo->getDomainType() == DOMAIN_LAND && pCargo->canAttack()) bMilitaryCargo = true;
+	}
+	if (!bMilitaryCargo) return false;
+	CvPlot* pBestLanding = NULL;
+	CvPlot* pBestWater = NULL;
+	int iBestDistance = MAX_INT, iBestCost = MAX_INT;
+	std::vector<int> aiSeenPlots;
+	for (int iDX = -5; iDX <= 5; ++iDX)
+		for (int iDY = -5; iDY <= 5; ++iDY)
+		{
+			CvPlot* pLanding = plotXY(pEye->getX_INLINE(), pEye->getY_INLINE(), iDX, iDY);
+			if (pLanding == NULL || pLanding->isWater() || pLanding->isImpassable() || pLanding->area() != pEye->area() || !pLanding->isCoastalLand()) continue;
+			int iPlot = GC.getMapINLINE().plotNum(pLanding->getX_INLINE(), pLanding->getY_INLINE());
+			if (std::find(aiSeenPlots.begin(), aiSeenPlots.end(), iPlot) != aiSeenPlots.end()) continue;
+			aiSeenPlots.push_back(iPlot);
+			int iDistance = stepDistance(pLanding->getX_INLINE(), pLanding->getY_INLINE(), pEye->getX_INLINE(), pEye->getY_INLINE());
+			if (iDistance > iBestDistance || !generatePath(pLanding, MOVE_THROUGH_ENEMY, true)) continue;
+			int iCost = getPathCost();
+			CvPlot* pWater = getGroup()->getPathSecondLastPlot();
+			if (pWater == NULL || !pWater->isWater()) continue;
+			if (iDistance < iBestDistance || iCost < iBestCost)
+			{
+				iBestDistance = iDistance;
+				iBestCost = iCost;
+				pBestLanding = pLanding;
+				pBestWater = pWater;
+			}
+		}
+	if (pBestWater == NULL) return false;
+	if (atPlot(pBestWater))
+	{
+		AI_wakeCargo(NO_UNITAI, AI_getMovePriority() + 1);
+		// Legal cargo moves capture the Eye or establish the closest reachable beachhead.
+		std::vector<int> aiCargo;
+		for (CLLNode<IDInfo>* pNode = plot()->headUnitNode(); pNode != NULL; pNode = plot()->nextUnitNode(pNode))
+		{
+			CvUnit* pCargo = ::getUnit(pNode->m_data);
+			if (pCargo != NULL && pCargo->getOwnerINLINE() == getOwnerINLINE() && pCargo->getTransportUnit() != NULL
+				&& pCargo->getTransportUnit()->getGroup() == getGroup()) aiCargo.push_back(pCargo->getID());
+		}
+		for (uint i = 0; i < aiCargo.size(); ++i)
+		{
+			CvUnit* pCargo = GET_PLAYER(getOwnerINLINE()).getUnit(aiCargo[i]);
+			if (pCargo != NULL && pCargo->getTransportUnit() != NULL && pCargo->getTransportUnit()->getGroup() == getGroup()
+				&& pCargo->getDomainType() == DOMAIN_LAND && pCargo->canAttack() && pCargo->canMove()
+				&& pCargo->canMoveInto(pBestLanding, true, false, true))
+				pCargo->getGroup()->pushMission(MISSION_MOVE_TO, pBestLanding->getX_INLINE(), pBestLanding->getY_INLINE(), MOVE_THROUGH_ENEMY, false, false, MISSIONAI_ASSAULT, pEye->plot());
+			// Capturing the colony can delete its city and eliminate its former owner during the mission.
+			if (GC.getGameINLINE().getTranscendenceCity() != pEye) return true;
+		}
+		getGroup()->pushMission(MISSION_SKIP);
+		return true;
+	}
+	getGroup()->pushMission(MISSION_MOVE_TO, pBestWater->getX_INLINE(), pBestWater->getY_INLINE(), 0, false, false, MISSIONAI_ASSAULT, pBestLanding);
+	return true;
+}
+
 bool CvUnitAI::AI_imperialSeaAssault()
 {
+	//Kaszkaj - The active Eye takes priority over ordinary imperial landing targets.
+	if (isActiveTranscendenceREFUnit(this) && GC.getGameINLINE().isTranscendenceEnemy(getOwnerINLINE()) && AI_transcendenceSeaAssault()) return true;
 	if (plot() == NULL || !canMove() || getUnitTravelState() != NO_UNIT_TRAVEL_STATE || !getGroup()->hasCargo()) return false;
     int iBestValue = 0;
     CvPlot* pBestPlot = NULL;
@@ -14607,6 +15177,8 @@ bool CvUnitAI::AI_canGroupWithAIType(UnitAITypes eUnitAI) const
 
 bool CvUnitAI::AI_allowGroup(const CvUnit* pUnit, UnitAITypes eUnitAI) const
 {
+	//Kaszkaj - Original and duplicated REF must not share movement groups.
+	if (GET_PLAYER(getOwnerINLINE()).isEurope() && !sameTranscendenceREFForce(this, pUnit)) return false;
 	CvSelectionGroup* pGroup = pUnit->getGroup();
 	CvPlot* pPlot = pUnit->plot();
 

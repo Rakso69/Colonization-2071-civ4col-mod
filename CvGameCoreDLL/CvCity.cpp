@@ -558,6 +558,8 @@ void CvCity::setupGraphical()
 
 void CvCity::kill()
 {
+	//Kaszkaj - Release the Eye project before removing its city; player elimination follows safe city deletion.
+	GC.getGameINLINE().onTranscendenceCityLost(this);
 	CvPlot* pPlot = plot();
 
 	removeTradeRoutes();
@@ -664,6 +666,8 @@ void CvCity::kill()
 	{
 		gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
 	}
+
+	GC.getGameINLINE().finishTranscendenceCityLoss();
 }
 
 
@@ -1552,6 +1556,17 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 
 	CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
+	//Kaszkaj - Only the committed Eye city may continue its worldwide exclusive project.
+	CvGame& kGame = GC.getGameINLINE();
+	if (eBuilding == kGame.getTranscendenceBuilding())
+	{
+		if (kGame.isTranscendenceActive())
+		{
+			return bContinue && kGame.isTranscendenceCity(this);
+		}
+		if (!kGame.canStartTranscendence(getOwnerINLINE(), this)) return false;
+	}
+
 	if(GC.getUSE_CAN_CONSTRUCT_CALLBACK())
 	{
 		CyCity* pyCity = new CyCity((CvCity*)this);
@@ -2176,6 +2191,15 @@ int CvCity::getYieldProductionNeeded(BuildingTypes eBuilding, YieldTypes eYield)
 		}
 	}
 
+	//Kaszkaj - AI opponents pay the configured extra goods cost for the Eye, without changing Industry costs.
+	if (!isHuman() && eYield != YIELD_HAMMERS && iProductionNeeded > 0
+		&& eBuilding == GC.getGameINLINE().getTranscendenceBuilding())
+	{
+		int iMultiplier = std::max(1, GC.getDefineINT("AI_TRANSCENDENCE_YIELD_COST_MULTIPLIER"));
+		__int64 iCost = (__int64)iProductionNeeded * iMultiplier;
+		iProductionNeeded = (int)std::min((__int64)MAX_INT, iCost);
+	}
+
 	return iProductionNeeded;
 }
 
@@ -2243,6 +2267,14 @@ int CvCity::getProductionTurnsLeft(BuildingTypes eBuilding, int iNum) const
 	}
 
 	iProductionNeeded = getYieldProductionNeeded(eBuilding, YIELD_HAMMERS);
+
+	//Kaszkaj - Estimate committed Eye construction from the Industry supplied by all owner colonies.
+	CvGame& kGame = GC.getGameINLINE();
+	if (kGame.isTranscendenceActive() && kGame.isTranscendenceCity(this) && eBuilding == kGame.getTranscendenceBuilding())
+	{
+		return getProductionTurnsLeft(iProductionNeeded, iProduction,
+			kGame.getTranscendenceProductionRate(iNum == 0), kGame.getTranscendenceProductionRate(false));
+	}
 
 	iProductionModifier = getProductionModifier(eBuilding);
 
@@ -2372,7 +2404,18 @@ int CvCity::getProductionDifference(int iProductionModifier, bool bOverflow, boo
 
 int CvCity::getCurrentProductionDifference(bool bOverflow) const
 {
+	//Kaszkaj - Display the shared Industry rate while this city constructs the Eye.
+	CvGame& kGame = GC.getGameINLINE();
+	if (kGame.isTranscendenceActive() && kGame.isTranscendenceCity(this)) return kGame.getTranscendenceProductionRate(bOverflow);
 	return getProductionDifference(getProductionModifier(), !isProductionConvince() && bOverflow, false);
+}
+
+//Kaszkaj - Apply each colony's existing production rules to its contribution to the Eye.
+int CvCity::getTranscendenceProduction(bool bUseStoredHammers, bool bOverflow) const
+{
+	BuildingTypes eBuilding = GC.getGameINLINE().getTranscendenceBuilding();
+	if (eBuilding == NO_BUILDING) return 0;
+	return getProductionDifference(getProductionModifier(eBuilding), bOverflow, bUseStoredHammers);
 }
 
 int CvCity::getStoredProductionDifference() const
@@ -2387,6 +2430,11 @@ int CvCity::getExtraProductionDifference(int iExtra, int iModifier) const
 
 bool CvCity::canHurry(HurryTypes eHurry, bool bTestVisible) const
 {
+	//Kaszkaj - The Eye and its paused colony projects cannot be rushed.
+	CvGame& kGame = GC.getGameINLINE();
+	if (kGame.isTranscendenceActive() && kGame.getTranscendencePlayer() == getOwnerINLINE()) return false;
+	BuildingTypes eBuilding = getProductionBuilding();
+	if (eBuilding != NO_BUILDING && !GC.getBuildingInfo(eBuilding).isHurryAllowed()) return false;
 	if (!GC.getHurryInfo(eHurry).isCity())
 	{
 		return false;
@@ -5582,6 +5630,8 @@ bool CvCity::isDominantSpecialBuilding(BuildingTypes eIndex) const
 
 void CvCity::clearOrderQueue()
 {
+	//Kaszkaj - Preserve the committed Eye head and the colony projects waiting behind it.
+	if (GC.getGameINLINE().isTranscendenceActive() && GC.getGameINLINE().isTranscendenceCity(this)) return;
 	while (headOrderQueueNode() != NULL)
 	{
 		popOrder(0);
@@ -5596,6 +5646,18 @@ void CvCity::clearOrderQueue()
 
 void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bool bPop, bool bAppend, bool bForce)
 {
+	//Kaszkaj - Starting the Eye commits the head immediately while preserving earlier projects in its tail.
+	CvGame& kGame = GC.getGameINLINE();
+	if (kGame.isTranscendenceActive() && kGame.isTranscendenceCity(this)) return;
+	bool bStartTranscendence = eOrder == ORDER_CONSTRUCT && iData1 == kGame.getTranscendenceBuilding();
+	if (bStartTranscendence)
+	{
+		if (!canConstruct((BuildingTypes)iData1) || !kGame.canStartTranscendence(getOwnerINLINE(), this)) return;
+		bSave = false;
+		bPop = false;
+		bAppend = false;
+	}
+
 	if (bPop)
 	{
 		popOrder(0);
@@ -5671,6 +5733,16 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 		startHeadOrder();
 	}
 
+	if (bStartTranscendence && !kGame.startTranscendence(this))
+	{
+		CLLNode<OrderData>* pHead = headOrderQueueNode();
+		if (pHead != NULL && pHead->m_data.eOrderType == ORDER_CONSTRUCT && pHead->m_data.iData1 == iData1)
+		{
+			popOrder(0, false, false);
+		}
+		return;
+	}
+
 	if ((getTeam() == GC.getGameINLINE().getActiveTeam()) || GC.getGameINLINE().isDebugMode())
 	{
 		setBillboardDirty(true);
@@ -5726,12 +5798,23 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 		return;
 	}
 
+	//Kaszkaj - Neither cancellation nor cargo delivery may bypass the committed Eye production rules.
+	CvGame& kGame = GC.getGameINLINE();
+	bool bEyeOrder = pOrderNode->m_data.eOrderType == ORDER_CONSTRUCT
+		&& pOrderNode->m_data.iData1 == kGame.getTranscendenceBuilding();
+	bool bCommittedEye = bEyeOrder && kGame.isTranscendenceActive() && kGame.isTranscendenceCity(this);
+	if (bCommittedEye && (!bFinish || getBuildingProduction((BuildingTypes)pOrderNode->m_data.iData1)
+		< getYieldProductionNeeded((BuildingTypes)pOrderNode->m_data.iData1, YIELD_HAMMERS))) return;
+	if (bFinish && kGame.isTranscendenceActive() && kGame.getTranscendencePlayer() == getOwnerINLINE() && !bCommittedEye) return;
+
 	if (bFinish && !processRequiredYields(iNum))
 	{
+		if (bCommittedEye) return;
 		bFinish = false;
 	}
+	bool bCompleteTranscendence = bFinish && bCommittedEye;
 
-	if (bFinish && pOrderNode->m_data.bSave)
+	if (bFinish && pOrderNode->m_data.bSave && !bEyeOrder)
 	{
 		pushOrder(pOrderNode->m_data.eOrderType, pOrderNode->m_data.iData1, pOrderNode->m_data.iData2, true, false, true);
 	}
@@ -5822,6 +5905,13 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 	m_orderQueue.deleteNode(pOrderNode);
 	pOrderNode = NULL;
 
+	//Kaszkaj - Declare Transcendence only after the completed queue node has been safely removed.
+	if (bCompleteTranscendence)
+	{
+		bChoose = false;
+		kGame.completeTranscendence(this);
+	}
+
 	if (bStart)
 	{
 		startHeadOrder();
@@ -5900,6 +5990,10 @@ void CvCity::popOrder(int iNum, bool bFinish, bool bChoose)
 
 bool CvCity::checkRequiredYields(OrderTypes eOrder, int iData1) const
 {
+	//Kaszkaj - Check pooled colony goods for the committed Eye without consuming them.
+	CvGame& kGame = GC.getGameINLINE();
+	bool bEye = eOrder == ORDER_CONSTRUCT && iData1 == kGame.getTranscendenceBuilding()
+		&& kGame.isTranscendenceActive() && kGame.isTranscendenceCity(this);
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
 		YieldTypes eYield = (YieldTypes) iYield;
@@ -5912,13 +6006,15 @@ bool CvCity::checkRequiredYields(OrderTypes eOrder, int iData1) const
 				iAmount = GET_PLAYER(getOwnerINLINE()).getYieldProductionNeeded((UnitTypes) iData1, eYield);
 				break;
 			case ORDER_CONSTRUCT:
-				iAmount = GET_PLAYER(getOwnerINLINE()).getYieldProductionNeeded((BuildingTypes) iData1, eYield);
+				iAmount = bEye ? getYieldProductionNeeded((BuildingTypes)iData1, eYield)
+					: GET_PLAYER(getOwnerINLINE()).getYieldProductionNeeded((BuildingTypes)iData1, eYield);
 				break;
 			default:
 				break;
 			}
 
-			if (iAmount > getYieldStored(eYield) + getYieldRushed(eYield))
+			int iStored = bEye ? kGame.getTranscendenceYieldStored(eYield) : getYieldStored(eYield) + getYieldRushed(eYield);
+			if (iAmount > iStored)
 			{
 				return false;
 			}
@@ -5930,6 +6026,8 @@ bool CvCity::checkRequiredYields(OrderTypes eOrder, int iData1) const
 
 void CvCity::checkCompletedBuilds(YieldTypes eYield, int iChange)
 {
+	//Kaszkaj - Material deliveries must not complete projects paused for the Eye.
+	if (GC.getGameINLINE().isTranscendenceActive() && GC.getGameINLINE().getTranscendencePlayer() == getOwnerINLINE()) return;
 	if (iChange > 0)
 	{
 		if (GC.getYieldInfo(eYield).isCargo())
@@ -5990,6 +6088,12 @@ bool CvCity::processRequiredYields(int iNum)
 		return false;
 	}
 
+	//Kaszkaj - The Eye consumes its required goods from the owner's pooled colony stocks.
+	if (pOrderNode->m_data.eOrderType == ORDER_CONSTRUCT && pOrderNode->m_data.iData1 == GC.getGameINLINE().getTranscendenceBuilding())
+	{
+		return GC.getGameINLINE().processTranscendenceYields(this);
+	}
+
 	if (!checkRequiredYields(pOrderNode->m_data.eOrderType, pOrderNode->m_data.iData1))
 	{
 		return false;
@@ -6024,6 +6128,8 @@ bool CvCity::processRequiredYields(int iNum)
 
 void CvCity::getOrdersWaitingForYield(std::vector< std::pair<OrderTypes, int> >& aOrders, YieldTypes eYield, bool bYieldsComplete, int iChange) const
 {
+	//Kaszkaj - Hide completion choices for colony projects paused by the Eye.
+	if (GC.getGameINLINE().isTranscendenceActive() && GC.getGameINLINE().getTranscendencePlayer() == getOwnerINLINE()) return;
 	int iStored = getYieldStored(eYield) + getYieldRushed(eYield);
 
 	for (int iUnit = 0; iUnit < GC.getNumUnitInfos(); ++iUnit)
@@ -6385,13 +6491,10 @@ void CvCity::doYields()
 			if (GC.getYieldInfo(eYield).isCargo())
 			{
 				//Androrc Domestic Market
-				if (getYieldDemand(eYield) > 0 && getYieldStored(eYield) > 0)
+				int iDemand = getYieldStored(eYield) > 0 ? getYieldDemand(eYield) : 0;
+				if (iDemand > 0)
 				{
-					int iAmount = getYieldDemand(eYield);
-					if (getYieldDemand(eYield) > getYieldStored(eYield))
-					{
-						iAmount = getYieldStored(eYield);
-					}
+					int iAmount = std::min(iDemand, getYieldStored(eYield));
 					int iProfit = iAmount * getYieldBuyPrice(eYield);
 					changeYieldStored(eYield, -iAmount);
 					GET_PLAYER(getOwnerINLINE()).changeGold(iProfit);
@@ -6574,6 +6677,8 @@ void CvCity::doSpecialists()
 
 bool CvCity::doCheckProduction()
 {
+	//Kaszkaj - Keep committed and paused projects intact while all colonies contribute to the Eye.
+	if (GC.getGameINLINE().isTranscendenceActive() && GC.getGameINLINE().getTranscendencePlayer() == getOwnerINLINE()) return true;
 	CLLNode<OrderData>* pOrderNode;
 	OrderData* pOrder;
 	UnitTypes eUpgradeUnit;
@@ -6683,6 +6788,9 @@ void CvCity::doCheat(bool bAlt, bool bShift, bool bCtrl)
 
 void CvCity::doProduction(bool bAllowNoProduction)
 {
+	//Kaszkaj - Shared Eye production is applied once after every colony has generated its Industry.
+	CvGame& kGame = GC.getGameINLINE();
+	if (kGame.isTranscendenceActive() && kGame.getTranscendencePlayer() == getOwnerINLINE()) return;
 	CyCity* pyCity = new CyCity(this);
 	CyArgsList argsList;
 	argsList.add(gDLL->getPythonIFace()->makePythonObject(pyCity));	// pass in city class
@@ -6701,6 +6809,8 @@ void CvCity::doProduction(bool bAllowNoProduction)
 			AI_chooseProduction();
 		}
 	}
+
+	if (kGame.isTranscendenceActive() && kGame.getTranscendencePlayer() == getOwnerINLINE()) return;
 
 	if (!bAllowNoProduction && !isProduction())
 	{
@@ -6743,6 +6853,8 @@ void CvCity::doProduction(bool bAllowNoProduction)
 
 void CvCity::doDecay()
 {
+	//Kaszkaj - Preserve accumulated work in projects waiting for the Eye to finish.
+	if (GC.getGameINLINE().isTranscendenceActive() && GC.getGameINLINE().getTranscendencePlayer() == getOwnerINLINE()) return;
 	int iI;
 
 	for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
@@ -7208,6 +7320,17 @@ void CvCity::getVisibleBuildings(std::list<BuildingTypes>& kChosenVisible, int& 
 	for(int i = 0; i < iNumUniques; i++)
 	{
 		kChosenVisible.push_back(kVisible[i]);
+	}
+
+	//Kaszkaj - Show the Eye during construction even when ordinary city layout limits would hide it.
+	if (GC.getGameINLINE().isTranscendenceCity(this))
+	{
+		BuildingTypes eEye = GC.getGameINLINE().getTranscendenceBuilding();
+		if (eEye != NO_BUILDING && std::find(kChosenVisible.begin(), kChosenVisible.end(), eEye) == kChosenVisible.end())
+		{
+			kChosenVisible.push_back(eEye);
+			iChosenNumGenerics = std::max(0, iChosenNumGenerics - 1);
+		}
 	}
 }
 
@@ -9486,10 +9609,7 @@ int CvCity::getYieldDemand(YieldTypes eYield) const
 	for (uint i = 0; i < m_aPopulationUnits.size(); ++i)
 	{
 		CvUnit* pLoopUnit = m_aPopulationUnits[i];
-		if (GC.getUnitInfo(pLoopUnit->getUnitType()).getYieldDemand(eYield) != 0)
-		{
-			iDemand += GC.getUnitInfo(pLoopUnit->getUnitType()).getYieldDemand(eYield);
-		}
+		iDemand += GC.getUnitInfo(pLoopUnit->getUnitType()).getYieldDemand(eYield);
 	}
 
 	return iDemand / 100;

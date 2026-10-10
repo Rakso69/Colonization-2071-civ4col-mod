@@ -129,6 +129,7 @@ void CvArtFileMgr::Init()
 //----------------------------------------------------------------------------
 void CvArtFileMgr::DeInit()
 {
+	resetTranscendenceArtScale();
 	int i;
 	for(i=0;i<(int)m_artInfoItems.size();i++)
 	{

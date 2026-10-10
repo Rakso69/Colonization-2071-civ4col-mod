@@ -9,6 +9,11 @@
 
 class CvEventTriggerInfo;
 
+//Kaszkaj - Persistently distinguish crusade copies from the original Progenitor Expeditionary Forces.
+bool isTranscendenceREFUnit(const CvUnit* pUnit);
+//Kaszkaj - Returning REF copies must not join a later crusade.
+bool isActiveTranscendenceREFUnit(const CvUnit* pUnit);
+
 class CvPlayerAI : public CvPlayer
 {
 
@@ -321,8 +326,12 @@ public:
 
 	bool AI_isKing();
 
-	CvPlot* AI_getImperialShipSpawnPlot(const CvUnit* pShip = NULL);
+	CvPlot* AI_getImperialShipSpawnPlot(const CvUnit* pShip = NULL, bool bTranscendence = false);
 	bool AI_shouldReturnImperialShip(const CvUnit* pShip) const;
+	//Kaszkaj - Focus the crusade on the Eye and launch the Progenitor Expeditionary Forces immediately.
+	void AI_doTranscendenceAssault(bool bNewCrusade = false);
+	//Kaszkaj - Start the Eye only with an army, fleet and garrison prepared for the full crusade.
+	bool AI_isReadyForTranscendence(const CvCity* pCity) const;
 
 	void AI_addUnitToMoveQueue(CvUnit* pUnit);
 	void AI_removeUnitFromMoveQueue(CvUnit* pUnit);
@@ -426,6 +435,16 @@ public:
   virtual void write(FDataStreamBase* pStream);
 
 protected:
+	struct FoundValueContext
+	{
+		FoundValueContext() : bBestYieldsReady(false), bPlotProfessionsReady(false) {}
+		bool bBestYieldsReady;
+		bool bPlotProfessionsReady;
+		int aiBestWorkedYield[NUM_YIELD_TYPES];
+		int aiBestUnworkedYield[NUM_YIELD_TYPES];
+		bool abPlotYieldAvailable[NUM_YIELD_TYPES][2];
+	};
+	int AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStartingLoc, FoundValueContext& kContext);
 
 	static CvPlayerAI* m_aPlayers;
 

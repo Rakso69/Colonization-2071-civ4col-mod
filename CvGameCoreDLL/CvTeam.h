@@ -35,6 +35,8 @@ public:
 	bool canChangeWarPeace(TeamTypes eTeam) const;
 	DllExport bool canDeclareWar(TeamTypes eTeam) const;
 	DllExport void declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan);
+	//Kaszkaj - Declare the mandatory Eye crusade without triggering normal Revolution mechanics.
+	void declareTranscendenceWar(TeamTypes eTeam);
 	DllExport void makePeace(TeamTypes eTeam, bool bBumpUnits = true);
 	bool canContact(TeamTypes eTeam) const;
 	void meet(TeamTypes eTeam, bool bNewDiplo);

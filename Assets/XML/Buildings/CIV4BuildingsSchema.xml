@@ -53,7 +53,8 @@
 	<ElementType name="bCenterInCity" content="textOnly" dt:type="boolean"/>
 	<ElementType name="iAIWeight" content="textOnly" dt:type="int"/>
 	<ElementType name="iCost" content="textOnly" dt:type="int"/>
-	<ElementType name="iHurryCostModifier" content="textOnly" dt:type="int"/>
+	<!-- Kaszkaj: An empty modifier forbids hurry; numeric modifiers retain their original meaning. -->
+	<ElementType name="iHurryCostModifier" content="textOnly" dt:type="string"/>
 	<ElementType name="iAdvancedStartCost" content="textOnly" dt:type="int"/>
 	<ElementType name="iAdvancedStartCostIncrease" content="textOnly" dt:type="int"/>
 	<ElementType name="iMinAreaSize" content="textOnly" dt:type="int"/>

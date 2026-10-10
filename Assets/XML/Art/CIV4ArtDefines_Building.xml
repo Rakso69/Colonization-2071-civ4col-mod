@@ -883,6 +883,19 @@
 			<KFM/>
 			<Button>,Art/Interface/Buttons/Unit_Resource_Colonization_Atlas.dds,7,10</Button>
 		</BuildingArtInfo>
+<!-- Eye of Pandora-->
+		<BuildingArtInfo>
+			<Type>ART_DEF_BUILDING_EYE_OF_TERROR</Type>
+			<LSystem>LSYSTEM_1x1</LSystem>
+			<bAnimated>1</bAnimated>
+			<CityTexture>,Art/Interface/Screens/City_Management/city_buildings_altas.dds,3,4</CityTexture>
+			<CitySelectedTexture>,IS,FILLER,TEXT</CitySelectedTexture>
+			<fScale>0.5</fScale>
+			<fInterfaceScale>0.3</fInterfaceScale>
+			<NIF>Art/Structures/Buildings/Eye_of_Pandora/SuperNova.nif</NIF>
+			<KFM/>
+			<Button>Art/Interface/Buttons/Buildings/Eye_of_Pandora.dds</Button>
+		</BuildingArtInfo>
 	</BuildingArtInfos>
 </Civ4ArtDefines>
 <!-- Power Plant-->

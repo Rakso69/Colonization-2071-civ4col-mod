@@ -301,5 +301,11 @@
 			<DefaultBuilding>BUILDING_BANK</DefaultBuilding>
 			<VictoryThresholds/>
 		</BuildingClassInfo>
+		<BuildingClassInfo>
+			<Type>BUILDINGCLASS_TRANSCENDENCE</Type>
+			<Description>TXT_KEY_BUILDING_EYE_OF_TERROR</Description>
+			<DefaultBuilding>BUILDING_EYE_OF_TERROR</DefaultBuilding>
+			<VictoryThresholds/>
+		</BuildingClassInfo>
 	</BuildingClassInfos>
 </Civ4BuildingClassInfos>

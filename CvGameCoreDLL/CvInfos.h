@@ -1029,7 +1029,6 @@ public:
 
     DllExport int getAllowsBuildTypes(int i) const;
     DllExport int getAllowsBuildTypesTerrain(int i) const;
-    DllExport int getIndustrializationVictory(int i) const;
 	DllExport int getAllowsProfessions(int i) const;
 	DllExport int getRequiredYields(int i) const;
 	DllExport int* getRequiredYieldsArray() const;
@@ -1112,7 +1111,6 @@ protected:
     int* m_aiAllowsUnitClasses;
     int* m_aiAllowsBuildTypes;
     int* m_aiAllowsBuildTypesTerrain;
-    int* m_aiIndustrializationVictory;
     int* m_aiAllowsProfessions;
     int* m_aiRequiredYields;
 
@@ -1232,6 +1230,7 @@ public:
 	DllExport int getFreePromotion() const;
 	DllExport int getAIWeight() const;
 	DllExport int getHurryCostModifier() const;
+	bool isHurryAllowed() const;
 	DllExport int getAdvancedStartCost() const;
 	DllExport int getAdvancedStartCostIncrease() const;
 	DllExport int getProfessionOutput() const;
@@ -1363,6 +1362,9 @@ protected:
 	int* m_aiPrereqNumOfBuildingClass;
 	int* m_aiYieldCost;
 	bool* m_abBuildingClassNeededInCity;
+private:
+	// Kaszkaj: An empty hurry modifier disables all hurry methods for this building.
+	bool m_bHurryAllowed;
 };
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1657,7 +1659,8 @@ public:
 	DllExport bool isPermanent() const;
 	DllExport bool isRevolution() const;
 	///TKs Invention Core Mod v 1.0
-	DllExport bool isIndustrialization() const;
+	// Kaszkaj: Transcendence is completed by the Eye of Terror project.
+	DllExport bool isTranscendence() const;
 	///Tke
 
 	DllExport const char* getMovie() const;
@@ -1678,7 +1681,7 @@ protected:
 	bool m_bPermanent;
 	bool m_bRevolution;
 	///TKs Invention Core Mod v 1.0
-	bool m_bIndustrialization;
+	bool m_bTranscendence;
 	///TKe
 	CvString m_szMovie;
 };

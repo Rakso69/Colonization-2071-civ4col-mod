@@ -241,7 +241,7 @@
 		<element type="HandicapInfo" maxOccurs="*"/>
 	</ElementType>
 	<ElementType name="bDefault" content="textOnly" dt:type="boolean"/>
-  <ElementType name="bIndustrialization" content="textOnly" dt:type="boolean"/>
+  <ElementType name="bTranscendence" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bTargetScore" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bEndEurope" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bEndScore" content="textOnly" dt:type="boolean"/>
@@ -260,7 +260,7 @@
 		<element type="Description"/>
 		<element type="Civilopedia"/>
 		<element type="bDefault"/>
-    <element type="bIndustrialization"/>
+    <element type="bTranscendence"/>
 		<element type="bTargetScore"/>
 		<element type="bEndEurope"/>
 		<element type="bEndScore"/>
@@ -400,13 +400,6 @@
   </ElementType>
   <ElementType name="RequiredYields" content="eltOnly">
     <element type="RequiredYield" minOccurs="0" maxOccurs="*"/>
-  </ElementType>
-  <ElementType name="NeededYields" content="eltOnly">
-    <element type="YieldType"/>
-    <element type="iChange"/>
-  </ElementType>
-  <ElementType name="IndustrializationVictory" content="eltOnly">
-    <element type="NeededYields" minOccurs="0" maxOccurs="*"/>
   </ElementType>
   <ElementType name="RequiredUnitType" content="textOnly"/>
   <ElementType name="RequiredInvention" content="textOnly"/>
@@ -572,7 +565,6 @@
     <element type="iGoldBonus" minOccurs="0"/>
     <element type="iFreeTechs" minOccurs="0"/>
     <element type="iKingTreasureTransportMod" minOccurs="0"/>
-    <element type="IndustrializationVictory" minOccurs="0"/>
   </ElementType>
 	<ElementType name="CivicInfos" content="eltOnly">
 		<element type="CivicInfo" maxOccurs="*"/>

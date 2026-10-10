@@ -465,9 +465,35 @@ bool CyGame::isVictoryValid(int /*VictoryTypes*/ eIndex)
 	return m_pGame ? m_pGame->isVictoryValid((VictoryTypes)eIndex) : false;
 }
 ///TKs Invention Core Mod v 1.0
-bool CyGame::isIndustrialVictoryAll()
+// Kaszkaj: Expose the single Transcendence project without scanning cities in Python.
+int CyGame::getTranscendencePlayer()
 {
-	return m_pGame ? m_pGame->isIndustrialVictoryAll() : false;
+	return m_pGame ? m_pGame->getTranscendencePlayer() : NO_PLAYER;
+}
+int CyGame::getTranscendenceCityID()
+{
+	return m_pGame ? m_pGame->getTranscendenceCityID() : -1;
+}
+int CyGame::getTranscendenceTurns()
+{
+	return m_pGame ? m_pGame->getTranscendenceTurns() : 0;
+}
+bool CyGame::isTranscendenceActive()
+{
+	return m_pGame ? m_pGame->isTranscendenceActive() : false;
+}
+//Kaszkaj - Expose the pending mandatory notice to the interface before it requests diplomacy.
+bool CyGame::isTranscendenceDiplomacyPending(int /*PlayerTypes*/ ePlayer)
+{
+	return m_pGame ? m_pGame->isTranscendenceDiplomacyPending((PlayerTypes)ePlayer) : false;
+}
+int CyGame::getTranscendenceProductionRate()
+{
+	return m_pGame ? m_pGame->getTranscendenceProductionRate() : 0;
+}
+int CyGame::getTranscendenceYieldStored(int /*YieldTypes*/ eYield)
+{
+	return m_pGame && eYield >= 0 && eYield < NUM_YIELD_TYPES ? m_pGame->getTranscendenceYieldStored((YieldTypes)eYield) : 0;
 }
 ///TKe
 bool CyGame::isSpecialUnitValid(int /*SpecialUnitTypes*/ eSpecialUnitType)

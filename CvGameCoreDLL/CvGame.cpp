@@ -4,6 +4,7 @@
 #include "CvGameCoreUtils.h"
 #include "CvGameCoreUtils.h"
 #include "CvGame.h"
+#include "CvCity.h"
 #include "CvGameAI.h"
 #include "CvMap.h"
 #include "CvPlot.h"
@@ -438,7 +439,38 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 	m_bPlayerOptionsSent = false;
 	m_bMaxTurnsExtended = false;
 	///TKs Invention Core Mod v 1.0
-	m_bIndustrialVictoryAll = false;
+	m_bUnusedGameSaveBool = false;
+	//Kaszkaj - Reset the project, notifications and transient research caches for a new game or load.
+	m_eTranscendencePlayer = NO_PLAYER;
+	m_iTranscendenceCityID = -1;
+	m_iTranscendencePlot = -1;
+	m_iTranscendenceStartTurn = -1;
+	m_iTranscendenceBuildTurns = 0;
+	m_iTranscendenceLastProductionTurn = -1;
+	m_iTranscendencePhase = 0;
+	m_eTranscendencePendingLoss = NO_PLAYER;
+	m_eTranscendenceBuilding = NO_BUILDING;
+	m_eTranscendenceVictory = NO_VICTORY;
+	m_bTranscendenceCollectIndustry = false;
+	m_bTranscendenceRestorePending = false;
+	m_iTranscendenceAcquisitionDepth = 0;
+	m_bTranscendenceEliminating = false;
+	m_bTranscendenceExarchAlliance = false;
+	m_bTranscendenceRetreatRunning = false;
+	m_bTranscendenceRetreatPending = false;
+	m_iTranscendenceAllianceCheckTurn = -1;
+	resetTranscendenceRetreatCache();
+	m_aeTranscendenceRequiredResearch.clear();
+	for (int i = 0; i < MAX_PLAYERS; ++i)
+	{
+		m_abTranscendenceAcknowledged[i] = false;
+		m_abTranscendenceREFDeployed[i] = false;
+		m_abTranscendenceDiplomacyQueued[i] = false;
+		m_aeTranscendenceSpeaker[i] = NO_PLAYER;
+		m_aiTranscendenceResearchState[i] = -1;
+	}
+	for (int i = 0; i < MAX_TEAMS; ++i) m_abTranscendenceSight[i] = false;
+
 	///TKe
 
 	m_eHandicap = eHandicap;
@@ -1037,6 +1069,10 @@ void CvGame::update()
 
 	if (!gDLL->GetWorldBuilderMode() || isInAdvancedStart())
 	{
+		//Kaszkaj - Adopt compatible older project queues only after the whole saved world is loaded.
+		restoreTranscendenceConstruction();
+		updateTranscendenceRetreat();
+
 		sendPlayerOptions();
 
 		// sample generic event
@@ -3560,17 +3596,468 @@ bool CvGame::isMaxTurnsExtended() const
 {
 	return m_bMaxTurnsExtended;
 }
-///TKs Invention Core Mod v 1.0
-bool CvGame::isIndustrialVictoryAll() const
+//Kaszkaj - Cache the dedicated project identifiers and required discoveries without scanning the map.
+BuildingTypes CvGame::getTranscendenceBuilding() const
 {
-	return m_bIndustrialVictoryAll;
+	if (m_eTranscendenceBuilding == NO_BUILDING && GC.getNumBuildingInfos() > 0)
+		m_eTranscendenceBuilding = (BuildingTypes)GC.getInfoTypeForString("BUILDING_EYE_OF_TERROR", true);
+	return m_eTranscendenceBuilding;
 }
 
-void CvGame::setIndustrialVictoryAll(bool bExtended)
+PlayerTypes CvGame::getTranscendencePlayer() const { return m_eTranscendencePlayer; }
+int CvGame::getTranscendenceCityID() const { return m_iTranscendenceCityID; }
+int CvGame::getTranscendenceTurns() const { return m_iTranscendenceBuildTurns; }
+
+CvCity* CvGame::getTranscendenceCity() const
 {
-	m_bIndustrialVictoryAll = bExtended;
+	return m_eTranscendencePlayer == NO_PLAYER ? NULL : GET_PLAYER(m_eTranscendencePlayer).getCity(m_iTranscendenceCityID);
 }
-///TKe
+
+bool CvGame::isTranscendenceActive() const
+{
+	return m_eTranscendencePlayer != NO_PLAYER && (m_iTranscendencePhase == 1 || m_iTranscendencePhase == 2);
+}
+
+bool CvGame::isTranscendenceCity(const CvCity* pCity) const
+{
+	return isTranscendenceActive() && pCity != NULL && pCity->getOwnerINLINE() == m_eTranscendencePlayer
+		&& pCity->getID() == m_iTranscendenceCityID;
+}
+
+void CvGame::invalidateTranscendenceResearch(PlayerTypes ePlayer)
+{
+	if (ePlayer >= 0 && ePlayer < MAX_PLAYERS) m_aiTranscendenceResearchState[ePlayer] = -1;
+}
+
+bool CvGame::canStartTranscendence(PlayerTypes ePlayer, const CvCity* pCity) const
+{
+	if (ePlayer < 0 || ePlayer >= MAX_PLAYERS || isTranscendenceActive()
+		|| m_eTranscendencePendingLoss != NO_PLAYER || getWinner() != NO_TEAM) return false;
+	BuildingTypes eBuilding = getTranscendenceBuilding();
+	if (eBuilding == NO_BUILDING) return false;
+	if (m_eTranscendenceVictory == NO_VICTORY)
+		m_eTranscendenceVictory = (VictoryTypes)GC.getInfoTypeForString("VICTORY_TRANSCENDENCE", true);
+	if (m_eTranscendenceVictory == NO_VICTORY || !isVictoryValid(m_eTranscendenceVictory)) return false;
+	const CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+	if (!kPlayer.isAlive() || kPlayer.isEurope() || kPlayer.isBarbarian() || kPlayer.getNumCities() == 0) return false;
+	if (pCity != NULL && (pCity->getOwnerINLINE() != ePlayer || pCity->isHasBuilding(eBuilding))) return false;
+	BuildingClassTypes eClass = (BuildingClassTypes)GC.getBuildingInfo(eBuilding).getBuildingClassType();
+	if (eClass != NO_BUILDINGCLASS && m_paiBuildingClassCreatedCount[eClass] > 0) return false;
+	if (m_aiTranscendenceResearchState[ePlayer] < 0)
+	{
+		if (m_aeTranscendenceRequiredResearch.empty())
+		{
+			CivicOptionTypes eResearch = (CivicOptionTypes)GC.getDefineINT("CIVICOPTION_INVENTIONS");
+			for (int i = 0; i < GC.getNumCivicInfos(); ++i)
+			{
+				const CvCivicInfo& kCivic = GC.getCivicInfo((CivicTypes)i);
+				if (kCivic.getCivicOptionType() == eResearch && strncmp(kCivic.getType(), "BRANCH_", 7) != 0)
+					m_aeTranscendenceRequiredResearch.push_back((CivicTypes)i);
+			}
+		}
+		m_aiTranscendenceResearchState[ePlayer] = 1;
+		for (unsigned int i = 0; i < m_aeTranscendenceRequiredResearch.size(); ++i)
+			if (kPlayer.getIdeasResearched(m_aeTranscendenceRequiredResearch[i]) <= 0)
+			{
+				m_aiTranscendenceResearchState[ePlayer] = 0;
+				break;
+			}
+	}
+	return m_aiTranscendenceResearchState[ePlayer] == 1;
+}
+
+//Kaszkaj - The selected colony becomes the locked capital immediately; AI crusades need no dialogue window.
+bool CvGame::startTranscendence(CvCity* pCity)
+{
+	if (pCity == NULL || !canStartTranscendence(pCity->getOwnerINLINE(), pCity)
+		|| pCity->getProductionBuilding() != getTranscendenceBuilding()) return false;
+	m_eTranscendencePlayer = pCity->getOwnerINLINE();
+	m_iTranscendenceCityID = pCity->getID();
+	m_iTranscendencePlot = GC.getMapINLINE().plotNumINLINE(pCity->getX_INLINE(), pCity->getY_INLINE());
+	m_iTranscendenceStartTurn = getGameTurn();
+	m_iTranscendenceLastProductionTurn = -1;
+	m_iTranscendenceBuildTurns = 0;
+	m_iTranscendencePhase = 1;
+	GET_PLAYER(m_eTranscendencePlayer).setCapitalCity(pCity);
+	pCity->setLayoutDirty(true);
+	gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
+	if (!GET_PLAYER(m_eTranscendencePlayer).isHuman()) acknowledgeTranscendence(m_eTranscendencePlayer);
+	return true;
+}
+
+//Kaszkaj - Start eligible AI projects before city turns, so each colony's Industry is credited exactly once.
+void CvGame::beginTranscendencePlayerTurn(PlayerTypes ePlayer)
+{
+	m_bTranscendenceCollectIndustry = false;
+	if (!isTranscendenceActive() && !GET_PLAYER(ePlayer).isHuman() && canStartTranscendence(ePlayer))
+	{
+		CvCity* pCity = CvCity::AI_getTranscendenceCity(ePlayer);
+		if (pCity != NULL) pCity->pushOrder(ORDER_CONSTRUCT, getTranscendenceBuilding(), -1, false, false, false);
+	}
+	m_bTranscendenceCollectIndustry = isTranscendenceActive() && ePlayer == m_eTranscendencePlayer;
+}
+
+int CvGame::getTranscendenceProductionRate(bool bOverflow) const
+{
+	if (!isTranscendenceActive()) return 0;
+	__int64 iTotal = 0;
+	int iLoop;
+	for (CvCity* pCity = GET_PLAYER(m_eTranscendencePlayer).firstCity(&iLoop); pCity != NULL; pCity = GET_PLAYER(m_eTranscendencePlayer).nextCity(&iLoop))
+		iTotal += std::max(0, pCity->getTranscendenceProduction(false, bOverflow));
+	return (int)std::min((__int64)MAX_INT, iTotal);
+}
+
+int CvGame::getTranscendenceYieldStored(YieldTypes eYield) const
+{
+	if (!isTranscendenceActive() || eYield < 0 || eYield >= NUM_YIELD_TYPES) return 0;
+	__int64 iTotal = 0;
+	int iLoop;
+	for (CvCity* pCity = GET_PLAYER(m_eTranscendencePlayer).firstCity(&iLoop); pCity != NULL; pCity = GET_PLAYER(m_eTranscendencePlayer).nextCity(&iLoop))
+		iTotal += std::max(0, pCity->getYieldStored(eYield));
+	return (int)std::min((__int64)MAX_INT, iTotal);
+}
+
+//Kaszkaj - Every owned colony supplies its Industry once per player turn; ordinary projects remain paused.
+void CvGame::doTranscendenceProduction(PlayerTypes ePlayer)
+{
+	if (!m_bTranscendenceCollectIndustry || !isTranscendenceActive() || ePlayer != m_eTranscendencePlayer
+		|| m_iTranscendenceLastProductionTurn == getGameTurn()) return;
+	m_bTranscendenceCollectIndustry = false;
+	CvCity* pTarget = getTranscendenceCity();
+	if (pTarget == NULL) return;
+	m_iTranscendenceLastProductionTurn = getGameTurn();
+	__int64 iTotal = pTarget->getBuildingProduction(getTranscendenceBuilding());
+	int iLoop;
+	for (CvCity* pCity = GET_PLAYER(ePlayer).firstCity(&iLoop); pCity != NULL; pCity = GET_PLAYER(ePlayer).nextCity(&iLoop))
+	{
+		if (pCity->isDisorder()) continue;
+		iTotal += std::max(0, pCity->getTranscendenceProduction(true));
+		pCity->setYieldStored(YIELD_HAMMERS, 0);
+		pCity->setOverflowProduction(0);
+	}
+	pTarget->setBuildingProduction(getTranscendenceBuilding(), (int)std::min((__int64)MAX_INT, iTotal));
+	++m_iTranscendenceBuildTurns;
+	pTarget->setLayoutDirty(true);
+	if (pTarget->getBuildingProduction(getTranscendenceBuilding()) >= pTarget->getYieldProductionNeeded(getTranscendenceBuilding(), YIELD_HAMMERS))
+		pTarget->popOrder(0, true, false);
+}
+
+//Kaszkaj - Check the complete empire-wide goods pool before consuming any of it, without free production.
+bool CvGame::processTranscendenceYields(CvCity* pCity)
+{
+	if (!isTranscendenceCity(pCity)) return false;
+	BuildingTypes eBuilding = getTranscendenceBuilding();
+	if (pCity->getBuildingProduction(eBuilding) < pCity->getYieldProductionNeeded(eBuilding, YIELD_HAMMERS)) return false;
+	__int64 aiStored[NUM_YIELD_TYPES];
+	int aiNeeded[NUM_YIELD_TYPES];
+	for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+	{
+		aiStored[i] = 0;
+		aiNeeded[i] = i == YIELD_HAMMERS ? 0 : pCity->getYieldProductionNeeded(eBuilding, (YieldTypes)i);
+	}
+	int iLoop;
+	for (CvCity* pLoop = GET_PLAYER(m_eTranscendencePlayer).firstCity(&iLoop); pLoop != NULL; pLoop = GET_PLAYER(m_eTranscendencePlayer).nextCity(&iLoop))
+		for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+			if (aiNeeded[i] > 0) aiStored[i] += std::max(0, pLoop->getYieldStored((YieldTypes)i));
+	for (int i = 0; i < NUM_YIELD_TYPES; ++i) if (aiStored[i] < aiNeeded[i]) return false;
+	for (CvCity* pLoop = GET_PLAYER(m_eTranscendencePlayer).firstCity(&iLoop); pLoop != NULL; pLoop = GET_PLAYER(m_eTranscendencePlayer).nextCity(&iLoop))
+		for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+			if (aiNeeded[i] > 0)
+			{
+				int iTake = std::min(aiNeeded[i], std::max(0, pLoop->getYieldStored((YieldTypes)i)));
+				pLoop->changeYieldStored((YieldTypes)i, -iTake);
+				aiNeeded[i] -= iTake;
+			}
+	return true;
+}
+
+//Kaszkaj - Finishing the locked construction wins Transcendence; preserve its final visual size.
+void CvGame::completeTranscendence(CvCity* pCity)
+{
+	if (!isTranscendenceCity(pCity) || !pCity->isHasRealBuilding(getTranscendenceBuilding())) return;
+	m_iTranscendencePhase = 3;
+	m_bTranscendenceCollectIndustry = false;
+	if (m_eTranscendenceVictory == NO_VICTORY)
+		m_eTranscendenceVictory = (VictoryTypes)GC.getInfoTypeForString("VICTORY_TRANSCENDENCE", true);
+	if (m_eTranscendenceVictory != NO_VICTORY && isVictoryValid(m_eTranscendenceVictory))
+		setWinner(GET_PLAYER(m_eTranscendencePlayer).getTeam(), m_eTranscendenceVictory);
+}
+
+//Kaszkaj - Maintain a dedicated 11x11 live-visibility contribution, deduplicating wrapped map tiles.
+void CvGame::changeTranscendenceSight(TeamTypes eTeam, bool bAdd)
+{
+	if (eTeam < 0 || eTeam >= MAX_TEAMS || m_abTranscendenceSight[eTeam] == bAdd) return;
+	if (m_iTranscendencePlot < 0 || m_iTranscendencePlot >= GC.getMapINLINE().numPlotsINLINE()) return;
+	CvPlot* pCenter = GC.getMapINLINE().plotByIndexINLINE(m_iTranscendencePlot);
+	CvPlot* apSeen[121];
+	int iSeen = 0;
+	for (int iX = -5; iX <= 5; ++iX) for (int iY = -5; iY <= 5; ++iY)
+	{
+		CvPlot* pPlot = plotXY(pCenter->getX_INLINE(), pCenter->getY_INLINE(), iX, iY);
+		if (pPlot == NULL) continue;
+		int i;
+		for (i = 0; i < iSeen; ++i) if (apSeen[i] == pPlot) break;
+		if (i != iSeen) continue;
+		apSeen[iSeen++] = pPlot;
+		pPlot->changeVisibilityCount(eTeam, bAdd ? 1 : -1, NO_INVISIBLE);
+	}
+	m_abTranscendenceSight[eTeam] = bAdd;
+}
+
+//Kaszkaj - Losing or razing the project colony removes only crusade sight and defers safe elimination.
+void CvGame::onTranscendenceCityLost(CvCity* pCity)
+{
+	if (!isTranscendenceCity(pCity)) return;
+	//Kaszkaj - Crusade copies withdraw after the project colony is lost; original REF forces are untouched.
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+	{
+		CvPlayer& kExarch = GET_PLAYER((PlayerTypes)iPlayer);
+		if (!kExarch.isEurope()) continue;
+		int iLoop;
+		for (CvUnit* pUnit = kExarch.firstUnit(&iLoop); pUnit != NULL; pUnit = kExarch.nextUnit(&iLoop))
+			if (pUnit->getScriptData() == "COL2071_TRANSCENDENCE_REF") pUnit->setScriptData("COL2071_TRANSCENDENCE_REF_RETREAT");
+		for (int i = 0; i < kExarch.getNumEuropeUnits(); ++i)
+		{
+			CvUnit* pUnit = kExarch.getEuropeUnit(i);
+			if (pUnit != NULL && pUnit->getScriptData() == "COL2071_TRANSCENDENCE_REF") pUnit->setScriptData("COL2071_TRANSCENDENCE_REF_RETREAT");
+		}
+	}
+	//Kaszkaj - End Exarch cooperation immediately; surviving copies only finish their independent withdrawal.
+	m_bTranscendenceExarchAlliance = false;
+	m_bTranscendenceRetreatRunning = true;
+	m_bTranscendenceRetreatPending = true;
+	m_iTranscendenceAllianceCheckTurn = -1;
+	m_eTranscendencePendingLoss = m_eTranscendencePlayer;
+	for (int i = 0; i < MAX_TEAMS; ++i) if (m_abTranscendenceSight[i]) changeTranscendenceSight((TeamTypes)i, false);
+	m_eTranscendencePlayer = NO_PLAYER;
+	m_iTranscendenceCityID = -1;
+	m_iTranscendencePlot = -1;
+	m_iTranscendencePhase = 0;
+	m_iTranscendenceBuildTurns = 0;
+	m_bTranscendenceCollectIndustry = false;
+	for (int i = 0; i < MAX_PLAYERS; ++i)
+	{
+		m_abTranscendenceAcknowledged[i] = false;
+		m_abTranscendenceREFDeployed[i] = false;
+		m_abTranscendenceDiplomacyQueued[i] = false;
+		m_aeTranscendenceSpeaker[i] = NO_PLAYER;
+	}
+}
+
+void CvGame::beginTranscendenceCityAcquisition() { ++m_iTranscendenceAcquisitionDepth; }
+void CvGame::endTranscendenceCityAcquisition()
+{
+	FAssert(m_iTranscendenceAcquisitionDepth > 0);
+	m_iTranscendenceAcquisitionDepth = std::max(0, m_iTranscendenceAcquisitionDepth - 1);
+	finishTranscendenceCityLoss();
+}
+
+void CvGame::finishTranscendenceCityLoss()
+{
+	if (m_eTranscendencePendingLoss == NO_PLAYER || m_iTranscendenceAcquisitionDepth > 0 || m_bTranscendenceEliminating) return;
+	PlayerTypes eLoser = m_eTranscendencePendingLoss;
+	m_eTranscendencePendingLoss = NO_PLAYER;
+	m_bTranscendenceEliminating = true;
+	if (GET_PLAYER(eLoser).isAlive()) GET_PLAYER(eLoser).setAlive(false);
+	m_bTranscendenceEliminating = false;
+}
+
+//Kaszkaj - Crusade opponents exclude States, Outer Gods and the builder's own team.
+bool CvGame::isTranscendenceEnemy(PlayerTypes ePlayer) const
+{
+	if (!isTranscendenceActive() || m_iTranscendencePhase != 2 || ePlayer < 0 || ePlayer >= MAX_PLAYERS) return false;
+	const CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+	if (!kPlayer.isAlive() || kPlayer.isBarbarian() || kPlayer.getTeam() == GET_PLAYER(m_eTranscendencePlayer).getTeam()) return false;
+	if (!kPlayer.isEurope()) return true;
+	CivilizationTypes eChild = (CivilizationTypes)GC.getCivilizationInfo(kPlayer.getCivilizationType()).getDerivativeCiv();
+	return eChild != NO_CIVILIZATION && GC.getCivilizationInfo(eChild).isNative();
+}
+
+bool CvGame::isTranscendenceWar(TeamTypes eFirst, TeamTypes eSecond) const
+{
+	if (!isTranscendenceActive() || m_iTranscendencePhase != 2 || eFirst == NO_TEAM || eSecond == NO_TEAM
+		|| !GET_TEAM(eFirst).isAtWar(eSecond)) return false;
+	TeamTypes eBuilder = GET_PLAYER(m_eTranscendencePlayer).getTeam();
+	if (eFirst != eBuilder && eSecond != eBuilder) return false;
+	TeamTypes eOther = eFirst == eBuilder ? eSecond : eFirst;
+	for (int i = 0; i < MAX_PLAYERS; ++i)
+		if (GET_PLAYER((PlayerTypes)i).getTeam() == eOther && isTranscendenceEnemy((PlayerTypes)i)) return true;
+	return false;
+}
+
+void CvGame::declareTranscendenceWar(PlayerTypes ePlayer)
+{
+	if (!isTranscendenceEnemy(ePlayer)) return;
+	TeamTypes eTarget = GET_PLAYER(m_eTranscendencePlayer).getTeam();
+	CvTeam& kTeam = GET_TEAM(GET_PLAYER(ePlayer).getTeam());
+	if (!kTeam.isHasMet(eTarget)) kTeam.meet(eTarget, false);
+	if (!kTeam.isAtWar(eTarget)) kTeam.declareTranscendenceWar(eTarget);
+	GET_PLAYER(ePlayer).AI_updateAreaTargets();
+}
+
+//Kaszkaj - Exarch alliance membership is independent of ordinary civilizations and the original REF.
+bool CvGame::isTranscendenceExarchTeam(TeamTypes eTeam) const
+{
+	if (eTeam < 0 || eTeam >= MAX_TEAMS) return false;
+	for (int i = 0; i < MAX_PLAYERS; ++i)
+	{
+		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)i);
+		if (!kPlayer.isAlive() || !kPlayer.isEurope() || kPlayer.getTeam() != eTeam) continue;
+		CivilizationTypes eChild = (CivilizationTypes)GC.getCivilizationInfo(kPlayer.getCivilizationType()).getDerivativeCiv();
+		if (eChild != NO_CIVILIZATION && GC.getCivilizationInfo(eChild).isNative()) return true;
+	}
+	return false;
+}
+
+bool CvGame::isTranscendenceAlly(TeamTypes eFirst, TeamTypes eSecond) const
+{
+	if (!m_bTranscendenceExarchAlliance || eFirst == eSecond) return false;
+	if (isTranscendenceActive())
+	{
+		TeamTypes eBuilder = GET_PLAYER(m_eTranscendencePlayer).getTeam();
+		if (eFirst == eBuilder || eSecond == eBuilder) return false;
+	}
+	return isTranscendenceExarchTeam(eFirst) && isTranscendenceExarchTeam(eSecond);
+}
+
+//Kaszkaj - Finish withdrawing copies outside capture callbacks without keeping the Exarch alliance alive.
+void CvGame::updateTranscendenceRetreat()
+{
+	if (!m_bTranscendenceRetreatRunning || (!m_bTranscendenceRetreatPending
+		&& m_iTranscendenceAllianceCheckTurn == getGameTurn())) return;
+	m_iTranscendenceAllianceCheckTurn = getGameTurn();
+	bool bCopiesRemain = false;
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+	{
+		CvPlayer& kExarch = GET_PLAYER((PlayerTypes)iPlayer);
+		if (!kExarch.isEurope()) continue;
+		int iLoop;
+		kExarch.removeTranscendenceREFOnEarth();
+		if (m_bTranscendenceRetreatPending)
+			for (CvSelectionGroup* pGroup = kExarch.firstSelectionGroup(&iLoop); pGroup != NULL; pGroup = kExarch.nextSelectionGroup(&iLoop))
+			{
+				CvUnit* pHead = pGroup->getHeadUnit();
+				if (pHead == NULL || pHead->getScriptData() != "COL2071_TRANSCENDENCE_REF_RETREAT") continue;
+				pGroup->clearMissionQueue();
+				pGroup->setActivityType(ACTIVITY_AWAKE);
+			}
+		if (bCopiesRemain) continue;
+		for (CvUnit* pUnit = kExarch.firstUnit(&iLoop); pUnit != NULL; pUnit = kExarch.nextUnit(&iLoop))
+			if (!pUnit->isDelayedDeath() && pUnit->getScriptData() == "COL2071_TRANSCENDENCE_REF_RETREAT") { bCopiesRemain = true; break; }
+		if (!bCopiesRemain)
+			for (int i = 0; i < kExarch.getNumEuropeUnits(); ++i)
+				if (kExarch.getEuropeUnit(i) != NULL && kExarch.getEuropeUnit(i)->getScriptData() == "COL2071_TRANSCENDENCE_REF_RETREAT") { bCopiesRemain = true; break; }
+	}
+	m_bTranscendenceRetreatPending = false;
+	if (!bCopiesRemain) m_bTranscendenceRetreatRunning = false;
+}
+
+PlayerTypes CvGame::chooseTranscendenceSpeaker(PlayerTypes eRecipient)
+{
+	std::vector<PlayerTypes> aeExarchs;
+	for (int i = 0; i < MAX_PLAYERS; ++i)
+	{
+		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)i);
+		if (!kPlayer.isAlive() || !kPlayer.isEurope() || kPlayer.getTeam() == GET_PLAYER(eRecipient).getTeam()) continue;
+		CivilizationTypes eChild = (CivilizationTypes)GC.getCivilizationInfo(kPlayer.getCivilizationType()).getDerivativeCiv();
+		if (eChild != NO_CIVILIZATION && GC.getCivilizationInfo(eChild).isNative()) aeExarchs.push_back((PlayerTypes)i);
+	}
+	return aeExarchs.empty() ? NO_PLAYER : aeExarchs[getSorenRandNum((int)aeExarchs.size(), "Transcendence Exarch")];
+}
+
+//Kaszkaj - Human consequences wait for the sole dialogue exit; AI recipients acknowledge without GUI.
+bool CvGame::isTranscendenceDiplomacyPending(PlayerTypes ePlayer) const
+{
+	if (!isTranscendenceActive() || ePlayer < 0 || ePlayer >= MAX_PLAYERS || m_abTranscendenceAcknowledged[ePlayer]) return false;
+	if (ePlayer == m_eTranscendencePlayer) return m_iTranscendencePhase == 1;
+	return m_iTranscendencePhase == 2 && isTranscendenceEnemy(ePlayer) && !GET_PLAYER(ePlayer).isEurope();
+}
+
+void CvGame::requestTranscendenceDiplomacy(PlayerTypes ePlayer)
+{
+	if (!isTranscendenceDiplomacyPending(ePlayer) || m_abTranscendenceDiplomacyQueued[ePlayer]) return;
+	if (!GET_PLAYER(ePlayer).isHuman()) { acknowledgeTranscendence(ePlayer); return; }
+	if (m_aeTranscendenceSpeaker[ePlayer] == NO_PLAYER || !GET_PLAYER(m_aeTranscendenceSpeaker[ePlayer]).isAlive())
+		m_aeTranscendenceSpeaker[ePlayer] = chooseTranscendenceSpeaker(ePlayer);
+	PlayerTypes eSpeaker = m_aeTranscendenceSpeaker[ePlayer];
+	if (eSpeaker == NO_PLAYER) { acknowledgeTranscendence(ePlayer); return; }
+	const char* szType = ePlayer == m_eTranscendencePlayer
+		? "AI_DIPLOCOMMENT_TRANSCENDENCE_CRUSADE"
+		: "AI_DIPLOCOMMENT_TRANSCENDENCE_OBLIGE";
+	DiploCommentTypes eComment = (DiploCommentTypes)GC.getInfoTypeForString(szType, true);
+	if (eComment == NO_DIPLOCOMMENT) { acknowledgeTranscendence(ePlayer); return; }
+	m_abTranscendenceDiplomacyQueued[ePlayer] = true;
+	CvDiploParameters* pDiplo = new CvDiploParameters(eSpeaker);
+	pDiplo->setDiploComment(eComment);
+	pDiplo->setAIContact(true);
+	pDiplo->setData(m_eTranscendencePlayer);
+	gDLL->beginDiplomacy(pDiplo, ePlayer);
+}
+
+void CvGame::acknowledgeTranscendence(PlayerTypes ePlayer)
+{
+	if (!isTranscendenceDiplomacyPending(ePlayer)) return;
+	m_abTranscendenceAcknowledged[ePlayer] = true;
+	m_abTranscendenceDiplomacyQueued[ePlayer] = false;
+	if (ePlayer == m_eTranscendencePlayer) activateTranscendenceCrusade();
+	else
+	{
+		declareTranscendenceWar(ePlayer);
+		changeTranscendenceSight(GET_PLAYER(ePlayer).getTeam(), true);
+		if (!GET_PLAYER(ePlayer).isHuman()) GET_PLAYER(ePlayer).AI_doTranscendenceAssault(true);
+	}
+}
+
+//Kaszkaj - Start each crusade once, preserving existing diplomacy among other civilizations and original REF forces.
+void CvGame::activateTranscendenceCrusade()
+{
+	if (!isTranscendenceActive() || m_iTranscendencePhase != 1) return;
+	m_iTranscendencePhase = 2;
+	//Kaszkaj - Progenitor Exarchs cooperate and cannot fight each other during the active crusade.
+	m_bTranscendenceExarchAlliance = true;
+	TeamTypes eBuilder = GET_PLAYER(m_eTranscendencePlayer).getTeam();
+	for (int i = 0; i < MAX_TEAMS; ++i)
+		if ((TeamTypes)i != eBuilder && isTranscendenceExarchTeam((TeamTypes)i))
+			for (int j = i + 1; j < MAX_TEAMS; ++j)
+				if ((TeamTypes)j != eBuilder && isTranscendenceExarchTeam((TeamTypes)j) && GET_TEAM((TeamTypes)i).isAtWar((TeamTypes)j))
+					GET_TEAM((TeamTypes)i).makePeace((TeamTypes)j, false);
+	for (int i = 0; i < MAX_PLAYERS; ++i)
+	{
+		PlayerTypes ePlayer = (PlayerTypes)i;
+		if (!isTranscendenceEnemy(ePlayer)) continue;
+		if (GET_PLAYER(ePlayer).isEurope())
+		{
+			declareTranscendenceWar(ePlayer);
+			if (!m_abTranscendenceREFDeployed[i])
+			{
+				m_abTranscendenceREFDeployed[i] = true;
+				GET_PLAYER(ePlayer).createTranscendenceREF(m_eTranscendencePlayer);
+			}
+			if (!GET_PLAYER(ePlayer).isHuman()) GET_PLAYER(ePlayer).AI_doTranscendenceAssault(true);
+		}
+		else if (!GET_PLAYER(ePlayer).isHuman()) acknowledgeTranscendence(ePlayer);
+	}
+}
+
+//Kaszkaj - Older saves can adopt one legal queued Eye after all players and plots have loaded.
+void CvGame::restoreTranscendenceConstruction()
+{
+	if (!m_bTranscendenceRestorePending || !isFinalInitialized()) return;
+	m_bTranscendenceRestorePending = false;
+	BuildingTypes eBuilding = getTranscendenceBuilding();
+	if (eBuilding == NO_BUILDING) return;
+	for (int i = 0; i < MAX_PLAYERS; ++i)
+	{
+		int iLoop;
+		for (CvCity* pCity = GET_PLAYER((PlayerTypes)i).firstCity(&iLoop); pCity != NULL; pCity = GET_PLAYER((PlayerTypes)i).nextCity(&iLoop))
+			if (pCity->getProductionBuilding() == eBuilding)
+			{
+				if (!isTranscendenceActive() && canStartTranscendence((PlayerTypes)i, pCity)) startTranscendence(pCity);
+				else if (!isTranscendenceCity(pCity)) pCity->popOrder(0, false, true);
+			}
+	}
+}
+
 
 void CvGame::setMaxTurnsExtended(bool bExtended)
 {
@@ -5251,74 +5738,27 @@ bool CvGame::testVictory(VictoryTypes eVictory, TeamTypes eTeam, bool* pbEndScor
 			}
 		}
 	}
-	///TKs Invention Core Mod v 1.0
-	if (GC.getVictoryInfo(eVictory).isIndustrialization())
+	//Kaszkaj - Transcendence is won only by completing the Eye of Terror, without Earth sales thresholds.
+	if (GC.getVictoryInfo(eVictory).isTranscendence())
 	{
-	    bool bIndustrialAttempt = false;
-	    int iVictoryGoal = 0;
-	    int iVictoryYield = 0;
-	    for (int iCivic = 0; iCivic < GC.getNumCivicInfos(); ++iCivic)
-        {
-            bIndustrialAttempt = false;
-            CvCivicInfo& kCivicInfo = GC.getCivicInfo((CivicTypes) iCivic);
-            YieldTypes eVictoryYield = (YieldTypes) GC.getDefineINT("INDUSTRIAL_VICTORY_SINGLE_YIELD");
-            if (eVictoryYield == NO_YIELD)
-            {
-                 bValid = false;
-                 break;
-            }
-            iVictoryGoal = kCivicInfo.getIndustrializationVictory(eVictoryYield);
-            ///TK Update 1.1b
-            iVictoryGoal *= GC.getGameSpeedInfo(GC.getGameINLINE().getGameSpeedType()).getFatherPercent();
-            iVictoryGoal /= 100;
-            ///TK end update
-            if (iVictoryGoal > 0)
-            {
-                if (isIndustrialVictoryAll() || GET_PLAYER(GET_TEAM(eTeam).getLeaderID()).getIdeasResearched((CivicTypes) iCivic) > 0)
-                {
-                    bIndustrialAttempt = true;
-                    setIndustrialVictoryAll(true);
-                    //return true;
-
-                }
-
-            }
-
-
-           if (bIndustrialAttempt)
-           {
-////                std::vector<CvUnit*> apEuropeUnits;
-////                int iLoop;
-////
-////                for (CvUnit* pUnit =  GET_PLAYER(GET_TEAM(eTeam).getLeaderID()).firstUnit(&iLoop); pUnit != NULL; pUnit =  GET_PLAYER(GET_TEAM(eTeam).getLeaderID()).nextUnit(&iLoop))
-////                {
-////                    if (pUnit->getUnitTravelState() == UNIT_TRAVEL_STATE_IN_EUROPE)
-////                    {
-////                        if (pUnit->isCargo() && pUnit->getYield() == eVictoryYield)
-////                        {
-////                            iVictoryYield += pUnit->getYieldStored();
-////                        }
-////                    }
-////                }
-    //           }
-               iVictoryYield = GET_PLAYER(GET_TEAM(eTeam).getLeaderID()).getVictoryYieldCount(eVictoryYield);
-               if (iVictoryYield >= iVictoryGoal)
-               {
-                   return true;
-               }
-
-            }
-
-        }
-
-        bValid = false;
+		BuildingTypes eBuilding = getTranscendenceBuilding();
+		if (!bValid || eBuilding == NO_BUILDING) return false;
+		for (int i = 0; i < MAX_PLAYERS; ++i)
+		{
+			if (!GET_PLAYER((PlayerTypes)i).isAlive() || GET_PLAYER((PlayerTypes)i).getTeam() != eTeam) continue;
+			int iLoop;
+			for (CvCity* pCity = GET_PLAYER((PlayerTypes)i).firstCity(&iLoop); pCity != NULL; pCity = GET_PLAYER((PlayerTypes)i).nextCity(&iLoop))
+				if (pCity->isHasRealBuilding(eBuilding)) return true;
+		}
+		return false;
 	}
-	///Tke
 
 	if (bValid)
 	{
 		if (GC.getVictoryInfo(eVictory).isRevolution())
 		{
+			//Kaszkaj - A crusade against the builder's own Exarch is not a completed Revolution.
+			if (isTranscendenceActive() && GET_PLAYER(m_eTranscendencePlayer).getTeam() == eTeam) return false;
 			if (!GET_TEAM(eTeam).checkIndependence())
 			{
 				bValid = false;
@@ -5943,7 +6383,7 @@ void CvGame::read(FDataStreamBase* pStream)
 	pStream->Read(&m_iAIAutoPlay);
 	pStream->Read(&m_iBestLandUnitCombat);
 	///TKs Invention Core Mod v 1.0
-	pStream->Read(&m_bIndustrialVictoryAll);
+	pStream->Read(&m_bUnusedGameSaveBool);
 	///TKe
 
 
@@ -6082,12 +6522,33 @@ void CvGame::read(FDataStreamBase* pStream)
 
 	pStream->Read(&m_iNumCultureVictoryCities);
 	pStream->Read(&m_eCultureVictoryCultureLevel);
+	//Kaszkaj - Project fields are versioned; existing plot visibility already carries the saved crusade sight.
+	if (uiFlag & 2)
+	{
+		pStream->Read((int*)&m_eTranscendencePlayer);
+		pStream->Read(&m_iTranscendenceCityID);
+		pStream->Read(&m_iTranscendencePlot);
+		pStream->Read(&m_iTranscendenceStartTurn);
+		pStream->Read(&m_iTranscendenceBuildTurns);
+		pStream->Read(&m_iTranscendenceLastProductionTurn);
+		pStream->Read(&m_iTranscendencePhase);
+		pStream->Read((int*)&m_eTranscendencePendingLoss);
+		pStream->Read(MAX_PLAYERS, m_abTranscendenceAcknowledged);
+		pStream->Read(MAX_PLAYERS, m_abTranscendenceREFDeployed);
+		pStream->Read(MAX_TEAMS, m_abTranscendenceSight);
+		pStream->Read(MAX_PLAYERS, (int*)m_aeTranscendenceSpeaker);
+		pStream->Read(&m_bTranscendenceExarchAlliance);
+		pStream->Read(&m_bTranscendenceRetreatRunning);
+		m_bTranscendenceRetreatPending = m_bTranscendenceRetreatRunning;
+	}
+	else m_bTranscendenceRestorePending = true;
+
 }
 
 
 void CvGame::write(FDataStreamBase* pStream)
 {
-	uint uiFlag=1;
+	uint uiFlag=3;
 	pStream->Write(uiFlag);		// flag for expansion
 
 	pStream->Write(m_iEndTurnMessagesSent);
@@ -6108,7 +6569,7 @@ void CvGame::write(FDataStreamBase* pStream)
 	pStream->Write(m_iAIAutoPlay);
 	pStream->Write(m_iBestLandUnitCombat);
 	///TKs Invention Core Mod v 1.0
-	pStream->Write(m_bIndustrialVictoryAll);
+	pStream->Write(m_bUnusedGameSaveBool);
 	///Tke
 
 	// m_uiInitialTime not saved
@@ -6196,6 +6657,22 @@ void CvGame::write(FDataStreamBase* pStream)
 
 	pStream->Write(m_iNumCultureVictoryCities);
 	pStream->Write(m_eCultureVictoryCultureLevel);
+	//Kaszkaj - Persist one project and its one-time crusade effects across saves.
+	pStream->Write(m_eTranscendencePlayer);
+	pStream->Write(m_iTranscendenceCityID);
+	pStream->Write(m_iTranscendencePlot);
+	pStream->Write(m_iTranscendenceStartTurn);
+	pStream->Write(m_iTranscendenceBuildTurns);
+	pStream->Write(m_iTranscendenceLastProductionTurn);
+	pStream->Write(m_iTranscendencePhase);
+	pStream->Write(m_eTranscendencePendingLoss);
+	pStream->Write(MAX_PLAYERS, m_abTranscendenceAcknowledged);
+	pStream->Write(MAX_PLAYERS, m_abTranscendenceREFDeployed);
+	pStream->Write(MAX_TEAMS, m_abTranscendenceSight);
+	pStream->Write(MAX_PLAYERS, (int*)m_aeTranscendenceSpeaker);
+	pStream->Write(m_bTranscendenceExarchAlliance);
+	pStream->Write(m_bTranscendenceRetreatRunning);
+
 }
 
 void CvGame::writeReplay(FDataStreamBase& stream, PlayerTypes ePlayer)

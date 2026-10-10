@@ -86,7 +86,6 @@ public:
 	int inventorThreshold() const;
 	int getResearchPartner() const;
 	int getIdeasResearched(int /*CivicTypes*/ eCivic);
-	int getVictoryYieldCount(int /*YieldTypes*/ eYield);
 	int getCurrentResearch() const;
 	int getCurrentResearchProgress(bool bGetTurns, int /*CivicTypes*/ eCivic);
 	void setCurrentResearch(CivicTypes eCurrentResearch);

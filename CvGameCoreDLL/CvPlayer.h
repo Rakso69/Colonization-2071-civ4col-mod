@@ -523,8 +523,6 @@ public:
 	void interceptEuropeUnits();
 
 	///TKs Invention Core Mod v 1.0
-	int getVictoryYieldCount(YieldTypes eYield) const;
-	void setVictoryYieldCount(YieldTypes eYield, int iValue);
 	int getIdeaProgress(CivicTypes eCivic) const;
 	void setIdeaProgress(CivicTypes eCivic, int iValue);
 	void changeIdeaProgress(CivicTypes eCivic, int iChange);
@@ -624,6 +622,10 @@ public:
 	ProfessionTypes getRevolutionEuropeProfession(int i) const;
 	void addRevolutionEuropeUnit(UnitTypes eUnit, ProfessionTypes eProfession);
 	void ensureRevolutionTransportCapacity();
+	//Kaszkaj - Duplicate the current Progenitor Expeditionary Forces for the Transcendence crusade.
+	void createTranscendenceREF(PlayerTypes eTarget);
+	//Kaszkaj - Remove withdrawn REF copies already on Earth without killing off-map units.
+	void removeTranscendenceREFOnEarth();
 	void clearRevolutionEuropeUnits();
 
 	UnitTypes getDocksNextUnit(int i) const;
@@ -794,7 +796,6 @@ protected:
 	int* m_aiYieldBoughtTotal;
 	int* m_aiTaxYieldModifierCount;
 	///TKs Invention Core Mod v 1.0
-	int* m_aiVictoryYieldCount;
 	int* m_aiIdeaProgress;
 	///Tke
 

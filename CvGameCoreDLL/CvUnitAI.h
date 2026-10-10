@@ -9,6 +9,9 @@
 
 class CvCity;
 
+//Kaszkaj - Invalidate retreat routing candidates when a new game or save replaces the map.
+void resetTranscendenceRetreatCache();
+
 class CvUnitAI : public CvUnit
 {
 
@@ -234,6 +237,10 @@ protected:
 	bool AI_bombardCity();
 	bool AI_cityAttack(int iRange, int iOddsThreshold, bool bFollow = false);
 	bool AI_attackBarbarian();
+	//Kaszkaj - Give the active Transcendence colony first priority for military movement and landings.
+	bool AI_transcendenceRetreat();
+	bool AI_transcendenceMove();
+	bool AI_transcendenceSeaAssault();
 	bool AI_anyAttack(int iRange, int iOddsThreshold, int iMinStack = 0, bool bFollow = false);
 	bool AI_smartAttack(int iRange, int iLowOddsThreshold, int iHighOddsThreshold, CvPlot* pHintPlot);
 	bool AI_leaveAttack(int iRange, int iThreshold, int iStrengthThreshold);

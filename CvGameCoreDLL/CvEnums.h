@@ -1025,6 +1025,8 @@ enum DllExport PlayerActionTypes
 	PLAYER_ACTION_HURRY,
 	PLAYER_ACTION_EUROPE_CHANGE_PROFESSION,
 	PLAYER_ACTION_FEAT,
+	//Kaszkaj - Request the irreversible Transcendence notice after closing the colony screen.
+	PLAYER_ACTION_TRANSCENDENCE_NOTICE,
 
 #ifdef _USRDLL
 	NUM_PLAYER_ACTION_TYPES
@@ -1763,6 +1765,9 @@ enum DllExport DiploEventTypes
 	DIPLOEVENT_FOUND_CITY_CHECK_NATIVES,
 	//Kaszkaj - Acknowledge confiscation before ending the human player's game.
 	DIPLOEVENT_KING_SEIZE_ASSETS,
+	//Kaszkaj - Acknowledgements trigger the Transcendence crusade through synchronised diplomacy.
+	DIPLOEVENT_TRANSCENDENCE_CRUSADE,
+	DIPLOEVENT_TRANSCENDENCE_OBLIGE,
 
 
 #ifdef _USRDLL

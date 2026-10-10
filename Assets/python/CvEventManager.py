@@ -644,9 +644,6 @@ class CvEventManager:
 		'Combat Result'
 		pWinner,pLoser = argsList
 		playerX = gc.getPlayer(pWinner.getOwner())
-		unitX = gc.getUnitInfo(pWinner.getUnitType())
-		playerY = gc.getPlayer(pLoser.getOwner())
-		unitY = gc.getUnitInfo(pLoser.getUnitType())
 		#Kaszkaj - Defeating a Progenitor AI grants Progenitor Treasure and an extra 500 Credits to a human player or 1000 to a computer opponent.
 		if pLoser.getUnitType() == gc.getInfoTypeForString('UNIT_PROGENITORAI'):
 			playerX.receiveGoody(pLoser.plot(), gc.getInfoTypeForString('GOODY_TREASURE'), pWinner)
@@ -656,6 +653,9 @@ class CvEventManager:
 				playerX.changeGold(1000)
 		if (not self.__LOG_COMBAT):
 			return
+		unitX = gc.getUnitInfo(pWinner.getUnitType())
+		playerY = gc.getPlayer(pLoser.getOwner())
+		unitY = gc.getUnitInfo(pLoser.getUnitType())
 		if playerX and playerX and unitX and playerY:
 			CvUtil.pyPrint('Player %d Civilization %s Unit %s has defeated Player %d Civilization %s Unit %s'
 				%(playerX.getID(), playerX.getCivilizationDescription(0), unitX.getDescription(),

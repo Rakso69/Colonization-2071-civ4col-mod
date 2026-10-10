@@ -2196,6 +2196,16 @@ bool CvUnit::canEnterTerritory(PlayerTypes ePlayer, bool bIgnoreRightOfPassage) 
 
 	TeamTypes eTeam = GET_PLAYER(ePlayer).getTeam();
 
+	//Kaszkaj - Temporary Exarch allies permit normal movement through each other's territory.
+	if (GC.getGameINLINE().isTranscendenceAlly(getTeam(), eTeam)) return true;
+	//Kaszkaj - Retreat copies may leave Exarch territory after the alliance ends, without changing diplomacy.
+	if (GET_PLAYER(getOwnerINLINE()).isEurope() && GET_PLAYER(ePlayer).isEurope()
+		&& getScriptData() == "COL2071_TRANSCENDENCE_REF_RETREAT")
+	{
+		CivilizationTypes eDerivative = (CivilizationTypes)GC.getCivilizationInfo(GET_PLAYER(ePlayer).getCivilizationType()).getDerivativeCiv();
+		if (eDerivative != NO_CIVILIZATION && GC.getCivilizationInfo(eDerivative).isNative()) return true;
+	}
+
 	if (GET_TEAM(getTeam()).isFriendlyTerritory(eTeam))
 	{
 		return true;
@@ -2941,6 +2951,11 @@ bool CvUnit::canLoadUnit(const CvUnit* pTransport, const CvPlot* pPlot, bool bCh
 	{
 		return false;
 	}
+	//Kaszkaj - Automatic boarding also separates original, active crusade and retreating REF forces.
+	if (GET_PLAYER(getOwnerINLINE()).isEurope()
+		&& (isTranscendenceREFUnit(this) || isTranscendenceREFUnit(pTransport))
+		&& (isTranscendenceREFUnit(this) != isTranscendenceREFUnit(pTransport)
+			|| getScriptData() != pTransport->getScriptData())) return false;
 	//Kaszkaj - AI Progenitor Treasure uses Freighters or Carriers; human loading rules remain unchanged.
 	if (!isHuman() && !GET_PLAYER(getOwnerINLINE()).isEurope() && getUnitInfo().isTreasure()
 		&& pTransport->getUnitInfo().getUnitClassType() != GC.getInfoTypeForString("UNITCLASS_GALLEON", true))
@@ -8940,18 +8955,14 @@ bool CvUnit::canHaveProfession(ProfessionTypes eProfession, bool bBumpOther, con
 	///TKs Invention Core Mod v 1.0
     if (!isNative() && !GET_PLAYER(getOwner()).isEurope())
 	{
-        for (int iCivic = 0; iCivic < GC.getNumCivicInfos(); ++iCivic)
+        const std::vector<CivicTypes>& aeRestrictions = GC.getProfessionInfo(eProfession).getTechnologyRestrictions();
+        for (int i = 0; i < (int)aeRestrictions.size(); ++i)
         {
-            if (GC.getCivicInfo((CivicTypes) iCivic).getCivicOptionType() == (CivicOptionTypes)GC.getDefineINT("CIVICOPTION_INVENTIONS"))
+            CivicTypes eCivic = aeRestrictions[i];
+            if (GC.getCivicInfo(eCivic).getAllowsProfessions(eProfession) > 0
+                && GET_PLAYER(getOwner()).getIdeasResearched(eCivic) == 0)
             {
-                CvCivicInfo& kCivicInfo = GC.getCivicInfo((CivicTypes) iCivic);
-                if (eProfession != NO_PROFESSION && kCivicInfo.getAllowsProfessions(eProfession) > 0)
-                {
-                    if (GET_PLAYER(getOwner()).getIdeasResearched((CivicTypes) iCivic) == 0)
-                    {
-                        return false;
-                    }
-                }
+                return false;
             }
         }
 	}

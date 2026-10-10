@@ -100,6 +100,9 @@ public:
 	int getProductionModifier(BuildingTypes eBuilding) const;
 
 	DllExport int getCurrentProductionDifference(bool bOverflow) const;
+	//Kaszkaj - Industry contributed by this colony to the shared Eye project.
+	int getTranscendenceProduction(bool bUseStoredHammers, bool bOverflow = true) const;
+	static CvCity* AI_getTranscendenceCity(PlayerTypes ePlayer);
 
 	DllExport bool canHurry(HurryTypes eHurry, bool bTestVisible = false) const;
 	void hurry(HurryTypes eHurry);

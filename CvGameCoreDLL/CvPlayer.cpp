@@ -53,7 +53,6 @@ CvPlayer::CvPlayer()
 	m_aiMissionaryPoints = new int[MAX_PLAYERS];
 	m_aiMissionaryThresholdMultiplier = new int[MAX_PLAYERS];
 	///TKs Invention Core Mod v 1.0
-    m_aiVictoryYieldCount = new int[NUM_YIELD_TYPES];
     ///TKe
 	m_abYieldEuropeTradable = new bool[NUM_YIELD_TYPES];
 	m_abFeatAccomplished = new bool[NUM_FEAT_TYPES];
@@ -104,7 +103,6 @@ CvPlayer::~CvPlayer()
 	SAFE_DELETE_ARRAY(m_aiMissionaryPoints);
 	SAFE_DELETE_ARRAY(m_aiMissionaryThresholdMultiplier);
 	///TKs Invention Core Mod v 1.0
-	SAFE_DELETE_ARRAY(m_aiVictoryYieldCount);
 	///TKe
 	SAFE_DELETE_ARRAY(m_abYieldEuropeTradable);
 	SAFE_DELETE_ARRAY(m_abFeatAccomplished);
@@ -400,7 +398,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		m_aiYieldTradedTotal[iI] = 0;
 		m_aiYieldBoughtTotal[iI] = 0;
 		///TKs Invention Core Mod v 1.0
-		m_aiVictoryYieldCount[iI] = 0;
 		///TKe
 		m_abYieldEuropeTradable[iI] = true;
 		m_aiTaxYieldModifierCount[iI] = 0;
@@ -1142,6 +1139,8 @@ CvCity* CvPlayer::initCity(int iX, int iY, bool bBumpUnits)
 
 void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade)
 {
+	//Kaszkaj - Keep the capture decision even when losing the Eye immediately ends the active project.
+	bool bCrusadeCapture = bConquest && isEurope() && GC.getGameINLINE().isTranscendenceEnemy(getID());
 	CLLNode<IDInfo>* pUnitNode;
 	CvCity* pNewCity;
 	CvUnit* pLoopUnit;
@@ -1373,6 +1372,8 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade)
 
 	bRecapture = ((eHighestCulturePlayer != NO_PLAYER) ? (GET_PLAYER(eHighestCulturePlayer).getTeam() == getTeam()) : false);
 
+	//Kaszkaj - Defer defeat until the acquired colony and population snapshots have been transferred safely.
+	GC.getGameINLINE().beginTranscendenceCityAcquisition();
 	pOldCity->kill();
 
 	//acquire old population units
@@ -1525,7 +1526,19 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade)
 		}
 	}
 
-	if (bConquest)
+	//Kaszkaj - Progenitor Exarchs destroy every crusade capture without a keep-city choice, captives or treasure.
+	if (bCrusadeCapture)
+	{
+		szBuffer = gDLL->getText("TXT_KEY_MISC_DESTROYED_CITY", pNewCity->getNameKey());
+		gDLL->getInterfaceIFace()->addMessage(getID(), true, GC.getEVENT_MESSAGE_TIME(), szBuffer, "AS2D_CITYRAZE", MESSAGE_TYPE_MAJOR_EVENT, ARTFILEMGR.getInterfaceArtInfo("WORLDBUILDER_CITY_EDIT")->getPath(), (ColorTypes)GC.getInfoTypeForString("COLOR_GREEN"), pCityPlot->getX_INLINE(), pCityPlot->getY_INLINE(), true, true);
+		szBuffer = gDLL->getText("TXT_KEY_MISC_CITY_RAZED_BY", pNewCity->getNameKey(), getCivilizationDescriptionKey());
+		GC.getGameINLINE().addReplayMessage(REPLAY_MESSAGE_MAJOR_EVENT, getID(), szBuffer, pCityPlot->getX_INLINE(), pCityPlot->getY_INLINE(), (ColorTypes)GC.getInfoTypeForString("COLOR_WARNING_TEXT"));
+		gDLL->getEventReporterIFace()->cityRazed(pNewCity, getID());
+		disband(pNewCity);
+		pNewCity = NULL;
+		if (pCityPlot->getImprovementType() == (ImprovementTypes)GC.getDefineINT("RUINS_IMPROVEMENT")) pCityPlot->setImprovementType(NO_IMPROVEMENT);
+	}
+	else if (bConquest)
 	{
 		CyCity* pyCity = new CyCity(pNewCity);
 		CyArgsList argsList;
@@ -1600,6 +1613,8 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade)
 			triggerData.m_iOtherPlayerCityId = -1;
 		}
 	}
+	//Kaszkaj - Resolve a lost Transcendence colony only after acquisition has finished.
+	GC.getGameINLINE().endTranscendenceCityAcquisition();
 }
 
 
@@ -2179,6 +2194,9 @@ void CvPlayer::doTurn()
 
 	AI_assignWorkingPlots();
 
+	//Kaszkaj - Snapshot all colony Industry before processing shared Transcendence construction.
+	GC.getGameINLINE().beginTranscendencePlayerTurn(getID());
+
 	doGold();
 
 	doBells();
@@ -2190,6 +2208,8 @@ void CvPlayer::doTurn()
 		pLoopCity->doTurn();
 	}
 
+	//Kaszkaj - Complete the shared Transcendence construction after every colony has produced its yields.
+	GC.getGameINLINE().doTranscendenceProduction(getID());
 
 	verifyCivics();
 
@@ -2837,6 +2857,16 @@ void CvPlayer::handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer
 
 	switch (eDiploEvent)
 	{
+	//Kaszkaj - Only an acknowledgement to a Progenitor Exarch resolves a pending Transcendence notice.
+	case DIPLOEVENT_TRANSCENDENCE_CRUSADE:
+	case DIPLOEVENT_TRANSCENDENCE_OBLIGE:
+		{
+			CivilizationTypes eDerivative = (CivilizationTypes)GC.getCivilizationInfo(getCivilizationType()).getDerivativeCiv();
+			if (isEurope() && eDerivative != NO_CIVILIZATION && GC.getCivilizationInfo(eDerivative).isNative()
+				&& GC.getGameINLINE().isTranscendenceDiplomacyPending(ePlayer))
+				GC.getGameINLINE().acknowledgeTranscendence(ePlayer);
+		}
+		break;
 	case DIPLOEVENT_CONTACT:
 		AI_setFirstContact(ePlayer, true);
 		GET_PLAYER(ePlayer).AI_setFirstContact(getID(), true);
@@ -4836,6 +4866,15 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 
 bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost) const
 {
+	//Kaszkaj - The Eye of Terror requires all Research and exclusive worldwide construction.
+	if (eBuilding == GC.getGameINLINE().getTranscendenceBuilding())
+	{
+		if (GC.getGameINLINE().isTranscendenceActive())
+		{
+			if (!bContinue || GC.getGameINLINE().getTranscendencePlayer() != getID()) return false;
+		}
+		else if (!GC.getGameINLINE().canStartTranscendence(getID())) return false;
+	}
 	BuildingClassTypes eBuildingClass;
 	CvTeamAI& currentTeam = GET_TEAM(getTeam());
 
@@ -5018,7 +5057,8 @@ int CvPlayer::getYieldProductionNeeded(BuildingTypes eBuilding, YieldTypes eYiel
 	iProductionNeeded *= 100 + getBuildingRequiredYieldModifier(eYield);
 	iProductionNeeded /= 100;
 
-	if (!isHuman())
+	//Kaszkaj - The Eye of Terror receives no AI construction discounts or era shortcuts.
+	if (!isHuman() && eBuilding != GC.getGameINLINE().getTranscendenceBuilding())
 	{
 		iProductionNeeded *= GC.getHandicapInfo(GC.getGameINLINE().getHandicapType()).getAIConstructPercent();
 		iProductionNeeded /= 100;
@@ -6125,6 +6165,10 @@ CvCity* CvPlayer::getPrimaryCity() const
 
 void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 {
+	//Kaszkaj - The colony constructing the Eye of Terror remains the capital throughout construction.
+	CvCity* pTranscendenceCity = GC.getGameINLINE().getTranscendenceCity();
+	if (pTranscendenceCity != NULL && pTranscendenceCity->getOwnerINLINE() == getID()
+		&& pNewCapitalCity != pTranscendenceCity) return;
 	CvCity* pOldCapitalCity = getCapitalCity();
 
 	if (pOldCapitalCity != pNewCapitalCity)
@@ -10442,25 +10486,7 @@ void CvPlayer::processCivics(CivicTypes eCivic, int iChange, bool bResearch)
             }
         }
 	}
-	if (!GC.getGameINLINE().isIndustrialVictoryAll())
-    {
-        for (int iYield = 0; iYield < NUM_YIELD_TYPES; iYield++)
-        {
-            if (kCivicInfo.getIndustrializationVictory(iYield) > 0)
-            {
-                for (int iI = 0; iI < MAX_PLAYERS; iI++)
-                {
-                    if (GET_PLAYER((PlayerTypes)iI).isAlive())
-                    {
 
-                        CvWString szMessage = gDLL->getText("TXT_KEY_INDUSTRILIZATION_HAS_BEGAN", getCivilizationAdjectiveKey());
-                        gDLL->getInterfaceIFace()->addMessage(((PlayerTypes)iI), false, GC.getEVENT_MESSAGE_TIME(), szMessage, "AS2D_UNIT_GREATPEOPLE", MESSAGE_TYPE_MAJOR_EVENT, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_UNIT_TEXT"));
-
-                    }
-                }
-            }
-        }
-    }
 
 	if (kCivicInfo.isAllowsMapTrade())
     {
@@ -10763,7 +10789,9 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 	pStream->Read(NUM_YIELD_TYPES, m_aiYieldBoughtTotal);
 	///TKs Invention Core Mod v 1.0
-	pStream->Read(NUM_YIELD_TYPES, m_aiVictoryYieldCount);
+	//Kaszkaj - Discard the retired exported-goods victory counter while preserving old save slots.
+	int aiRetiredVictoryYields[NUM_YIELD_TYPES];
+	pStream->Read(NUM_YIELD_TYPES, aiRetiredVictoryYields);
 	///Tke
 	pStream->Read(NUM_YIELD_TYPES, m_aiTaxYieldModifierCount);
 	if (uiFlag > 1)
@@ -11171,7 +11199,9 @@ void CvPlayer::write(FDataStreamBase* pStream)
 	pStream->Write(NUM_YIELD_TYPES, m_aiYieldTradedTotal);
 	pStream->Write(NUM_YIELD_TYPES, m_aiYieldBoughtTotal);
 	///TKs Invention Core Mod v 1.0
-	pStream->Write(NUM_YIELD_TYPES, m_aiVictoryYieldCount);
+	//Kaszkaj - Keep the retired victory-counter save slots empty.
+	int aiRetiredVictoryYields[NUM_YIELD_TYPES] = {0};
+	pStream->Write(NUM_YIELD_TYPES, aiRetiredVictoryYields);
 	///Tke
 	pStream->Write(NUM_YIELD_TYPES, m_aiTaxYieldModifierCount);
 	pStream->Write(MAX_PLAYERS, m_aiMissionaryPoints);
@@ -13759,15 +13789,7 @@ void CvPlayer::sellYieldUnitToEurope(CvUnit* pUnit, int iAmount, int iCommission
 				int iProfit = getSellToEuropeProfit(eYield, iAmount * (100 - iCommission) / 100);
 				changeGold(iProfit * getExtraTradeMultiplier(kPlayerEurope.getID()) / 100);
                 ///TKs Invention Core Mod v 1.0
-                if (GC.getGameINLINE().isIndustrialVictoryAll())
-                {
-                    YieldTypes eVictoryYield = (YieldTypes) GC.getDefineINT("INDUSTRIAL_VICTORY_SINGLE_YIELD");
-                    if (eYield == eVictoryYield)
-                    {
-                        int iVicYieldCount = getVictoryYieldCount(eVictoryYield);
-                        setVictoryYieldCount(eVictoryYield, iVicYieldCount + iAmount);
-                    }
-                }
+
                 ///TKe
 				changeYieldTradedTotal(eYield, iAmount);
 				kPlayerEurope.changeYieldTradedTotal(eYield, iAmount);
@@ -13826,10 +13848,7 @@ CvUnit* CvPlayer::buyYieldUnitFromEurope(YieldTypes eYield, int iAmount, CvUnit*
 	}
 
 	///TKs Invention Core Mod v 1.0
-	if (eYield == YIELD_CLOTH && GC.getGameINLINE().isIndustrialVictoryAll())
-    {
-        return NULL;
-    }
+
 	///TKe
 
 	FAssert(pTransport != NULL);
@@ -14319,6 +14338,11 @@ void CvPlayer::doAction(PlayerActionTypes eAction, int iData1, int iData2, int i
 {
 	switch (eAction)
 	{
+	//Kaszkaj - Open a pending mandatory notice through the synchronised player-action channel.
+	case PLAYER_ACTION_TRANSCENDENCE_NOTICE:
+		if (isHuman() && GC.getGameINLINE().isTranscendenceDiplomacyPending(getID()))
+			GC.getGameINLINE().requestTranscendenceDiplomacy(getID());
+		break;
 	case PLAYER_ACTION_BUY_EUROPE_UNIT:
 		buyEuropeUnit((UnitTypes) iData1, 100);
 		break;
@@ -14498,16 +14522,29 @@ bool CvPlayer::checkIndependence() const
 
 		if (kParent.isAlive() && GET_TEAM(kParent.getTeam()).isParentOf(getTeam()))
 		{
-			// land units on map
+			//Kaszkaj - Revolution checks the original REF; crusade copies neither replace nor consume it.
 			int iNumUnits = kParent.countNumTravelUnits(NO_UNIT_TRAVEL_STATE, DOMAIN_LAND);
-			if (iNumUnits > 0)
-			{
-				return false;
-			}
-
-			// need both ships and land units
 			int iNumLandUnits = kParent.countNumDomainUnits(DOMAIN_LAND);
 			int iShips = kParent.countNumDomainUnits(DOMAIN_SEA);
+			int iLoop;
+			for (CvUnit* pUnit = kParent.firstUnit(&iLoop); pUnit != NULL; pUnit = kParent.nextUnit(&iLoop))
+			{
+				if (!isTranscendenceREFUnit(pUnit)) continue;
+				if (pUnit->getDomainType() == DOMAIN_LAND)
+				{
+					--iNumLandUnits;
+					if (pUnit->getUnitTravelState() == NO_UNIT_TRAVEL_STATE) --iNumUnits;
+				}
+				else if (pUnit->getDomainType() == DOMAIN_SEA) --iShips;
+			}
+			for (int i = 0; i < kParent.getNumEuropeUnits(); ++i)
+			{
+				CvUnit* pUnit = kParent.getEuropeUnit(i);
+				if (!isTranscendenceREFUnit(pUnit)) continue;
+				if (pUnit->getDomainType() == DOMAIN_LAND) --iNumLandUnits;
+				else if (pUnit->getDomainType() == DOMAIN_SEA) --iShips;
+			}
+			if (iNumUnits > 0) return false;
 
 			for (int i = 0; i < getNumRevolutionEuropeUnits(); ++i)
 			{
@@ -15100,6 +15137,136 @@ void CvPlayer::ensureRevolutionTransportCapacity()
 		addRevolutionEuropeUnit(eTransport, eTransportProfession);
 		iCapacity += GC.getUnitInfo(eTransport).getCargoSpace();
 	}
+}
+
+
+//Kaszkaj - Clone the current Progenitor Expeditionary Forces without consuming the original REF.
+void CvPlayer::createTranscendenceREF(PlayerTypes eTarget)
+{
+	CvCity* pTarget = GC.getGameINLINE().getTranscendenceCity();
+	if (!isEurope() || pTarget == NULL || pTarget->getOwnerINLINE() != eTarget) return;
+	std::vector<std::pair<UnitTypes, ProfessionTypes> > aForce;
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+	{
+		CvPlayer& kChild = GET_PLAYER((PlayerTypes)iPlayer);
+		if (!kChild.isAlive() || kChild.getParent() != getID()) continue;
+		for (int i = 0; i < kChild.getNumRevolutionEuropeUnits(); ++i)
+			aForce.push_back(std::make_pair(kChild.getRevolutionEuropeUnit(i), kChild.getRevolutionEuropeProfession(i)));
+	}
+	//Kaszkaj - Include original deployed REF alongside the remaining undeployed subject blueprints.
+	{
+		int iLoop;
+		for (CvUnit* pUnit = firstUnit(&iLoop); pUnit != NULL; pUnit = nextUnit(&iLoop))
+		{
+			if (!isTranscendenceREFUnit(pUnit) && !pUnit->isDelayedDeath() && (pUnit->canAttack() || (pUnit->getDomainType() == DOMAIN_SEA && pUnit->cargoSpace() > 0)))
+				aForce.push_back(std::make_pair(pUnit->getUnitType(), pUnit->getProfession()));
+		}
+		for (int i = 0; i < getNumEuropeUnits(); ++i)
+		{
+			CvUnit* pUnit = getEuropeUnit(i);
+			if (pUnit != NULL && !isTranscendenceREFUnit(pUnit) && !pUnit->isDelayedDeath() && (pUnit->canAttack() || (pUnit->getDomainType() == DOMAIN_SEA && pUnit->cargoSpace() > 0)))
+				aForce.push_back(std::make_pair(pUnit->getUnitType(), pUnit->getProfession()));
+		}
+	}
+	if (aForce.empty()) return;
+	// Provide enough compatible seats for the duplicated army to launch immediately.
+	int iSoldiers = 0, iRequiredSize = 1, iCapacity = 0;
+	for (uint i = 0; i < aForce.size(); ++i)
+	{
+		if (aForce[i].first == NO_UNIT) continue;
+		const CvUnitInfo& kUnit = GC.getUnitInfo(aForce[i].first);
+		if (kUnit.getDomainType() == DOMAIN_LAND)
+		{
+			++iSoldiers;
+			iRequiredSize = std::max(iRequiredSize, kUnit.getRequiredTransportSize());
+		}
+	}
+	const CvCivilizationInfo& kCivilization = GC.getCivilizationInfo(getCivilizationType());
+	UnitTypes eTransport = NO_UNIT;
+	ProfessionTypes eTransportProfession = NO_PROFESSION;
+	for (int i = 0; i < kCivilization.getNumCivilizationFreeUnits(); ++i)
+	{
+		UnitTypes eUnit = (UnitTypes)kCivilization.getCivilizationUnits(kCivilization.getCivilizationFreeUnitsClass(i));
+		if (eUnit == NO_UNIT) continue;
+		const CvUnitInfo& kShip = GC.getUnitInfo(eUnit);
+		if (kShip.getDomainType() != DOMAIN_SEA || kShip.getCargoSpace() < iRequiredSize
+			|| (kShip.getDomainCargo() != NO_DOMAIN && kShip.getDomainCargo() != DOMAIN_LAND)) continue;
+		bool bCompatible = true;
+		for (uint j = 0; j < aForce.size(); ++j)
+			if (aForce[j].first != NO_UNIT && GC.getUnitInfo(aForce[j].first).getDomainType() == DOMAIN_LAND
+				&& kShip.getSpecialCargo() != NO_SPECIALUNIT && kShip.getSpecialCargo() != GC.getUnitInfo(aForce[j].first).getSpecialUnitType()) bCompatible = false;
+		if (bCompatible && (eTransport == NO_UNIT || kShip.getCargoSpace() > GC.getUnitInfo(eTransport).getCargoSpace()))
+		{
+			eTransport = eUnit;
+			eTransportProfession = (ProfessionTypes)kCivilization.getCivilizationFreeUnitsProfession(i);
+		}
+	}
+	for (uint i = 0; i < aForce.size(); ++i)
+	{
+		if (aForce[i].first == NO_UNIT) continue;
+		const CvUnitInfo& kShip = GC.getUnitInfo(aForce[i].first);
+		if (kShip.getDomainType() != DOMAIN_SEA || kShip.getCargoSpace() < iRequiredSize
+			|| (kShip.getDomainCargo() != NO_DOMAIN && kShip.getDomainCargo() != DOMAIN_LAND)) continue;
+		bool bCompatible = true;
+		for (uint j = 0; j < aForce.size(); ++j)
+			if (aForce[j].first != NO_UNIT && GC.getUnitInfo(aForce[j].first).getDomainType() == DOMAIN_LAND
+				&& kShip.getSpecialCargo() != NO_SPECIALUNIT && kShip.getSpecialCargo() != GC.getUnitInfo(aForce[j].first).getSpecialUnitType()) bCompatible = false;
+		if (bCompatible) iCapacity += kShip.getCargoSpace();
+	}
+	if (eTransport != NO_UNIT)
+		while (iCapacity < iSoldiers)
+		{
+			aForce.push_back(std::make_pair(eTransport, eTransportProfession));
+			iCapacity += GC.getUnitInfo(eTransport).getCargoSpace();
+		}
+	CvPlot* pEntry = GET_PLAYER(getID()).AI_getImperialShipSpawnPlot(NULL, true);
+	for (uint i = 0; i < aForce.size(); ++i)
+	{
+		UnitTypes eUnit = aForce[i].first;
+		ProfessionTypes eProfession = aForce[i].second;
+		if (eUnit == NO_UNIT) continue;
+		CvUnit* pNewUnit = NULL;
+		if (GC.getUnitInfo(eUnit).getDomainType() == DOMAIN_SEA)
+		{
+			if (pEntry != NULL)
+			{
+				pNewUnit = initUnit(eUnit, eProfession, pEntry->getX_INLINE(), pEntry->getY_INLINE(), UNITAI_COMBAT_SEA);
+				if (pNewUnit != NULL) pNewUnit->setUnitTravelState(UNIT_TRAVEL_STATE_IN_EUROPE, false);
+			}
+		}
+		else if (GC.getUnitInfo(eUnit).getDomainType() == DOMAIN_LAND)
+		{
+			UnitAITypes eAI = eProfession == NO_PROFESSION ? UNITAI_DEFENSIVE : (UnitAITypes)GC.getProfessionInfo(eProfession).getDefaultUnitAIType();
+			if (eAI != UNITAI_DEFENSIVE && eAI != UNITAI_OFFENSIVE && eAI != UNITAI_COUNTER) eAI = UNITAI_DEFENSIVE;
+			pNewUnit = initEuropeUnit(eUnit, eAI);
+			if (pNewUnit != NULL) pNewUnit->setProfession(eProfession);
+		}
+		//Kaszkaj - Save the copy marker before dispatch, preserving original REF accounting.
+		if (pNewUnit != NULL) pNewUnit->setScriptData("COL2071_TRANSCENDENCE_REF");
+	}
+}
+
+//Kaszkaj - Off-map REF copies have already reached Earth; clean up only that force and its own counters.
+void CvPlayer::removeTranscendenceREFOnEarth()
+{
+	bool bRemoved = false;
+	for (uint i = 0; i < m_aEuropeUnits.size();)
+	{
+		CvUnit* pUnit = m_aEuropeUnits[i];
+		if (pUnit == NULL || pUnit->getScriptData() != "COL2071_TRANSCENDENCE_REF_RETREAT")
+		{
+			++i;
+			continue;
+		}
+		m_aEuropeUnits.erase(m_aEuropeUnits.begin() + i);
+		pUnit->AI_setUnitAIType(NO_UNITAI);
+		pUnit->updateOwnerCache(-1);
+		GET_PLAYER(getID()).AI_removeUnitFromMoveQueue(pUnit);
+		gDLL->getEventReporterIFace()->unitLost(pUnit);
+		delete pUnit;
+		bRemoved = true;
+	}
+	if (bRemoved) gDLL->getInterfaceIFace()->setDirty(EuropeScreen_DIRTY_BIT, true);
 }
 
 void CvPlayer::clearRevolutionEuropeUnits()
@@ -16651,6 +16818,8 @@ void CvPlayer::changeIdeasResearched(CivicTypes eIndex, int iChange)
 	if (eIndex != NO_CIVIC)
 	{
 		m_aiIdeasResearched[eIndex] += iChange;
+		//Kaszkaj - Recheck the complete Research requirement only when knowledge changes.
+		GC.getGameINLINE().invalidateTranscendenceResearch(getID());
 		if (getID() != NO_PLAYER && CvPlayerAI::areStaticsInitialized())
 		{
 			GET_PLAYER(getID()).AI_invalidateResearchCache();
@@ -16907,16 +17076,9 @@ void CvPlayer::setDefaultPopUnit(UnitTypes eUnit)
     m_iDefaultPopUnit = eUnit;
 }
 
-int CvPlayer::getVictoryYieldCount(YieldTypes eYield) const
-{
-	return m_aiVictoryYieldCount[eYield];
-	//return 0;
-}
 
-void CvPlayer::setVictoryYieldCount(YieldTypes eYield, int iValue)
-{
-	m_aiVictoryYieldCount[eYield] = iValue;
-}
+
+
 void CvPlayer::ConvertUnits(UnitTypes eFromUnit, UnitTypes eToUnit, CivicTypes eCivic, int iFlag1, int iFlag2, int iFlag3)
 {
         int iLoop;

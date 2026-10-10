@@ -11,7 +11,7 @@
 			<Description>TXT_KEY_VICTORY_SCORE</Description>
 			<Civilopedia>TXT_KEY_VICTORY_SCORE_PEDIA</Civilopedia>
 			<bDefault>0</bDefault>
-			<bIndustrialization>0</bIndustrialization>
+			<bTranscendence>0</bTranscendence>
 			<bTargetScore>1</bTargetScore>
 			<bEndEurope>0</bEndEurope>
 			<bEndScore>0</bEndScore>
@@ -31,7 +31,7 @@
 			<Description>TXT_KEY_VICTORY_EUROPE</Description>
 			<Civilopedia>TXT_KEY_VICTORY_EUROPE_PEDIA</Civilopedia>
 			<bDefault>0</bDefault>
-			<bIndustrialization>0</bIndustrialization>
+			<bTranscendence>0</bTranscendence>
 			<bTargetScore>0</bTargetScore>
 			<bEndEurope>1</bEndEurope>
 			<bEndScore>0</bEndScore>
@@ -51,7 +51,7 @@
 			<Description>TXT_KEY_VICTORY_TIME</Description>
 			<Civilopedia>TXT_KEY_VICTORY_TIME_PEDIA</Civilopedia>
 			<bDefault>0</bDefault>
-			<bIndustrialization>0</bIndustrialization>
+			<bTranscendence>0</bTranscendence>
 			<bTargetScore>0</bTargetScore>
 			<bEndEurope>0</bEndEurope>
 			<bEndScore>1</bEndScore>
@@ -71,7 +71,7 @@
 			<Description>TXT_KEY_VICTORY_REVOLUTION</Description>
 			<Civilopedia>TXT_KEY_VICTORY_REVOLUTION_PEDIA</Civilopedia>
 			<bDefault>1</bDefault>
-			<bIndustrialization>0</bIndustrialization>
+			<bTranscendence>0</bTranscendence>
 			<bTargetScore>0</bTargetScore>
 			<bEndEurope>0</bEndEurope>
 			<bEndScore>0</bEndScore>
@@ -88,11 +88,11 @@
 		</VictoryInfo>
 <!-- Colonization 2071-->
 		<VictoryInfo>
-			<Type>VICTORY_INDUSTRIALISATION</Type>
+			<Type>VICTORY_TRANSCENDENCE</Type>
 			<Description>TXT_KEY_VICTORY_TRANSCENDENCE</Description>
 			<Civilopedia>TXT_KEY_VICTORY_TRANSCENDENCE_PEDIA</Civilopedia>
 			<bDefault>1</bDefault>
-			<bIndustrialization>1</bIndustrialization>
+			<bTranscendence>1</bTranscendence>
 			<bTargetScore>0</bTargetScore>
 			<bEndEurope>0</bEndEurope>
 			<bEndScore>0</bEndScore>
@@ -112,7 +112,7 @@
 			<Description>TXT_KEY_VICTORY_HEGEMONY</Description>
 			<Civilopedia>TXT_KEY_VICTORY_HEGEMONY_PEDIA</Civilopedia>
 			<bDefault>1</bDefault>
-			<bIndustrialization>0</bIndustrialization>
+			<bTranscendence>0</bTranscendence>
 			<bTargetScore>0</bTargetScore>
 			<bEndEurope>0</bEndEurope>
 			<bEndScore>0</bEndScore>
